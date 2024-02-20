@@ -1,11 +1,8 @@
 library( qualtRics )
 library( dplyr )
 
-
-# IMPORT FILE FROM STATA:
-
-library( haven )
-d <- haven::read_dta( "nptrends_year2_13jan23_with_y2_weight.dta" )
+# setwd( "..." )
+source( "00-data-processing-utils.R" )
 
 
 
@@ -20,33 +17,38 @@ d <- haven::read_dta( "nptrends_year2_13jan23_with_y2_weight.dta" )
 
 d <- 
   read_survey( 
-    "wave-02-qualtrics-download-29mar23.csv", 
+    "data-raw/wave-02-qualtrics-download-29mar23.csv", 
     legacy = T )
 
 head( as.data.frame(d) )
 
-dd <- extract_colmap( d )
-head( as.data.frame(dd) )
+# exports data dictionary 
 
+dd <- extract_colmap( d )  
 
-# setwd( "..." )
-source( "data-processing-utils.R" )
+# add group variables
+# and factor labels 
 
 dd <- 
   dd %>% 
   mutate( group_name = append_groups(qname) ) %>%
   group_by( group_name ) %>% 
   mutate( group_n = n(),
+          group_name = ifelse( group_n > 1, group_name, "" ),
           is_group = ifelse( group_n > 1, "1", "0" ),
-          group_levels = get_categories(description) ) %>%
+          group_levels = ifelse( group_n > 1, get_categories(description), "" ) ) %>%
   ungroup() %>% 
+  mutate( type = ifelse( group_n > 1, "factor", "" ) ) %>% 
   select( qname, is_group, group_name, group_n, group_levels, 
           description, main, sub )
-  
 
+
+  
 write.csv( dd, "../dd-nptrends-wave-02.csv" )
 
-# open by importing into excel (data>>get data) to fix UTF8 encoding problem 
+# FIX UTF8 PROBLEM: 
+# open empty excel file;
+# import csv by (data>>get data) to fix UTF8 encoding problem 
 
 
 
@@ -101,14 +103,16 @@ table( dd$CEOrace_4 )
 table( dd$CEOrace_5 )
 table( dd$CEOrace_7 )
 
-CEOrace_f <- rep( NA, nrow(dd) )
-CEOrace_f[ dd$CEOrace_1 == "Asian/Pacific Islander" ] <- "Asian/Pacific Islander"
-CEOrace_f[ dd$CEOrace_2 == "Black/African American" ] <- "Black/African American"
-CEOrace_f[ dd$CEOrace_3 == "Latinx/Hispanic" ] <- "Latinx/Hispanic"
-CEOrace_f[ dd$CEOrace_4 == "Native American/American Indian" ] <- "Native American/American Indian"
-CEOrace_f[ dd$CEOrace_5 == "White" ] <- "White"
+ceo_race <- rep( NA, nrow(dd) )
+ceo_race[ dd$CEOrace_1 == "Asian/Pacific Islander" ] <- "Asian/Pacific Islander"
+ceo_race[ dd$CEOrace_2 == "Black/African American" ] <- "Black/African American"
+ceo_race[ dd$CEOrace_3 == "Latinx/Hispanic" ] <- "Latinx/Hispanic"
+ceo_race[ dd$CEOrace_4 == "Native American/American Indian" ] <- "Native American/American Indian"
+ceo_race[ dd$CEOrace_5 == "White" ] <- "White"
 
+d$ceo_race <- ceo_race
 
+write.csv( d, "../nptrends-wave-02-data-raw.csv" )
 
 # find_all_groups( d$qname )
 # 
@@ -122,10 +126,14 @@ CEOrace_f[ dd$CEOrace_5 == "White" ] <- "White"
 # [22] "FinanceChanges"    "LeadershipChanges" "CEOrace"          
 # [25] "CEOgender"         "BCrace"            "BCgender"         
 # [28] "ExternalAffairs"   "ContactInfoUpdate" "FirstName"        
-# [31] "LastName"  
+# [31] "LastName"
 
 
 
 
 
-write.csv( d, "../nptrends-wave-02-data-raw.csv" )
+# SECOND YEAR FILE FROM ROB
+# IMPORT FILE FROM STATA:
+
+library( haven )
+d <- haven::read_dta( "nptrends_year2_13jan23_with_y2_weight.dta" )
