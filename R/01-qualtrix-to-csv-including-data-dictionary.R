@@ -2,8 +2,10 @@ library( qualtRics )
 library( dplyr )
 
 # setwd( "..." )
-source( "00-data-processing-utils.R" )
+# source( "00-data-processing-utils.R" )
 
+URL <- "https://raw.githubusercontent.com/UrbanInstitute/nccs-nptrends/main/R/00-data-processing-utils.R"
+source( URL )
 
 
 
