@@ -99,6 +99,12 @@ find_all_groups <- function( q ) {
 # q3: "Did you SEEK or APPLY for this funding? - Federal government grants - (select all that apply)"
 # q4: "Did you SEEK or APPLY for this funding? - Local government contracts or fee-for-service payments (other than Medicare/Medicaid) - (select all that apply)"
 #
+# get_categories(v)
+# [1] "Local government grants"                                                              
+# [2] "State government grants"                                                              
+# [3] "Federal government grants"                                                            
+# [4] "Local government contracts or fee-for-service payments (other than Medicare/Medicaid)"
+# 
 # Arguments:
 #   v: The survey questions extracted from a qualtrics data exportj (pre-grouped by question family).
 
@@ -171,14 +177,14 @@ get_categories <- function( v ) {
 #######
 
 
-  # Arguments:
-  #   d: A data frame.
-  #   cols: Columns to factorize. Can be specified by column names (character) or column positions (numeric).
-  #   labels: Labels for the factor levels. If NULL, column names are used.
-  #   exhaustive: Logical indicating whether factorization is exhaustive (all rows sum to 1 or NA) or not (all rows sum to 0, 1, or NA).
+# Arguments:
+#   d: A data frame.
+#   cols: Columns to factorize. Can be specified by column names (character) or column positions (numeric).
+#   labels: Labels for the factor levels. If NULL, column names are used.
+#   exhaustive: Logical indicating whether factorization is exhaustive (all rows sum to 1 or NA) or not (all rows sum to 0, 1, or NA).
 
-  # Returns:
-  #   A factor vector.
+# Returns:
+#   A factor vector.
 
 factorize <- function( d, cols, labels=NULL, exhaustive=TRUE ) {
 
