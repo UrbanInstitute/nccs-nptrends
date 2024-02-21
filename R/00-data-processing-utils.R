@@ -1,6 +1,18 @@
 ####### 
-#######   ADD VARIABLE GROUPS TO DATA DICTIONARY 
+#######   ADD VARIABLE GROUPS TO DATA DICTIONARY:
 #######
+#######     Many variables belong to groups on the survey, such as types of revenue. 
+#######     some of these are atomized categorical variables that need to be combined 
+#######     into single factors. Others need to be better documented. These function 
+#######     help label groups and extract group levels to help convert raw qualtrics 
+#######     files into a format that is more intuitive for the end users of the dataset.
+#######
+
+
+# Same details as find_all_groups() below except it returns a vector
+# of group names congruent with the input vector of variable names 
+# (instead of the smaller list of unique groups), so that it can
+# be appended as a column in the data dictionary. 
 
 append_groups <- function( vname ) {
 
@@ -17,6 +29,15 @@ append_groups <- function( vname ) {
 # d$group <- append_groups( vname=d$qname )
 
 
+
+# Find all unique question groups by parsing question strings and identifying 
+# those with the same prefix and different endings (ceo_1, ceo_2, etc.).
+
+# Arguments:
+#   q: A vector of the variable name strings exported from qualtrix.
+
+# Returns:
+#   A set of the unique variable groups in the dataset returned as a character vector.
 
 
 find_all_groups <- function( q ) {
@@ -56,6 +77,33 @@ find_all_groups <- function( q ) {
 ####### 
 #######   PARSE RESPONSE CATEGORIES FROM FIELD DESCRIPTION 
 #######
+
+# Extract response categories from the qualtrics questions embedded in the data exports. 
+# The questions are first grouped by the question family then the get_categories() function
+# is applied. It works by comparing strings to identify the base question component, then
+# returning the difference. 
+#
+# Input strings (x's are common across all questions): 
+#   xxxxx aaa xxx
+#   xxxxx bb xxx
+#   xxxxx ccccc xxx
+#
+# Output strings: 
+#   aaa
+#   bb
+#   ccccc
+#
+# Examples: 
+# q1: "Did you SEEK or APPLY for this funding? - Local government grants - (select all that apply)"
+# q2: "Did you SEEK or APPLY for this funding? - State government grants - (select all that apply)"
+# q3: "Did you SEEK or APPLY for this funding? - Federal government grants - (select all that apply)"
+# q4: "Did you SEEK or APPLY for this funding? - Local government contracts or fee-for-service payments (other than Medicare/Medicaid) - (select all that apply)"
+#
+# Arguments:
+#   v: The survey questions extracted from a qualtrics data exportj (pre-grouped by question family).
+
+# Returns:
+#   A vector of the extracted categories (e.g. response categories for factor variables).
 
 get_categories <- function( v ) {
 
@@ -123,6 +171,14 @@ get_categories <- function( v ) {
 #######
 
 
+  # Arguments:
+  #   d: A data frame.
+  #   cols: Columns to factorize. Can be specified by column names (character) or column positions (numeric).
+  #   labels: Labels for the factor levels. If NULL, column names are used.
+  #   exhaustive: Logical indicating whether factorization is exhaustive (all rows sum to 1 or NA) or not (all rows sum to 0, 1, or NA).
+
+  # Returns:
+  #   A factor vector.
 
 factorize <- function( d, cols, labels=NULL, exhaustive=TRUE ) {
 
