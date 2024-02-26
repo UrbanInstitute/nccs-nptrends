@@ -1,6 +1,6 @@
 rm(list = ls())
 
-source("C:/Users/tpoongundranar/Documents/Urban/NCCS/adhoc_requests/fidelity_hmartin_022224/fidelity_scoping_helpers.R")
+source("C:/Users/tpoongundranar/Documents/Urban/NCCS/nccs-nptrends/adhoc_requests/fidelity_hmartin_022224/fidelity_scoping_helpers.R")
 setwd("Y:/CNP/Generosity Commission/")
 
 library(readr)
@@ -128,7 +128,7 @@ year1_SCMWregion_varcounts_df <- year1_SCMWregion |>
   get_multi_variable_count(
     variables = VARS_YEAR1_TARGET,
     year = 1,
-    region = "Southwest and Mountain Central"
+    region = "South Central and Mountain West"
   )
 
 year1_MWregion_varcounts_df <- year1_SCMWregion %>% 
@@ -136,7 +136,7 @@ year1_MWregion_varcounts_df <- year1_SCMWregion %>%
   get_multi_variable_count(
     variables = VARS_YEAR1_TARGET,
     year = 1,
-    region = "Southwest"
+    region = "Mountain West"
   )
 
 year1_SCregion_varcounts_df <- year1_SCMWregion %>% 
@@ -144,7 +144,7 @@ year1_SCregion_varcounts_df <- year1_SCMWregion %>%
   get_multi_variable_count(
     variables = VARS_YEAR1_TARGET,
     year = 1,
-    region = "Mountain Central"
+    region = "South Central"
   )
 
 # Combine Year 1 Results
@@ -156,7 +156,7 @@ year1_varcounts_df <- purrr::list_rbind(
   )
 )
 
-# Unique EINs for Southwest and Mountain Central Regions
+# Unique EINs for South Central and Mountain West Regions
 ein_SCMWregion <- unique(year1_SCMWregion$EIN)
 ein_MWregion <- year1_SCMWregion %>% 
   dplyr::filter(state %in% MW_STATES_ABBR) %>% 
@@ -198,12 +198,12 @@ race_ceo_cols <- c(
 )
 
 # EINs that have not changed board members in Year 2 Survey
-ein_brace_chng <- year2_SCMWregion %>% 
+ein_ceorace_chng <- year2_SCMWregion %>% 
   dplyr::filter( LeadershipChanges_4 != 1 | LeadershipChanges_5 != 1) %>% 
   dplyr::pull("ein")
 
 # EINs that have not changed CEOs in Year 2 Survey
-ein_ceorace_chng <- year2_SCMWregion %>% 
+ein_brace_chng <- year2_SCMWregion %>% 
   dplyr::filter( LeadershipChanges_6 != 1) %>% 
   dplyr::pull("ein")
 
@@ -326,13 +326,13 @@ year2_varcounts_df <- purrr::list_rbind(
   list(
     year2_SCMWregion_varcounts_df %>% 
       dplyr::mutate(Year = "2",
-                    Region = "Southwest and Mountain Central"),
+                    Region = "South Central and Mountain West"),
     year2_SCregion_varcounts_df  %>% 
       dplyr::mutate(Year = "2",
-                    Region = "Southwest"),
+                    Region = "South Central"),
     year2_MWregion_varcounts_df  %>% 
       dplyr::mutate(Year = "2",
-                    Region = "Mountain Central")
+                    Region = "Mountain West")
   )
 )
 year2_varcounts_df
@@ -350,5 +350,5 @@ View(varcounts_df)
 
 write.csv(
   varcounts_df,
-  "C:/Users/tpoongundranar/Documents/Urban/NCCS/adhoc_requests/fidelity_hmartin_022224/scmw_varcounts.csv"
+  "C:/Users/tpoongundranar/Documents/Urban/NCCS/nccs-nptrends/adhoc_requests/fidelity_hmartin_022224/scmw_varcounts.csv"
 )
