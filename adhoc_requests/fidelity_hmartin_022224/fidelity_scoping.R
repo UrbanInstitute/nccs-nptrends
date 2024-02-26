@@ -34,7 +34,7 @@ SCMW_STATES_ABBR <- scan(
   strip.white=TRUE
 ) |> usdata::state2abbr()
 
-SC_STATES_ABBR <- scan(
+MW_STATES_ABBR <- scan(
   text = 'Arizona 
   Colorado 
   Idaho 
@@ -49,7 +49,7 @@ SC_STATES_ABBR <- scan(
   strip.white=TRUE
 ) |> usdata::state2abbr()
 
-MW_STATES_ABBR <- scan(
+SC_STATES_ABBR <- scan(
   text = 'Alabama 
   Arkansas 
   Kentucky 
