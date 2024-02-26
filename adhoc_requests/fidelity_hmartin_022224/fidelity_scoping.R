@@ -197,14 +197,16 @@ race_ceo_cols <- c(
   "CEOrace_7"
 )
 
+all_race_cols <- c(race_ceo_cols, race_board_cols)
+
 # EINs that have not changed board members in Year 2 Survey
 ein_ceorace_chng <- year2_SCMWregion %>% 
-  dplyr::filter( LeadershipChanges_4 != 1 | LeadershipChanges_5 != 1) %>% 
+  dplyr::filter(! (LeadershipChanges_4 %in% c(1) | LeadershipChanges_5 %in% c(1) ))   %>% 
   dplyr::pull("ein")
 
 # EINs that have not changed CEOs in Year 2 Survey
 ein_brace_chng <- year2_SCMWregion %>% 
-  dplyr::filter( LeadershipChanges_6 != 1) %>% 
+  dplyr::filter( ! LeadershipChanges_6 %in% c(1)) %>% 
   dplyr::pull("ein")
 
 # Get Survey responses for race of Board members from Year 1 for participants
@@ -244,22 +246,26 @@ year1_MWregion_ceorace_chng <- year1_SCMWregion_ceorace_chng %>%
 # Recode Board Member and CEO race variables in Year 2 Survey data for EINs
 # to include a category for bi-racial classifications
 year2_SCMWregion_proc <- year2_SCMWregion %>%
-  dplyr::mutate(BCrace_6 = ifelse(rowSums(dplyr::across(race_board_cols)) > 1,
+  dplyr::rowwise() %>% 
+  dplyr::mutate(BCrace_6 = ifelse(sum(dplyr::across(race_board_cols),
+                                      na.rm = TRUE) > 1,
                                   1,
-                                  NA),
-                CEOrace_6 = ifelse(rowSums(dplyr::across(race_ceo_cols)) > 1,
+                                  NA)) %>% 
+  dplyr::rowwise() %>% 
+  dplyr::mutate(CEOrace_6 = ifelse(sum(dplyr::across(race_ceo_cols),
+                                       na.rm = TRUE) > 1,
                                    1,
                                    NA)) %>% 
-  dplyr::mutate_at(race_board_cols, ~ ifelse(BCrace_6 == 1, NA, .),
-                   race_ceo_cols, ~ ifelse(CEOrace_6 == 1, NA, .),
-                   c(race_board_cols, race_ceo_cols), ~ ifelse(. == 0, NA, .)) 
+  dplyr::mutate_at(race_board_cols, ~ ifelse(! is.na(BCrace_6), NA, . )) %>% 
+  dplyr::mutate_at(race_ceo_cols, ~ ifelse(! is.na(CEOrace_6), NA, . )) %>% 
+  dplyr::mutate_at(all_race_cols, ~ dplyr::na_if(.x, 0)) 
+
 
 year2_SCregion_proc <- year2_SCMWregion_proc %>% 
   dplyr::filter(ein %in% ein_SCregion)
 
 year2_MWregion_proc <- year2_SCMWregion_proc %>% 
   dplyr::filter(ein %in% ein_MWregion)
-
 
 # Get counts of responses for year 2 survey participants
 year2_SCMWregion_responses <- get_multi_variable_count(
@@ -295,7 +301,7 @@ year2_SCMWregion_varcounts_df <- purrr::list_rbind(
   )
 ) %>% 
   dplyr::group_by(`Variable Name`) %>% 
-  dplyr::summarise("Number of Responses" = sum(`Number of Responses`))
+  dplyr::summarise("Number of Responses" = sum(`Number of Responses`, na.rm = TRUE))
 
 year2_SCregion_varcounts_df <- purrr::list_rbind(
   list(
@@ -307,7 +313,7 @@ year2_SCregion_varcounts_df <- purrr::list_rbind(
   )
 ) %>% 
   dplyr::group_by(`Variable Name`) %>% 
-  dplyr::summarise("Number of Responses" = sum(`Number of Responses`))
+  dplyr::summarise("Number of Responses" = sum(`Number of Responses`, na.rm = TRUE))
 
 year2_MWregion_varcounts_df <- purrr::list_rbind(
   list(
@@ -319,7 +325,7 @@ year2_MWregion_varcounts_df <- purrr::list_rbind(
   )
 ) %>% 
   dplyr::group_by(`Variable Name`) %>% 
-  dplyr::summarise("Number of Responses" = sum(`Number of Responses`))
+  dplyr::summarise("Number of Responses" = sum(`Number of Responses`, na.rm = TRUE))
 
 
 year2_varcounts_df <- purrr::list_rbind(

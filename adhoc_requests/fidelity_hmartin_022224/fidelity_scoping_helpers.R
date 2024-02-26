@@ -15,7 +15,7 @@ get_single_variable_count <- function(var_name, dataset){
     dplyr::select(tidyselect::all_of(var_name)) %>% 
     dplyr::filter(.data[[var_name]] != -99) %>% 
     tidyr::drop_na() %>% 
-    dplyr::summarize("Number of Responses" = n(),
+    dplyr::summarize("Number of Responses" = sum(! is.na(.data[[var_name]])),
                      "Variable Name" = var_name)
   return(df)
 }
