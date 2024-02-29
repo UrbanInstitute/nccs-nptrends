@@ -2,6 +2,7 @@
 title: "Cleaning the Survey Data"
 ---
 
+
 ```{r, include=FALSE, echo=FALSE}
 library(haven)
 library(dplyr)
@@ -16,7 +17,7 @@ raw_survey_df <- raw_survey_df[-(1:2), ]
 
 weighted_survey_df <- haven::read_dta( "Qualtrics Survey/Intermediate/nptrends_year2_13jan23_with_y2_weight.dta" )
 
-setwd("nccs-nptrends/")
+setwd("..")
 
 dd <- readxl::read_xlsx("dd-nptrends-wave-02.xlsx", sheet = "data dictionary")
 ```
