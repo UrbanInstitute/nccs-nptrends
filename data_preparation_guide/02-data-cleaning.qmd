@@ -1,0 +1,198 @@
+---
+title: "Cleaning the Survey Data"
+---
+
+```{r, include=FALSE, echo=FALSE}
+library(haven)
+library(dplyr)
+library(tidyr)
+library(epoxy)
+
+setwd("Y:/CNP/Generosity Commission/")
+
+raw_survey_df <- readr::read_csv("DATA-PREP/01-data-raw/wave-02/wave-02-qualtrics-download-29mar23.csv")
+qualtrics_outputs <- raw_survey_df[1, ]
+raw_survey_df <- raw_survey_df[-(1:2), ]
+
+weighted_survey_df <- haven::read_dta( "Qualtrics Survey/Intermediate/nptrends_year2_13jan23_with_y2_weight.dta" )
+
+setwd("nccs-nptrends/")
+
+dd <- readxl::read_xlsx("dd-nptrends-wave-02.xlsx", sheet = "data dictionary")
+```
+
+In this chapter we process the raw survey data by:
+
+1.  Renaming columns
+2.  Recoding response values for quantitative analysis
+3.  Dropping duplicates, incomplete responses and test responses
+
+## Renaming Columns
+
+Columns referencing survey questions are renamed with the help of a data dictionary to improve readability.
+
+```{r}
+torename <- dd %>% 
+  dplyr::select(vname, vname_raw) %>% 
+  tidyr::drop_na()
+
+survey_df <- raw_survey_df %>% 
+  dplyr::rename_at(vars(torename$vname_raw), ~torename$vname)
+```
+
+## Recoding Survey Responses
+
+The next step is recoding survey responses. Each group of survey questions comes with its own set of valid inputs that must be recoded separately. For example, "N/A"'s are options for some survey questions and not for others, and some survey questions allow for manual text inputs.
+
+The below code chunk separates all survey questions into their respective categories before further separating each category into numeric, text or NA inputs.
+
+NA questions here refer to "Check here if not applicable to your organization" questions in the survey, where a "C" indicates that the respondent has checked the N/A box.
+
+```{r}
+# All questions provided to respondents
+survey_qns <- names(survey_df)[32:203]
+
+# Broken down into specific categories and subgroups
+program_change_qns <- survey_qns[1:15]
+program_change_qns_numeric <- survey_qns[1:14]
+program_change_qns_text <- survey_qns[15]
+
+people_served_qns <- survey_qns[16:19]
+demand_qn <- survey_qns[20:20]
+
+# Broken down into specific categories and subgroups
+staff_qns <- survey_qns[21:47]
+staff_qns_numeric <- survey_qns[c(21:27, 29:36, 38)]
+staff_qns_text <- survey_qns[c(28, 37, 47)]
+staff_qns_na <- survey_qns[c(39:46)] # NA Question
+
+# Rest of Qns To-Do if above are ok
+importance_qns <- survey_qns[48:49]
+fundraise_qns <- survey_qns[50:60]
+majorgift_qn <- survey_qns[61:61]
+fundraise_change_qns <- survey_qns[62:68]
+fundraise_donor_qns <- survey_qns[69:70]
+finance_fundraise_qns <- survey_qns[71:96]
+finance_revenue_qns <- survey_qns[97:105]
+reserve_qns <- survey_qns[110:111]
+carse_qns <- survey_qns[112:113]
+finance_chng_qns <- survey_qns[114:121]
+leadership_chng_qns <- survey_qns[122:132]
+race_gender_qns <- survey_qns[133:158]
+extaffairs_qns <- survey_qns[159:171]
+primary_cncrn_qn <- survey_qns[172:172]
+```
+
+### Survey Question Breakdown
+
+```{epoxy}
+- **{length(survey_qns)}** general survey questions
+- **{length(program_change_qns)}** questions about changes to programs and services
+- **{length(people_served_qns)}** questions about the number of people each organization serves
+- **{length(demand_qn)}** question about overall program demand
+- **{length(staff_qns)}** questions about staff numbers
+```
+
+### Code Chunk to Recode Variables
+
+```{r, warning=FALSE}
+# Recode each category
+survey_recode_df <- survey_df %>% 
+  dplyr::mutate(
+    dplyr::across(
+      program_change_qns_numeric,
+      ~ dplyr::case_match(
+        ., 
+        "Yes" ~ 1, "No" ~ 0, "N/A" ~ 99, 
+        "Unsure" ~ 98, "-99" ~ -99,
+        .default = NA
+      )
+    ),
+    dplyr::across(
+      people_served_qns,
+      ~ dplyr::case_match(
+        .,
+        "-99" ~ -99, NA ~ NA, "N/A" ~ 1,
+        .default = as.integer(.)
+      )
+    ),
+    dplyr::across(
+      demand_qn,
+      ~ dplyr::case_match(
+        .,
+        "Increase" ~ 98, "Stay the same" ~ 0, "Decrease" ~ 1,
+        "-99" ~ -99,
+        .default = NA
+      )
+    ),
+    dplyr::across(
+      staff_qns_numeric,
+      ~ dplyr::case_match(
+        .,
+        "-99" ~ -99, NA ~ NA,
+        .default = as.integer(.)
+      )
+    ),
+    dplyr::across(
+      c(staff_qns_text, program_change_qns_text),
+      ~ dplyr::case_match(
+        .,
+        "-99" ~ "-99", NA ~ NA,
+        .default = as.character(.)
+      )
+    ),
+    dplyr::across(
+      tidyselect::all_of(staff_qns_na),
+      ~ dplyr::case_match(
+        .,
+        "-99" ~ -99, NA ~ NA, "C" ~ 1,
+        .default = NA
+      )
+    )
+  )
+```
+
+## Evaluating Survey Completion Rates
+
+We next evaluate survey completion rates for each category of questions. We separate our variables into question categories and compute the proportion of valid responses. In most cases, -99 or NA values are considered to be invalid.
+
+```{r}
+survey_qn_subset <- c(program_change_qns, 
+                      people_served_qns, 
+                      demand_qn, 
+                      staff_qns)
+
+survey_qn_num_ls <- list(
+  "Program Changes" = program_change_qns_numeric,
+  "People Served" = people_served_qns,
+  "Next Year's Demand" = demand_qn,
+  "Staff & Volunteers" = c(staff_qns_numeric, staff_qns_na))
+
+survey_qn_text <- c(program_change_qns_text,
+                    staff_qns_text)
+
+survey_subset <- survey_recode_df %>% 
+  dplyr::select(
+    tidyselect::all_of(
+      c("ResponseId", survey_qn_subset)
+    )
+  )
+
+response_rate_ls <- purrr::imap(
+  .x = survey_qn_num_ls,
+  .f = function(x, idx) {
+    group <- as.name(idx)
+    survey_subset %>%
+      dplyr::rowwise() %>%
+      dplyr::mutate(!!idx := sum(!dplyr::c_across(tidyselect::all_of(x)) %in% c(-99, NA)) / length(x)) %>%
+      dplyr::select(tidyselect::all_of(c("ResponseId", idx)))
+  }
+)
+
+response_rate_df <- purrr::reduce(response_rate_ls,
+                                  dplyr::left_join,
+                                  by = "ResponseId")
+
+response_rate_df
+```
+
