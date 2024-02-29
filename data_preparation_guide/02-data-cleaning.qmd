@@ -149,7 +149,7 @@ survey_recode_df <- survey_df %>%
 
 We next evaluate survey completion rates for each category of questions. We separate our variables into question categories and compute the proportion of valid responses. In most cases, -99 or NA values are considered to be invalid.
 
-```{r}
+```{r, warning=FALSE}
 survey_qn_subset <- c(program_change_qns, 
                       people_served_qns, 
                       demand_qn, 
