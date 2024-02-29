@@ -98,57 +98,49 @@ primary_cncrn_qn <- survey_qns[172:172]
 
 ```{r, warning=FALSE}
 # Recode each category
-survey_recode_df <- survey_df %>% 
+survey_recode_df <- survey_df %>%
   dplyr::mutate(
     dplyr::across(
       program_change_qns_numeric,
-      ~ dplyr::case_match(
-        ., 
-        "Yes" ~ 1, "No" ~ 0, "N/A" ~ 99, 
-        "Unsure" ~ 98, "-99" ~ -99,
-        .default = NA
-      )
+      ~ dplyr::case_match(.,
+                          "Yes" ~ 1, "No" ~ 0, "N/A" ~ 99,
+                          "Unsure" ~ 98, "-99" ~ -99,
+                          .default = NA)
     ),
     dplyr::across(
       people_served_qns,
-      ~ dplyr::case_match(
-        .,
-        "-99" ~ -99, NA ~ NA, "N/A" ~ 1,
-        .default = as.integer(.)
-      )
+      ~ dplyr::case_match(.,
+                          "-99" ~ -99, NA ~ NA, "N/A" ~ 1,
+                          .default = as.integer(.))
     ),
     dplyr::across(
       demand_qn,
       ~ dplyr::case_match(
         .,
-        "Increase" ~ 98, "Stay the same" ~ 0, "Decrease" ~ 1,
+        "Increase" ~ 98,
+        "Stay the same" ~ 0,
+        "Decrease" ~ 1,
         "-99" ~ -99,
         .default = NA
       )
     ),
     dplyr::across(
       staff_qns_numeric,
-      ~ dplyr::case_match(
-        .,
-        "-99" ~ -99, NA ~ NA,
-        .default = as.integer(.)
-      )
+      ~ dplyr::case_match(.,
+                          "-99" ~ -99, NA ~ NA,
+                          .default = as.integer(.))
     ),
     dplyr::across(
       c(staff_qns_text, program_change_qns_text),
-      ~ dplyr::case_match(
-        .,
-        "-99" ~ "-99", NA ~ NA,
-        .default = as.character(.)
-      )
+      ~ dplyr::case_match(.,
+                          "-99" ~ "-99", NA ~ NA,
+                          .default = as.character(.))
     ),
     dplyr::across(
       tidyselect::all_of(staff_qns_na),
-      ~ dplyr::case_match(
-        .,
-        "-99" ~ -99, NA ~ NA, "C" ~ 1,
-        .default = NA
-      )
+      ~ dplyr::case_match(.,
+                          "-99" ~ -99, NA ~ NA, "C" ~ 1,
+                          .default = NA)
     )
   )
 ```
