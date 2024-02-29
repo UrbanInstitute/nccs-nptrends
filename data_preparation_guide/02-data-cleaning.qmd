@@ -54,23 +54,38 @@ NA questions here refer to "Check here if not applicable to your organization" q
 survey_qns <- names(survey_df)[32:203]
 
 # Broken down into specific categories and subgroups
+
+# Changes to Programs and Services
 program_change_qns <- survey_qns[1:15]
 program_change_qns_numeric <- survey_qns[1:14]
 program_change_qns_text <- survey_qns[15]
 
+# People Served
 people_served_qns <- survey_qns[16:19]
+
+# Demand for future programs and services
 demand_qn <- survey_qns[20:20]
 
-# Broken down into specific categories and subgroups
+# Staff and Volunteers
 staff_qns <- survey_qns[21:47]
 staff_qns_numeric <- survey_qns[c(21:27, 29:36, 38)]
 staff_qns_text <- survey_qns[c(28, 37, 47)]
 staff_qns_na <- survey_qns[c(39:46)] # NA Question
 
-# Rest of Qns To-Do if above are ok
+# Importance of Volunteers and Donors
 importance_qns <- survey_qns[48:49]
+volimportance <- survey_qns[48]
+donimportance <- survey_qns[49]
+
+# Fundraising
 fundraise_qns <- survey_qns[50:60]
+fundraise_numeric <- survey_qns[50:59]
+fundraise_text <- survey_qns[60]
+
+# Amount for major gifts
 majorgift_qn <- survey_qns[61:61]
+
+# Replicate approach if above is ok with Jesse
 fundraise_change_qns <- survey_qns[62:68]
 fundraise_donor_qns <- survey_qns[69:70]
 finance_fundraise_qns <- survey_qns[71:96]
@@ -101,7 +116,7 @@ primary_cncrn_qn <- survey_qns[172:172]
 survey_recode_df <- survey_df %>%
   dplyr::mutate(
     dplyr::across(
-      program_change_qns_numeric,
+      c(program_change_qns_numeric, fundraise_numeric),
       ~ dplyr::case_match(.,
                           "Yes" ~ 1, "No" ~ 0, "N/A" ~ 99,
                           "Unsure" ~ 98, "-99" ~ -99,
@@ -131,7 +146,7 @@ survey_recode_df <- survey_df %>%
                           .default = as.integer(.))
     ),
     dplyr::across(
-      c(staff_qns_text, program_change_qns_text),
+      c(staff_qns_text, program_change_qns_text, fundraise_text),
       ~ dplyr::case_match(.,
                           "-99" ~ "-99", NA ~ NA,
                           .default = as.character(.))
@@ -141,6 +156,40 @@ survey_recode_df <- survey_df %>%
       ~ dplyr::case_match(.,
                           "-99" ~ -99, NA ~ NA, "C" ~ 1,
                           .default = NA)
+    ),
+    dplyr::across(
+      c(staff_qns_text, program_change_qns_text),
+      ~ dplyr::case_match(.,
+                          "-99" ~ "-99", NA ~ NA,
+                          .default = as.character(.))
+    ),
+    dplyr::across(
+      tidyselect::all_of(volimportance),
+      ~ dplyr::recode_factor(.,
+                          "Essential - we depend entirely on volunteers to carry out our mission and goals" = 1,
+                          "Very important - we depend on volunteers for a wide range of tasks, but not all" = 2,
+                          "Somewhat important - we depend on volunteers for several key tasks" = 3,
+                          "Not very important - we depend on volunteers for only non-essential tasks" = 4,
+                          "Not at all important - we could carry out our mission and goals without using volunteers" = 5,
+                          "We do not use volunteers" = 99,
+                          "-99" = -99)
+    ),
+    dplyr::across(
+      tidyselect::all_of(donimportance),
+      ~ dplyr::recode_factor(.,
+                          "Essential, we depend entirely on individual donations to carry out our mission and goals" = 1,
+                          "Very important, we depend on individual donations for a wide range of activities, but not all" = 2,
+                          "Important, we depend on individual donations for several key activities" = 3,
+                          "Not very important, we depend on individual donations for only non-essential activities" = 4,
+                          "Not at all important, we could carry out our mission and goals without donations from individuals" = 5,
+                          "We do not receive donations from individuals" = 99,
+                          "-99" = -99)
+    ),
+    dplyr::across(
+      majorgift_qn,
+      ~ dplyr::case_match(.,
+                          "-99" ~ -99,
+                          .default = as.numeric(.))
     )
   )
 ```
