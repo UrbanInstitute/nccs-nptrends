@@ -2,12 +2,12 @@
 title: "Cleaning the Survey Data"
 ---
 
-
 ```{r, include=FALSE, echo=FALSE}
 library(haven)
 library(dplyr)
 library(tidyr)
 library(epoxy)
+library(memisc)
 
 setwd("Y:/CNP/Generosity Commission/")
 
@@ -18,7 +18,6 @@ raw_survey_df <- raw_survey_df[-(1:2), ]
 weighted_survey_df <- haven::read_dta( "Qualtrics Survey/Intermediate/nptrends_year2_13jan23_with_y2_weight.dta" )
 
 setwd("..")
-
 dd <- readxl::read_xlsx("dd-nptrends-wave-02.xlsx", sheet = "data dictionary")
 ```
 
@@ -50,53 +49,103 @@ The below code chunk separates all survey questions into their respective catego
 NA questions here refer to "Check here if not applicable to your organization" questions in the survey, where a "C" indicates that the respondent has checked the N/A box.
 
 ```{r}
-# All questions provided to respondents
-survey_qns <- names(survey_df)[32:203]
+setwd("..")
+dd <- readxl::read_xlsx("dd-nptrends-wave-02.xlsx", sheet = "data dictionary")
+# Function to get survey questions by group and data type from data dictionary
+get_survey_questions <- function(data_dict, qgroup, qtype){
+  qns <- data_dict %>% 
+    dplyr::filter(group == qgroup,
+                  type == qtype) %>% 
+    dplyr::pull("vname")
+  return(qns)
+}
 
-# Broken down into specific categories and subgroups
 
 # Changes to Programs and Services
-program_change_qns <- survey_qns[1:15]
-program_change_qns_numeric <- survey_qns[1:14]
-program_change_qns_text <- survey_qns[15]
+program_change_qns_bool <- get_survey_questions(dd, "ProgChanges", "boolean")
+program_change_qns_txt <- get_survey_questions(dd, "ProgChanges", "text")
 
 # People Served
-people_served_qns <- survey_qns[16:19]
+people_served_qns_int <- get_survey_questions(dd, "PeopleServed#1", "integer")
+people_served_qns_bool <- get_survey_questions(dd, "PeopleServed#2", "boolean")
 
 # Demand for future programs and services
-demand_qn <- survey_qns[20:20]
+demand_fct_qns <- get_survey_questions(dd, "Demand", "factor") 
 
 # Staff and Volunteers
-staff_qns <- survey_qns[21:47]
-staff_qns_numeric <- survey_qns[c(21:27, 29:36, 38)]
-staff_qns_text <- survey_qns[c(28, 37, 47)]
-staff_qns_na <- survey_qns[c(39:46)] # NA Question
+staff_qns_int <- c(
+  get_survey_questions(dd, "Staff#1", "integer"),
+  get_survey_questions(dd, "Staff#2", "integer")
+)
+staff_qns_fct <- get_survey_questions(dd, "Staff#3", "factor")
+staff_qns_text <- c(
+  get_survey_questions(dd, "Staff#1", "text"),
+  get_survey_questions(dd, "Staff#2", "text"),
+  get_survey_questions(dd, "Staff#3", "text")
+)
 
 # Importance of Volunteers and Donors
-importance_qns <- survey_qns[48:49]
-volimportance <- survey_qns[48]
-donimportance <- survey_qns[49]
+volimportance_qns_fct <- get_survey_questions(dd, "VolImportance", "factor")
+donimportance_qns_fct <- get_survey_questions(dd, "DonImportance", "factor")
 
 # Fundraising
-fundraise_qns <- survey_qns[50:60]
-fundraise_numeric <- survey_qns[50:59]
-fundraise_text <- survey_qns[60]
+fundraise_qns_bool <- get_survey_questions(dd, "FRchanges", "boolean")
+fundraise_qns_text <- get_survey_questions(dd, "FRchanges", "text")
 
 # Amount for major gifts
-majorgift_qn <- survey_qns[61:61]
+majorgift_qn_num <- get_survey_questions(dd, "Frmajgift", "numeric")
 
-# Replicate approach if above is ok with Jesse
-fundraise_change_qns <- survey_qns[62:68]
-fundraise_donor_qns <- survey_qns[69:70]
-finance_fundraise_qns <- survey_qns[71:96]
-finance_revenue_qns <- survey_qns[97:105]
-reserve_qns <- survey_qns[110:111]
-carse_qns <- survey_qns[112:113]
-finance_chng_qns <- survey_qns[114:121]
-leadership_chng_qns <- survey_qns[122:132]
-race_gender_qns <- survey_qns[133:158]
-extaffairs_qns <- survey_qns[159:171]
-primary_cncrn_qn <- survey_qns[172:172]
+# Fundraising Changes
+fundraise_change_qns_fct <- get_survey_questions(dd, "FRchanges#1", "factor")
+
+# Number of donors
+fundraise_donor_qns_int <- get_survey_questions(dd, "FRnumberdonors", "integer")
+
+# Fundraising Sought and Received
+fundraise_skrcv_qns_fct <- c(
+  get_survey_questions(dd, "Funding1#1", "factor"),
+  get_survey_questions(dd, "Funding1#2", "factor")
+)
+
+# Revenue breakdown
+finance_revenue_qns_num <- get_survey_questions(dd, "Finances", "numeric")
+finance_revenue_qns_text <- get_survey_questions(dd, "Finances", "text")
+
+# Financial reserves
+reserve_qns_num <- get_survey_questions(dd, "Reserves", "numeric")
+reserve_qns_bool <- get_survey_questions(dd, "Reserves", "boolean")
+
+# CARES Funding
+cares_qns_num <- get_survey_questions(dd, "CARES", "numeric")
+cares_qns_bool <- get_survey_questions(dd, "CARES", "boolean")
+
+# Changes to finances
+finance_chng_qns_bool <- get_survey_questions(dd, "FinanceChanges", "boolean")
+finance_chng_qns_text <- get_survey_questions(dd, "FinanceChanges", "text")
+
+# Leadership Changes
+leadership_chng_qns_bool <- get_survey_questions(dd, "LeadershipChanges", "boolean")
+leadership_chng_qns_text <- get_survey_questions(dd, "LeadershipChanges", "text")
+
+# Race and Gender Qns
+race_gender_qns_bool <- c(
+  get_survey_questions(dd, "CEOrace", "boolean"),
+  get_survey_questions(dd, "CEOgender", "boolean"),
+  get_survey_questions(dd, "BCrace", "boolean"),
+  get_survey_questions(dd, "BCgender", "boolean")
+)
+
+race_gender_qns_text <- c(
+  get_survey_questions(dd, "CEOrace", "text"),
+  get_survey_questions(dd, "CEOgender", "text"),
+  get_survey_questions(dd, "BCrace", "text"),
+  get_survey_questions(dd, "BCgender", "text")
+)
+
+# External affairs questions
+extaffairs_qns_fct <- get_survey_questions(dd, "ExternalAffairs", "factor")
+# Primary concern question
+primary_cncrn_qn_text <- get_survey_questions(dd, "PrimaryConcern", "text") 
 ```
 
 ### Survey Question Breakdown
@@ -109,21 +158,61 @@ primary_cncrn_qn <- survey_qns[172:172]
 - **{length(staff_qns)}** questions about staff numbers
 ```
 
-### Code Chunk to Recode Variables
+### Recode and Relabel Variables
+
+There are several factor and boolean variables in this survey data set with inconsistent coding. We will recode each category of question individually and document our decision criteria.
+
+Using the memisc package, different types of missingness (e.g. Unsure, N/A, -99 etc.) are coded as missing.
+
+#### Yes/No Questions
+
+| Original Value | Description | Recode Value | Missing ? |
+|---|---|---|---|
+|Yes|Yes|1|No|
+|No|No|0|No|
+|Unsure|Unsure|97|Yes|
+|N/A|Not Applicable|98|Yes|
+|-99|Incomplete|99|Yes|
+|NA| Unanswered|NA|Yes|
+
+```{r}
+
+bool_qns <- c(program_change_qns_bool, fundraise_qns_bool, cares_qns_bool, finance_chng_qns_bool, leadership_chng_qns_bool)
+
+survey_recode_df <- survey_df %>% 
+  dplyr::mutate(
+    dplyr::across(
+      .cols = tidyselect::all_of(c(program_change_qns_bool, fundraise_qns_bool, cares_qns_bool, finance_chng_qns_bool, leadership_chng_qns_bool)),
+      ~ dplyr::case_match(.,
+                          "Yes" ~ 1, "No" ~ 0, "Unsure" ~ 97, "N/A" ~ 98, "-99" ~ 99,
+                          .default = NA)
+    )
+  )
+
+for(qn in bool_qns){
+  survey_recode_df[[qn]] <- memisc::as.item(survey_recode_df[[qn]],
+                                            labels = c(0, 1, 97, 98, 99),
+                                            missing.values = c(97, 98, 99))
+}
+
+```
+
+#### N/A Checkboxes
+
 
 ```{r, warning=FALSE}
 # Recode each category
 survey_recode_df <- survey_df %>%
   dplyr::mutate(
     dplyr::across(
-      c(program_change_qns_numeric, fundraise_numeric),
+      c(program_change_qns_numeric, fundraise_numeric, cares_yesno, finance_chng_yesno, leadership_chng_yesno),
       ~ dplyr::case_match(.,
                           "Yes" ~ 1, "No" ~ 0, "N/A" ~ 99,
                           "Unsure" ~ 98, "-99" ~ -99,
                           .default = NA)
     ),
     dplyr::across(
-      people_served_qns,
+      c(people_served_qns, fundraise_donor_qns),
       ~ dplyr::case_match(.,
                           "-99" ~ -99, NA ~ NA, "N/A" ~ 1,
                           .default = as.integer(.))
@@ -140,28 +229,22 @@ survey_recode_df <- survey_df %>%
       )
     ),
     dplyr::across(
-      staff_qns_numeric,
+      c(staff_qns_numeric, finance_revenue_numeric_qns),
       ~ dplyr::case_match(.,
                           "-99" ~ -99, NA ~ NA,
                           .default = as.integer(.))
     ),
     dplyr::across(
-      c(staff_qns_text, program_change_qns_text, fundraise_text),
+      c(staff_qns_text, program_change_qns_text, fundraise_text, finance_revenue_text_qns, finance_chng_text, leadership_chng_text, race_gender_text, primary_cncrn_qn),
       ~ dplyr::case_match(.,
                           "-99" ~ "-99", NA ~ NA,
                           .default = as.character(.))
     ),
     dplyr::across(
-      tidyselect::all_of(staff_qns_na),
+      tidyselect::all_of(c(staff_qns_na, reserve_na)),
       ~ dplyr::case_match(.,
                           "-99" ~ -99, NA ~ NA, "C" ~ 1,
                           .default = NA)
-    ),
-    dplyr::across(
-      c(staff_qns_text, program_change_qns_text),
-      ~ dplyr::case_match(.,
-                          "-99" ~ "-99", NA ~ NA,
-                          .default = as.character(.))
     ),
     dplyr::across(
       tidyselect::all_of(volimportance),
@@ -186,15 +269,73 @@ survey_recode_df <- survey_df %>%
                           "-99" = -99)
     ),
     dplyr::across(
-      majorgift_qn,
+      c(majorgift_qn, reserve_numeric),
       ~ dplyr::case_match(.,
                           "-99" ~ -99,
                           .default = as.numeric(.))
-    )
+    ),
+    dplyr::across(
+      tidyselect::all_of(fundraise_change_qns),
+      ~ dplyr::recode_factor(.,
+                          "Increased significantly (by more than 10%)" = 1,
+                          "Increased moderately (by less than 10%)" = 2,
+                          "Stayed more or less the same" = 3,
+                          "Decreased moderately (by less than 10%)" = 4,
+                          "Decreased significantly (by more than 10%)" = 5,
+                          "Unsure" = 99,
+                          "-99" = -99,
+                          "N/A" = 1)    
+  ),
+    dplyr::across(
+      tidyselect::all_of(finance_fundraise_qns),
+      ~ dplyr::recode_factor(.,
+                          "(select all that apply)" = 1,
+                          "-99" = -99)    
+  ),    
+  dplyr::across(
+      tidyselect::all_of(race_gender_binary),
+      ~ dplyr::case_match(.,
+                          "Asian/Pacific Islander" ~ 1,
+                          "Black/African American" ~ 1,
+                          "Latinx/Hispanic" ~ 1,
+                          "Native American/American Indian" ~ 1,
+                          "White" ~ 1,
+                          "Man" ~ 1,
+                          "Woman" ~ 1,
+                          "Trans" ~ 1,
+                          "Gender non-conforming/Non-Binary" ~ 1,
+                          "Other (please specify):" ~ 1,
+                          "-99" ~ -99,
+                          "0" ~ 0,
+                          NA ~ NA,
+                          .default = NA)
+    ),
+    dplyr::across(
+      tidyselect::all_of(extaffairs_qns),
+      ~ dplyr::recode_factor(.,
+                          "Frequently" = 1,
+                          "Almost all the time" = 2,
+                          "Occasionally" = 3,
+                          "Rarely" = 4,
+                          "Never" = 5,
+                          "-99" = -99)    
   )
+) %>% 
+  dplyr::mutate(
+    CARES_Rcv_Est = stringr::str_replace(CARES_Rcv_Est, ",", ""),
+    CARES_Rcv_Est = stringr::str_replace(CARES_Rcv_Est, "$", "")
+  ) %>% 
+  dplyr::mutate(
+    dplyr::across(
+      tidyselect::all_of(cares_dollarchar),
+      ~ dplyr::case_match(.,
+                          "-99" ~ -99,
+                          .default = as.numeric(.))    
+  )
+)
 ```
 
-## Evaluating Survey Completion Rates
+## Evaluating Survey Completion Rates and Summing Section Completion
 
 We next evaluate survey completion rates for each category of questions. We separate our variables into question categories and compute the proportion of valid responses. In most cases, -99 or NA values are considered to be invalid.
 
@@ -202,13 +343,42 @@ We next evaluate survey completion rates for each category of questions. We sepa
 survey_qn_subset <- c(program_change_qns, 
                       people_served_qns, 
                       demand_qn, 
-                      staff_qns)
+                      staff_qns,
+                      importance_qns,
+                      fundraise_qns,
+                      majorgift_qn,
+                      fundraise_change_qns,
+                      fundraise_donor_qns,
+                      finance_fundraise_qns,
+                      finance_revenue_numeric_qns,
+                      reserve_numeric,
+                      cares_qns,
+                      finance_chng_yesno,
+                      leadership_chng_yesno,
+                      race_gender_binary,
+                      extaffairs_qns,
+                      primary_cncrn_qn)
 
 survey_qn_num_ls <- list(
   "Program Changes" = program_change_qns_numeric,
   "People Served" = people_served_qns,
   "Next Year's Demand" = demand_qn,
-  "Staff & Volunteers" = c(staff_qns_numeric, staff_qns_na))
+  "Staff & Volunteers" = c(staff_qns_numeric, staff_qns_na),
+  "Volunteer Importance" = volimportance,
+  "Donor Importance" = donimportance,
+  "Fundraising" = fundraise_numeric,
+  "Major Gift Amount" = majorgift_qn,
+  "Fundraising Changes" = fundraise_change_qns,
+  "Donor Changes" = fundraise_donor_qns,
+  "Fundraising Sought/Received" = finance_fundraise_qns,
+  "Revenue Breakdown" = finance_revenue_numeric_qns,
+  "Reserves" = reserve_numeric,
+  "CARES Funding" = cares_qns,
+  "Finance Changes" = finance_chng_yesno,
+  "Leadership Changes" = leadership_chng_yesno,
+  "Race and Gender" = race_gender_binary,
+  "External Affairs" = extaffairs_qns,
+  "Primary Concern" = primary_cncrn_qn)
 
 survey_qn_text <- c(program_change_qns_text,
                     staff_qns_text)
@@ -235,6 +405,24 @@ response_rate_df <- purrr::reduce(response_rate_ls,
                                   dplyr::left_join,
                                   by = "ResponseId")
 
-response_rate_df
+testcases = c("R_1lB6u4BoFZWFeXI","R_3e3RyQttJeNzqLu","R_3kzeIxsE73IIoq9","R_2BxNQBmrv4Dr9Dn","R_Q4WjxQdBfeZbn4B",
+				"R_xFNLuOjPbg6iL6N","R_3McyCOS2Gv7FNcd","R_9YWW00fssFUBEYh","R_PNiTwNoQSfvuRkB","R_111PYLkD7mpeFui",
+				"R_a59rvIufWBZhAhr","R_3MGb8by31yzxYW7","R_1exbPd4NNpfWrFt","R_2PwfUW9idAwPE1w","R_3EunbLVD5Ce8b93",
+				"R_2uO55NoBulnQTvx","R_Wl2yqsO0HXhhaTv","R_1kSRidkXneLKy4u","R_3j3DCg6oVhQWRe0")
+
+response_rate_df %>% 
+  dplyr::filter(! ResponseId %in% weighted_survey_df$ResponseId)
 ```
 
+```{r}
+dropped_responses <- response_rate_df %>% 
+    dplyr::filter(! ResponseId %in% c(weighted_survey_df$ResponseId, testcases))
+
+response_cols <- names(dropped_responses)[c(-1, -18)]
+
+dropped_responses <- dropped_responses %>% 
+  dplyr::rowwise() %>% 
+  dplyr::mutate("Number Blank" = sum(dplyr::c_across(tidyselect::all_of(response_cols)) == 0))
+```
+
+## Merging Race and Gender Inputs from Year 1
