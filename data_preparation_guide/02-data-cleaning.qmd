@@ -198,10 +198,9 @@ for(qn in bool_qns){
                                             missing.values = c(97, 98, 99))
 }
 
-# Function to recode survey variable as item with missingness and variables
+# Function to convert survey variable to survey.item with missingness and variable labels
 
 create_survey_item <- function(survey_data, qns, recode_vals, recode_labs, missing_vals){
-  
   survey_data <- survey_data |>
     purrr::modify_at(
       .at = qns,
@@ -212,11 +211,16 @@ create_survey_item <- function(survey_data, qns, recode_vals, recode_labs, missi
       ),
       missing.values = missing_vals
     )
-  
   return(survey_data)
-  
 }
 
+survey_recode_df <- create_survey_item(
+  survey_recode_df, 
+  bool_qns, 
+  recode_vals = c(0, 1, 97, 98, 99), 
+  recode_labs = c("No", "Yes", "Unsure", "Not Applicable", "N/A"), 
+  missing_vals = c(97, 98, 99)
+)
 
 ```
 
