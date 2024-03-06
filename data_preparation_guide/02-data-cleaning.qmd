@@ -191,9 +191,32 @@ survey_recode_df <- survey_df %>%
 
 for(qn in bool_qns){
   survey_recode_df[[qn]] <- memisc::as.item(survey_recode_df[[qn]],
-                                            labels = c(0, 1, 97, 98, 99),
+                                            labels = structure(
+                                              .Data = c(0, 1, 97, 98, 99),
+                                              names = c("No", "Yes", "Unsure", "Not Applicable", "N/A")
+                                            ),
                                             missing.values = c(97, 98, 99))
 }
+
+# Function to recode survey variable as item with missingness and variables
+
+create_survey_item <- function(survey_data, qns, recode_vals, recode_labs, missing_vals){
+  
+  survey_data <- survey_data |>
+    purrr::modify_at(
+      .at = qns,
+      .f = memisc::as.item,
+      labels = structure(
+        .Data = recode_vals,
+        names = recode_labs
+      ),
+      missing.values = missing_vals
+    )
+  
+  return(survey_data)
+  
+}
+
 
 ```
 
