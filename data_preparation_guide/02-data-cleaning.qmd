@@ -149,7 +149,7 @@ extaffairs_qns_fct <- get_survey_questions(dd, "ExternalAffairs", "factor")
 primary_cncrn_qn_text <- get_survey_questions(dd, "PrimaryConcern", "text") 
 ```
 
-### Survey Question Breakdown
+### Survey Variable Breakdown
 
 ```{epoxy}
 - **{length(c(program_change_qns_bool, program_change_qns_txt))}** questions about changes to programs and services
