@@ -118,6 +118,83 @@ BCrace_7
 
 year1_raw <- readr::read_csv("Qualtrics Survey/Intermediate/gc_survey_27apr_21.csv")
 year2_raw <- rio::import("Qualtrics Survey/Intermediate/nptrends_year2_13jan23_with_y2_weight.sav")
+year3_raw <- readr::read_csv("Qualtrics Survey/Year 3/Nonprofit Trends and Impacts 2023 - Complete.csv")
+year3_raw <- year3_raw[c(-1, -2), ]
+
+lat <- year3_raw$LocationLatitude
+lon <- year3_raw$LocationLongitude
+
+census_api <- function(lat, lon){
+  
+  query_params <- list( latitude = as.character( lat ),
+                        longitude = as.character( lon ),
+                        censusYear = "2020",
+                        format = "json" )
+  
+  response <- httr::GET( "https://geo.fcc.gov/api/census/area?",
+                         query = query_params )
+  
+  body <- httr::content( response, 
+                         "parsed" )
+  
+  return(body$State$code)
+  
+}
+
+state_codes <- purrr::map2(.x = lat,
+                           .y = lon,
+                           .f = census_api)
+
+scmw_y3 <- year3_raw %>% 
+  dplyr::filter(ExternalReference %in% year1_SCMWregion$EIN)
+
+get_multi_variable_count <- function( variables, data, year, region ){
+  varcounts_df <- purrr::map(
+    .x = variables,
+    .f = get_single_variable_count,
+    dataset = data
+  ) |> purrr::list_rbind()
+  varcounts_df$`Year` <- as.character(year)
+  varcounts_df$`Region` <- as.character(region)
+  return(varcounts_df)
+}
+
+
+get_single_variable_count <- function(var_name, dataset){
+  df <- dataset %>% 
+    dplyr::select(tidyselect::all_of(var_name)) %>% 
+    dplyr::filter(.data[[var_name]] != -99) %>% 
+    tidyr::drop_na() %>% 
+    dplyr::summarize("Number of Responses" = sum(! is.na(.data[[var_name]])),
+                     "Variable Name" = var_name)
+  return(df)
+}
+
+
+eins <- year1_SCMWregion %>% 
+  dplyr::filter(state %in% MW_STATES_ABBR) %>%
+  dplyr::pull("EIN")
+
+scmw_y3 %>% 
+  dplyr::filter(ExternalReference %in% eins)|>
+  get_multi_variable_count(
+    variables = names(year3_raw),
+    year = 3,
+    region = "South Central and Mountain West"
+  ) |>
+  View()
+
+year1_SCMWregion %>% 
+  dplyr::filter(EIN %in% eins,
+                EIN %in% scmw_y3$ExternalReference)|>
+  get_multi_variable_count(
+    variables = VARS_YEAR1_TARGET,
+    year = 1,
+    region = "South Central and Mountain West"
+  ) |> View()
+
+View(rs)
+
 
 # Filter for target sates: South Central and Mountain West = SCMW
 
