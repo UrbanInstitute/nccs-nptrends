@@ -1,0 +1,54 @@
+---
+title: "Geocoding Addresses"
+---
+In this section, we'll cover geocoding the addresses provided using the postmastr package and a geocoder.
+
+```{r, include=FALSE, echo=FALSE}
+library(postmastr)
+
+setwd("Y:/CNP/Generosity Commission/")
+survey_recode_df <- readr::read_csv("DATA-PREP/02-data-intermediate/02-wave-two/wave-02-data-intermediate-recoded.csv")
+```
+
+## Reformat Addresses using Postmastr
+
+### Postal Codes
+
+#### Exploring Data
+
+```{r}
+survey_addr_zipcodes <- survey_recode_df %>% 
+  dplyr::select(EIN, Addr_ZIP)
+
+postmastr_zip <- postmastr::pm_identify(survey_addr_zipcodes, var = "Addr_ZIP")
+postmastr_zip <- postmastr::pm_prep(postmastr_zip, var = "Addr_ZIP", type = "zip")
+```
+
+```{epoxy}
+Our postmastr object returns {postmastr::pm_postal_all(postmastr_zip)} when asked if all ZIP codes in the survey data set are valid. This requires additional exploration.
+```
+
+```{r}
+zip_detect <- postmastr::pm_postal_detect(postmastr_zip) %>% 
+  dplyr::filter(pm.hasZip == FALSE)
+```
+```{epoxy}
+pm_postal_detect() reveals that the survey responses without a valid ZIP code have the following values: {zip_detect$pm.address}, which indicate missingness. We can thus remove them from our postal code data set.
+```
+```{r}
+survey_addr_zipcodes <- survey_recode_df %>% 
+  dplyr::select(EIN, Addr_ZIP) %>% 
+  dplyr::filter(! Addr_ZIP %in% c(NA, "-99"))
+
+postmastr_zip <- postmastr::pm_identify(survey_addr_zipcodes, var = "Addr_ZIP")
+postmastr_zip <- postmastr::pm_prep(postmastr_zip, var = "Addr_ZIP", type = "zip")
+```
+```{epoxy}
+Our postmastr object now returns {postmastr::pm_postal_all(postmastr_zip)} when asked if all ZIP codes in the survey data set are valid.
+```
+We can now parse and process all postal codes.
+
+```{r}
+postmastr_zip <- postmastr::pm_postal_parse(postmastr_zip)
+```
+
