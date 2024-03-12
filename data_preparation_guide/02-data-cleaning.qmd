@@ -1015,3 +1015,11 @@ response_rate_df
 ```
 
 
+## Save outputs
+
+```{r}
+setwd("Y:/CNP/Generosity Commission/")
+readr::write_csv(survey_recode_df,
+                 "DATA-PREP/02-data-intermediate/02-wave-two/wave-02-data-intermediate-recoded.csv")
+```
+
