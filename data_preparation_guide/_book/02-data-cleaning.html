@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./03-geocoding.html" rel="next">
 <link href="./references.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -162,6 +163,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Cleaning the Survey Data</span></span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-geocoding.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Geocoding Addresses</span></span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -175,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#renaming-columns" id="toc-renaming-columns" class="nav-link active" data-scroll-target="#renaming-columns"><span class="header-section-number">3.1</span> Renaming Columns</a></li>
   <li><a href="#recoding-survey-responses" id="toc-recoding-survey-responses" class="nav-link" data-scroll-target="#recoding-survey-responses"><span class="header-section-number">3.2</span> Recoding Survey Responses</a>
   <ul class="collapse">
-  <li><a href="#survey-question-breakdown" id="toc-survey-question-breakdown" class="nav-link" data-scroll-target="#survey-question-breakdown"><span class="header-section-number">3.2.1</span> Survey Question Breakdown</a></li>
+  <li><a href="#survey-variable-breakdown" id="toc-survey-variable-breakdown" class="nav-link" data-scroll-target="#survey-variable-breakdown"><span class="header-section-number">3.2.1</span> Survey Variable Breakdown</a></li>
   <li><a href="#recode-and-relabel-variables" id="toc-recode-and-relabel-variables" class="nav-link" data-scroll-target="#recode-and-relabel-variables"><span class="header-section-number">3.2.2</span> Recode and Relabel Variables</a></li>
   </ul></li>
   <li><a href="#adding-race-and-gender-answers-from-year-1-survey" id="toc-adding-race-and-gender-answers-from-year-1-survey" class="nav-link" data-scroll-target="#adding-race-and-gender-answers-from-year-1-survey"><span class="header-section-number">3.3</span> Adding Race and Gender Answers from Year 1 Survey</a>
@@ -188,6 +195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#validate-results" id="toc-validate-results" class="nav-link" data-scroll-target="#validate-results"><span class="header-section-number">3.3.6</span> Validate Results</a></li>
   </ul></li>
   <li><a href="#evaluating-survey-completion-rates-and-summing-section-completion" id="toc-evaluating-survey-completion-rates-and-summing-section-completion" class="nav-link" data-scroll-target="#evaluating-survey-completion-rates-and-summing-section-completion"><span class="header-section-number">3.4</span> Evaluating Survey Completion Rates and Summing Section Completion</a></li>
+  <li><a href="#save-outputs" id="toc-save-outputs" class="nav-link" data-scroll-target="#save-outputs"><span class="header-section-number">3.5</span> Save outputs</a></li>
   </ul>
 </nav>
     </div>
@@ -331,8 +339,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a><span class="co"># Primary concern question</span></span>
 <span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>primary_cncrn_qn_text <span class="ot">&lt;-</span> <span class="fu">get_survey_questions</span>(dd, <span class="st">"PrimaryConcern"</span>, <span class="st">"text"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="survey-question-breakdown" class="level3" data-number="3.2.1">
-<h3 data-number="3.2.1" class="anchored" data-anchor-id="survey-question-breakdown"><span class="header-section-number">3.2.1</span> Survey Question Breakdown</h3>
+<section id="survey-variable-breakdown" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="survey-variable-breakdown"><span class="header-section-number">3.2.1</span> Survey Variable Breakdown</h3>
 <div class="cell">
 <ul>
 <li><strong>15</strong> questions about changes to programs and services</li>
@@ -5087,6 +5095,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 #   `Finance Changes` &lt;dbl&gt;, `Leadership Changes` &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
+</section>
+<section id="save-outputs" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="save-outputs"><span class="header-section-number">3.5</span> Save outputs</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"Y:/CNP/Generosity Commission/"</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(survey_recode_df,</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"DATA-PREP/02-data-intermediate/02-wave-two/wave-02-data-intermediate-recoded.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>
@@ -5332,6 +5348,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./03-geocoding.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Geocoding Addresses</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
