@@ -11,6 +11,7 @@ book:
     - summary.qmd
     - references.qmd
     - 02-data-cleaning.qmd
+    - 03-geocoding.qmd
 
 bibliography: references.bib
 
