@@ -347,10 +347,16 @@ street_parsed <- postmastr_street_full_parsed %>%
 postmastr_faddress_parsed <- street_parsed %>% 
   tidylog::left_join(citystate_parsed) %>% 
   tidylog::left_join(zip_parsed) %>% 
-  tidyr::unite(f_address, pm.address, pm.city, pm.state, pm.zip, pm.zip4, na.rm = TRUE, sep = ",") %>% 
-  dplyr::mutate(EIN = as.character(EIN))
+  tidyr::unite(f_address, pm.address, pm.city, pm.state, pm.zip, pm.zip4, na.rm = TRUE, sep = ",")
 
 head(postmastr_faddress_parsed, 20)
 ```
 
-The f_address column now has parsed addresses that can be formatted using a geocoder of choice. 
+The f_address column now has parsed addresses that can be formatted using a geocoder of choice. We can now rejoin the parsed address data via EINs with our original data set.
+
+```{r}
+survey_geoproc_df <- survey_recode_df %>% 
+  dplyr::filter(! is.na(EIN)) %>% 
+  tidylog::left_join(postmastr_faddress_parsed, by = "EIN")
+```
+
