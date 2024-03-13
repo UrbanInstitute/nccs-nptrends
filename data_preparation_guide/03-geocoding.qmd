@@ -5,6 +5,8 @@ In this section, we'll cover geocoding the addresses provided using the postmast
 
 ```{r, include=FALSE, echo=FALSE}
 library(postmastr)
+library(dplyr)
+library(epoxy)
 
 setwd("Y:/CNP/Generosity Commission/")
 survey_recode_df <- readr::read_csv("DATA-PREP/02-data-intermediate/02-wave-two/wave-02-data-intermediate-recoded.csv")
@@ -14,22 +16,22 @@ survey_recode_df <- readr::read_csv("DATA-PREP/02-data-intermediate/02-wave-two/
 
 ### Postal Codes
 
-#### Exploring Data
+#### Processing Zip Code Data
 
 ```{r}
 survey_addr_zipcodes <- survey_recode_df %>% 
   dplyr::select(EIN, Addr_ZIP)
 
-postmastr_zip <- postmastr::pm_identify(survey_addr_zipcodes, var = "Addr_ZIP")
-postmastr_zip <- postmastr::pm_prep(postmastr_zip, var = "Addr_ZIP", type = "zip")
+postmastr_zip_id <- postmastr::pm_identify(survey_addr_zipcodes, var = "Addr_ZIP")
+postmastr_zip_prep <- postmastr::pm_prep(postmastr_zip_id, var = "Addr_ZIP", type = "zip")
 ```
 
 ```{epoxy}
-Our postmastr object returns {postmastr::pm_postal_all(postmastr_zip)} when asked if all ZIP codes in the survey data set are valid. This requires additional exploration.
+Our postmastr object returns {postmastr::pm_postal_all(postmastr_zip_prep)} when asked if all ZIP codes in the survey data set are valid. This requires additional exploration.
 ```
 
 ```{r}
-zip_detect <- postmastr::pm_postal_detect(postmastr_zip) %>% 
+zip_detect <- postmastr::pm_postal_detect(postmastr_zip_prep) %>% 
   dplyr::filter(pm.hasZip == FALSE)
 ```
 ```{epoxy}
@@ -40,15 +42,315 @@ survey_addr_zipcodes <- survey_recode_df %>%
   dplyr::select(EIN, Addr_ZIP) %>% 
   dplyr::filter(! Addr_ZIP %in% c(NA, "-99"))
 
-postmastr_zip <- postmastr::pm_identify(survey_addr_zipcodes, var = "Addr_ZIP")
-postmastr_zip <- postmastr::pm_prep(postmastr_zip, var = "Addr_ZIP", type = "zip")
+postmastr_zip_id <- postmastr::pm_identify(survey_addr_zipcodes, var = "Addr_ZIP")
+postmastr_zip_prep <- postmastr::pm_prep(postmastr_zip_id, var = "Addr_ZIP", type = "zip")
 ```
 ```{epoxy}
-Our postmastr object now returns {postmastr::pm_postal_all(postmastr_zip)} when asked if all ZIP codes in the survey data set are valid.
+Our postmastr object now returns {postmastr::pm_postal_all(postmastr_zip_prep)} when asked if all ZIP codes in the survey data set are valid.
 ```
-We can now parse and process all postal codes.
+
+#### Parsing Zip Codes
+
+We can now parse and process all postal codes. After parsing, we left join our results with the original dataset to keep EINs.
 
 ```{r}
-postmastr_zip <- postmastr::pm_postal_parse(postmastr_zip)
+postmastr_zip_parsed <- postmastr::pm_postal_parse(postmastr_zip_prep)
+
+zip_parsed <- postmastr_zip_id %>% 
+  tidylog::left_join(postmastr_zip_parsed) %>% 
+  dplyr::select(EIN, pm.zip, pm.zip4)
 ```
 
+### City and State
+
+#### Processing Data
+
+```{r}
+statedict <- postmastr::pm_dictionary(type = "state")
+
+survey_addr_citystate <- survey_recode_df %>% 
+  dplyr::select(EIN, Addr_CityState) %>% 
+  dplyr::filter(! Addr_CityState %in% c(NA, "-99")) %>% 
+  dplyr::mutate(Addr_CityState = gsub("\\.", "", Addr_CityState),
+                Addr_CityState = gsub("Falls ChurchVA 22042", "Falls Church, VA", Addr_CityState),
+                Addr_CityState = gsub("Sonoma cA", "Sonoma, CA", Addr_CityState))
+
+postmastr_citystate_id <- postmastr::pm_identify(survey_addr_citystate, var = "Addr_CityState")
+postmastr_citystate_prep <- postmastr::pm_prep(postmastr_citystate_id, var = "Addr_CityState", type = "state")
+```
+
+```{epoxy}
+Our postmastr object now returns {postmastr::pm_state_all(postmastr_citystate_prep)} when asked if all states in the Addr_CityState column are valid.
+```
+
+We next examine the rows without a valid state.
+
+```{r}
+pm_state_none(postmastr_citystate_prep)
+```
+
+This data set contains some title case state abbreviations that are undetected.
+We can append them to our state dictionary. We can then check the unmatched variables to double-check if any states were missed.
+
+```{r}
+states_append <- postmastr::pm_append(
+  type = "state",
+  input = c(
+    "Fl",
+    "North Caroling",
+    "Tx",
+    "Ca",
+    "Falls ChurchVA 22042",
+    "GA 30014",
+    "NV.",
+    "Ky",
+    "Ma",
+    "CO.",
+    "OaklandCA",
+    "Mi",
+    "cA",
+    "Ny"
+  ),
+  output = c(
+    "FL",
+    "NC",
+    "TX",
+    "CA",
+    "VA",
+    "GA",
+    "NV",
+    "KY",
+    "MA",
+    "CO",
+    "CA",
+    "MI",
+    "CA",
+    "NY"
+  ),
+  locale = "us"
+)
+
+statedict <- postmastr::pm_dictionary(type = "state", append = states_append)
+
+pm_state_none(postmastr_citystate_prep, dictionary = statedict)
+```
+
+#### Parsing State Data
+
+Once processing is complete, we can parse States from the Addr_CityState column.
+
+```{r}
+postmastr_state_parsed <- postmastr::pm_state_parse(postmastr_citystate_prep,
+                                                    dictionary = statedict)
+postmastr_state_parsed
+```
+
+#### Processing City Data
+
+We repeat the same process for city data. We include a filter for the states
+identified after parsing with Postmastr.
+
+```{r}
+states <- unique(postmastr_state_parsed$pm.state)[!is.na(unique(postmastr_state_parsed$pm.state))]
+
+citydict <- postmastr::pm_dictionary(type = "city", filter = states)
+
+pm_city_none(postmastr_state_parsed, dictionary = citydict)
+```
+
+After processing state names, our postmastr object contains sum unmatched cities. We create an additional city-level dictionary to append to our current city-level dictionary. We coerce valid city names to NA values to let postmastr know that these inputs are valid.
+
+```{r}
+city_append <- postmastr::pm_append(
+  type = "city",
+  input = c(
+    "Indianapolis",
+    "Selinsgrove",
+    "Birmingham.",
+    "Westbrookville",
+    "Honolulu",
+    "Dillsburg",
+    "Carrolltown",
+    "Chestnut Hill",
+    "Newfoundland",
+    "Mercersburg",
+    "Moultonborough",
+    "Hanibal",
+    "OKC",
+    "Saint Clair Shores",
+    "Mt Pleasant",
+    "Boise",
+    "idyllwild",
+    "Weehawken",
+    "Appleon",
+    "Pacoima",
+    "SEattle",
+    "West Palm beach",
+    "Chelmsford",
+    "Metuchen",
+    "Marietta.",
+    "Sewickley",
+    "Falls ChurchVA",
+    "Trout Run",
+    "JUD",
+    "OLEMA",
+    "Danielson",
+    "North Las Vegas",
+    "Braintree",
+    "Lititz",
+    "benesnville",
+    "OaklandCA",
+    "Phoenixville",
+    "Denver",
+    "Van Nuys",
+    "Jacvksonville",
+    "Bronx",
+    "Pratts",
+    "Baltimore",
+    "Sonoma",
+    "Williston Pk",
+    "Wernersville",
+    "St Louis",
+    "La Canada Flintridge",
+    "Falls Church"
+  ),
+  output = c(
+    NA,
+    NA,
+    "Birmingham",
+    NA,
+    NA,
+    NA,
+    NA,
+    NA,
+    NA,
+    NA,
+    NA,
+    NA,
+    "Oklahoma City",
+    NA,
+    "Mount Pleasant",
+    NA,
+    "Idyllwild",
+    NA,
+    "Appleton",
+    NA,
+    "Seattle",
+    "West Palm Beach",
+    NA,
+    NA,
+    "Marietta",
+    "Sewickley",
+    "Falls Church",
+    NA,
+    "Jud",
+    "Olema",
+    NA,
+    "North Las Vegas",
+    NA,
+    NA,
+    "Bensenville",
+    "Oakland",
+    NA,
+    NA,
+    NA,
+    NA,
+    "The Bronx",
+    "Pratt",
+    "Baltimore",
+    NA,
+    "Williston Park",
+    NA,
+    "St. Louis",
+    NA,
+    "Falls Church"
+  )
+)
+
+citydict <-
+  postmastr::pm_dictionary(type = "city",
+                           filter = states,
+                           append = city_append)
+
+pm_city_none(postmastr_state_parsed, dictionary = citydict)
+```
+```{r}
+postmastr_citystate_parsed <- postmastr::pm_city_parse(postmastr_state_parsed, dictionary = citydict)
+
+citystate_parsed <- postmastr_citystate_parsed %>% 
+  tidylog::left_join(postmastr_citystate_id) %>% 
+  dplyr::select(EIN, pm.city, pm.state)
+```
+
+### Street Names
+
+#### Prepare Data
+
+The final column to process is Addr_StreetLocation which contains street names.
+
+```{r}
+survey_addr_street <- survey_recode_df %>% 
+  dplyr::select(EIN, Addr_StreetLocation) %>% 
+  dplyr::filter(! Addr_StreetLocation %in% c("-99", NA))
+
+postmastr_street_id <- postmastr::pm_identify(survey_addr_street, var = "Addr_StreetLocation")
+postmastr_street_prep <- postmastr::pm_prep(postmastr_street_id, var = "Addr_StreetLocation", type = "street")
+
+postmastr_street_prep
+```
+
+#### Parse House Numbers
+
+```{r}
+postmastr_house_parsed <- postmastr::pm_house_parse(postmastr_street_prep)
+postmastr_house_parsed
+```
+
+#### Parse Street Prefix and Suffix
+
+To parse street prefixes and suffixes requires 2 dictionaries. 1 with directions and 1 with conversions for suffixes like "street" or "boulevard".
+
+```{r}
+dirs <- pm_dictionary(type = "directional", locale = "us")
+postmastr_streetdir_parsed <- postmastr::pm_streetDir_parse(postmastr_house_parsed, dictionary = dirs)
+postmastr_streetSuf_parsed <- postmastr::pm_streetSuf_parse(postmastr_streetdir_parsed)
+```
+
+#### Parse Street Names
+
+```{r}
+postmaster_street_parsed <- postmastr::pm_street_parse(postmastr_streetSuf_parsed,
+                                                       ordinal = TRUE,
+                                                       drop = TRUE)
+postmaster_street_parsed
+```
+
+#### Combining Street Components Back
+
+```{r}
+postmastr_street_full_parsed <- postmastr::pm_replace(postmaster_street_parsed, 
+                                                      source = postmastr_street_id)
+endQ <- rlang::quo(!! rlang::sym("pm.sufDir"))
+
+postmastr_street_full_parsed <- postmastr::pm_rebuild(postmastr_street_full_parsed, 
+                                                      output = "short", 
+                                                      keep_ids = TRUE)
+
+street_parsed <- postmastr_street_full_parsed %>% 
+  tidylog::left_join(postmastr_street_id) %>% 
+  dplyr::select(EIN, pm.address)
+```
+
+### Combining All Addresses Together
+
+```{r}
+postmastr_faddress_parsed <- street_parsed %>% 
+  tidylog::left_join(citystate_parsed) %>% 
+  tidylog::left_join(zip_parsed) %>% 
+  tidyr::unite(f_address, pm.address, pm.city, pm.state, pm.zip, pm.zip4, na.rm = TRUE, sep = ",") %>% 
+  dplyr::mutate(EIN = as.character(EIN))
+
+head(postmastr_faddress_parsed, 20)
+```
+
+The f_address column now has parsed addresses that can be formatted using a geocoder of choice. 
