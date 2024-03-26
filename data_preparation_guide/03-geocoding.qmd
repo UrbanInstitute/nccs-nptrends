@@ -1,6 +1,7 @@
 ---
 title: "Geocoding Addresses"
 ---
+
 In this section, we'll parse the addresses from the survey using the [postmastr](https://slu-opengis.github.io/postmastr/) package for geocoding.
 
 ```{r, include=FALSE, echo=FALSE}
@@ -21,10 +22,7 @@ survey_recode_df <- survey_recode_df %>%
 
 ## Process Adress Columns using Postmastr
 
-Our survey data set has 3 columns with address information:
-1. Addr_ZIP: Postal Codes
-2. Addr_CityState : City and State
-3. Addr_StreetLocation: Street Names
+Our survey data set has 3 columns with address information: 1. Addr_ZIP: Postal Codes 2. Addr_CityState : City and State 3. Addr_StreetLocation: Street Names
 
 ### Postal Codes
 
@@ -48,9 +46,11 @@ Our postmastr object returns {postmastr::pm_postal_all(postmastr_zip_prep)} when
 zip_detect <- postmastr::pm_postal_detect(postmastr_zip_prep) %>% 
   dplyr::filter(pm.hasZip == FALSE)
 ```
+
 ```{epoxy}
 pm_postal_detect() reveals that the survey responses without a valid ZIP code have the following values: {zip_detect$pm.address}, which indicate missingness. We can thus remove them from our postal code data set.
 ```
+
 ```{r}
 survey_addr_zipcodes <- survey_recode_df %>% 
   dplyr::select(row.id, Addr_ZIP) %>% 
@@ -59,6 +59,7 @@ survey_addr_zipcodes <- survey_recode_df %>%
 postmastr_zip_id <- postmastr::pm_identify(survey_addr_zipcodes, var = "Addr_ZIP")
 postmastr_zip_prep <- postmastr::pm_prep(postmastr_zip_id, var = "Addr_ZIP", type = "zip")
 ```
+
 ```{epoxy}
 Our postmastr object now returns {postmastr::pm_postal_all(postmastr_zip_prep)} when asked if all ZIP codes in the survey data set are valid.
 ```
@@ -77,7 +78,7 @@ zip_parsed <- postmastr_zip_id %>%
 
 ### City and State
 
-We can now repeat the process for Addr_CityState. 
+We can now repeat the process for Addr_CityState.
 
 #### Processing Data
 
@@ -107,8 +108,7 @@ We next examine the rows without a valid state.
 pm_state_none(postmastr_citystate_prep)
 ```
 
-This data set contains some title case state abbreviations that are undetected.
-We can append them to our state dictionary. We can then check the unmatched variables to double-check if any states were missed.
+This data set contains some title case state abbreviations that are undetected. We can append them to our state dictionary. We can then check the unmatched variables to double-check if any states were missed.
 
 ```{r}
 states_append <- postmastr::pm_append(
@@ -165,8 +165,7 @@ postmastr_state_parsed
 
 #### Processing City Data
 
-We repeat the same process for city data. We include a filter for the states
-identified after parsing with Postmastr.
+We repeat the same process for city data. We include a filter for the states identified after parsing with Postmastr.
 
 ```{r}
 states <- unique(postmastr_state_parsed$pm.state)[!is.na(unique(postmastr_state_parsed$pm.state))]
@@ -390,14 +389,11 @@ survey_geoproc_df <- survey_recode_df %>%
 
 ## Geocoding
 
-This single column can now be passed into a geocoder of choice. In our case
-we use the Urban Institute's internal geocoder. The outputs are presented
-below.
+This single column can now be passed into a geocoder of choice. In our case we use the Urban Institute's internal geocoder. The outputs are presented below.
 
 ```{r, include=FALSE, echo=FALSE}
 setwd("Y:/CNP/Generosity Commission/")
 readr::write_csv(postmastr_faddress_parsed, "DATA-PREP/02-data-intermediate/02-wave-two/wave-02-postmastr-addresses.csv")
 ```
-
 
 We merge these results with our original survey data set. The geographic metadata can now be used to append additional census information in the next chapter.
