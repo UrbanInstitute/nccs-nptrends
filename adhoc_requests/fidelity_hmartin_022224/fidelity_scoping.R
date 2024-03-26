@@ -1,13 +1,60 @@
 rm(list = ls())
 
-source("C:/Users/tpoongundranar/Documents/Urban/NCCS/nccs-nptrends/adhoc_requests/fidelity_hmartin_022224/fidelity_scoping_helpers.R")
-setwd("Y:/CNP/Generosity Commission/")
-
+# Load in packages
 library(readr)
 library(dplyr)
 library(rio)
+library(readxl)
 
-# Global Variables
+# Load in crosswalk
+xwalk_df <- readxl::read_xlsx(
+  "C:/Users/tpoongundranar/Documents/Urban/NCCS/nccs-nptrends/dd-nptrends-wave-02.xlsx",
+  sheet = 3
+)
+
+# Load in helper functions
+source("C:/Users/tpoongundranar/Documents/Urban/NCCS/nccs-nptrends/adhoc_requests/fidelity_hmartin_022224/fidelity_scoping_helpers.R")
+
+# Load in datasets
+setwd("Y:/CNP/Generosity Commission/")
+year1_raw <- readr::read_csv("Qualtrics Survey/Intermediate/gc_survey_27apr_21.csv")
+year2_raw <- readr::read_csv("DATA-PREP/02-data-intermediate/02-wave-two/wave-02-data-intermediate-recoded.csv")
+year3_raw <- readr::read_csv("Qualtrics Survey/Year 3/Nonprofit Trends and Impacts 2023 - Complete.csv")
+year3_raw <- year3_raw[c(-1, -2), ]
+
+# Select relevant columns and convert with crosswalk
+
+## Year 1 Survey Data
+year1_xwalk <- xwalk_df %>% 
+  dplyr::select(vname, vname_y1) %>% 
+  tidyr::drop_na()
+year1_cols <- c("state", "EIN", year1_xwalk$vname_y1)
+year1_subset <- year1_raw %>% 
+  dplyr::select(tidyselect::all_of(year1_cols)) %>% 
+  dplyr::rename_with(~ year1_xwalk$vname, .cols = year1_xwalk$vname_y1) %>% 
+  dplyr::mutate(EIN = as.character(EIN))
+
+## Year 2 Survey Data
+year2_xwalk <- xwalk_df %>% 
+  dplyr::select(vname, vname_y2) %>% 
+  tidyr::drop_na()
+year2_cols <- c("EIN", 
+                year2_xwalk$vname,
+                "CEOrace_Bi",
+                "BChairrace_Bi")
+year2_subset <- year2_raw %>% 
+  dplyr::select(tidyselect::all_of(year2_cols)) %>% 
+  dplyr::mutate(EIN = as.character(EIN))
+
+## Year 3 Survey Data
+year3_xwalk <- xwalk_df %>% 
+  dplyr::select(vname, vname_y3) %>% 
+  tidyr::drop_na()
+year3_cols <- c("ExternalReference", year3_xwalk$vname_y3)
+year3_subset <- year3_raw %>% 
+  dplyr::select(tidyselect::all_of(year3_cols)) %>% 
+  dplyr::rename("EIN" = "ExternalReference") %>% 
+  dplyr::rename_with(~ year3_xwalk$vname, .cols = year3_xwalk$vname_y3)
 
 # Target states in Mountain West and South Central
 SCMW_STATES_ABBR <- scan(
@@ -64,65 +111,122 @@ SC_STATES_ABBR <- scan(
   strip.white=TRUE
 ) |> usdata::state2abbr()
 
-VARS_YEAR1_TARGET <- scan(
-  text = "DonImportance VolImportance FRchanges_1 FRchanges_2 FRchanges_3 FRchanges_2_1 FRchanges_2_2
-FRchanges_2_3 Funding2_1_5_1 CEOrace BCrace",
-  what = "",
-  sep = "",
-  quiet=TRUE,
-  strip.white=TRUE
-)
+# Filter out EINs not in state and left join EINs
+scmw_year1 <- year1_subset %>% 
+  dplyr::filter(state %in% SCMW_STATES_ABBR)
 
-VARS_YEAR2_TARGET <- scan(
-  text = "DonImportance
-VolImportance
-FRchanges_1
-FRchanges_2
-FRchanges_3
-FRchanges_4
-FRchanges_5
-FRchanges_6
-FRchanges_7
-FRchanges_8
-FRchanges_9
-FRchanges_1_1
-FRchanges_1_2
-FRchanges_1_3
-FRchanges_1_6
-FRchanges_1_7
-Funding1_1_9
-Funding1_2_9
-CEOrace_1
-CEOrace_2
-CEOrace_3
-CEOrace_4
-CEOrace_5
-CEOrace_6
-CEOrace_7
-BCrace_1
-BCrace_2
-BCrace_3
-BCrace_4
-BCrace_5
-BCrace_6
-BCrace_7
-",
-  what = "",
-  sep = "",
-  quiet=TRUE,
-  strip.white=TRUE
-)
+scmw_df <- scmw_year1 %>% 
+  dplyr::select(EIN, state)
+
+scmw_eins <- scmw_df$EIN
+
+scmw_year2 <- year2_subset %>% 
+  dplyr::filter(EIN %in% scmw_year1$EIN) %>% 
+  tidylog::left_join(scmw_df, by = "EIN") %>% 
+  dplyr::mutate(CEOrace = dplyr::select(., tidyr::contains("CEOrace")) %>%  rowSums(na.rm = TRUE),
+                CEOgender = dplyr::select(., tidyr::contains("CEOgender")) %>%  rowSums(na.rm = TRUE),
+                BChairrace = dplyr::select(., tidyr::contains("BChairrace")) %>%  rowSums(na.rm = TRUE),
+                BChairgender = dplyr::select(., tidyr::contains("BChairgender")) %>%  rowSums(na.rm = TRUE))
 
 
-# Load in Survey data
+scmw_year3 <- year3_subset %>% 
+  dplyr::filter(EIN %in% scmw_year1$EIN) %>% 
+  tidylog::left_join(scmw_df, by = "EIN")
 
-year1_raw <- readr::read_csv("Qualtrics Survey/Intermediate/gc_survey_27apr_21.csv")
-year2_raw <- rio::import("Qualtrics Survey/Intermediate/nptrends_year2_13jan23_with_y2_weight.sav")
-year3_raw <- readr::read_csv("Qualtrics Survey/Year 3/Nonprofit Trends and Impacts 2023 - Complete.csv")
-year3_raw <- year3_raw[c(-1, -2), ]
+# Get response rates
 
-lat <- year3_raw$LocationLatitude
-lon <- year3_raw$LocationLongitude
+## Year 1 Response Rates
+year1_responses <- purrr::map(.x = year1_xwalk$vname,
+           .f = function(v){
+             if (grepl("DAF", v)){
+               missing_vals <- c(NA)
+             } else {
+               missing_vals <- c(-99, NA)
+             }
+             scmw_year2 %>% 
+               dplyr::select(state, v) %>% 
+               dplyr::filter(! .data[[v]] %in% missing_vals) %>% 
+               dplyr::group_by(state) %>% 
+               dplyr::summarise(count = n()) %>% 
+               dplyr::mutate(qn = v)
+           }) |> 
+  purrr::list_rbind() 
+
+readr::write_csv(year1_responses, "year1_response.rates_state.csv")
+
+## Year 2 Response Rates
+
+### Create new column for race
+year2_vars <- c(year2_xwalk$vname[1:38])
+year2_vars <- year2_vars[! grepl("race|gender", year2_vars)]
+year2_vars <- c(year2_vars, "CEOrace", "CEOgender", "BChairrace", "BChairgender")
+
+year2_responses <- purrr::map(.x = year2_vars,
+                              .f = function(v){
+                                if (grepl("DAF", v)){
+                                  missing_vals <- c(NA, 97, 98, 99)
+                                } else {
+                                  missing_vals <- c(-99, NA, 97, 98, 99)
+                                }
+                                scmw_year2 %>% 
+                                  dplyr::select(state, v) %>% 
+                                  dplyr::filter(! .data[[v]] %in% missing_vals) %>% 
+                                  dplyr::group_by(state) %>% 
+                                  dplyr::summarise(count = n()) %>% 
+                                  dplyr::mutate(qn = v)
+                              }) |> 
+  purrr::list_rbind()
+
+readr::write_csv(year2_responses, "year2_response.rates_state.csv")
+
+## Year 3 Response Rates
+year3_responses <- purrr::map(.x = year3_xwalk$vname,
+                              .f = function(v){
+                                if (grepl("DAF", v)){
+                                  missing_vals <- c(NA)
+                                } else {
+                                  missing_vals <- c(-99, NA)
+                                }
+                                scmw_year3 %>% 
+                                  dplyr::select(state, v) %>% 
+                                  dplyr::filter(! .data[[v]] %in% missing_vals) %>% 
+                                  dplyr::group_by(state) %>% 
+                                  dplyr::summarise(count = n()) %>% 
+                                  dplyr::mutate(qn = v)
+                              }) |> 
+  purrr::list_rbind() 
+
+readr::write_csv(year3_responses, "year3_response.rates_state.csv")
+
+# Augment year 3 responses with year 1 variables
+
+## Find EINs of respondents where CEO race and gender unchanged
+no_ceo_chng_ein <- year3_subset %>% 
+  dplyr::filter(
+    ! (LeadershipChng_HireCEO == 1 | LeadershipChng_IntrmCEO == 1),
+    EIN %in% scmw_eins
+  ) %>% 
+  dplyr::pull("EIN")
+
+no_bchair_chng_ein <- year3_subset %>% 
+  dplyr::filter(
+    LeadershipChng_ChngBC != 1,
+    EIN %in% scmw_eins
+  ) %>% 
+  dplyr::pull("EIN")
+
+scmw_year1 %>% 
+  dplyr::select(EIN, BChairgender, state) %>% 
+  dplyr::filter(EIN %in% no_bchair_chng_ein) %>% 
+  dplyr::group_by(state) %>% 
+  dplyr::summarise(count = n())
+
+## Pull and wrangle year2 responses with CEO race and gender
+race_gender_cols <- year2_cols[grepl("race|gender", year2_cols)]
+
+year2_CEOchng <- year2_subset %>% 
+  dplyr::select(EIN, tidyselect::all_of(race_gender_cols)) %>% 
+  tidyr::pivot_longer(!EIN, names_to = "")
 
 census_api <- function(lat, lon){
   
