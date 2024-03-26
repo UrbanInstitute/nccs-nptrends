@@ -952,16 +952,109 @@ survey_recode_df <- create_survey_item(
 )
 ```
 
+### Create single Race/Gender column
+
+While our race and gender columns are individual binary columns, this is not the case for year 1 and 3 results. Both those years contain single columns for race and gender variables for CEOs and Board Chairs respectively. For easier comparability, we create a new variable aggregating race and gender values for all our individual binary columns.
+
+#### Aggregated Race Variable
+
+| Original Value | Description | Recode Label | Recode Value | Missing ? |
+|---|---|---|---|---|
+|1|Asian/Pacific Islander|AAPI|1|No|
+|1|Black/African American|Black|2|No|
+|1|Latinx/Hispanic|Hisp|3|No|
+|1|Native American/American Indian|NativeAm|4|No|
+|1|White|White|5|No|
+|1|Bi/Multi-racial|Bi|6|No|
+|1|Other (please specify)|Oth|7|No|
+|0|Checkbox Unchecked|NA|Yes|
+
+```{r}
+# Create New Race variables
+survey_recode_df <- survey_recode_df %>%
+  dplyr::mutate(
+    CEOrace = dplyr::case_when(
+      CEOrace_AAPI == 1 ~ 1,
+      CEOrace_Black == 1 ~ 2,
+      CEOrace_Hisp == 1 ~ 3,
+      CEOrace_NativeAm == 1 ~ 4,
+      CEOrace_White == 1 ~ 5,
+      CEOrace_Bi == 1 ~ 6,
+      CEOrace_Oth == 1 ~ 7,
+      .default = NA
+    ),
+    BChairrace = dplyr::case_when(
+      BChairrace_AAPI == 1 ~ 1,
+      BChairrace_Black == 1 ~ 2,
+      BChairrace_Hisp == 1 ~ 3,
+      BChairrace_NativeAm == 1 ~ 4,
+      BChairrace_White == 1 ~ 5,
+      BChairrace_Bi == 1 ~ 6,
+      BChairrace_Oth == 1 ~ 7,
+      .default = NA
+  ))
+
+# Create Survey Item
+survey_recode_df <- create_survey_item(
+  survey_recode_df, 
+  c("CEOrace", "BChairrace"), 
+  recode_vals = c(1, 2, 3, 4, 5, 6, 7), 
+  recode_labs = c("AAPI", "Black", "Hisp", "NativeAm", "White", "Bi", "Oth"), 
+  missing_vals = c()
+)
+```
+
+#### Aggregated Gender Variable
+| Original Value | Description | Recode Label | Recode Value | Missing ? |
+|1|Man|Man|1|No|
+|1|Woman|Woman|2|No|
+|1|Trans|Trans|3|No|
+|1|Gender non-conforming/Non-Binary|NB|4|No|
+|1|Other (please specify)|Oth|5|No|
+|0|Checkbox Unchecked|NA|Yes|
+
+```{r}
+# Create New Race variables
+survey_recode_df <- survey_recode_df %>%
+  dplyr::mutate(
+    CEOgender = dplyr::case_when(
+      CEOgender_Man == 1 ~ 1,
+      CEOgender_Woman == 1 ~ 2,
+      CEOgender_Trans == 1 ~ 3,
+      CEOgender_NB == 1 ~ 4,
+      CEOgender_Oth == 1 ~ 5,
+      .default = NA
+    ),
+    BChairgender = dplyr::case_when(
+      BChairgender_Man == 1 ~ 1,
+      BChairgender_Woman == 1 ~ 2,
+      BChairgender_Trans == 1 ~ 3,
+      BChairgender_NB == 1 ~ 4,
+      BChairgender_Oth == 1 ~ 5,
+      .default = NA
+  ))
+
+# Create Survey Item
+survey_recode_df <- create_survey_item(
+  survey_recode_df, 
+  c("CEOgender", "BChairgender"), 
+  recode_vals = c(1, 2, 3, 4, 5), 
+  recode_labs = c("Man", "Woman", "Trans", "NB", "Oth"), 
+  missing_vals = c()
+)
+```
+
+
 ### Validate Results
 
 We can see that the number of valid responses for race and gender questions concerning the CEO and Board Chair have increased.
 
 ```{r}
-race_qns <- c(race_ceo_qns_bool, race_bchair_qns_bool)
+race_gender_qns <- c(race_gender_qns_bool, "CEOrace", "CEOgender", "BChairrace","BChairgender")
 
 codebook(
   survey_recode_df %>% 
-    dplyr::select(tidyselect::all_of(race_qns))
+    dplyr::select(tidyselect::all_of(race_gender_qns))
 )
 ```
 
