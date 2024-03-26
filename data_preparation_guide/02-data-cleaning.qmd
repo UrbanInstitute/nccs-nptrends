@@ -908,7 +908,7 @@ for (gender_var in gender_bchair_qns_bool){
   survey_recode_df <- survey_recode_df %>% 
   dplyr::mutate(
     !! gender_var := ifelse(
-    EIN %in% year1_BCchng$EIN & gender_var %in% names(year1_CEOchng), 
+    EIN %in% year1_BCchng$EIN & gender_var %in% names(year1_BCchng), 
     year1_BCchng[[gender_var]], 
     .data[[gender_var]]
     )
