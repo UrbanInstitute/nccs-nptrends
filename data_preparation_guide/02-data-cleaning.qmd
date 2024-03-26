@@ -876,6 +876,19 @@ for (race_var in race_ceo_qns_bool){
   )
 }
 
+gender_ceo_qns_bool <- race_gender_qns_bool[grepl("CEOgender", race_gender_qns_bool)]
+
+for (gender_var in gender_ceo_qns_bool){
+  survey_recode_df <- survey_recode_df %>% 
+  dplyr::mutate(
+    !! gender_var := ifelse(
+    EIN %in% year1_CEOchng$EIN & gender_var %in% names(year1_CEOchng), 
+    year1_CEOchng[[gender_var]], 
+    .data[[gender_var]]
+    )
+  )
+}
+
 race_bchair_qns_bool <- c(race_bchair_qns_bool, "BChairrace_Bi")
 
 for (race_var in race_bchair_qns_bool){
@@ -885,6 +898,19 @@ for (race_var in race_bchair_qns_bool){
     EIN %in% year1_BCchng$EIN, 
     year1_BCchng[[race_var]], 
     .data[[race_var]]
+    )
+  )
+}
+
+gender_bchair_qns_bool <- race_gender_qns_bool[grepl("BChairgender", race_gender_qns_bool)]
+
+for (gender_var in gender_bchair_qns_bool){
+  survey_recode_df <- survey_recode_df %>% 
+  dplyr::mutate(
+    !! gender_var := ifelse(
+    EIN %in% year1_BCchng$EIN & gender_var %in% names(year1_CEOchng), 
+    year1_BCchng[[gender_var]], 
+    .data[[gender_var]]
     )
   )
 }
@@ -903,7 +929,23 @@ survey_recode_df <- create_survey_item(
 
 survey_recode_df <- create_survey_item(
   survey_recode_df, 
+  gender_ceo_qns_bool, 
+  recode_vals = c(0, 1, 99), 
+  recode_labs = c("No", "Yes", "Incomplete"), 
+  missing_vals = c(99)
+)
+
+survey_recode_df <- create_survey_item(
+  survey_recode_df, 
   race_bchair_qns_bool, 
+  recode_vals = c(0, 1, 99), 
+  recode_labs = c("No", "Yes", "Incomplete"), 
+  missing_vals = c(99)
+)
+
+survey_recode_df <- create_survey_item(
+  survey_recode_df, 
+  gender_bchair_qns_bool, 
   recode_vals = c(0, 1, 99), 
   recode_labs = c("No", "Yes", "Incomplete"), 
   missing_vals = c(99)
@@ -1022,4 +1064,3 @@ setwd("Y:/CNP/Generosity Commission/")
 readr::write_csv(survey_recode_df,
                  "DATA-PREP/02-data-intermediate/02-wave-two/wave-02-data-intermediate-recoded.csv")
 ```
-
