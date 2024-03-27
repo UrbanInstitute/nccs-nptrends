@@ -1,0 +1,40 @@
+---
+title: "Anonymization"
+---
+
+In this section we'll work through variables with potentially identifiable information and either exclude/anonymize them.
+
+```{r, include=FALSE, echo=FALSE}
+library(dplyr)
+library(readr)
+
+setwd("Y:/CNP/Generosity Commission/")
+survey_recode_df <- readr::read_csv("DATA-PREP/02-data-intermediate/02-wave-two/wave-02-data-intermediate-recoded.csv")
+```
+
+# Anonymizing Continuous Variables
+
+Variables with numeric or integer inputs can be identifiable using publicly available 990 data. They are presented in the table below.
+
+|Variable|Description|
+|:---:|:---:|
+|Reserves_Est|Dollar Value of Financial Reserves|
+|CARES_Rcv_Est|Dollar Value of CARES Funding|
+|Finance_Rev_GovtMain|Dollar Value of Revenue from Government Agencies|
+|Finance_Rev_Prtcpnt|Dollar Value of Revenue from Self-Paying Participants|
+|Finance_Rev_Govt3rdParty|Dollar Value of Revenue from Government as Third-Party Payer|
+|Finance_Rev_IndvDon|Dollar Value of Revenue from Individual Donations|
+|Finance_Rev_Gift|Dollar Value of Revenue from In-Kind Gifts|
+|Finance_Rev_Grnt|Dollar Value of Revenue from Private Foundations/Corporate Grants|
+|Finance_Rev_Spnsr|Dollar Value of Revenue from Corporate Sponsorships|
+|Finance_Rev_Oth||Dollar Value of Revenue from Other Sources|
+
+These can be anonymized by the creation of synthetic data that mimics the underlying distribution of these variables in the 
+
+```{r}
+
+```
+
+# Anonymizing Discrete Variables
+
+Our variables
