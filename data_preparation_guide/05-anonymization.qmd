@@ -7,12 +7,15 @@ In this section we'll work through variables with potentially identifiable infor
 ```{r, include=FALSE, echo=FALSE}
 library(dplyr)
 library(readr)
+library(sdcMicro)
 
 setwd("Y:/CNP/Generosity Commission/")
 survey_recode_df <- readr::read_csv("DATA-PREP/02-data-intermediate/02-wave-two/wave-02-data-intermediate-recoded.csv")
 ```
 
-# Anonymizing Continuous Variables
+# Identifying Variables for Anonymization
+
+## Continuous Variables
 
 Variables with numeric or integer inputs can be identifiable using publicly available 990 data. They are presented in the table below.
 
@@ -29,12 +32,48 @@ Variables with numeric or integer inputs can be identifiable using publicly avai
 |Finance_Rev_Spnsr|Dollar Value of Revenue from Corporate Sponsorships|
 |Finance_Rev_Oth||Dollar Value of Revenue from Other Sources|
 
-These can be anonymized by the creation of synthetic data that mimics the underlying distribution of these variables in the 
+## Categorical Variables
+
+Categorical variables on their own may not be identifiable. However, they can be combined with other variables to identify survey respondents. This possibility of composite identification is called the ["Mosaic Effect"](https://www.govinfo.gov/content/pkg/CHRG-111shrg56893/pdf/CHRG-111shrg56893.pdf).
+
+For example, the gender/racial identities of CEOs can be used in conjunction with geographical data to identify respondents who belong to minority groups. Thus, there is a need to anonymize categorical variables that contain demographic information linked to specific survey respondents and their organizations.
+
+A table with these variables is provided below:
+
+|Variable(s)|Description|
+|:---:|:---:|
+|CEOrace_{Race} Variables|Race of Chief Executive|
+|CEOgender_{Gender} Variables|Gender of Chief Executive|
+|BChairrace_{Race} Variables|Race of Board Chair|
+|BChairgender_{Gender} Variables|Gender of Board Chair|
+|State|State for Respondent|
+
+# Anonymizing Variables with SDCMicro
+
+To anonymize these variables, we use the sdcMicro R package, developed by HSN, PARIS21 (OECD), Statistics Austria, The Vienna University of Technology, and the World Bank for Statistical Disclosure Control (SDC).
+
+## Selecting Variables
+
+sdcMicro creates an sdMicro object based on the variables needed for anyonmization process. These variables are supplied as function arguments. They are presented in the table below.
+
+|Argument|Description|
+|:---:|:---:|
+|keyVars|Categorical Variables for Anonymization|
+|CEOgender_{Gender} Variables|Gender of Chief Executive|
+|BChairrace_{Race} Variables|Race of Board Chair|
+|BChairgender_{Gender} Variables|Gender of Board Chair|
+|State|State for Respondent|
+
+
+
+```{r}
+# Categorical Variables
+```
+
+
+## Creating a SDCMicro Object
 
 ```{r}
 
 ```
 
-# Anonymizing Discrete Variables
-
-Our variables
