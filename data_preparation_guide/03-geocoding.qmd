@@ -424,6 +424,7 @@ We do not need all geographic information returned from the geocoder. The variab
 |Region|State name|
 |RegionAbbr|State abbreviation|
 |Subregion|County name|
+|City|City name|
 
 We can also pre-emptively drop geographic variables with personally identifiable information such as the postalcode and street address.
 
@@ -433,7 +434,8 @@ geocode_cols <- c(
   "row.id",
   "Region",
   "RegionAbbr",
-  "Subregion"
+  "Subregion",
+  "City"
 )
 
 # Subset the geocoded data set
