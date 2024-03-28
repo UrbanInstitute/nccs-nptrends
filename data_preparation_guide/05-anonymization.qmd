@@ -11,6 +11,7 @@ library(sdcMicro)
 
 setwd("Y:/CNP/Generosity Commission/")
 survey_recode_df <- readr::read_csv("DATA-PREP/02-data-intermediate/02-wave-two/wave-02-data-intermediate-recoded.csv")
+anon_df <- survey_recode_df %>% dplyr::select("EIN", "Reserves_Est")
 ```
 
 # Identifying Variables for Anonymization
