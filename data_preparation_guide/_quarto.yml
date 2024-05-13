@@ -12,6 +12,8 @@ book:
     - references.qmd
     - 02-data-cleaning.qmd
     - 03-geocoding.qmd
+    - 04-metadata.qmd
+    - 05-anonymization.qmd
 
 bibliography: references.bib
 
