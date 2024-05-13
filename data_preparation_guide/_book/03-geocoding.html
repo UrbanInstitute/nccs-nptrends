@@ -249,36 +249,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>postmastr_zip_prep <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_prep</span>(postmastr_zip_id, <span class="at">var =</span> <span class="st">"Addr_ZIP"</span>, <span class="at">type =</span> <span class="st">"zip"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<pre class="epoxy cell-code"><code>Our postmastr object returns {postmastr::pm_postal_all(postmastr_zip_prep)} when asked if all ZIP codes in the survey data set are valid. This requires additional exploration.</code></pre>
+<p>Our postmastr object returns FALSE when asked if all ZIP codes in the survey data set are valid. This requires additional exploration.</p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>zip_detect <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_postal_detect</span>(postmastr_zip_prep) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(pm.hasZip <span class="sc">==</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>zip_detect <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_postal_detect</span>(postmastr_zip_prep) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(pm.hasZip <span class="sc">==</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<pre class="epoxy cell-code"><code>pm_postal_detect() reveals that the survey responses without a valid ZIP code have the following values: {zip_detect$pm.address}, which indicate missingness. We can thus remove them from our postal code data set.</code></pre>
+<p>pm_postal_detect() reveals that the survey responses without a valid ZIP code have the following values: -99, which indicate missingness. We can thus remove them from our postal code data set.</p>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>survey_addr_zipcodes <span class="ot">&lt;-</span> survey_recode_df <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(row.id, Addr_ZIP) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span> Addr_ZIP <span class="sc">%in%</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">"-99"</span>))</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>postmastr_zip_id <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_identify</span>(survey_addr_zipcodes, <span class="at">var =</span> <span class="st">"Addr_ZIP"</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>postmastr_zip_prep <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_prep</span>(postmastr_zip_id, <span class="at">var =</span> <span class="st">"Addr_ZIP"</span>, <span class="at">type =</span> <span class="st">"zip"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>survey_addr_zipcodes <span class="ot">&lt;-</span> survey_recode_df <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(row.id, Addr_ZIP) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span> Addr_ZIP <span class="sc">%in%</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="st">"-99"</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>postmastr_zip_id <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_identify</span>(survey_addr_zipcodes, <span class="at">var =</span> <span class="st">"Addr_ZIP"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>postmastr_zip_prep <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_prep</span>(postmastr_zip_id, <span class="at">var =</span> <span class="st">"Addr_ZIP"</span>, <span class="at">type =</span> <span class="st">"zip"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<pre class="epoxy cell-code"><code>Our postmastr object now returns {postmastr::pm_postal_all(postmastr_zip_prep)} when asked if all ZIP codes in the survey data set are valid.</code></pre>
+<p>Our postmastr object now returns TRUE when asked if all ZIP codes in the survey data set are valid.</p>
 </div>
 </section>
 <section id="parsing-zip-codes" class="level4" data-number="4.1.1.2">
 <h4 data-number="4.1.1.2" class="anchored" data-anchor-id="parsing-zip-codes"><span class="header-section-number">4.1.1.2</span> Parsing Zip Codes</h4>
 <p>We can now parse and process all postal codes. After parsing, we left join our results with the original dataset to keep row.ids.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>postmastr_zip_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_postal_parse</span>(postmastr_zip_prep)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>zip_parsed <span class="ot">&lt;-</span> postmastr_zip_id <span class="sc">%&gt;%</span> </span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  tidylog<span class="sc">::</span><span class="fu">left_join</span>(postmastr_zip_parsed) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(row.id, pm.zip, pm.zip4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>postmastr_zip_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_postal_parse</span>(postmastr_zip_prep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There was 1 warning in `dplyr::mutate()`.
+ℹ In argument: `pm.address = ifelse(...)`.
+Caused by warning in `stri_sub()`:
+! argument is not an atomic vector; coercing</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>zip_parsed <span class="ot">&lt;-</span> postmastr_zip_id <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  tidylog<span class="sc">::</span><span class="fu">left_join</span>(postmastr_zip_parsed) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(row.id, pm.zip, pm.zip4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(pm.uid)`
+left_join: added 3 columns (pm.address, pm.zip, pm.zip4)
+&gt; rows only in x 0
+&gt; rows only in postmastr_zip_parsed ( 0)
+&gt; matched rows 760
+&gt; =====
+&gt; rows total 760</code></pre>
+</div>
 </div>
 </section>
 </section>
@@ -303,11 +317,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>postmastr_citystate_prep <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_prep</span>(postmastr_citystate_id, <span class="at">var =</span> <span class="st">"Addr_CityState"</span>, <span class="at">type =</span> <span class="st">"state"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<pre class="epoxy cell-code"><code>Our postmastr object now returns {postmastr::pm_state_all(postmastr_citystate_prep)} when asked if all states in the Addr_CityState column are valid.</code></pre>
+<p>Our postmastr object now returns FALSE when asked if all states in the Addr_CityState column are valid.</p>
 </div>
 <p>We next examine the rows without a valid state.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pm_state_none</span>(postmastr_citystate_prep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pm_state_none</span>(postmastr_citystate_prep)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 291 × 2
+   pm.uid pm.address    
+    &lt;int&gt; &lt;chr&gt;         
+ 1      1 Indianapolis  
+ 2      2 Willowbrook   
+ 3      6 Lincoln       
+ 4      8 Lodi          
+ 5     10 Largo Fl      
+ 6     11 Jeffersonville
+ 7     12 Atlanta       
+ 8     14 Norfolk       
+ 9     15 OSSINING      
+10     20 Miami         
+# ℹ 281 more rows</code></pre>
+</div>
 </div>
 <p>This data set contains some title case state abbreviations that are undetected. We can append them to our state dictionary. We can then check the unmatched variables to double-check if any states were missed.</p>
 <div class="cell">
@@ -351,149 +381,227 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>statedict <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_dictionary</span>(<span class="at">type =</span> <span class="st">"state"</span>, <span class="at">append =</span> states_append)</span>
 <span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="fu">pm_state_none</span>(postmastr_citystate_prep, <span class="at">dictionary =</span> statedict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 278 × 2
+   pm.uid pm.address    
+    &lt;int&gt; &lt;chr&gt;         
+ 1      1 Indianapolis  
+ 2      2 Willowbrook   
+ 3      6 Lincoln       
+ 4      8 Lodi          
+ 5     11 Jeffersonville
+ 6     12 Atlanta       
+ 7     14 Norfolk       
+ 8     15 OSSINING      
+ 9     20 Miami         
+10     22 Portland      
+# ℹ 268 more rows</code></pre>
+</div>
 </div>
 </section>
 <section id="parsing-state-data" class="level4" data-number="4.1.2.2">
 <h4 data-number="4.1.2.2" class="anchored" data-anchor-id="parsing-state-data"><span class="header-section-number">4.1.2.2</span> Parsing State Data</h4>
 <p>Once processing is complete, we can parse States from the Addr_CityState column.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>postmastr_state_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_state_parse</span>(postmastr_citystate_prep,</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">dictionary =</span> statedict)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>postmastr_state_parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>postmastr_state_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_state_parse</span>(postmastr_citystate_prep,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                                                    <span class="at">dictionary =</span> statedict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There was 1 warning in `dplyr::mutate()`.
+ℹ In argument: `pm.address = ifelse(...)`.
+Caused by warning in `stri_sub()`:
+! argument is not an atomic vector; coercing</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>postmastr_state_parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 642 × 3
+   pm.uid pm.address   pm.state
+    &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;   
+ 1      1 Indianapolis &lt;NA&gt;    
+ 2      2 Willowbrook  &lt;NA&gt;    
+ 3      3 Springfield  MA      
+ 4      4 Chicago      IL      
+ 5      5 Selinsgrove  PA      
+ 6      6 Lincoln      &lt;NA&gt;    
+ 7      7 Dayton       OH      
+ 8      8 Lodi         &lt;NA&gt;    
+ 9      9 Harrison     ME      
+10     10 Largo        FL      
+# ℹ 632 more rows</code></pre>
+</div>
 </div>
 </section>
 <section id="processing-city-data" class="level4" data-number="4.1.2.3">
 <h4 data-number="4.1.2.3" class="anchored" data-anchor-id="processing-city-data"><span class="header-section-number">4.1.2.3</span> Processing City Data</h4>
 <p>We repeat the same process for city data. We include a filter for the states identified after parsing with Postmastr.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">unique</span>(postmastr_state_parsed<span class="sc">$</span>pm.state)[<span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">unique</span>(postmastr_state_parsed<span class="sc">$</span>pm.state))]</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>citydict <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_dictionary</span>(<span class="at">type =</span> <span class="st">"city"</span>, <span class="at">filter =</span> states)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pm_city_none</span>(postmastr_state_parsed, <span class="at">dictionary =</span> citydict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">unique</span>(postmastr_state_parsed<span class="sc">$</span>pm.state)[<span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">unique</span>(postmastr_state_parsed<span class="sc">$</span>pm.state))]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>citydict <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_dictionary</span>(<span class="at">type =</span> <span class="st">"city"</span>, <span class="at">filter =</span> states)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pm_city_none</span>(postmastr_state_parsed, <span class="at">dictionary =</span> citydict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 50 × 3
+   pm.uid pm.address     pm.state
+    &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;   
+ 1      1 Indianapolis   &lt;NA&gt;    
+ 2      5 Selinsgrove    PA      
+ 3     25 St Louis       MO      
+ 4     32 Westbrookville &lt;NA&gt;    
+ 5     55 Honolulu       &lt;NA&gt;    
+ 6     75 Dillsburg      &lt;NA&gt;    
+ 7     89 AHMEDABAD      &lt;NA&gt;    
+ 8     96 Carrolltown    &lt;NA&gt;    
+ 9    120 Chestnut Hill  MA      
+10    128 Newfoundland   PA      
+# ℹ 40 more rows</code></pre>
+</div>
 </div>
 <p>After processing state names, our postmastr object contains sum unmatched cities. We create an additional city-level dictionary to append to our current city-level dictionary. We coerce valid city names to NA values to let postmastr know that these inputs are valid.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>city_append <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_append</span>(</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"city"</span>,</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">input =</span> <span class="fu">c</span>(</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Indianapolis"</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Selinsgrove"</span>,</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Birmingham."</span>,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Westbrookville"</span>,</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Honolulu"</span>,</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Dillsburg"</span>,</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Carrolltown"</span>,</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Chestnut Hill"</span>,</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Newfoundland"</span>,</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Mercersburg"</span>,</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Moultonborough"</span>,</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Hanibal"</span>,</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"OKC"</span>,</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Saint Clair Shores"</span>,</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Mt Pleasant"</span>,</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Boise"</span>,</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"idyllwild"</span>,</span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Weehawken"</span>,</span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Appleon"</span>,</span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Pacoima"</span>,</span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SEattle"</span>,</span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"West Palm beach"</span>,</span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Chelmsford"</span>,</span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Metuchen"</span>,</span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Marietta."</span>,</span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sewickley"</span>,</span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Falls ChurchVA"</span>,</span>
-<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Trout Run"</span>,</span>
-<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"JUD"</span>,</span>
-<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">"OLEMA"</span>,</span>
-<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Danielson"</span>,</span>
-<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">"North Las Vegas"</span>,</span>
-<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Braintree"</span>,</span>
-<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Lititz"</span>,</span>
-<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"benesnville"</span>,</span>
-<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">"OaklandCA"</span>,</span>
-<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Phoenixville"</span>,</span>
-<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Denver"</span>,</span>
-<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Van Nuys"</span>,</span>
-<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Jacvksonville"</span>,</span>
-<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Bronx"</span>,</span>
-<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Pratts"</span>,</span>
-<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Baltimore"</span>,</span>
-<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sonoma"</span>,</span>
-<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Williston Pk"</span>,</span>
-<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Wernersville"</span>,</span>
-<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">"St Louis"</span>,</span>
-<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">"La Canada Flintridge"</span>,</span>
-<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Falls Church"</span></span>
-<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">output =</span> <span class="fu">c</span>(</span>
-<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Birmingham"</span>,</span>
-<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Oklahoma City"</span>,</span>
-<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Mount Pleasant"</span>,</span>
-<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Idyllwild"</span>,</span>
-<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Appleton"</span>,</span>
-<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Seattle"</span>,</span>
-<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a>    <span class="st">"West Palm Beach"</span>,</span>
-<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Marietta"</span>,</span>
-<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sewickley"</span>,</span>
-<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Falls Church"</span>,</span>
-<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Jud"</span>,</span>
-<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Olema"</span>,</span>
-<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a>    <span class="st">"North Las Vegas"</span>,</span>
-<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Bensenville"</span>,</span>
-<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Oakland"</span>,</span>
-<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The Bronx"</span>,</span>
-<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Pratt"</span>,</span>
-<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Baltimore"</span>,</span>
-<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Williston Park"</span>,</span>
-<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a>    <span class="st">"St. Louis"</span>,</span>
-<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
-<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Falls Church"</span></span>
-<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a>citydict <span class="ot">&lt;-</span></span>
-<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>  postmastr<span class="sc">::</span><span class="fu">pm_dictionary</span>(<span class="at">type =</span> <span class="st">"city"</span>,</span>
-<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a>                           <span class="at">filter =</span> states,</span>
-<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a>                           <span class="at">append =</span> city_append)</span>
-<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a><span class="fu">pm_city_none</span>(postmastr_state_parsed, <span class="at">dictionary =</span> citydict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>city_append <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_append</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"city"</span>,</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">input =</span> <span class="fu">c</span>(</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Indianapolis"</span>,</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Selinsgrove"</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Birmingham."</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Westbrookville"</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Honolulu"</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Dillsburg"</span>,</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Carrolltown"</span>,</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Chestnut Hill"</span>,</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Newfoundland"</span>,</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Mercersburg"</span>,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Moultonborough"</span>,</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Hanibal"</span>,</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"OKC"</span>,</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Saint Clair Shores"</span>,</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Mt Pleasant"</span>,</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Boise"</span>,</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"idyllwild"</span>,</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Weehawken"</span>,</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Appleon"</span>,</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Pacoima"</span>,</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SEattle"</span>,</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"West Palm beach"</span>,</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Chelmsford"</span>,</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Metuchen"</span>,</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Marietta."</span>,</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sewickley"</span>,</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Falls ChurchVA"</span>,</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Trout Run"</span>,</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"JUD"</span>,</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">"OLEMA"</span>,</span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Danielson"</span>,</span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">"North Las Vegas"</span>,</span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Braintree"</span>,</span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Lititz"</span>,</span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"benesnville"</span>,</span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">"OaklandCA"</span>,</span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Phoenixville"</span>,</span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Denver"</span>,</span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Van Nuys"</span>,</span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Jacvksonville"</span>,</span>
+<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Bronx"</span>,</span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Pratts"</span>,</span>
+<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Baltimore"</span>,</span>
+<span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sonoma"</span>,</span>
+<span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Williston Pk"</span>,</span>
+<span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Wernersville"</span>,</span>
+<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">"St Louis"</span>,</span>
+<span id="cb20-51"><a href="#cb20-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">"La Canada Flintridge"</span>,</span>
+<span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Falls Church"</span></span>
+<span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">output =</span> <span class="fu">c</span>(</span>
+<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-56"><a href="#cb20-56" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-57"><a href="#cb20-57" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Birmingham"</span>,</span>
+<span id="cb20-58"><a href="#cb20-58" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-59"><a href="#cb20-59" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-60"><a href="#cb20-60" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-61"><a href="#cb20-61" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-62"><a href="#cb20-62" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-63"><a href="#cb20-63" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-64"><a href="#cb20-64" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-65"><a href="#cb20-65" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-66"><a href="#cb20-66" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-67"><a href="#cb20-67" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Oklahoma City"</span>,</span>
+<span id="cb20-68"><a href="#cb20-68" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-69"><a href="#cb20-69" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Mount Pleasant"</span>,</span>
+<span id="cb20-70"><a href="#cb20-70" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-71"><a href="#cb20-71" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Idyllwild"</span>,</span>
+<span id="cb20-72"><a href="#cb20-72" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-73"><a href="#cb20-73" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Appleton"</span>,</span>
+<span id="cb20-74"><a href="#cb20-74" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-75"><a href="#cb20-75" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Seattle"</span>,</span>
+<span id="cb20-76"><a href="#cb20-76" aria-hidden="true" tabindex="-1"></a>    <span class="st">"West Palm Beach"</span>,</span>
+<span id="cb20-77"><a href="#cb20-77" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-78"><a href="#cb20-78" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-79"><a href="#cb20-79" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Marietta"</span>,</span>
+<span id="cb20-80"><a href="#cb20-80" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sewickley"</span>,</span>
+<span id="cb20-81"><a href="#cb20-81" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Falls Church"</span>,</span>
+<span id="cb20-82"><a href="#cb20-82" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-83"><a href="#cb20-83" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Jud"</span>,</span>
+<span id="cb20-84"><a href="#cb20-84" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Olema"</span>,</span>
+<span id="cb20-85"><a href="#cb20-85" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-86"><a href="#cb20-86" aria-hidden="true" tabindex="-1"></a>    <span class="st">"North Las Vegas"</span>,</span>
+<span id="cb20-87"><a href="#cb20-87" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-88"><a href="#cb20-88" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-89"><a href="#cb20-89" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Bensenville"</span>,</span>
+<span id="cb20-90"><a href="#cb20-90" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Oakland"</span>,</span>
+<span id="cb20-91"><a href="#cb20-91" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-92"><a href="#cb20-92" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-93"><a href="#cb20-93" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-94"><a href="#cb20-94" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-95"><a href="#cb20-95" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The Bronx"</span>,</span>
+<span id="cb20-96"><a href="#cb20-96" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Pratt"</span>,</span>
+<span id="cb20-97"><a href="#cb20-97" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Baltimore"</span>,</span>
+<span id="cb20-98"><a href="#cb20-98" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-99"><a href="#cb20-99" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Williston Park"</span>,</span>
+<span id="cb20-100"><a href="#cb20-100" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-101"><a href="#cb20-101" aria-hidden="true" tabindex="-1"></a>    <span class="st">"St. Louis"</span>,</span>
+<span id="cb20-102"><a href="#cb20-102" aria-hidden="true" tabindex="-1"></a>    <span class="cn">NA</span>,</span>
+<span id="cb20-103"><a href="#cb20-103" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Falls Church"</span></span>
+<span id="cb20-104"><a href="#cb20-104" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb20-105"><a href="#cb20-105" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-106"><a href="#cb20-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-107"><a href="#cb20-107" aria-hidden="true" tabindex="-1"></a>citydict <span class="ot">&lt;-</span></span>
+<span id="cb20-108"><a href="#cb20-108" aria-hidden="true" tabindex="-1"></a>  postmastr<span class="sc">::</span><span class="fu">pm_dictionary</span>(<span class="at">type =</span> <span class="st">"city"</span>,</span>
+<span id="cb20-109"><a href="#cb20-109" aria-hidden="true" tabindex="-1"></a>                           <span class="at">filter =</span> states,</span>
+<span id="cb20-110"><a href="#cb20-110" aria-hidden="true" tabindex="-1"></a>                           <span class="at">append =</span> city_append)</span>
+<span id="cb20-111"><a href="#cb20-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-112"><a href="#cb20-112" aria-hidden="true" tabindex="-1"></a><span class="fu">pm_city_none</span>(postmastr_state_parsed, <span class="at">dictionary =</span> citydict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+  pm.uid pm.address                pm.state
+   &lt;int&gt; &lt;chr&gt;                     &lt;chr&gt;   
+1     89 AHMEDABAD                 &lt;NA&gt;    
+2    382 Falls ChurchVA 22042      &lt;NA&gt;    
+3    486 Tay Ho Ha Noi             &lt;NA&gt;    
+4    491 Bangalore Karnataka India &lt;NA&gt;    
+5    595 Sonoma cA                 &lt;NA&gt;    </code></pre>
+</div>
 </div>
 <p>The unmatched cities in our data set are not from the US and will be ignored.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>postmastr_citystate_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_city_parse</span>(postmastr_state_parsed, <span class="at">dictionary =</span> citydict)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>citystate_parsed <span class="ot">&lt;-</span> postmastr_citystate_parsed <span class="sc">%&gt;%</span> </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  tidylog<span class="sc">::</span><span class="fu">left_join</span>(postmastr_citystate_id) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(row.id, pm.city, pm.state)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>postmastr_citystate_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_city_parse</span>(postmastr_state_parsed, <span class="at">dictionary =</span> citydict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There was 1 warning in `dplyr::mutate()`.
+ℹ In argument: `pm.address = ifelse(...)`.
+Caused by warning in `stri_sub()`:
+! argument is not an atomic vector; coercing</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>citystate_parsed <span class="ot">&lt;-</span> postmastr_citystate_parsed <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  tidylog<span class="sc">::</span><span class="fu">left_join</span>(postmastr_citystate_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(row.id, pm.city, pm.state)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(pm.uid)`
+left_join: added 4 columns (pm.id, pm.type, row.id, Addr_CityState)
+&gt; rows only in x 0
+&gt; rows only in postmastr_citystate_id ( 0)
+&gt; matched rows 765 (includes duplicates)
+&gt; =====
+&gt; rows total 765</code></pre>
+</div>
 </div>
 </section>
 </section>
@@ -503,58 +611,120 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 data-number="4.1.3.1" class="anchored" data-anchor-id="prepare-data"><span class="header-section-number">4.1.3.1</span> Prepare Data</h4>
 <p>The final column to process is Addr_StreetLocation which contains street names.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>survey_addr_street <span class="ot">&lt;-</span> survey_recode_df <span class="sc">%&gt;%</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(row.id, Addr_StreetLocation) <span class="sc">%&gt;%</span> </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span> Addr_StreetLocation <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"-99"</span>, <span class="cn">NA</span>))</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>postmastr_street_id <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_identify</span>(survey_addr_street, <span class="at">var =</span> <span class="st">"Addr_StreetLocation"</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>postmastr_street_prep <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_prep</span>(postmastr_street_id, <span class="at">var =</span> <span class="st">"Addr_StreetLocation"</span>, <span class="at">type =</span> <span class="st">"street"</span>)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(postmastr_street_prep, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>survey_addr_street <span class="ot">&lt;-</span> survey_recode_df <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(row.id, Addr_StreetLocation) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span> Addr_StreetLocation <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"-99"</span>, <span class="cn">NA</span>))</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>postmastr_street_id <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_identify</span>(survey_addr_street, <span class="at">var =</span> <span class="st">"Addr_StreetLocation"</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>postmastr_street_prep <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_prep</span>(postmastr_street_id, <span class="at">var =</span> <span class="st">"Addr_StreetLocation"</span>, <span class="at">type =</span> <span class="st">"street"</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(postmastr_street_prep, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 2
+   pm.uid pm.address                   
+    &lt;int&gt; &lt;chr&gt;                        
+ 1      1 6130 N Michigan Rd           
+ 2      2 6141 Bentley Ave             
+ 3      3 38 Oxford Street             
+ 4      4 2545 W Diversey Ave Suite 225
+ 5      5 429 Eighth Street            
+ 6      6 912 N. 70th Street           
+ 7      7 409 Troy St                  
+ 8      8 275 Poplar Street            
+ 9      9 156 Deertrees Rd             
+10     10 12552 Belcher Rd S           </code></pre>
+</div>
 </div>
 </section>
 <section id="parse-house-numbers" class="level4" data-number="4.1.3.2">
 <h4 data-number="4.1.3.2" class="anchored" data-anchor-id="parse-house-numbers"><span class="header-section-number">4.1.3.2</span> Parse House Numbers</h4>
 <p>Next, we extract house/unit numbers from the street addresses.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>postmastr_house_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_house_parse</span>(postmastr_street_prep)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(postmastr_house_parsed, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>postmastr_house_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_house_parse</span>(postmastr_street_prep)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(postmastr_house_parsed, <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 3
+   pm.uid pm.address               pm.house
+    &lt;int&gt; &lt;chr&gt;                    &lt;chr&gt;   
+ 1      1 N Michigan Rd            6130    
+ 2      2 Bentley Ave              6141    
+ 3      3 Oxford Street            38      
+ 4      4 W Diversey Ave Suite 225 2545    
+ 5      5 Eighth Street            429     
+ 6      6 N. 70th Street           912     
+ 7      7 Troy St                  409     
+ 8      8 Poplar Street            275     
+ 9      9 Deertrees Rd             156     
+10     10 Belcher Rd S             12552   </code></pre>
+</div>
 </div>
 </section>
 <section id="parse-street-prefix-and-suffix" class="level4" data-number="4.1.3.3">
 <h4 data-number="4.1.3.3" class="anchored" data-anchor-id="parse-street-prefix-and-suffix"><span class="header-section-number">4.1.3.3</span> Parse Street Prefix and Suffix</h4>
 <p>To parse street prefixes and suffixes requires 2 dictionaries. 1 with directions and 1 with conversions for suffixes like “street” or “boulevard”.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>dirs <span class="ot">&lt;-</span> <span class="fu">pm_dictionary</span>(<span class="at">type =</span> <span class="st">"directional"</span>, <span class="at">locale =</span> <span class="st">"us"</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>postmastr_streetdir_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_streetDir_parse</span>(postmastr_house_parsed, <span class="at">dictionary =</span> dirs)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>postmastr_streetSuf_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_streetSuf_parse</span>(postmastr_streetdir_parsed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>dirs <span class="ot">&lt;-</span> <span class="fu">pm_dictionary</span>(<span class="at">type =</span> <span class="st">"directional"</span>, <span class="at">locale =</span> <span class="st">"us"</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>postmastr_streetdir_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_streetDir_parse</span>(postmastr_house_parsed, <span class="at">dictionary =</span> dirs)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>postmastr_streetSuf_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_streetSuf_parse</span>(postmastr_streetdir_parsed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: There was 1 warning in `dplyr::mutate()`.
+ℹ In argument: `pm.address = ifelse(...)`.
+Caused by warning in `stri_sub()`:
+! argument is not an atomic vector; coercing</code></pre>
+</div>
 </div>
 </section>
 <section id="parse-street-names" class="level4" data-number="4.1.3.4">
 <h4 data-number="4.1.3.4" class="anchored" data-anchor-id="parse-street-names"><span class="header-section-number">4.1.3.4</span> Parse Street Names</h4>
 <p>The final element for parsing is the street names themselves.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>postmaster_street_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_street_parse</span>(postmastr_streetSuf_parsed,</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">ordinal =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">drop =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>postmaster_street_parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>postmaster_street_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_street_parse</span>(postmastr_streetSuf_parsed,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">ordinal =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                                                       <span class="at">drop =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>postmaster_street_parsed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 756 × 6
+   pm.uid pm.house pm.preDir pm.street              pm.streetSuf pm.sufDir
+    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;                  &lt;chr&gt;        &lt;chr&gt;    
+ 1      1 6130     N         Michigan               Rd           &lt;NA&gt;     
+ 2      2 6141     &lt;NA&gt;      Bentley                Ave          &lt;NA&gt;     
+ 3      3 38       &lt;NA&gt;      Oxford                 St           &lt;NA&gt;     
+ 4      4 2545     W         Diversey Ave Suite 225 &lt;NA&gt;         &lt;NA&gt;     
+ 5      5 429      &lt;NA&gt;      8th                    St           &lt;NA&gt;     
+ 6      6 912      N         70th                   St           &lt;NA&gt;     
+ 7      7 409      &lt;NA&gt;      Troy                   St           &lt;NA&gt;     
+ 8      8 275      &lt;NA&gt;      Poplar                 St           &lt;NA&gt;     
+ 9      9 156      &lt;NA&gt;      Deertrees              Rd           &lt;NA&gt;     
+10     10 12552    &lt;NA&gt;      Belcher                Rd           S        
+# ℹ 746 more rows</code></pre>
+</div>
 </div>
 </section>
 <section id="combine-street-components-into-single-column" class="level4" data-number="4.1.3.5">
 <h4 data-number="4.1.3.5" class="anchored" data-anchor-id="combine-street-components-into-single-column"><span class="header-section-number">4.1.3.5</span> Combine Street Components Into Single Column</h4>
 <p>After parsing each component, we concatenate them into a single street address.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>postmastr_street_full_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_replace</span>(postmaster_street_parsed, </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                                                      <span class="at">source =</span> postmastr_street_id)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>endQ <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">quo</span>(<span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(<span class="st">"pm.sufDir"</span>))</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>postmastr_street_full_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_rebuild</span>(postmastr_street_full_parsed, </span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>                                                      <span class="at">output =</span> <span class="st">"short"</span>, </span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>                                                      <span class="at">keep_ids =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>street_parsed <span class="ot">&lt;-</span> postmastr_street_full_parsed <span class="sc">%&gt;%</span> </span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  tidylog<span class="sc">::</span><span class="fu">left_join</span>(postmastr_street_id) <span class="sc">%&gt;%</span> </span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(row.id, pm.address)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>postmastr_street_full_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_replace</span>(postmaster_street_parsed, </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                                                      <span class="at">source =</span> postmastr_street_id)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>endQ <span class="ot">&lt;-</span> rlang<span class="sc">::</span><span class="fu">quo</span>(<span class="sc">!!</span> rlang<span class="sc">::</span><span class="fu">sym</span>(<span class="st">"pm.sufDir"</span>))</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>postmastr_street_full_parsed <span class="ot">&lt;-</span> postmastr<span class="sc">::</span><span class="fu">pm_rebuild</span>(postmastr_street_full_parsed, </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>                                                      <span class="at">output =</span> <span class="st">"short"</span>, </span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>                                                      <span class="at">keep_ids =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>street_parsed <span class="ot">&lt;-</span> postmastr_street_full_parsed <span class="sc">%&gt;%</span> </span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  tidylog<span class="sc">::</span><span class="fu">left_join</span>(postmastr_street_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(row.id, pm.address)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(pm.id, pm.uid, pm.type, row.id,
+Addr_StreetLocation)`
+left_join: added no columns
+&gt; rows only in x 0
+&gt; rows only in postmastr_street_id ( 0)
+&gt; matched rows 766
+&gt; =====
+&gt; rows total 766</code></pre>
+</div>
 </div>
 </section>
 </section>
@@ -562,17 +732,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="4.1.4" class="anchored" data-anchor-id="combine-all-parsed-addresses-components-together"><span class="header-section-number">4.1.4</span> Combine All Parsed Addresses Components Together</h3>
 <p>And finally, we concatenate our postal code, city, state and street address into a single f_address column for geocoding.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>postmastr_faddress_parsed <span class="ot">&lt;-</span> street_parsed <span class="sc">%&gt;%</span> </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  tidylog<span class="sc">::</span><span class="fu">left_join</span>(citystate_parsed) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  tidylog<span class="sc">::</span><span class="fu">left_join</span>(zip_parsed) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">unite</span>(f_address, pm.address, pm.city, pm.state, pm.zip, pm.zip4, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">","</span>)</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(postmastr_faddress_parsed, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>postmastr_faddress_parsed <span class="ot">&lt;-</span> street_parsed <span class="sc">%&gt;%</span> </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  tidylog<span class="sc">::</span><span class="fu">left_join</span>(citystate_parsed) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  tidylog<span class="sc">::</span><span class="fu">left_join</span>(zip_parsed) <span class="sc">%&gt;%</span> </span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">unite</span>(f_address, pm.address, pm.city, pm.state, pm.zip, pm.zip4, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">sep =</span> <span class="st">","</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(row.id)`
+left_join: added 2 columns (pm.city, pm.state)
+&gt; rows only in x 3
+&gt; rows only in citystate_parsed ( 2)
+&gt; matched rows 763
+&gt; =====
+&gt; rows total 766
+Joining with `by = join_by(row.id)`
+left_join: added 2 columns (pm.zip, pm.zip4)
+&gt; rows only in x 8
+&gt; rows only in zip_parsed ( 2)
+&gt; matched rows 758
+&gt; =====
+&gt; rows total 766</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(postmastr_faddress_parsed, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 2
+   row.id f_address                                            
+    &lt;int&gt; &lt;chr&gt;                                                
+ 1      2 6130 N Michigan Rd,Indianapolis,46228                
+ 2      3 6141 Bentley Ave,Willowbrook,60527                   
+ 3      4 38 Oxford St,Springfield,MA,01108                    
+ 4      5 2545 W Diversey Ave Suite 225,Chicago,IL,60647       
+ 5      6 429 8th St,Selinsgrove,PA,17870                      
+ 6      7 912 N 70th St,Lincoln,68505                          
+ 7      8 409 Troy St,Dayton,OH,45404                          
+ 8      9 275 Poplar St,Lodi,95240                             
+ 9     10 156 Deertrees Rd,Harrison,ME,04040                   
+10     11 12552 Belcher Rd S,Largo,FL,33773                    
+11     12 118 E Chestnut Street Po Box 886,Jeffersonville,47130
+12     13 1297 Jonesboro Rd SE,Atlanta,30315                   
+13     14 301 Front St,Key West,FL,33040                       
+14     15 150 St Paul's Blvd. 5th Floor,Norfolk,23510          
+15     16 138 Spring St,OSSINING,10562                         
+16     17 15 Saunders Way #500d,Westbrook,ME,04092             
+17     18 3100 Independence Dr,Birmingham,AL,35209             
+18     19 16173 Baseline Rd,Genoa,IL,60135                     
+19     20 2100 Sherman Ave Suite 300,Cincinnati,OH,45212       
+20     21 2800 Biscayne Blvd Suite 300,Miami,33137             </code></pre>
+</div>
 </div>
 <p>The f_address column now has parsed addresses that can be formatted using a geocoder of choice. We can now rejoin the parsed address data via row.id from our original data set.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>survey_geoproc_df <span class="ot">&lt;-</span> survey_recode_df <span class="sc">%&gt;%</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  tidylog<span class="sc">::</span><span class="fu">left_join</span>(postmastr_faddress_parsed, <span class="at">by =</span> <span class="st">"row.id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>survey_geoproc_df <span class="ot">&lt;-</span> survey_recode_df <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  tidylog<span class="sc">::</span><span class="fu">left_join</span>(postmastr_faddress_parsed, <span class="at">by =</span> <span class="st">"row.id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>left_join: added one column (f_address)
+           &gt; rows only in x                           56
+           &gt; rows only in postmastr_faddress_parsed (  0)
+           &gt; matched rows                            766
+           &gt;                                        =====
+           &gt; rows total                              822</code></pre>
+</div>
 </div>
 </section>
 </section>
@@ -585,6 +803,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="reading-geocoder-outputs" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="reading-geocoder-outputs"><span class="header-section-number">4.2.2</span> Reading Geocoder Outputs</h3>
 <p>The outputs from the geocoding process are presented below.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 766 × 61
+   row.id f_address  Match_addr Longitude Latitude Addr_type Score Status Region
+    &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt; 
+ 1      2 6130 N Mi… 6130 N Mi…     -86.2     39.9 StreetAd…   100 M      India…
+ 2      3 6141 Bent… 6141 Bent…     -88.0     41.8 PointAdd…   100 M      Illin…
+ 3      4 38 Oxford… 38 Oxford…     -72.6     42.1 PointAdd…   100 M      Massa…
+ 4      5 2545 W Di… 2545 W Di…     -87.7     41.9 Subaddre…   100 M      Illin…
+ 5      6 429 8th S… 429 8th S…     -76.9     40.8 PointAdd…   100 M      Penns…
+ 6      7 912 N 70t… 912 N 70t…     -96.6     40.8 StreetAd…   100 M      Nebra…
+ 7      8 409 Troy … 409 Troy …     -84.2     39.8 PointAdd…   100 M      Ohio  
+ 8      9 275 Popla… 275 Popla…    -121.      38.1 StreetAd…   100 M      Calif…
+ 9     10 156 Deert… 156 Deert…     -70.7     44.1 PointAdd…   100 M      Maine 
+10     11 12552 Bel… 12552 Bel…     -82.7     27.9 PointAdd…   100 M      Flori…
+# ℹ 756 more rows
+# ℹ 52 more variables: RegionAbbr &lt;chr&gt;, Subregion &lt;chr&gt;, MetroArea &lt;chr&gt;,
+#   City &lt;chr&gt;, Nbrhd &lt;chr&gt;, geometry &lt;chr&gt;, Match_type &lt;chr&gt;, LongLabel &lt;chr&gt;,
+#   ShortLabel &lt;chr&gt;, Type &lt;chr&gt;, PlaceName &lt;chr&gt;, Place_addr &lt;chr&gt;,
+#   Phone &lt;chr&gt;, URL &lt;lgl&gt;, Rank &lt;dbl&gt;, AddBldg &lt;lgl&gt;, AddNum &lt;chr&gt;,
+#   AddNumFrom &lt;dbl&gt;, AddNumTo &lt;dbl&gt;, AddRange &lt;chr&gt;, Side &lt;chr&gt;,
+#   StPreDir &lt;chr&gt;, StPreType &lt;chr&gt;, StName &lt;chr&gt;, StType &lt;chr&gt;, StDir &lt;chr&gt;, …</code></pre>
+</div>
+</div>
 <p>We do not need all geographic information returned from the geocoder. The variables of interest are listed in the table below.</p>
 <table class="table">
 <thead>
@@ -626,62 +868,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 <p>We can also pre-emptively drop geographic variables with personally identifiable information such as the postalcode and street address.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define geocoded variables of interest</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>geocode_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"row.id"</span>,</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Region"</span>,</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"RegionAbbr"</span>,</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Subregion"</span>,</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"City"</span>,</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Latitude"</span>,</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Longitude"</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the geocoded data set</span></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>postmastr_geocoded_subset <span class="ot">&lt;-</span> postmastr_geocoded <span class="sc">%&gt;%</span> </span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>    tidyselect<span class="sc">::</span><span class="fu">all_of</span>(geocode_cols)</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge those results via row.id with the processed survey data</span></span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>survey_geocoded_df <span class="ot">&lt;-</span> survey_recode_df <span class="sc">%&gt;%</span> </span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>  tidylog<span class="sc">::</span><span class="fu">left_join</span>(postmastr_geocoded_subset,</span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">by =</span> <span class="st">"row.id"</span>)</span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Define geographic variables to exclude from processed data set</span></span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>geo_cols_to_exclude <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">"address"</span>,</span>
-<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">"city"</span>,</span>
-<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">"state"</span>,</span>
-<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">"zip5"</span>,</span>
-<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">"zipcode"</span>,</span>
-<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Addr_StreetLocation"</span>,</span>
-<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Addr_CityState"</span>,</span>
-<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Addr_ZIP"</span>,</span>
-<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a>  <span class="st">"row.id"</span></span>
-<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Exclude Columns and Rename Existing Geographic Columns</span></span>
-<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>survey_geocoded_df <span class="ot">&lt;-</span> survey_geocoded_df <span class="sc">%&gt;%</span> </span>
-<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span> tidyselect<span class="sc">::</span><span class="fu">all_of</span>(geo_cols_to_exclude)</span>
-<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
-<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"State"</span> <span class="ot">=</span> <span class="st">"Region"</span>,</span>
-<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"StateAbbr"</span> <span class="ot">=</span> <span class="st">"RegionAbbr"</span>,</span>
-<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"County"</span> <span class="ot">=</span> <span class="st">"Subregion"</span></span>
-<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define geocoded variables of interest</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>geocode_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"row.id"</span>,</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Region"</span>,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"RegionAbbr"</span>,</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Subregion"</span>,</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"City"</span>,</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Latitude"</span>,</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Longitude"</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset the geocoded data set</span></span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>postmastr_geocoded_subset <span class="ot">&lt;-</span> postmastr_geocoded <span class="sc">%&gt;%</span> </span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>    tidyselect<span class="sc">::</span><span class="fu">all_of</span>(geocode_cols)</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge those results via row.id with the processed survey data</span></span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>survey_geocoded_df <span class="ot">&lt;-</span> survey_recode_df <span class="sc">%&gt;%</span> </span>
+<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>  tidylog<span class="sc">::</span><span class="fu">left_join</span>(postmastr_geocoded_subset,</span>
+<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">by =</span> <span class="st">"row.id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>left_join: added 6 columns (Region, RegionAbbr, Subregion, City, Latitude, …)
+           &gt; rows only in x                           56
+           &gt; rows only in postmastr_geocoded_subset (  0)
+           &gt; matched rows                            766
+           &gt;                                        =====
+           &gt; rows total                              822</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define geographic variables to exclude from processed data set</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>geo_cols_to_exclude <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"address"</span>,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"city"</span>,</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"state"</span>,</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"zip5"</span>,</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"zipcode"</span>,</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Addr_StreetLocation"</span>,</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Addr_CityState"</span>,</span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Addr_ZIP"</span>,</span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"row.id"</span></span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Exclude Columns and Rename Existing Geographic Columns</span></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a>survey_geocoded_df <span class="ot">&lt;-</span> survey_geocoded_df <span class="sc">%&gt;%</span> </span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span> tidyselect<span class="sc">::</span><span class="fu">all_of</span>(geo_cols_to_exclude)</span>
+<span id="cb45-18"><a href="#cb45-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-19"><a href="#cb45-19" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(</span>
+<span id="cb45-20"><a href="#cb45-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"State"</span> <span class="ot">=</span> <span class="st">"Region"</span>,</span>
+<span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"StateAbbr"</span> <span class="ot">=</span> <span class="st">"RegionAbbr"</span>,</span>
+<span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"County"</span> <span class="ot">=</span> <span class="st">"Subregion"</span></span>
+<span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="saving-geocoded-outputs" class="level3" data-number="4.2.3">
 <h3 data-number="4.2.3" class="anchored" data-anchor-id="saving-geocoded-outputs"><span class="header-section-number">4.2.3</span> Saving Geocoded Outputs</h3>
 <p>We can now write these outputs to disk and move on to the next chapter, where we add census level metadata to our survey responses.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"Y:/CNP/Generosity Commission/"</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  survey_geocoded_df,</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DATA-PREP/02-data-intermediate/02-wave-two/wave-02-data-intermediate-geocoded.csv"</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"Y:/CNP/Generosity Commission/"</span>)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  survey_geocoded_df,</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"DATA-PREP/02-data-intermediate/02-wave-two/wave-02-data-intermediate-geocoded.csv"</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
