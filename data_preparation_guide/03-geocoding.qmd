@@ -482,7 +482,7 @@ survey_geocoded_df <- survey_geocoded_df %>%
 
 We can now write these outputs to disk and move on to the next chapter, where we add census level metadata to our survey responses.
 
-```{r}
+```{r, eval=FALSE}
 setwd("Y:/CNP/Generosity Commission/")
 readr::write_csv(
   survey_geocoded_df,

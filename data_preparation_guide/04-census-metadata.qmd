@@ -1,11 +1,14 @@
 ---
 title: "Appending Census Data"
+execute: 
+  eval: false
 ---
 
 ```{r, include=FALSE, echo=FALSE}
 library(tidycensus)
 library(dplyr)
 
+setwd("Y:/CNP/Generosity Commission/")
 survey_geocoded_df <- readr::read_csv(
   "DATA-PREP/02-data-intermediate/02-wave-two/wave-02-data-intermediate-geocoded.csv"
 )
@@ -17,10 +20,10 @@ In this section we'll append Census metadata to our survey responses. The variab
 
 The first step in this process is mapping census variables at the county level. We can accomplish this using the FCC's [API](https://geo.fcc.gov/api/census/#!/block/get_block_find).
 
-```{r}
+```{r, eval=FALSE}
 # Function to access API and retrive county FIPS codes
 census_api <- function(lat, lon, year, unit) {
-  if (!all(is.na(x = c(lat, lon))) & !all(c(lat, lon) == 0)) {
+  if(! lat %in% c(0, NA) & ! lon %in% c(0, NA)) {
     query_params <- list(
       latitude = as.character(lat),
       longitude = as.character(lon),
@@ -34,10 +37,11 @@ census_api <- function(lat, lon, year, unit) {
     body <- httr::content(response,
                           "parsed")
     if (unit == "Block"){
-      return(body$Block$FIPS)
+      rs <- body$Block$FIPS
     } else if (unit == "County"){
-      return(body$County$FIPS)
+      rs <- body$County$FIPS
     }
+    return(rs)
   } else {
     return(NA)
   }
@@ -85,7 +89,7 @@ The census variables found in these metadata files are listed in the table below
 | med_household_income_adj | Median household income, inflation adjusted to 2021 dollars                   |
 | median_value_adj         | Median housing value, inflation adjusted to 2021 dollars                      |
 
-```{r}
+```{r, eval=FALSE}
 # Download county-level census metadata
 county_metadata_df <- readr::read_csv(
   "https://nccsdata.s3.us-east-1.amazonaws.com/geo/data/county/county_2017-2021.csv"
@@ -116,7 +120,7 @@ This requires pulling block FIPs codes and working with a crosswalk file.
 
 We repeat the API call from above and append block FIPS codes to the data set.
 
-```{r}
+```{r, eval=FALSE}
 # Create new column with Block FIPs
 survey_census_df <- survey_census_df %>% 
   dplyr::mutate(Block_FIPS = purrr::map2_chr(Latitude,
@@ -128,7 +132,7 @@ survey_census_df <- survey_census_df %>%
 
 We now use the NCCS crosswalk file to map these block FIPS codes to additional geographic units. We use the data.table package to process the data and extract the EINs.
 
-```{r}
+```{r, eval=FALSE}
 # Load in Block crosswalk
 block_xwalk_df <- data.table::fread(
   "https://nccsdata.s3.us-east-1.amazonaws.com/geo/xwalk/BLOCKX.csv"
@@ -152,7 +156,7 @@ block_xwalk_df <- as.data.frame(block_xwalk_lazy)
 
 We now merge this crosswalk with NCCS' Census Tract crosswalk to include CBSA FIPs.
 
-```{r}
+```{r, eval=FALSE}
 tract_xwalk_df <- readr::read_csv(
   "https://nccsdata.s3.us-east-1.amazonaws.com/geo/xwalk/TRACTX.csv"
 ) %>% 
@@ -185,7 +189,7 @@ summary(xwalk_df)
 
 We can now repeat the same process as above but with census crosswalks at the tract and Metro CBSA levels using Tract FIPS and CBSA FIPS from our crosswalks.
 
-```{r}
+```{r, eval=FALSE}
 # Download Tract-level census metadata
 tract_metadata_df <- readr::read_csv(
   "https://nccsdata.s3.us-east-1.amazonaws.com/geo/data/tract/tract_2017-2021.csv"
@@ -211,7 +215,7 @@ survey_census_df <- survey_census_df %>%
 
 ## CBSA Level Metadata
 
-```{r}
+```{r, eval=FALSE}
 # Download CBSA-level census metadata
 cbsa_metadata_df <- readr::read_csv(
   "https://nccsdata.s3.us-east-1.amazonaws.com/geo/data/msa/msa_2017-2021.csv"
@@ -233,7 +237,7 @@ survey_census_df <- survey_census_df %>%
 
 # Save data
 
-```{r}
+```{r, eval=FALSE}
 setwd("Y:/CNP/Generosity Commission/")
 readr::write_csv(
   survey_census_df,

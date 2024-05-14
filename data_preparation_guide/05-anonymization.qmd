@@ -1,5 +1,7 @@
 ---
 title: "Anonymization"
+execute:
+  eval: FALSE
 ---
 
 In this section we'll work through variables with potentially identifiable information and either exclude/anonymize them.
