@@ -41,7 +41,7 @@
 \makeatother
 \usepackage{xcolor}
 \setlength{\emergencystretch}{3em} % prevent overfull lines
-\setcounter{secnumdepth}{5}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % Make \paragraph and \subparagraph free-standing
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
@@ -117,35 +117,11 @@
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
-\newlength{\cslhangindent}
-\setlength{\cslhangindent}{1.5em}
-\newlength{\csllabelwidth}
-\setlength{\csllabelwidth}{3em}
-\newlength{\cslentryspacingunit} % times entry-spacing
-\setlength{\cslentryspacingunit}{\parskip}
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
-  % turn on hanging indent if param 1 is 1
-  \ifodd #1
-  \let\oldpar\par
-  \def\par{\hangindent=\cslhangindent\oldpar}
-  \fi
-  % set entry spacing
-  \setlength{\parskip}{#2\cslentryspacingunit}
- }%
- {}
-\usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
-\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
 \KOMAoption{captions}{tableheading}
 \makeatletter
 \makeatother
 \makeatletter
-\@ifpackageloaded{bookmark}{}{\usepackage{bookmark}}
 \makeatother
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
@@ -203,8 +179,6 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={NP Trends Survey Data Preparation Guide},
-  pdfauthor={Thiya},
   colorlinks=true,
   linkcolor={blue},
   filecolor={Maroon},
@@ -212,27 +186,15 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
-\title{NP Trends Survey Data Preparation Guide}
-\author{Thiya}
-\date{2024-02-28}
+\author{}
+\date{}
 
 \begin{document}
-\maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, breakable, frame hidden, sharp corners, borderline west={3pt}{0pt}{shadecolor}, enhanced, boxrule=0pt]}{\end{tcolorbox}}\fi
-
-\renewcommand*\contentsname{Table of contents}
-{
-\hypersetup{linkcolor=}
-\setcounter{tocdepth}{2}
-\tableofcontents
-}
-\bookmarksetup{startatroot}
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, breakable, interior hidden, borderline west={3pt}{0pt}{shadecolor}, frame hidden, enhanced, sharp corners]}{\end{tcolorbox}}\fi
 
 \hypertarget{preface}{%
 \chapter*{Preface}\label{preface}}
 \addcontentsline{toc}{chapter}{Preface}
-
-\markboth{Preface}{Preface}
 
 This is a Quarto book.
 
@@ -248,250 +210,6 @@ To learn more about Quarto books visit
 \begin{verbatim}
 [1] 2
 \end{verbatim}
-
-\bookmarksetup{startatroot}
-
-\hypertarget{introduction}{%
-\chapter{Introduction}\label{introduction}}
-
-This is a book created from markdown and executable code.
-
-See Knuth (1984) for additional discussion of literate programming.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DecValTok{1} \SpecialCharTok{+} \DecValTok{1}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-[1] 2
-\end{verbatim}
-
-\bookmarksetup{startatroot}
-
-\hypertarget{summary}{%
-\chapter{Summary}\label{summary}}
-
-In summary, this book has no content whatsoever.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DecValTok{1} \SpecialCharTok{+} \DecValTok{1}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-[1] 2
-\end{verbatim}
-
-\bookmarksetup{startatroot}
-
-\hypertarget{references}{%
-\chapter*{References}\label{references}}
-\addcontentsline{toc}{chapter}{References}
-
-\markboth{References}{References}
-
-\hypertarget{refs}{}
-\begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-knuth84}{}}%
-Knuth, Donald E. 1984. {``Literate Programming.''} \emph{Comput. J.} 27
-(2): 97--111. \url{https://doi.org/10.1093/comjnl/27.2.97}.
-
-\end{CSLReferences}
-
-\bookmarksetup{startatroot}
-
-\hypertarget{cleaning-the-survey-data}{%
-\chapter{Cleaning the Survey Data}\label{cleaning-the-survey-data}}
-
-In this chapter we process the raw survey data by:
-
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\tightlist
-\item
-  Renaming columns
-\item
-  Recoding response values for quantitative analysis
-\item
-  Dropping duplicates, incomplete responses and test responses
-\end{enumerate}
-
-\hypertarget{renaming-columns}{%
-\subsection{Renaming Columns}\label{renaming-columns}}
-
-Columns referencing survey questions are renamed with the help of a data
-dictionary to improve readability.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{torename }\OtherTok{\textless{}{-}}\NormalTok{ dd }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{select}\NormalTok{(vname, vname\_raw) }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{  tidyr}\SpecialCharTok{::}\FunctionTok{drop\_na}\NormalTok{()}
-
-\NormalTok{survey\_df }\OtherTok{\textless{}{-}}\NormalTok{ raw\_survey\_df }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{rename\_at}\NormalTok{(}\FunctionTok{vars}\NormalTok{(torename}\SpecialCharTok{$}\NormalTok{vname\_raw), }\SpecialCharTok{\textasciitilde{}}\NormalTok{torename}\SpecialCharTok{$}\NormalTok{vname)}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{recoding-survey-responses}{%
-\subsection{Recoding Survey Responses}\label{recoding-survey-responses}}
-
-The next step is recoding survey responses. Each group of survey
-questions comes with its own set of valid inputs that must be recoded
-separately. For example, ``N/A'''s are options for some survey questions
-and not for others, and some survey questions allow for manual text
-inputs.
-
-The below code chunk separates all survey questions into their
-respective categories before further separating each category into
-numeric, text or NA inputs.
-
-NA inputs here refer to ``Check here if not applicable to your
-organization'' columns in the survey, where a ``C'' indicates that the
-respondent has checked the N/A box.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# All questions provided to respondents}
-\NormalTok{survey\_qns }\OtherTok{\textless{}{-}} \FunctionTok{names}\NormalTok{(survey\_df)[}\DecValTok{32}\SpecialCharTok{:}\DecValTok{203}\NormalTok{]}
-
-\CommentTok{\# Broken down into specific categories}
-\NormalTok{program\_change\_qns }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{15}\NormalTok{]}
-\NormalTok{people\_served\_qns }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{16}\SpecialCharTok{:}\DecValTok{19}\NormalTok{]}
-\NormalTok{demand\_qn }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{20}\SpecialCharTok{:}\DecValTok{20}\NormalTok{]}
-
-\CommentTok{\# Split into different variable type subgroups}
-\NormalTok{staff\_qns }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{21}\SpecialCharTok{:}\DecValTok{47}\NormalTok{]}
-\NormalTok{staff\_qns\_numeric }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\FunctionTok{c}\NormalTok{(}\DecValTok{21}\SpecialCharTok{:}\DecValTok{27}\NormalTok{, }\DecValTok{29}\SpecialCharTok{:}\DecValTok{36}\NormalTok{, }\DecValTok{38}\NormalTok{)]}
-\NormalTok{staff\_qns\_text }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\FunctionTok{c}\NormalTok{(}\DecValTok{28}\NormalTok{, }\DecValTok{37}\NormalTok{, }\DecValTok{47}\NormalTok{)]}
-\NormalTok{staff\_qns\_na }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\FunctionTok{c}\NormalTok{(}\DecValTok{39}\SpecialCharTok{:}\DecValTok{46}\NormalTok{)]}
-
-\CommentTok{\# Rest of Qns To{-}Do if above are ok}
-\NormalTok{importance\_qns }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{48}\SpecialCharTok{:}\DecValTok{49}\NormalTok{]}
-\NormalTok{fundraise\_qns }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{50}\SpecialCharTok{:}\DecValTok{60}\NormalTok{]}
-\NormalTok{majorgift\_qn }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{61}\SpecialCharTok{:}\DecValTok{61}\NormalTok{]}
-\NormalTok{fundraise\_change\_qns }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{62}\SpecialCharTok{:}\DecValTok{68}\NormalTok{]}
-\NormalTok{fundraise\_donor\_qns }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{69}\SpecialCharTok{:}\DecValTok{70}\NormalTok{]}
-\NormalTok{finance\_fundraise\_qns }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{71}\SpecialCharTok{:}\DecValTok{96}\NormalTok{]}
-\NormalTok{finance\_revenue\_qns }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{97}\SpecialCharTok{:}\DecValTok{105}\NormalTok{]}
-\NormalTok{reserve\_qns }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{110}\SpecialCharTok{:}\DecValTok{111}\NormalTok{]}
-\NormalTok{carse\_qns }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{112}\SpecialCharTok{:}\DecValTok{113}\NormalTok{]}
-\NormalTok{finance\_chng\_qns }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{114}\SpecialCharTok{:}\DecValTok{121}\NormalTok{]}
-\NormalTok{leadership\_chng\_qns }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{122}\SpecialCharTok{:}\DecValTok{132}\NormalTok{]}
-\NormalTok{race\_gender\_qns }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{133}\SpecialCharTok{:}\DecValTok{158}\NormalTok{]}
-\NormalTok{extaffairs\_qns }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{159}\SpecialCharTok{:}\DecValTok{171}\NormalTok{]}
-\NormalTok{primary\_cncrn\_qn }\OtherTok{\textless{}{-}}\NormalTok{ survey\_qns[}\DecValTok{172}\SpecialCharTok{:}\DecValTok{172}\NormalTok{]}
-\end{Highlighting}
-\end{Shaded}
-
-\hypertarget{survey-question-breakdown}{%
-\subsubsection{Survey Question
-Breakdown}\label{survey-question-breakdown}}
-
-\begin{itemize}
-\tightlist
-\item
-  \textbf{172} general survey questions
-\item
-  \textbf{15} questions about changes to programs and services
-\item
-  \textbf{4} questions about the number of people each organization
-  serves
-\item
-  \textbf{1} question about overall program demand
-\item
-  \textbf{27} questions about staff numbers
-\end{itemize}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# Recode each category}
-\NormalTok{survey\_recode\_df }\OtherTok{\textless{}{-}}\NormalTok{ survey\_df }\SpecialCharTok{\%\textgreater{}\%} 
-\NormalTok{  dplyr}\SpecialCharTok{::}\FunctionTok{mutate}\NormalTok{(}
-\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{across}\NormalTok{(}
-\NormalTok{      program\_change\_qns,}
-      \SpecialCharTok{\textasciitilde{}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{case\_match}\NormalTok{(}
-\NormalTok{        ., }
-        \StringTok{"Yes"} \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{, }\StringTok{"No"} \SpecialCharTok{\textasciitilde{}} \DecValTok{0}\NormalTok{, }\StringTok{"N/A"} \SpecialCharTok{\textasciitilde{}} \DecValTok{99}\NormalTok{, }
-        \StringTok{"Unsure"} \SpecialCharTok{\textasciitilde{}} \DecValTok{98}\NormalTok{, }\StringTok{"{-}99"} \SpecialCharTok{\textasciitilde{}} \SpecialCharTok{{-}}\DecValTok{99}\NormalTok{,}
-        \AttributeTok{.default =} \ConstantTok{NA}
-\NormalTok{      )}
-\NormalTok{    ),}
-\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{across}\NormalTok{(}
-\NormalTok{      people\_served\_qns,}
-      \SpecialCharTok{\textasciitilde{}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{case\_match}\NormalTok{(}
-\NormalTok{        .,}
-        \StringTok{"{-}99"} \SpecialCharTok{\textasciitilde{}} \SpecialCharTok{{-}}\DecValTok{99}\NormalTok{, }\ConstantTok{NA} \SpecialCharTok{\textasciitilde{}} \ConstantTok{NA}\NormalTok{, }\StringTok{"N/A"} \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
-        \AttributeTok{.default =} \FunctionTok{as.integer}\NormalTok{(.)}
-\NormalTok{      )}
-\NormalTok{    ),}
-\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{across}\NormalTok{(}
-\NormalTok{      demand\_qn,}
-      \SpecialCharTok{\textasciitilde{}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{case\_match}\NormalTok{(}
-\NormalTok{        .,}
-        \StringTok{"Increase"} \SpecialCharTok{\textasciitilde{}} \DecValTok{98}\NormalTok{, }\StringTok{"Stay the same"} \SpecialCharTok{\textasciitilde{}} \DecValTok{0}\NormalTok{, }\StringTok{"Decrease"} \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
-        \StringTok{"{-}99"} \SpecialCharTok{\textasciitilde{}} \SpecialCharTok{{-}}\DecValTok{99}\NormalTok{,}
-        \AttributeTok{.default =} \ConstantTok{NA}
-\NormalTok{      )}
-\NormalTok{    ),}
-\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{across}\NormalTok{(}
-\NormalTok{      staff\_qns\_numeric,}
-      \SpecialCharTok{\textasciitilde{}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{case\_match}\NormalTok{(}
-\NormalTok{        .,}
-        \StringTok{"{-}99"} \SpecialCharTok{\textasciitilde{}} \SpecialCharTok{{-}}\DecValTok{99}\NormalTok{, }\ConstantTok{NA} \SpecialCharTok{\textasciitilde{}} \ConstantTok{NA}\NormalTok{,}
-        \AttributeTok{.default =} \FunctionTok{as.integer}\NormalTok{(.)}
-\NormalTok{      )}
-\NormalTok{    ),}
-\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{across}\NormalTok{(}
-\NormalTok{      staff\_qns\_text,}
-      \SpecialCharTok{\textasciitilde{}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{case\_match}\NormalTok{(}
-\NormalTok{        .,}
-        \StringTok{"{-}99"} \SpecialCharTok{\textasciitilde{}} \StringTok{"{-}99"}\NormalTok{, }\ConstantTok{NA} \SpecialCharTok{\textasciitilde{}} \ConstantTok{NA}\NormalTok{,}
-        \AttributeTok{.default =} \FunctionTok{as.character}\NormalTok{(.)}
-\NormalTok{      )}
-\NormalTok{    ),}
-\NormalTok{    dplyr}\SpecialCharTok{::}\FunctionTok{across}\NormalTok{(}
-\NormalTok{      tidyselect}\SpecialCharTok{::}\FunctionTok{all\_of}\NormalTok{(staff\_qns\_na),}
-      \SpecialCharTok{\textasciitilde{}}\NormalTok{ dplyr}\SpecialCharTok{::}\FunctionTok{case\_match}\NormalTok{(}
-\NormalTok{        .,}
-        \StringTok{"{-}99"} \SpecialCharTok{\textasciitilde{}} \SpecialCharTok{{-}}\DecValTok{99}\NormalTok{, }\ConstantTok{NA} \SpecialCharTok{\textasciitilde{}} \ConstantTok{NA}\NormalTok{, }\StringTok{"C"} \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
-        \AttributeTok{.default =} \ConstantTok{NA}
-\NormalTok{      )}
-\NormalTok{    )}
-\NormalTok{  )}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-Warning: There were 7 warnings in `dplyr::mutate()`.
-The first warning was:
-i In argument: `dplyr::across(...)`.
-Caused by warning:
-! Using an external vector in selections was deprecated in tidyselect 1.1.0.
-i Please use `all_of()` or `any_of()` instead.
-  # Was:
-  data %>% select(program_change_qns)
-
-  # Now:
-  data %>% select(all_of(program_change_qns))
-
-See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
-i Run `dplyr::last_dplyr_warnings()` to see the 6 remaining warnings.
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{\# raw\_survey\_df \%\textgreater{}\% }
-\CommentTok{\#   dplyr::rowwise() \%\textgreater{}\% }
-\CommentTok{\#   dplyr::mutate(response\_rate = sum(dplyr::c\_across(tidyselect::all\_of(survey\_qns)) != {-}99, na.rm = TRUE)) \%\textgreater{}\% }
-\CommentTok{\#   dplyr::select(ResponseId, response\_rate) \%\textgreater{}\% }
-\CommentTok{\#   dplyr::filter(! ResponseId \%in\% weighted\_survey\_df$ResponseId)}
-\end{Highlighting}
-\end{Shaded}
-
 
 
 
