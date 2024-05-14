@@ -1,5 +1,6 @@
 project:
-  type: book
+  type: website
+  output-dir: docs
 
 book:
   title: "NP Trends Survey Data Preparation Guide"
@@ -12,7 +13,7 @@ book:
     - references.qmd
     - 02-data-cleaning.qmd
     - 03-geocoding.qmd
-    - 04-metadata.qmd
+    - 04-census-metadata.qmd
     - 05-anonymization.qmd
 
 bibliography: references.bib
