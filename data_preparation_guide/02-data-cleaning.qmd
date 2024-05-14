@@ -230,7 +230,7 @@ survey_recode_df <- create_survey_item(
 codebook(
   survey_recode_df %>% 
     dplyr::select(
-      tidyselect::all_of(bool_qns)
+      tidyselect::all_of(bool_qns[1])
     )
 )
 ```
@@ -271,7 +271,7 @@ survey_recode_df <- create_survey_item(
 codebook(
   survey_recode_df %>% 
     dplyr::select(
-      tidyselect::all_of(fundraise_skrcv_qns_bool)
+      tidyselect::all_of(fundraise_skrcv_qns_bool[1])
     )
 )
 ```
@@ -329,7 +329,7 @@ survey_recode_df <- create_survey_item(
 codebook(
   survey_recode_df %>% 
     dplyr::select(
-      tidyselect::all_of(race_gender_qns_bool)
+      tidyselect::all_of(race_gender_qns_bool[1])
     )
 )
 ```
@@ -369,7 +369,7 @@ survey_recode_df <- create_survey_item(
 codebook(
   survey_recode_df %>% 
     dplyr::select(
-      tidyselect::all_of(na_bool_qns)
+      tidyselect::all_of(na_bool_qns[1])
     )
 )
 ```
@@ -415,7 +415,7 @@ survey_recode_df <- create_survey_item(
 codebook(
   survey_recode_df %>% 
     dplyr::select(
-      tidyselect::all_of(demand_fct_qns)
+      tidyselect::all_of(demand_fct_qns[1])
     )
 )
 ```
@@ -464,7 +464,7 @@ survey_recode_df <- create_survey_item(
 codebook(
   survey_recode_df %>% 
     dplyr::select(
-      tidyselect::all_of(fundraise_change_qns_fct)
+      tidyselect::all_of(fundraise_change_qns_fct[1])
     )
 )
 ```
@@ -529,7 +529,7 @@ survey_recode_df <- create_survey_item(
 codebook(
   survey_recode_df %>% 
     dplyr::select(
-      tidyselect::all_of(volimportance_qns_fct)
+      tidyselect::all_of(volimportance_qns_fct[1])
     )
 )
 ```
@@ -575,7 +575,7 @@ survey_recode_df <- create_survey_item(
 codebook(
   survey_recode_df %>% 
     dplyr::select(
-      tidyselect::all_of(donimportance_qns_fct)
+      tidyselect::all_of(donimportance_qns_fct[1])
     )
 )
 ```
@@ -621,7 +621,7 @@ survey_recode_df <- create_survey_item(
 codebook(
   survey_recode_df %>% 
     dplyr::select(
-      tidyselect::all_of(extaffairs_qns_fct)
+      tidyselect::all_of(extaffairs_qns_fct[1])
     )
 )
 ```
@@ -661,7 +661,7 @@ survey_recode_df <- create_survey_item(
 codebook(
   survey_recode_df %>% 
     dplyr::select(
-      tidyselect::all_of(int_qns)
+      tidyselect::all_of(int_qns[1])
     )
 )
 ```
@@ -708,7 +708,7 @@ survey_recode_df <- create_survey_item(
 codebook(
   survey_recode_df %>% 
     dplyr::select(
-      tidyselect::all_of(numeric_qns)
+      tidyselect::all_of(numeric_qns[1])
     )
 )
 ```
@@ -733,7 +733,7 @@ survey_recode_df <- survey_recode_df %>%
 codebook(
   survey_recode_df %>% 
     dplyr::select(
-      tidyselect::all_of(text_qns)
+      tidyselect::all_of(text_qns[1])
     )
 )
 ```
@@ -1054,7 +1054,7 @@ race_gender_qns <- c(race_gender_qns_bool, "CEOrace", "CEOgender", "BChairrace",
 
 codebook(
   survey_recode_df %>% 
-    dplyr::select(tidyselect::all_of(race_gender_qns))
+    dplyr::select(tidyselect::all_of(race_gender_qns[1]))
 )
 ```
 
@@ -1063,7 +1063,7 @@ codebook(
 
 We next evaluate survey completion rates for each category of questions. We separate our variables into question categories and compute the proportion of valid responses. 
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, eval=FALSE}
 # Create named list of variables
 
 survey_completion_qns_ls <- list(
@@ -1152,7 +1152,7 @@ response_rate_df
 
 ## Save outputs
 
-```{r}
+```{r, eval=FALSE}
 setwd("Y:/CNP/Generosity Commission/")
 readr::write_csv(survey_recode_df,
                  "DATA-PREP/02-data-intermediate/02-wave-two/wave-02-data-intermediate-recoded.csv")
