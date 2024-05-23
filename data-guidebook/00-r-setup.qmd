@@ -1,0 +1,23 @@
+---
+title: "R Setup"
+---
+
+The following R packages are used throughout the data preparation guide: 
+
+* **haven**: import data from Stata and SAS 
+* **dplyr**: data wrangling 
+* **tidyr**: data wrangling 
+* **epoxy**: quarto document text
+* **memisc**: survey data tools  
+* **labelled**: memisc helper package  
+
+```{r}
+library( haven )
+library( dplyr )
+library( tidyr )
+library( epoxy )
+library( memisc )
+library( labelled )
+```
+
+

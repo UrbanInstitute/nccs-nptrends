@@ -1,0 +1,117 @@
+---
+title: "Summary Statistics"
+execute:
+  warning: false
+  message: false
+---
+
+```{r, include=FALSE, echo=FALSE}
+library( haven )
+library( dplyr )
+library( tidyr )
+library( epoxy )
+library( memisc )
+library( labelled )
+
+# SOURCE PREVIOUS STEPS 
+knitr::purl( "21-year2-recoding-rules.qmd" )   # convert QMD to R script
+source(      "21-year2-recoding-rules.R"   )   # run all chunks in prior step
+```
+
+
+
+
+  
+```{r, results="asis", echo=F, eval=F}
+all.questions <- c(
+  program_change_qns_bool, program_change_qns_txt,
+  people_served_qns_bool, people_served_qns_int,
+  demand_fct_qns,
+  staff_qns_bool, staff_qns_int, staff_qns_text,
+  volimportance_qns_fct, donimportance_qns_fct,
+  leadership_chng_qns_bool, leadership_chng_qns_text,
+  race_gender_qns_bool, race_gender_qns_text,
+  finance_chng_qns_bool, finance_chng_qns_text,
+  cares_qns_bool, cares_qns_num,
+  reserve_qns_bool, reserve_qns_num,
+  finance_revenue_qns_num, finance_revenue_qns_text,
+  fundraise_skrcv_qns_bool,
+  fundraise_donor_qns_int,
+  fundraise_change_qns_fct,
+  fundraise_qns_bool,fundraise_qns_text,
+  majorgift_qn_num,
+  extaffairs_qns_fct,
+  primary_cncrn_qn_text )
+
+omit.these.groups <- c("id","DROP","MainAddress","Comments")
+all.vars <- dd$vname[ ! dd$group %in% omit.these.groups ] |> na.omit()
+show_html( codebook( survey_df[ all.vars ] ))
+```
+
+
+
+
+- **`r length( c(program_change_qns_bool, program_change_qns_txt) ) `** questions about **CHANGES TO PROGRAMS AND SERVICES**
+- **`r length( c(people_served_qns_bool,people_served_qns_int) ) `** questions about the **NUMBER OF PEOPLE EACH ORGANIZATION SERVES**
+- **`r length( c(demand_fct_qns) ) `** question about **OVERALL PROGRAM DEMAND**
+- **`r length( c(staff_qns_bool, staff_qns_int,  staff_qns_text) ) `** questions about **STAFF NUMBERS**
+- **`r length( c(volimportance_qns_fct, donimportance_qns_fct) ) `** questions about **DONOR AND VOLUNTEER IMPORTANCE**
+- **`r length( c(leadership_chng_qns_bool, leadership_chng_qns_text) ) `** questions about **CHANGES TO LEADERSHIP**
+- **`r length( c(race_gender_qns_bool, race_gender_qns_text) ) `** questions about **THE RACE AND GENDER OF CEOS AND BOARD CHAIRS**
+- **`r length( c(finance_chng_qns_bool, finance_chng_qns_text) ) `** questions about **CHANGES TO ORGANIZATIONAL FINANCES**
+- **`r length( c(cares_qns_bool, cares_qns_num) ) `** questions about **CARES FUNDING**
+- **`r length( c(reserve_qns_bool, reserve_qns_num) ) `** questions about **FINANCIAL RESERVES**
+- **`r length( c(finance_revenue_qns_num, finance_revenue_qns_text) ) `** questions about **REVENUE SOURCES**
+- **`r length( c(fundraise_skrcv_qns_bool) ) `** questions about **FUNDRAISING SOURCES**
+- **`r length( c(fundraise_donor_qns_int) ) `** questions about **DONOR TYPES IN FUNDRAISING**
+- **`r length( c(fundraise_change_qns_fct) ) `** questions about **FUNDRAISING YIELDS**
+- **`r length( c(fundraise_qns_bool, fundraise_qns_text) ) `** questions about **FUNDRAISING STRATEGY CHANGES**
+- **`r length( c(majorgift_qn_num) ) `** questions about **MAJOR GIFT AMOUNTS**
+- **`r length( c(extaffairs_qns_fct) ) `** questions about **EXTERNAL AFFAIRS**  
+- **`r length( c(primary_cncrn_qn_text) ) `** questions about **FUTURE CONCERNS**
+
+
+# CHANGES TO PROGRAMS AND SERVICES
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(program_change_qns_bool,program_change_qns_txt)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+
+# NUMBER OF PEOPLE EACH ORGANIZATION SERVES
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(people_served_qns_bool,people_served_qns_int)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+
+# OVERALL PROGRAM DEMAND
+
+```{r, results="asis", echo=F}
+COLUMNS <- demand_fct_qns
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+
+
+
+
+
+
+
+
+
+<style>
+
+h1, h2 {
+  margin-top: 80px;
+}
+
+.codebook-entry {
+   background-color: beige;
+   margin-top: 60px;
+}
+
+</style>

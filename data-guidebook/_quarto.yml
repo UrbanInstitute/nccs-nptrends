@@ -1,0 +1,46 @@
+project:
+  type: book
+  output-dir: GUIDEBOOK
+  
+  
+book:
+  title: "NP Trends Survey Data Preparation Guide"
+  output-file: "np-trends-book"
+  author: 
+    - "Thiya"
+    - "Jesse Lecy"
+  date: "2/28/2024"
+  chapters:
+    - index.qmd
+    - 00-r-setup.qmd
+    - 01-create-dd-files.qmd
+    - part: 20-YEAR-TWO.qmd
+      chapters: 
+      - 21-year2-recoding-rules.qmd
+      - 22-year2-summarize-responses.qmd
+      - 23-year2-fix-demographics.qmd
+    - part: 30-YEAR-THREE.qmd
+      chapters: 
+      - 31-year3-recoding-rules.qmd
+      - 32-year3-summarize-responses.qmd
+      - 33-year3-prepping-puf.qmd
+    - part: 40-GEOCODING.qmd
+      chapters:
+      - 41-validating-addresses.qmd
+      - 42-geocoding-addresses.qmd
+      - 43-adding-geographies.qmd
+      - 44-census-data.qmd
+    - part: 50-WEIGHTS.qmd
+    - 99-references.qmd
+      
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf: 
+    documentclass: scrbook
+
+editor: visual
+
