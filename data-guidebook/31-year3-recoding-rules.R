@@ -1,11 +1,4 @@
----
-title: "Relabeling Qualtrics Variables"
-execute:
-  warning: false
-  message: false
----
-
-```{r, include=FALSE, echo=FALSE}
+## ----include=FALSE, echo=FALSE------------------------------------------------
 library( haven )
 library( dplyr )
 library( tidyr )
@@ -18,10 +11,9 @@ library( labelled )
 knitr::purl( "30-YEAR-THREE.qmd" )   # convert QMD to R script
 source(      "30-YEAR-THREE.R"   )   # run all chunks in prior step
 
-```
 
 
-```{r, eval=F, echo=F}
+## ----eval=F, echo=F-----------------------------------------------------------
 # LOAD SURVEY DATA FROM SAVED FILE AFTER LAST CHAPTER
 
 fpath     <- "DATA-PREP/03-year-three/02-data-intermediate/"
@@ -33,18 +25,9 @@ survey_df <- read.csv( paste0( fpath, fname ) )
 dd <- readxl::read_xlsx( 
         "../data-dictionaries/dd-nptrends-wave-03.xlsx", 
         sheet = "data dictionary" )
-```
 
 
-Qualtrics uses some random values like -99 to encode for things like skipped questions, "not sure" categories, or "not applicable" answers. Currently one needs to a dictionary to look up every variable to understand what each value means. 
-
-In addition, some response categories are confusing because they equate to a missing response. For example, from an analytical perspective an answer of "not sure" and skipping the question completely both equate to a missing value when the response categories are yes or no.  
-
-The **memisc** package was designed for working with survey data. It allows you to label response categories in the data and also designate different types of missingness (e.g. Unsure, N/A, and -99 can all be coded as missing).
-
-Several factor and boolean variables in this survey data set have inconsistent coding. They are recoded in this section and the decision criteria are documented for inspection and review.
-
-```{r, echo=F}
+## ----echo=F-------------------------------------------------------------------
 # Functions to convert survey variable to survey
 # item with missingness and variable labels
 
@@ -134,11 +117,9 @@ keep_numbers <- function(x){
   x[ x == -99 ] <- Inf
   return(x)
 }
-```
 
 
-
-```{r, eval=F, echo=F}
+## ----eval=F, echo=F-----------------------------------------------------------
 
 #####
 #####   FUNDRAISING EXAMPLE
@@ -159,13 +140,9 @@ missing <- "UNSURE"
 d2 <- dplyr::select( survey_df, all_of( COLUMNS ) )
 d3 <- recode_columns( d2, k=COLUMNS, pattern, replace, values, labels, missing )
 codebook( d3 )
-```
 
 
-
-
-
-```{r, eval=F, echo=F}
+## ----eval=F, echo=F-----------------------------------------------------------
 
 # ALTERNATIVE REPRESENTATION OF RECODING RULES
 
@@ -190,11 +167,9 @@ missing <- "UNSURE"
 d3 <- recode_columns( d2, k=COLUMNS, pattern, replace, values, labels, missing )
 codebook( d3 )
 
-```
 
 
-
-```{r, eval=F, echo=F}
+## ----eval=F, echo=F-----------------------------------------------------------
 # NUMERIC ENCODING WITH MEMISC TO PRESERVE MISSING CASES
 #
 #   We want to use a number to preserve the numeric data,
@@ -249,36 +224,9 @@ x %>% include.missings() %>% as.integer()
 
 # converted to NA when saving to file
 x %>% as.numeric() %>% summary()
-```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Yes/No Questions
-
-
-| Original Value | Description | Recode Value | Code as Missing ? |
-|---|---|---|---|
-|Yes|Yes|1|No|
-|No|No|0|No|
-|Unsure|Unsure|97|Yes|
-|N/A|Not Applicable|98|Yes|
-|-99|Incomplete|99|Yes|
-|NA| Unanswered|NA|Yes|
-
-
-```{r}
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 bool_qns <- 
   c( program_change_qns_bool, 
@@ -312,44 +260,17 @@ missing <- c( 97, 98, 99 )
 survey_df <- 
   survey_df %>% 
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
-```
 
-```{r, eval=F, echo=F}
+
+## ----eval=F, echo=F-----------------------------------------------------------
 # codebook( survey_df[ COLUMNS[1] ] )
-```
 
-**Example:**
 
-```{r, results="asis", echo=F}
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
-```
 
 
-
-
-
-
-
-# Single Checkboxes
-
-These questions are presented as a checkbox to the respondent. They indicate an affirmative answer to the question.
-
-
-
-
-
-## Seek or Receive Fundraising Questions
-
-These checkboxes are ticked by the respondent to indicate if they have sought or received funding from a specific source.
-
-| Original Value | Description | Recode Label | Recode Value | Code as Missing? |
-|---|---|---|---|---|
-|(select all that apply)|Checkbox Checked|Yes|1|No|
-|-99|Checkbox Unchecked|No|0|No|
-|NA|Unanswered|NA|NA|Yes|
-
-
-```{r}
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  fundraise_skrcv_qns_bool
 
@@ -374,46 +295,17 @@ missing <- "UNSURE"
 survey_df <- 
   survey_df %>% 
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
-```
 
-```{r, eval=F, echo=F}
+
+## ----eval=F, echo=F-----------------------------------------------------------
 # codebook( survey_df[ COLUMNS[1] ] )
-```
 
-**Example:**
 
-```{r, results="asis", echo=F}
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
-```
 
 
-
-
-
-
-## Race and Gender Checkboxes
-
-These checkboxes are ticked by the respondent to indicate if their CEO or board chair belong to a specified race or gender identity.
-
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Asian/Pacific Islander|Checkbox Checked|Yes|1|No|
-|Black/African American|Checkbox Checked|Yes|1|No|
-|Latinx/Hispanic|Checkbox Checked|Yes|1|No|
-|Native American/American Indian|Checkbox Checked|Yes|1|No|
-|White|Checkbox Checked|Yes|1|No|
-|Man|Checkbox Checked|Yes|1|No|
-|Woman|Checkbox Checked|Yes|1|No|
-|Trans|Checkbox Checked|Yes|1|No|
-|Gender non-conforming/Non-Binary|Checkbox Checked|Yes|1|No|
-|Other (please specify)|Checkbox Checked|Yes|1|No|
-|0|Checkbox Unchecked|No|0|No|
-|-99|Incomplete|Incomplete|99|Yes|
-|NA|Unanswered|NA|NA|Yes|
-
-
-
-```{r}
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  race_gender_qns_bool
 
@@ -448,32 +340,17 @@ missing <- "x"
 survey_df <- 
   survey_df %>% 
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
-```
 
-```{r, eval=F, echo=F}
+
+## ----eval=F, echo=F-----------------------------------------------------------
 codebook( survey_df[ COLUMNS[1] ] )
-```
 
-**Example:**
 
-```{r, results="asis", echo=F}
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
-```
 
 
-
-## Regulation Checkboxes
-
-These questions are presented as a checkbox to the user to indicate that a question is not applicable. "Yes" here means "Yes, this question is not applicable".
-
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|1|Checkbox Checked|Yes|1|No|
-|NA|Unanswered|No|0|No|
-|22|Yes|Yes|1|No|
-|22|No|Yes|0|No|
-
-```{r}
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  regulation_qns
 
@@ -508,33 +385,17 @@ missing <- NULL
 survey_df <- 
   survey_df %>% 
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
-```
 
-```{r, eval=F, echo=F}
+
+## ----eval=F, echo=F-----------------------------------------------------------
 codebook( survey_df[ COLUMNS[2] ] )
-```
 
-**Example:**
 
-```{r, results="asis", echo=F}
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
-```
 
 
-
-
-
-## Staffing Plans
-
-These questions are presented as a checkbox to the user to indicate that a question is not applicable. "Yes" here means "Yes, this question is not applicable".
-
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|1|Checkbox Checked|Yes|1|No|
-|NA|Unanswered|No|0|No|
-
-
-```{r}
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  staffing_plans
 
@@ -567,32 +428,17 @@ missing <- NULL
 survey_df <- 
   survey_df %>% 
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
-```
 
-```{r, eval=F, echo=F}
+
+## ----eval=F, echo=F-----------------------------------------------------------
 codebook( survey_df[ COLUMNS[2] ] )
-```
 
-**Example:**
 
-```{r, results="asis", echo=F}
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
-```
 
 
-
-## N/A Checkboxes
-
-These questions are presented as a checkbox to the user to indicate that a question is not applicable. "Yes" here means "Yes, this question is not applicable".
-
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|C|Yes, this question is not applicable|Yes|1|No|
-|N/A|Yes, this question is not applicable|Yes|1|No|
-|-99|Incomplete|No|0|No|
-|NA|Unanswered|NA|NA|Yes|
-
-```{r}
+## -----------------------------------------------------------------------------
 na_bool_qns <- 
   c( staff_qns_bool, 
      reserve_qns_bool, 
@@ -624,43 +470,17 @@ missing <- NULL
 survey_df <- 
   survey_df %>% 
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
-```
 
-```{r, eval=F, echo=F}
+
+## ----eval=F, echo=F-----------------------------------------------------------
 codebook( survey_df[ COLUMNS[1] ] )
-```
 
-**Example:**
 
-```{r, results="asis", echo=F}
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
-```
 
 
-
-
-
-# Multi-selection Inputs
-
-These questions offer the user with multiple options to select one from. Since the options are ordered categories, they are coded on an ordinal scale.
-
-## Increase - Decrease Questions
-
-There 2 questions that ask respondents to define changes via an increase or decrease
-relative to previous years. They are recoded on an ordinal scale.
-
-## Changes in Demand Questions
-
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Increase|Increase|Increase|2|No|
-|Stay the same|Stay the same|Unchanged|1|No|
-|Decrease|Decrease|Decrease|0|No|
-|-99|Incomplete|No|99|Yes|
-|NA|Unanswered|NA|NA|Yes|
-
-
-```{r}
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  demand_fct_qns
 
@@ -687,40 +507,17 @@ missing <- "x"
 survey_df <- 
   survey_df %>% 
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
-```
 
-```{r, eval=F, echo=F}
+
+## ----eval=F, echo=F-----------------------------------------------------------
 codebook( survey_df[ COLUMNS[1] ] )
-```
 
-**Example:**
 
-```{r, results="asis", echo=F}
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
-```
 
 
-
-
-
-
-## Changes in Fundraising Questions
-
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Increased significantly (by more than 10%)|Largest Increase|Increase Significantly|5|No|
-|Increased moderately (by less than 10%)|Second Largest Increase|Increase Moderately|4|No|
-|Stayed more or less the same|Third Largest Increase|Unchanged|3|No|
-|Decreased moderately (by less than 10%)|Fourth Largest Increase|Decrease Moderately|2|No|
-|Decreased significantly (by more than 10%)|Fifth Largest Increase|Decrease Significantly|1|No|
-|Unsure|Unsure|Unsure|99|Missing|
-|-99|Incomplete|Incomplete|98|Yes|
-|N/A|Not Applicable|Not Applicable|97|Yes|
-|NA|Unanswered|NA|NA|Yes|
-
-
-
-```{r}
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  fundraise_change_qns_fct
 
@@ -752,42 +549,17 @@ missing <- c( "X" )
 survey_df <- 
   survey_df %>% 
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
-```
 
-```{r, eval=F, echo=F}
+
+## ----eval=F, echo=F-----------------------------------------------------------
 codebook( survey_df[ COLUMNS[1] ] )
-```
 
-**Example:**
 
-```{r, results="asis", echo=F}
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
-```
 
 
-
-
-
-
-# Level of Importance Questions
-
-There are 2 questions that ask respondents to rank the importance of volunteers and donors respectively. However, both sets of options' are not identical. Hence, they are recoded to common values for reproducibility.
-
-## Volunteer Importance
-
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Essential - we depend entirely on volunteers to carry out our mission and goals|Maximum Importance|Essential|5|No|
-|Very important - we depend on volunteers for a wide range of tasks, but not all|Second Most Important|Very Important|4|No|
-|Somewhat important - we depend on volunteers for several key tasks|Third Most Important|Somewhat Important|3|No|
-|Not very important - we depend on volunteers for only non-essential tasks|Fourth Most Important|Not Very Important|2|No|
-|Not at all important - we could carry out our mission and goals without using volunteers|Fifth Most Important|Not At All Important|1|No|
-|We do not use volunteers|Sixth Most Important|Not Used|0|No|
-|-99|Incomplete|Incomplete|99|Yes|
-|NA|Unanswered|NA|NA|Yes|
-
-
-```{r}
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  volimportance_qns_fct
 
@@ -818,38 +590,17 @@ missing <- c( "X" )
 survey_df <- 
   survey_df %>% 
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
-```
 
-```{r, eval=F, echo=F}
+
+## ----eval=F, echo=F-----------------------------------------------------------
 codebook( survey_df[ COLUMNS[1] ] )
-```
 
-**Example:**
 
-```{r, results="asis", echo=F}
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
-```
 
 
-
-
-
-
-## Donor Importance
-
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Essential, we depend entirely on individual donations to carry out our mission and goals|Maximum Importance|Essential|5|No|
-|Very important, we depend on individual donations for a wide range of activities, but not all|Very Important|4|No|
-|Important, we depend on individual donations for several key activities|Third Most Important|Somewhat Important|3|No|
-|Not very important, we depend on individual donations for only non-essential activities|Fourth Most Important|Not Very Important|2|No|
-|Not at all important, we could carry out our mission and goals without donations from individuals|Fifth Most Important|Not At All Important|1|No|
-|We do not receive donations from individuals|Sixth Most Important|Not Used|0|No|
-|-99|Incomplete|Incomplete|99|Yes|
-|NA|Unanswered|NA|NA|Yes|
-
-
-```{r}
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  donimportance_qns_fct
 
@@ -881,44 +632,17 @@ missing <- c( "X" )
 survey_df <- 
   survey_df %>% 
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
-```
 
-```{r, eval=F, echo=F}
+
+## ----eval=F, echo=F-----------------------------------------------------------
 codebook( survey_df[ COLUMNS[1] ] )
-```
 
-**Example:**
 
-```{r, results="asis", echo=F}
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
-```
 
 
-
-
-
-
-
-
-
-
-
-# Frequency Questions
-
-These questions ask respondents to rank the frequency at which they engage in an activity.
-
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Frequently|Most Frequent|Frequently|4|No|
-|Almost all the time|Second Most Frequent|More Often Than Not|3|No|
-|Occasionally|Third Most Frequent|Occasionally|2|No|
-|Rarely|Fourth Most Frequent|Rarely|1|No|
-|Never|Fifth Most Frequent|Occasionally|0|No|
-|-99|Incomplete|Incomplete|99|Yes|
-|NA|Unanswered|NA|NA|Yes|
-
-
-```{r}
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  extaffairs_qns_fct
 
@@ -947,41 +671,17 @@ missing <- c( "X" )
 survey_df <- 
   survey_df %>% 
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
-```
 
-```{r, eval=F, echo=F}
+
+## ----eval=F, echo=F-----------------------------------------------------------
 codebook( survey_df[ COLUMNS[1] ] )
-```
 
-**Example:**
 
-```{r, results="asis", echo=F}
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
-```
 
 
-
-
-
-
-
-
-
-
-
-
-# Integer Inputs
-
-These questions accept an integer input from users to indicate the number of staff they have, people they served, or donors they have. 
-
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Whole Number|Number of Staff, People or Donors|NA|Integer Value|No|
-|N/A|Not Applicable|NA|-1|Yes|
-|-99|Incomplete|NA|-2|Yes|
-|NA|Unanswered|NA|NA|Yes|
-
-```{r}
+## -----------------------------------------------------------------------------
 int_qns <- 
   c( staff_qns_int, 
      people_served_qns_int, 
@@ -1002,37 +702,17 @@ survey_df[ COLUMNS ] <-
   lapply( memisc::as.item, missing.values=Inf )
 
 survey_df[ COLUMNS ] <- purrr::map( COLUMNS, add_q_details, survey_df )
-```
 
 
-```{r, eval=F, echo=F}
+## ----eval=F, echo=F-----------------------------------------------------------
 codebook( survey_df[ COLUMNS[1] ] )
-```
 
-**Example:**
 
-```{r, results="asis", echo=F}
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
-```
 
 
-
-
-
-
-
-# Numeric Inputs
-
-These questions accept a numeric input from users to denote dollar values.
-For some variables, additional processing is done to remove commas and "$" signs.
-
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Dollar Amount|Dollar Amount|NA|Numeric Value|No|
-|-99|Incomplete|NA|-1|Yes|
-|NA|Unanswered|NA|NA|Yes|
-
-```{r, warning=FALSE}
+## ----warning=FALSE------------------------------------------------------------
 numeric_qns <- 
   c( majorgift_qn_num, 
      reserve_qns_num, 
@@ -1050,27 +730,17 @@ survey_df[ COLUMNS ] <-
   lapply( memisc::as.item, missing.values=Inf )
 
 survey_df[ COLUMNS ] <- purrr::map( COLUMNS, add_q_details, survey_df )
-```
 
 
-```{r, eval=F, echo=F}
+## ----eval=F, echo=F-----------------------------------------------------------
 codebook( survey_df[ COLUMNS[2] ] )
-```
 
-**Example:**
 
-```{r, results="asis", echo=F}
+## ----results="asis", echo=F---------------------------------------------------
 show_html( codebook( survey_df[ COLUMNS[1] ] ))
-```
 
 
-
-
-# Text Inputs
-
-These questions allow the user to enter raw text as answers. All non-text values are converted to NAs.
-
-```{r}
+## -----------------------------------------------------------------------------
 text_qns <- 
   c( staff_qns_text, 
      finance_chng_qns_text, 
@@ -1092,24 +762,17 @@ survey_df[ text_qns ] <-
 survey_df[ text_qns ] <- purrr::map( text_qns, add_q_details, survey_df )
 
 codebook( survey_df[ text_qns[1] ] )
-```
 
 
-```{r, eval=F, echo=F}
+## ----eval=F, echo=F-----------------------------------------------------------
 # codebook( survey_df[ COLUMNS[1] ] )
-```
 
-**Example:**
 
-```{r, results="asis", echo=F}
+## ----results="asis", echo=F---------------------------------------------------
 show_html( codebook( survey_df[ text_qns[1] ] ))
-```
 
 
-
-
-
-```{r, echo=F}
+## ----echo=F-------------------------------------------------------------------
 #### 
 ####   CLEANUP
 #### 
@@ -1122,21 +785,4 @@ write.csv( survey_df, paste0( fpath, fname ), row.names=F )
 
 rdsname <- "SURVEYDF-step31.rds"
 saveRDS( survey_df, paste0( fpath, rdsname ) )
-```
-
-
-
-
-
-<style>
-
-h1, h2 {
-  margin-top: 80px
-}
-
-.codebook-entry {
-   background-color: beige;
-   margin-top: 20px;
-}
-</style>
 

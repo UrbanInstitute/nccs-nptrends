@@ -1,9 +1,257 @@
 ---
-title: "Title"
+title: "Summary Statistics"
+execute:
+  warning: false
+  message: false
 ---
 
-In summary, this book has no content whatsoever.
+```{r, include=FALSE, echo=FALSE}
+library( haven )
+library( dplyr )
+library( tidyr )
+library( epoxy )
+library( memisc )
+library( labelled )
 
-```{r}
-1 + 1
+# SOURCE PREVIOUS STEPS 
+knitr::purl( "31-year3-recoding-rules.qmd" )   # convert QMD to R script
+source(      "31-year3-recoding-rules.R"   )   # run all chunks in prior step
 ```
+
+
+
+
+  
+```{r, results="asis", echo=F, eval=F}
+all.questions <- c(
+  program_change_qns_bool, program_change_qns_txt,
+  people_served_qns_bool, people_served_qns_int,
+  demand_fct_qns,
+  staff_qns_bool, staff_qns_int, staff_qns_text,
+  volimportance_qns_fct, donimportance_qns_fct,
+  leadership_chng_qns_bool, leadership_chng_qns_text,
+  race_gender_qns_bool, race_gender_qns_text,
+  finance_chng_qns_bool, finance_chng_qns_text,
+  cares_qns_bool, cares_qns_num,
+  reserve_qns_bool, reserve_qns_num,
+  finance_revenue_qns_num, finance_revenue_qns_text,
+  fundraise_skrcv_qns_bool,
+  fundraise_donor_qns_int,
+  fundraise_change_qns_fct,
+  fundraise_qns_bool,fundraise_qns_text,
+  majorgift_qn_num,
+  extaffairs_qns_fct,
+  primary_cncrn_qn_text,
+  fiscal_year_fct, fiscal_year_txt,
+  regulation_qns,
+  staffing_plans )
+
+omit.these.groups <- c("id","DROP","MainAddress","Comments")
+all.vars <- dd$vname[ ! dd$group %in% omit.these.groups ] |> na.omit()
+show_html( codebook( survey_df[ all.vars ] ))
+```
+
+
+
+<br>
+<hr>
+<br>
+
+- **`r length( c(program_change_qns_bool, program_change_qns_txt) ) `** questions about **CHANGES TO PROGRAMS AND SERVICES**
+- **`r length( c(people_served_qns_bool,people_served_qns_int) ) `** questions about the **NUMBER OF PEOPLE EACH ORGANIZATION SERVES**
+- **`r length( c(demand_fct_qns) ) `** question about **OVERALL PROGRAM DEMAND**
+- **`r length( c(staff_qns_bool, staff_qns_int,  staff_qns_text) ) `** questions about **STAFF NUMBERS**
+- **`r length( c(volimportance_qns_fct, donimportance_qns_fct) ) `** questions about **DONOR AND VOLUNTEER IMPORTANCE**
+- **`r length( c(leadership_chng_qns_bool, leadership_chng_qns_text) ) `** questions about **CHANGES TO LEADERSHIP**
+- **`r length( c(race_gender_qns_bool, race_gender_qns_text) ) `** questions about **THE RACE AND GENDER OF CEOS AND BOARD CHAIRS**
+- **`r length( c(finance_chng_qns_bool, finance_chng_qns_text) ) `** questions about **CHANGES TO ORGANIZATIONAL FINANCES**
+- **`r length( c(cares_qns_bool, cares_qns_num) ) `** questions about **CARES FUNDING**
+- **`r length( c(reserve_qns_bool, reserve_qns_num) ) `** questions about **FINANCIAL RESERVES**
+- **`r length( c(finance_revenue_qns_num, finance_revenue_qns_text) ) `** questions about **REVENUE SOURCES**
+- **`r length( c(fundraise_skrcv_qns_bool) ) `** questions about **FUNDRAISING SOURCES**
+- **`r length( c(fundraise_donor_qns_int) ) `** questions about **DONOR TYPES IN FUNDRAISING**
+- **`r length( c(fundraise_change_qns_fct) ) `** questions about **FUNDRAISING YIELDS**
+- **`r length( c(fundraise_qns_bool, fundraise_qns_text) ) `** questions about **FUNDRAISING STRATEGY CHANGES**
+- **`r length( c(majorgift_qn_num) ) `** questions about **MAJOR GIFT AMOUNTS**
+- **`r length( c(extaffairs_qns_fct) ) `** questions about **EXTERNAL AFFAIRS**  
+- **`r length( c(primary_cncrn_qn_text) ) `** questions about **FUTURE CONCERNS**
+- **`r length( c(fiscal_year_fct, fiscal_year_txt) ) `** questions about **FISCAL YEAR END**
+- **`r length( c(regulation_qns) ) `** questions about **REGULATION**
+- **`r length( c(staffing_plans) ) `** questions about **STAFFING PLANS**
+
+
+<br>
+<hr>
+<br>
+
+
+# CHANGES TO PROGRAMS AND SERVICES
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(program_change_qns_bool,program_change_qns_txt)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+
+# NUMBER OF PEOPLE EACH ORGANIZATION SERVES
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(people_served_qns_bool,people_served_qns_int)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+
+# OVERALL PROGRAM DEMAND
+
+```{r, results="asis", echo=F}
+COLUMNS <- demand_fct_qns
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+
+# STAFF NUMBERS
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(staff_qns_bool, staff_qns_int,  staff_qns_text)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+
+
+# DONOR AND VOLUNTEER IMPORTANCE
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(volimportance_qns_fct, donimportance_qns_fct)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+
+# CHANGES TO LEADERSHIP
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(leadership_chng_qns_bool, leadership_chng_qns_text)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+
+
+# THE RACE AND GENDER OF CEOS AND BOARD CHAIRS
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(race_gender_qns_bool, race_gender_qns_text)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+# CHANGES TO ORGANIZATIONAL FINANCES
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(finance_chng_qns_bool, finance_chng_qns_text)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+# CARES FUNDING
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(cares_qns_bool, cares_qns_num)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+# FINANCIAL RESERVES
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(reserve_qns_bool, reserve_qns_num)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+# REVENUE SOURCES
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(finance_revenue_qns_num, finance_revenue_qns_text)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+# FUNDRAISING SOURCES**
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(fundraise_skrcv_qns_bool)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+# DONOR TYPES IN FUNDRAISING
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(fundraise_donor_qns_int)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+# FUNDRAISING YIELDS
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(fundraise_change_qns_fct)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+
+# FUNDRAISING STRATEGY CHANGES
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(fundraise_qns_bool, fundraise_qns_text)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+# MAJOR GIFT AMOUNTS
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(majorgift_qn_num)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+# EXTERNAL AFFAIRS
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(extaffairs_qns_fct)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+# FUTURE CONCERNS
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(primary_cncrn_qn_text)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+# FISCAL YEAR END
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(fiscal_year_fct, fiscal_year_txt) 
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+# REGULATION
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(regulation_qns)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+# STAFFING PLANS
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(staffing_plans)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+
+
+<style>
+
+h1, h2 {
+  margin-top: 80px;
+}
+
+.codebook-entry {
+   background-color: beige;
+   margin-top: 60px;
+}
+
+</style>
