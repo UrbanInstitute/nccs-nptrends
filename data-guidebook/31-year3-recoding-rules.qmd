@@ -830,18 +830,17 @@ RULES <- c(
 "                 Not very important - we depend on volunteers for only non-essential tasks    =>>     2   ",
 "  Not at all important - we could carry out our mission and goals without using volunteers    =>>     1   ",
 "                                                                  We do not use volunteers    =>>     0   ",
-"                                                                                       -99    =>>     X   "    )
+"                                                                                        99    =>>     0   "    )
 
 rules <- parse_rules( RULES )          
 pattern <- rules[[ "pattern" ]]
 replace <- rules[[ "replace" ]]
 
 # MEMISC LABELS AND MISSING VALUE CODES 
-values  <- c( 5, 4, 3, 2, 1, 0, "X" )
+values  <- c( 5, 4, 3, 2, 1, 0 )
 labels  <- c( "Essential", "Very Important", "Somewhat Important", 
-              "Not Very Important", "Not At All Important", "Not Used", 
-              "Incomplete" )
-missing <- c( "X" )
+              "Not Very Important", "Not At All Important", "Not Used" )
+missing <- NA
 
 # RECODE VARIABLES 
 survey_df <- 
@@ -892,7 +891,7 @@ RULES <- c(
   "           Not very important, we depend on individual donations for only non-essential activities  =>>  2  ",
   " Not at all important, we could carry out our mission and goals without donations from individuals  =>>  1  ",
   "                                                      We do not receive donations from individuals  =>>  0  ",
-  "                                                                                               -99  =>>  X  "  )
+  "                                                                                                99  =>>  0  "  )
 
 
 rules <- parse_rules( RULES )          
@@ -900,11 +899,11 @@ pattern <- rules[[ "pattern" ]]
 replace <- rules[[ "replace" ]]
 
 # MEMISC LABELS AND MISSING VALUE CODES 
-values  <- c(5, 4, 3, 2, 1, 0, "X" )
+values  <- c( 5, 4, 3, 2, 1, 0  )
 labels  <- c( "Essential", "Very Important", 
               "Somewhat Important", "Not Very Important", 
-              "Not At All Important", "Not Used", "Incomplete")
-missing <- c( "X" )
+              "Not At All Important", "Not Used" )
+missing <- NA
 
 # RECODE VARIABLES 
 survey_df <- 
@@ -968,7 +967,7 @@ replace <- rules[[ "replace" ]]
 # MEMISC LABELS AND MISSING VALUE CODES 
 values  <- c( 5, 4, 3, 2, 1 )
 labels  <- c( "Frequently", "More Often than Not", 
-              "Occasionally", "Rarely", "Never", "Incomplete" )
+              "Occasionally", "Rarely", "Never"  )
 missing <- NA
 
 # RECODE VARIABLES 

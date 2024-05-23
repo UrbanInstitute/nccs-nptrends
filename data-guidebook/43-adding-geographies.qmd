@@ -1,5 +1,5 @@
 ---
-title: "Title"
+title: "Adding Census Data"
 ---
 
 In summary, this book has no content whatsoever.

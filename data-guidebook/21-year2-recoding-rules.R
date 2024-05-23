@@ -1,4 +1,4 @@
-## ----include=FALSE, echo=FALSE-----------------------------------------------------------------------------------------------
+## ----include=FALSE, echo=FALSE------------------------------------------------
 library( haven )
 library( dplyr )
 library( tidyr )
@@ -13,21 +13,21 @@ source( "20-YEAR-TWO.R" )          # run all chunks in prior step
 
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## # LOAD SURVEY DATA FROM SAVED FILE AFTER LAST CHAPTER
-## 
-## fpath <- "DATA-PREP/02-year-two/02-data-intermediate/"
-## fname <- "SURVEYDF.csv"
-## survey_df <- read.csv( paste0( fpath, fname ) )
-## 
-## # LOAD DATA DICTIONARY
-## 
-## dd <- readxl::read_xlsx(
-##         "../data-dictionaries/dd-nptrends-wave-02.xlsx",
-##         sheet = "data dictionary" )
+## ----eval=F, echo=F-----------------------------------------------------------
+# LOAD SURVEY DATA FROM SAVED FILE AFTER LAST CHAPTER
+
+fpath <- "DATA-PREP/02-year-two/02-data-intermediate/"
+fname <- "SURVEYDF.csv"
+survey_df <- read.csv( paste0( fpath, fname ) )
+
+# LOAD DATA DICTIONARY 
+
+dd <- readxl::read_xlsx( 
+        "../data-dictionaries/dd-nptrends-wave-02.xlsx", 
+        sheet = "data dictionary" )
 
 
-## ----echo=F------------------------------------------------------------------------------------------------------------------
+## ----echo=F-------------------------------------------------------------------
 # Functions to convert survey variable to survey
 # item with missingness and variable labels
 
@@ -119,114 +119,114 @@ keep_numbers <- function(x){
 }
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## 
-## #####
-## #####   FUNDRAISING EXAMPLE
-## #####
-## 
-## # APPLY TO COLUMNS K:
-## COLUMNS <-  fundraise_skrcv_qns_bool
-## 
-## # VALUES FOR RECODING
-## pattern <- c( "(select all that apply)", "-99" )
-## replace <- c( "1", "0" )
-## 
-## # MEMISC LABELS AND MISSING VALUE CODES
-## values  <- c("0", "1")
-## labels  <- c( "No", "Yes" )
-## missing <- "UNSURE"
-## 
-## d2 <- dplyr::select( survey_df, all_of( COLUMNS ) )
-## d3 <- recode_columns( d2, k=COLUMNS, pattern, replace, values, labels, missing )
-## codebook( d3 )
+## ----eval=F, echo=F-----------------------------------------------------------
+
+#####
+#####   FUNDRAISING EXAMPLE
+#####
+
+# APPLY TO COLUMNS K:
+COLUMNS <-  fundraise_skrcv_qns_bool
+
+# VALUES FOR RECODING 
+pattern <- c( "(select all that apply)", "-99" )
+replace <- c( "1", "0" )
+
+# MEMISC LABELS AND MISSING VALUE CODES  
+values  <- c("0", "1")
+labels  <- c( "No", "Yes" )
+missing <- "UNSURE"
+
+d2 <- dplyr::select( survey_df, all_of( COLUMNS ) )
+d3 <- recode_columns( d2, k=COLUMNS, pattern, replace, values, labels, missing )
+codebook( d3 )
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## 
-## # ALTERNATIVE REPRESENTATION OF RECODING RULES
-## 
-## RULES <- c(     ### -----------------------------
-## 
-##   "   (select all that apply)   =>>   1   ",
-##   "                       -99   =>>   0   "
-## 
-## )               ### ------------------------------
-## 
-## 
-## # VALUES FOR RECODING
-## rules <- parse_rules( RULES )
-## pattern <- rules[[ "pattern" ]]
-## replace <- rules[[ "replace" ]]
-## 
-## # MEMISC LABELS AND MISSING VALUE CODES
-## values  <- c("0", "1")
-## labels  <- c( "No", "Yes" )
-## missing <- "UNSURE"
-## 
-## d3 <- recode_columns( d2, k=COLUMNS, pattern, replace, values, labels, missing )
-## codebook( d3 )
-## 
+## ----eval=F, echo=F-----------------------------------------------------------
+
+# ALTERNATIVE REPRESENTATION OF RECODING RULES
+
+RULES <- c(     ### -----------------------------
+       
+  "   (select all that apply)   =>>   1   ", 
+  "                       -99   =>>   0   "    
+
+)               ### ------------------------------
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## # NUMERIC ENCODING WITH MEMISC TO PRESERVE MISSING CASES
-## #
-## #   We want to use a number to preserve the numeric data,
-## #   but we don't want to number to impact computations.
-## #   Ideally the user has to remove missing values before
-## #   any computations so that the missing values are not
-## #   polluting the statistics.
-## 
-## #   Options: -n (n being any value), NaN, Inf
-## 
-## survey_df <- read.csv( paste0( fpath, fname ) )
-## x <- survey_df[[ "FndRaise_MajGift_Amt" ]]
-## sum( x == -99, na.rm=T )  # 18 missing values
-## 
-## 
-## x[ x == -99 ] <- -1   # user might calculate without realizing
-## x[ x == -99 ] <- NaN  # can't calculate until dropping and distinct from NA;
-##                       #   - memisc doesn't recognize as missing value though
-## x[ x == -99 ] <- Inf  # this one works
-## 
-## 
-## keep_numbers <- function(x){
-##   x <- gsub( "[$,]", "", x ) %>% as.numeric()
-##   x[ x == -99 ] <- Inf
-##   return(x)
-## }
-## 
-## x <- survey_df[[ "FndRaise_MajGift_Amt" ]]
-## x <- keep_numbers( x )
-## x <- memisc::as.item( x, missing.values=Inf )
-## 
-## codebook( x )
-## 
-##    #   Storage mode: double
-##    #   Measurement: interval
-##    #   Missing values: Inf
-##    #
-##    #   Values                  N Percent
-##    #
-##    #      M (unlab.mss.)      18     2.2
-##    #   NA M                  156    19.0
-##    #
-##    #        Min:       0.010
-##    #        Max: 1000000.000
-##    #       Mean:    5935.894
-##    #   Std.Dev.:   44801.714
-## 
-## # missing values preserved in memisc object
-## x %>% print()
-## x %>% include.missings() %>% as.integer()
-## 
-## 
-## # converted to NA when saving to file
-## x %>% as.numeric() %>% summary()
+# VALUES FOR RECODING 
+rules <- parse_rules( RULES )
+pattern <- rules[[ "pattern" ]]
+replace <- rules[[ "replace" ]]
+
+# MEMISC LABELS AND MISSING VALUE CODES  
+values  <- c("0", "1")
+labels  <- c( "No", "Yes" )
+missing <- "UNSURE"
+
+d3 <- recode_columns( d2, k=COLUMNS, pattern, replace, values, labels, missing )
+codebook( d3 )
 
 
-## ----------------------------------------------------------------------------------------------------------------------------
+
+## ----eval=F, echo=F-----------------------------------------------------------
+# NUMERIC ENCODING WITH MEMISC TO PRESERVE MISSING CASES
+#
+#   We want to use a number to preserve the numeric data,
+#   but we don't want to number to impact computations.
+#   Ideally the user has to remove missing values before 
+#   any computations so that the missing values are not
+#   polluting the statistics.
+
+#   Options: -n (n being any value), NaN, Inf
+
+survey_df <- read.csv( paste0( fpath, fname ) )
+x <- survey_df[[ "FndRaise_MajGift_Amt" ]]
+sum( x == -99, na.rm=T )  # 18 missing values
+
+
+x[ x == -99 ] <- -1   # user might calculate without realizing
+x[ x == -99 ] <- NaN  # can't calculate until dropping and distinct from NA;
+                      #   - memisc doesn't recognize as missing value though
+x[ x == -99 ] <- Inf  # this one works 
+
+
+keep_numbers <- function(x){
+  x <- gsub( "[$,]", "", x ) %>% as.numeric()
+  x[ x == -99 ] <- Inf
+  return(x)
+}
+
+x <- survey_df[[ "FndRaise_MajGift_Amt" ]]
+x <- keep_numbers( x )
+x <- memisc::as.item( x, missing.values=Inf )
+
+codebook( x )
+
+   #   Storage mode: double
+   #   Measurement: interval
+   #   Missing values: Inf
+   # 
+   #   Values                  N Percent
+   #                                  
+   #      M (unlab.mss.)      18     2.2
+   #   NA M                  156    19.0
+   #                                  
+   #        Min:       0.010            
+   #        Max: 1000000.000            
+   #       Mean:    5935.894            
+   #   Std.Dev.:   44801.714
+
+# missing values preserved in memisc object
+x %>% print()
+x %>% include.missings() %>% as.integer()
+
+
+# converted to NA when saving to file
+x %>% as.numeric() %>% summary()
+
+
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 bool_qns <- 
   c( program_change_qns_bool, 
@@ -262,15 +262,15 @@ survey_df <-
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## # codebook( survey_df[ COLUMNS[1] ] )
+## ----eval=F, echo=F-----------------------------------------------------------
+# codebook( survey_df[ COLUMNS[1] ] )
 
 
-## ----results="asis", echo=F--------------------------------------------------------------------------------------------------
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 
-## ----------------------------------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  fundraise_skrcv_qns_bool
 
@@ -297,15 +297,15 @@ survey_df <-
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## # codebook( survey_df[ COLUMNS[1] ] )
+## ----eval=F, echo=F-----------------------------------------------------------
+# codebook( survey_df[ COLUMNS[1] ] )
 
 
-## ----results="asis", echo=F--------------------------------------------------------------------------------------------------
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 
-## ----------------------------------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  race_gender_qns_bool
 
@@ -342,15 +342,15 @@ survey_df <-
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## codebook( survey_df[ COLUMNS[1] ] )
+## ----eval=F, echo=F-----------------------------------------------------------
+codebook( survey_df[ COLUMNS[1] ] )
 
 
-## ----results="asis", echo=F--------------------------------------------------------------------------------------------------
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 
-## ----------------------------------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 na_bool_qns <- 
   c( staff_qns_bool, 
      reserve_qns_bool, 
@@ -384,15 +384,15 @@ survey_df <-
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## codebook( survey_df[ COLUMNS[1] ] )
+## ----eval=F, echo=F-----------------------------------------------------------
+codebook( survey_df[ COLUMNS[1] ] )
 
 
-## ----results="asis", echo=F--------------------------------------------------------------------------------------------------
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 
-## ----------------------------------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  demand_fct_qns
 
@@ -421,15 +421,15 @@ survey_df <-
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## codebook( survey_df[ COLUMNS[1] ] )
+## ----eval=F, echo=F-----------------------------------------------------------
+codebook( survey_df[ COLUMNS[1] ] )
 
 
-## ----results="asis", echo=F--------------------------------------------------------------------------------------------------
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 
-## ----------------------------------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  fundraise_change_qns_fct
 
@@ -463,15 +463,15 @@ survey_df <-
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## codebook( survey_df[ COLUMNS[1] ] )
+## ----eval=F, echo=F-----------------------------------------------------------
+codebook( survey_df[ COLUMNS[1] ] )
 
 
-## ----results="asis", echo=F--------------------------------------------------------------------------------------------------
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 
-## ----------------------------------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  volimportance_qns_fct
 
@@ -504,15 +504,15 @@ survey_df <-
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## codebook( survey_df[ COLUMNS[1] ] )
+## ----eval=F, echo=F-----------------------------------------------------------
+codebook( survey_df[ COLUMNS[1] ] )
 
 
-## ----results="asis", echo=F--------------------------------------------------------------------------------------------------
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 
-## ----------------------------------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  donimportance_qns_fct
 
@@ -546,15 +546,15 @@ survey_df <-
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## codebook( survey_df[ COLUMNS[1] ] )
+## ----eval=F, echo=F-----------------------------------------------------------
+codebook( survey_df[ COLUMNS[1] ] )
 
 
-## ----results="asis", echo=F--------------------------------------------------------------------------------------------------
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 
-## ----------------------------------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # APPLY TO COLUMNS K:
 COLUMNS <-  extaffairs_qns_fct
 
@@ -585,15 +585,15 @@ survey_df <-
   recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## codebook( survey_df[ COLUMNS[1] ] )
+## ----eval=F, echo=F-----------------------------------------------------------
+codebook( survey_df[ COLUMNS[1] ] )
 
 
-## ----results="asis", echo=F--------------------------------------------------------------------------------------------------
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 
-## ----------------------------------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 int_qns <- 
   c( staff_qns_int, 
      people_served_qns_int, 
@@ -616,15 +616,15 @@ survey_df[ COLUMNS ] <-
 survey_df[ COLUMNS ] <- purrr::map( COLUMNS, add_q_details, survey_df )
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## codebook( survey_df[ COLUMNS[1] ] )
+## ----eval=F, echo=F-----------------------------------------------------------
+codebook( survey_df[ COLUMNS[1] ] )
 
 
-## ----results="asis", echo=F--------------------------------------------------------------------------------------------------
+## ----results="asis", echo=F---------------------------------------------------
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 
-## ----warning=FALSE-----------------------------------------------------------------------------------------------------------
+## ----warning=FALSE------------------------------------------------------------
 numeric_qns <- 
   c( majorgift_qn_num, 
      reserve_qns_num, 
@@ -644,15 +644,15 @@ survey_df[ COLUMNS ] <-
 survey_df[ COLUMNS ] <- purrr::map( COLUMNS, add_q_details, survey_df )
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## codebook( survey_df[ COLUMNS[2] ] )
+## ----eval=F, echo=F-----------------------------------------------------------
+codebook( survey_df[ COLUMNS[2] ] )
 
 
-## ----results="asis", echo=F--------------------------------------------------------------------------------------------------
+## ----results="asis", echo=F---------------------------------------------------
 show_html( codebook( survey_df[ COLUMNS[1] ] ))
 
 
-## ----------------------------------------------------------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 text_qns <- 
   c( staff_qns_text, 
      finance_chng_qns_text, 
@@ -676,10 +676,25 @@ survey_df[ text_qns ] <- purrr::map( text_qns, add_q_details, survey_df )
 codebook( survey_df[ text_qns[1] ] )
 
 
-## ----eval=F, echo=F----------------------------------------------------------------------------------------------------------
-## # codebook( survey_df[ COLUMNS[1] ] )
+## ----eval=F, echo=F-----------------------------------------------------------
+# codebook( survey_df[ COLUMNS[1] ] )
 
 
-## ----results="asis", echo=F--------------------------------------------------------------------------------------------------
+## ----results="asis", echo=F---------------------------------------------------
 show_html( codebook( survey_df[ text_qns[1] ] ))
+
+
+## ----echo=F-------------------------------------------------------------------
+#### 
+####   CLEANUP
+#### 
+
+# temp file for use in next chapter 
+
+fpath <- "DATA-PREP/02-year-two/02-data-intermediate/"
+fname <- "SURVEYDF-step21.csv"
+write.csv( survey_df, paste0( fpath, fname ), row.names=F )
+
+rdsname <- "SURVEYDF-step21.rds"
+saveRDS( survey_df, paste0( fpath, rdsname ) )
 

@@ -590,3 +590,16 @@ fname <- "DATA-CODEBOOK.txt"
 memisc::Write( codebook(survey_df2), file=paste0( fpath, fname ) )
 ```
 
+
+
+<style>
+
+h1, h2 {
+  margin-top: 80px
+}
+
+.codebook-entry {
+   background-color: beige;
+   margin-top: 20px;
+}
+</style>

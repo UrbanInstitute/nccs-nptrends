@@ -29,7 +29,6 @@ book:
       - 41-validating-addresses.qmd
       - 42-geocoding-addresses.qmd
       - 43-adding-geographies.qmd
-      - 44-census-data.qmd
     - part: 50-WEIGHTS.qmd
     - 99-references.qmd
       

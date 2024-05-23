@@ -15,14 +15,14 @@ library( labelled )
 
 # SOURCE PREVIOUS STEPS
 # there were no changes to data in 22-
-knitr::purl( "21-year2-recoding-rules.qmd" )   # convert QMD to R script
-source(      "21-year2-recoding-rules.R"   )   # run all chunks in prior step
+knitr::purl( "31-year3-recoding-rules.qmd" )   # convert QMD to R script
+source(      "31-year3-recoding-rules.R"   )   # run all chunks in prior step
 
 survey_df2 <- as.data.frame( survey_df )
 
-fpath <- "DATA-PREP/01-year-one/02-data-intermediate/"
-fname <- "wave-01-data-intermediate.dta"
-weighted_survey_df <- haven::read_dta( paste0(fpath,fname) )
+fpath <- "DATA-PREP/02-year-two/02-data-final/"
+fname <- "YEAR-02-DATA-RESTRICTED-V01.csv"
+year2_final <- read.csv( paste0(fpath,fname) )
 ```
 
 
@@ -588,3 +588,18 @@ fname <- "DATA-CODEBOOK.txt"
 memisc::Write( codebook(survey_df2), file=paste0( fpath, fname ) )
 ```
 
+
+
+
+
+<style>
+
+h1, h2 {
+  margin-top: 80px
+}
+
+.codebook-entry {
+   background-color: beige;
+   margin-top: 20px;
+}
+</style>

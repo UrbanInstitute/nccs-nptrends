@@ -274,13 +274,13 @@ recode <- function( df,
   df <- df %>% 
     dplyr::mutate(
       dplyr::across(
-        .cols = tidyselect::all_of( COLS ),
-        ~ eval( parse( text=RULES.TXT ) )
+        .cols = tidyselect::all_of( COLUMNS ),
+        ~ eval( RULES.TXT )
     ))
   
   df <- create_survey_item(
     df, 
-    fundraise_skrcv_qns_bool, 
+    qns = COLUMNS, 
     recode_vals  = VALUES, 
     recode_labs  = LABELS, 
     missing_vals = MISSING
@@ -308,7 +308,7 @@ VALUES  <- c( 0, 1 )
 LABELS  <- c( "No", "Yes" )
 MISSING <- c()
 
-df <- recode( df )
+survey_df <- recode( survey_df )
 
 
 ```
