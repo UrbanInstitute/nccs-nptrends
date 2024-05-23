@@ -16,7 +16,7 @@ library( labelled )
 # SOURCE PREVIOUS STEPS 
 
 knitr::purl( "20-YEAR-TWO.qmd" )   # convert QMD to R script
-source( "20-YEAR-TWO.R" )          # run all chunks in prior step
+source(      "20-YEAR-TWO.R" )     # run all chunks in prior step
 
 ```
 

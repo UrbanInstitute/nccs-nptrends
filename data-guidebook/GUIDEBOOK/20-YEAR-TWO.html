@@ -328,7 +328,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>fpath <span class="ot">&lt;-</span> <span class="st">"DATA-PREP/02-year-two/01-data-raw/"</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="st">"wave-02-qualtrics-download-29mar23.csv"</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>survey_df  <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>( <span class="fu">paste0</span>( fpath, fname ) )</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>survey_df  <span class="ot">&lt;-</span> survey_df[ <span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>), ]                      <span class="co"># drop qualtrics headers    </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>survey_df  <span class="ot">&lt;-</span> survey_df[ <span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>), ]                      <span class="co"># drop qualtrics headers  </span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="st">"YEAR-02-COMPLETE-CASE-CODES.csv"</span> </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>cases <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( <span class="fu">paste0</span>(fpath,fname) )</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>cases <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">select</span>( cases, EIN, Completion_Status )</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> <span class="fu">merge</span>( survey_df, cases, <span class="at">by=</span><span class="st">"EIN"</span>, <span class="at">all.x=</span>T )</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  survey_df <span class="sc">%&gt;%</span> </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>( Completion_Status <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Complete"</span>,<span class="st">"Partial_keep"</span>) ) <span class="sc">%&gt;%</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>( <span class="sc">-</span> Completion_Status )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note the raw data is challenging because it contains qualtrics encodings and missing values need context to be used correctly (e.g.&nbsp;were the questions skipped by skip logic, or by the respondent?).</p>
 <div class="cell">
@@ -336,63 +347,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <colgroup>
-<col style="width: 23%">
-<col style="width: 19%">
-<col style="width: 19%">
-<col style="width: 19%">
-<col style="width: 19%">
+<col style="width: 26%">
+<col style="width: 21%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
 </colgroup>
 <thead>
 <tr class="header">
+<th style="text-align: center;">PeopleServed#2_2_1</th>
 <th style="text-align: center;">DemandNextYear</th>
 <th style="text-align: center;">Staff#1_1_1</th>
 <th style="text-align: center;">Staff#1_2_1</th>
 <th style="text-align: center;">Staff#1_3_1</th>
-<th style="text-align: center;">Staff#1_4_1</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: center;">NA</td>
-<td style="text-align: center;">NA</td>
-<td style="text-align: center;">NA</td>
-<td style="text-align: center;">NA</td>
-<td style="text-align: center;">NA</td>
+<td style="text-align: center;">-99</td>
+<td style="text-align: center;">Increase</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">-99</td>
 </tr>
 <tr class="even">
-<td style="text-align: center;">Stay the same</td>
-<td style="text-align: center;">15</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">12</td>
+<td style="text-align: center;">-99</td>
+<td style="text-align: center;">Increase</td>
 <td style="text-align: center;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">Increase</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">0</td>
-<td style="text-align: center;">8</td>
-<td style="text-align: center;">8</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">Stay the same</td>
-<td style="text-align: center;">-99</td>
-<td style="text-align: center;">-99</td>
-<td style="text-align: center;">14</td>
-<td style="text-align: center;">-99</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">Increase</td>
 <td style="text-align: center;">4</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">18</td>
-<td style="text-align: center;">-99</td>
+<td style="text-align: center;">9</td>
 </tr>
-<tr class="even">
+<tr class="odd">
+<td style="text-align: center;">-99</td>
 <td style="text-align: center;">Increase</td>
 <td style="text-align: center;">3</td>
 <td style="text-align: center;">1</td>
-<td style="text-align: center;">16</td>
-<td style="text-align: center;">20</td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">-99</td>
+<td style="text-align: center;">Increase</td>
+<td style="text-align: center;">13</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Increase</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">-99</td>
+<td style="text-align: center;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">N/A</td>
+<td style="text-align: center;">Increase</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">11</td>
 </tr>
 </tbody>
 </table>
@@ -420,7 +431,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Examples:</strong></p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Staff#1_1_1" "Staff#1_2_1" "Staff#1_3_1" "Staff#1_4_1"</code></pre>
+<pre><code>[1] "DemandNextYear" "Staff#1_1_1"    "Staff#1_2_1"    "Staff#1_3_1"   </code></pre>
 </div>
 </div>
 <p>Give the data meaningful names so that it is easier to work with.</p>
@@ -434,30 +445,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Examples:</strong></p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Staff_Fulltime_2021"  "Staff_Parttime_2021"  "Staff_Boardmmbr_2021"
-[4] "Staff_RegVlntr_2021" </code></pre>
+<pre><code>[1] "Dmnd_NxtYear"         "Staff_Fulltime_2021"  "Staff_Parttime_2021" 
+[4] "Staff_Boardmmbr_2021"</code></pre>
 </div>
-</div>
-<p>Add survey questions as an attribute in the data frame:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>temp          <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>( <span class="fu">paste0</span>( fpath, fname ) )</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>question.txt  <span class="ot">&lt;-</span> <span class="fu">as.character</span>( temp[ <span class="dv">1</span>, ] )</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>( temp )</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>( question.txt ) <span class="ot">&lt;-</span> <span class="fu">names</span>( survey_df )</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>( survey_df, <span class="st">"question_txt"</span> ) <span class="ot">&lt;-</span> question.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="drop-nuisance-fields" class="level2">
 <h2 class="anchored" data-anchor-id="drop-nuisance-fields">Drop Nuisance Fields</h2>
 <p>Many of the exported qualtrics fields contain non-useful metadata or are empty. These have been labeled as “DROP” in the <strong>group</strong> field. Remove these for convenience.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SELECT COLUMNS TO DROP: </span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>DROP_THESE <span class="ot">&lt;-</span> dd<span class="sc">$</span>vname[ dd<span class="sc">$</span>group <span class="sc">==</span> <span class="st">"DROP"</span> ] <span class="sc">|&gt;</span> <span class="fu">na.omit</span>()</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  survey_df <span class="sc">%&gt;%</span> </span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>( <span class="sc">-</span><span class="fu">any_of</span>( DROP_THESE ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SELECT COLUMNS TO DROP: </span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>DROP_THESE <span class="ot">&lt;-</span> dd<span class="sc">$</span>vname[ dd<span class="sc">$</span>group <span class="sc">==</span> <span class="st">"DROP"</span> ] <span class="sc">|&gt;</span> <span class="fu">na.omit</span>()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  survey_df <span class="sc">%&gt;%</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>( <span class="sc">-</span><span class="fu">any_of</span>( DROP_THESE ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>

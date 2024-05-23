@@ -22,7 +22,18 @@ dd$vname[ is.na(dd$vname) ] <-
 fpath <- "DATA-PREP/02-year-two/01-data-raw/"
 fname <- "wave-02-qualtrics-download-29mar23.csv"
 survey_df  <- readr::read_csv( paste0( fpath, fname ) )
-survey_df  <- survey_df[ -(1:2), ]                      # drop qualtrics headers    
+survey_df  <- survey_df[ -(1:2), ]                      # drop qualtrics headers  
+
+fname <- "YEAR-02-COMPLETE-CASE-CODES.csv" 
+cases <- read.csv( paste0(fpath,fname) )
+
+cases <- dplyr::select( cases, EIN, Completion_Status )
+survey_df <- merge( survey_df, cases, by="EIN", all.x=T )
+
+survey_df <- 
+  survey_df %>% 
+  dplyr::filter( Completion_Status %in% c("Complete","Partial_keep") ) %>%
+  dplyr::select( - Completion_Status )
 
 
 ## -----------------------------------------------------------------------------
@@ -52,7 +63,11 @@ survey_df <-
 (names(survey_df))[ 52:55 ] 
 
 
-## -----------------------------------------------------------------------------
+## ----eval=F, echo=F-----------------------------------------------------------
+# Add survey questions as an attribute in the data frame: 
+
+fpath <- "DATA-PREP/02-year-two/01-data-raw/"
+fname <- "wave-02-qualtrics-download-29mar23.csv"
 temp          <- readr::read_csv( paste0( fpath, fname ) )
 question.txt  <- as.character( temp[ 1, ] )
 rm( temp )

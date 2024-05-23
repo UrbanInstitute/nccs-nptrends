@@ -4395,6 +4395,11 @@ How many (paid and unpaid) people in your organization will have worke… - 2022
 </div>
 </div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fpath <span class="ot">&lt;-</span> <span class="st">"DATA-PREP/03-year-three/03-data-final/"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="st">"YEAR-03-DATA-RESTRICTED-V01.csv"</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>( survey_df, <span class="fu">paste0</span>( fpath, fname ), <span class="at">row.names=</span>F, <span class="at">na=</span><span class="st">""</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <style>
 
 h1, h2 {

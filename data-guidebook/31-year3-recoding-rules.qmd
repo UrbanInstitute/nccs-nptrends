@@ -1153,6 +1153,13 @@ saveRDS( survey_df, paste0( fpath, rdsname ) )
 
 
 
+```{r}
+fpath <- "DATA-PREP/03-year-three/03-data-final/"
+fname <- "YEAR-03-DATA-RESTRICTED-V01.csv"
+write.csv( survey_df, paste0( fpath, fname ), row.names=F, na="" )
+```
+
+
 
 
 <style>
