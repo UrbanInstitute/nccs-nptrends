@@ -1,4 +1,4 @@
-## ----echo=T-------------------------------------------------------------------
+## ----echo=T-----------------------------------------------------------------------------------------------------------------
 library( haven )
 library( dplyr )
 library( tidyr )
@@ -7,7 +7,7 @@ library( memisc )
 library( labelled )
 
 
-## ----cache=T------------------------------------------------------------------
+## ----cache=T----------------------------------------------------------------------------------------------------------------
 # LOAD DATA DICTIONARY 
 dd <- 
   readxl::read_xlsx( 
@@ -19,12 +19,16 @@ fpath <- "DATA-PREP/03-year-three/01-data-raw/"
 fname <- "year-03-qualtrics-download-combined.csv"
 survey_df  <- readr::read_csv( paste0( fpath, fname ) )
 
+survey_df <- 
+  survey_df %>% 
+  dplyr::filter( Completion_Status %in% c("Complete","Partial_keep") )
 
-## -----------------------------------------------------------------------------
+
+## ---------------------------------------------------------------------------------------------------------------------------
 survey_df[ 1:6, 51:55 ] %>% pander::pander()   # data peek
 
 
-## -----------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------------------------------------
 torename <- 
   dd %>% 
   dplyr::select( vname, vname_raw ) %>% 
@@ -35,11 +39,11 @@ torename <- dplyr::filter( torename, vname_raw != "Q10.2_4" )
 # torename$vname_raw %>% setdiff( names(survey_df) )
 
 
-## ----echo=F-------------------------------------------------------------------
+## ----echo=F-----------------------------------------------------------------------------------------------------------------
 (names(survey_df))[ 52:55 ] 
 
 
-## ----cache=T------------------------------------------------------------------
+## ----cache=T----------------------------------------------------------------------------------------------------------------
 # USE RAW VNAME IF VNAME IS EMPTY:
 dd$vname[ is.na(dd$vname) ] <- dd$vname_raw[ is.na(dd$vname) ]
 
@@ -50,11 +54,11 @@ survey_df <-
      ~ torename$vname )
 
 
-## ----echo=F-------------------------------------------------------------------
+## ----echo=F-----------------------------------------------------------------------------------------------------------------
 (names(survey_df))[ 52:55 ] 
 
 
-## -----------------------------------------------------------------------------
+## ---------------------------------------------------------------------------------------------------------------------------
 temp          <- readr::read_csv( paste0( fpath, fname ) )
 question.txt  <- as.character( temp[ 1, ] )
 rm( temp )
@@ -63,7 +67,7 @@ names( question.txt ) <- names( survey_df )
 attr( survey_df, "question_txt" ) <- question.txt
 
 
-## ----cache=TRUE---------------------------------------------------------------
+## ----cache=TRUE-------------------------------------------------------------------------------------------------------------
 # SELECT COLUMNS TO DROP: 
 DROP_THESE <- dd$vname[ dd$group == "DROP" ] |> na.omit()
 
@@ -72,41 +76,41 @@ survey_df <-
   dplyr::select( -any_of( DROP_THESE ) )
 
 
-## ----echo=F, eval=F-----------------------------------------------------------
+## ----echo=F, eval=F---------------------------------------------------------------------------------------------------------
+## 
+## # Response Types
+## 
+## # Preview of the types of raw responses in the qualtrics files prior to recoding:
+## 
+## 
+## id <- dd$vname[ dd$group == "id" ] |> na.omit()
+## df_preview <- survey_df %>% dplyr::select( - any_of(id) )
+## 
+## ff <- function( x ){
+##   x <- x[ ! is.na(x) ]
+##   x <- unique(x) |> sort() |> head(10)
+##   if( length(x) == 10 ){ x <- c("{FIRST 10 VALUES ONLY}",x) }
+##   paste0( x, collapse=" ;; ")
+## }
+## 
+## L   <- sapply( df_preview, ff )
+## T   <- table( L ) |> sort( d=TRUE)
+## T   <- T[ T > 1 ]
+## tdf <- T |>
+##   as.data.frame() %>%
+##   dplyr::rename( RESPONSE_VALUES = L )
+## 
+## print_qns <- function( val, L ){
+##   nm <- names( L[ L == val ] )
+##   paste0( nm, collapse=" ;; " )
+## }
+## 
+## tdf$QUESTIONS <- purrr::map_chr( tdf$RESPONSE_VALUES, print_qns, L )
+## 
+## tdf[c("QUESTIONS","RESPONSE_VALUES")] %>% pander::pander()
 
-# Response Types 
 
-# Preview of the types of raw responses in the qualtrics files prior to recoding: 
-
-  
-id <- dd$vname[ dd$group == "id" ] |> na.omit()
-df_preview <- survey_df %>% dplyr::select( - any_of(id) )
-
-ff <- function( x ){
-  x <- x[ ! is.na(x) ]
-  x <- unique(x) |> sort() |> head(10)
-  if( length(x) == 10 ){ x <- c("{FIRST 10 VALUES ONLY}",x) }
-  paste0( x, collapse=" ;; ")
-}
-
-L   <- sapply( df_preview, ff )
-T   <- table( L ) |> sort( d=TRUE) 
-T   <- T[ T > 1 ]
-tdf <- T |> 
-  as.data.frame() %>% 
-  dplyr::rename( RESPONSE_VALUES = L )
-
-print_qns <- function( val, L ){
-  nm <- names( L[ L == val ] )
-  paste0( nm, collapse=" ;; " )
-}
-
-tdf$QUESTIONS <- purrr::map_chr( tdf$RESPONSE_VALUES, print_qns, L )
-
-tdf[c("QUESTIONS","RESPONSE_VALUES")] %>% pander::pander()
-
-
-## ----echo=F-------------------------------------------------------------------
+## ----echo=F-----------------------------------------------------------------------------------------------------------------
 # Function to get survey questions 
 # by group and data type from data dictionary
 
@@ -128,7 +132,7 @@ print_qns <- function( qns, data_dict ){
 }
 
 
-## ----cache=T, echo=F----------------------------------------------------------
+## ----cache=T, echo=F--------------------------------------------------------------------------------------------------------
 ## Changes to Programs and Services
 
 program_change_qns_bool <- get_survey_questions( dd, "ProgChanges", "boolean" )
@@ -254,39 +258,39 @@ staffing_plans <- get_survey_questions( dd, "StaffingPlans", "boolean" )
 
 
 
-## ----eval=F, echo=F-----------------------------------------------------------
+## ----eval=F, echo=F---------------------------------------------------------------------------------------------------------
+## 
+## # CHECK FOR MISSED VARIABLES NOT INCLUDED ABOVE
+## 
+## all.questions <- c(
+##   program_change_qns_bool, program_change_qns_txt,
+##   people_served_qns_bool, people_served_qns_int,
+##   demand_fct_qns,
+##   staff_qns_bool, staff_qns_int, staff_qns_text,
+##   volimportance_qns_fct, donimportance_qns_fct,
+##   leadership_chng_qns_bool, leadership_chng_qns_text,
+##   race_gender_qns_bool, race_gender_qns_text,
+##   finance_chng_qns_bool, finance_chng_qns_text,
+##   cares_qns_bool, cares_qns_num,
+##   reserve_qns_bool, reserve_qns_num,
+##   finance_revenue_qns_num, finance_revenue_qns_text,
+##   fundraise_skrcv_qns_bool,
+##   fundraise_donor_qns_int,
+##   fundraise_change_qns_fct,
+##   fundraise_qns_bool,fundraise_qns_text,
+##   majorgift_qn_num,
+##   extaffairs_qns_fct,
+##   primary_cncrn_qn_text,
+##   fiscal_year_fct, fiscal_year_txt,
+##   regulation_qns,
+##   staffing_plans )
+## 
+## omit.these.groups <- c("id","DROP","MainAddress")
+## all.vars <- dd$vname[ ! dd$group %in% omit.these.groups ] |> na.omit()
+## setdiff( all.vars, all.questions )
 
-# CHECK FOR MISSED VARIABLES NOT INCLUDED ABOVE 
 
-all.questions <- c(
-  program_change_qns_bool, program_change_qns_txt,
-  people_served_qns_bool, people_served_qns_int,
-  demand_fct_qns,
-  staff_qns_bool, staff_qns_int, staff_qns_text,
-  volimportance_qns_fct, donimportance_qns_fct,
-  leadership_chng_qns_bool, leadership_chng_qns_text,
-  race_gender_qns_bool, race_gender_qns_text,
-  finance_chng_qns_bool, finance_chng_qns_text,
-  cares_qns_bool, cares_qns_num,
-  reserve_qns_bool, reserve_qns_num,
-  finance_revenue_qns_num, finance_revenue_qns_text,
-  fundraise_skrcv_qns_bool,
-  fundraise_donor_qns_int,
-  fundraise_change_qns_fct,
-  fundraise_qns_bool,fundraise_qns_text,
-  majorgift_qn_num,
-  extaffairs_qns_fct,
-  primary_cncrn_qn_text,
-  fiscal_year_fct, fiscal_year_txt,
-  regulation_qns,
-  staffing_plans )
-
-omit.these.groups <- c("id","DROP","MainAddress")
-all.vars <- dd$vname[ ! dd$group %in% omit.these.groups ] |> na.omit()
-setdiff( all.vars, all.questions )
-
-
-## ----echo=F-------------------------------------------------------------------
+## ----echo=F-----------------------------------------------------------------------------------------------------------------
 #### 
 ####   CLEANUP
 #### 

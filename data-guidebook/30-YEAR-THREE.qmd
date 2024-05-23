@@ -36,6 +36,10 @@ dd <-
 fpath <- "DATA-PREP/03-year-three/01-data-raw/"
 fname <- "year-03-qualtrics-download-combined.csv"
 survey_df  <- readr::read_csv( paste0( fpath, fname ) )
+
+survey_df <- 
+  survey_df %>% 
+  dplyr::filter( Completion_Status %in% c("Complete","Partial_keep") )
 ```
 
 

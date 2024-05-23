@@ -540,6 +540,11 @@ COLUMNS <-  staffing_plans
 
 # VALUES THAT NEED RECODING
 
+row.id <- apply( survey_df[ COLUMNS ], 
+                 MARGIN = 1, 
+                 FUN = function(x) all(is.na(x)) )  
+
+
 RULES <- c(    
           
              "    1    =>>     1   ", 
@@ -550,13 +555,24 @@ rules <- parse_rules( RULES )
 pattern <- rules[[ "pattern" ]]
 replace <- rules[[ "replace" ]]
 
+
 na_to_zero <- function(x){
   x[ is.na(x) ] <- 0
   return(x)
 }
+
 survey_df[ COLUMNS ] <- 
   survey_df[ COLUMNS ] %>% 
   lapply( na_to_zero )
+
+zero_to_na <- function( x, rowid ){
+  x[ rowid ] <- NA
+  return(x)
+}
+
+survey_df[ COLUMNS ] <- 
+  survey_df[ COLUMNS ] %>% 
+  lapply( zero_to_na, row.id )
 
 # MEMISC LABELS AND MISSING VALUE CODES 
 values  <- c( "0", "1" )
@@ -668,10 +684,9 @@ COLUMNS <-  demand_fct_qns
 
 RULES <- c(    
           
-             "        Decrease    =>>     0   ",
-             "   Stay the same    =>>     1   ", 
-             "        Increase    =>>     2   ", 
-             "             -99    =>>     x   "    )
+             "   0    =>>     0   ",
+             "   1    =>>     1   ", 
+             "  98    =>>     2   "     )
 
 
 rules <- parse_rules( RULES )          
@@ -679,9 +694,9 @@ pattern <- rules[[ "pattern" ]]
 replace <- rules[[ "replace" ]]
 
 # MEMISC LABELS AND MISSING VALUE CODES 
-values  <- c( 2, 1, 0, "x" )
-labels  <- c( "Increase", "Unchanged", "Decrease", "Incomplete" )
-missing <- "x"
+values  <- c( 2, 1, 0 )
+labels  <- c( "Increase", "Unchanged", "Decrease" )
+missing <- NA
 
 # RECODE VARIABLES 
 survey_df <- 
@@ -726,6 +741,10 @@ COLUMNS <-  fundraise_change_qns_fct
 
 # VALUES THAT NEED RECODING
 
+row.id <- apply( survey_df[ COLUMNS ], 
+                 MARGIN = 1, 
+                 FUN = function(x) all(is.na(x)) )
+
 RULES <- c(    
           
      "   Increased significantly (by more than 10%)    =>>     5   ",
@@ -733,19 +752,29 @@ RULES <- c(
      "                 Stayed more or less the same    =>>     3   ",
      "      Decreased moderately (by less than 10%)    =>>     2   ",
      "   Decreased significantly (by more than 10%)    =>>     1   ",
-     "                                       Unsure    =>>     0   ",
-     "                                          -99    =>>     X   ",
-     "                                          N/A    =>>   N/A   "  )
+     "                                           98    =>>     0   ",
+     "                                           99    =>>     X   "  )
  
 rules <- parse_rules( RULES )          
 pattern <- rules[[ "pattern" ]]
 replace <- rules[[ "replace" ]]
 
+
+all_na <- function( x, rowid ){
+  x[ rowid ] <- NA
+  return(x)
+}
+
+survey_df[ COLUMNS ] <- 
+  survey_df[ COLUMNS ] %>% 
+  lapply( all_na, row.id )
+
+
 # MEMISC LABELS AND MISSING VALUE CODES 
-values  <- c( 5, 4, 3, 2, 1, 0, "X", "N/A" )
+values  <- c( 5, 4, 3, 2, 1, 0, "X"  )
 labels  <- c( "Increase Significantly", "Increase Moderately", 
               "Unchanged", "Decrease Moderately", "Decrease Significantly", 
-              "Unsure", "Incomplete", "Not Applicable" )
+              "Unsure", "Not Applicable" )
 missing <- c( "X" )
 
 # RECODE VARIABLES 
@@ -926,22 +955,21 @@ COLUMNS <-  extaffairs_qns_fct
 
 RULES <- c(    
 
-     "             Frequently    =>>     4   ",
-     "    Almost all the time    =>>     3   ",
-     "           Occasionally    =>>     2   ",
-     "                 Rarely    =>>     1   ",
-     "                  Never    =>>     0   ",
-     "                    -99    =>>     X   "   )
+     "             Frequently    =>>     5   ",
+     "    Almost all the time    =>>     4   ",
+     "           Occasionally    =>>     3   ",
+     "                 Rarely    =>>     2   ",
+     "                  Never    =>>     1   "   )
      
 rules <- parse_rules( RULES )          
 pattern <- rules[[ "pattern" ]]
 replace <- rules[[ "replace" ]]
 
 # MEMISC LABELS AND MISSING VALUE CODES 
-values  <- c( 4, 3, 2, 1, 0, "X" )
+values  <- c( 5, 4, 3, 2, 1 )
 labels  <- c( "Frequently", "More Often than Not", 
               "Occasionally", "Rarely", "Never", "Incomplete" )
-missing <- c( "X" )
+missing <- NA
 
 # RECODE VARIABLES 
 survey_df <- 

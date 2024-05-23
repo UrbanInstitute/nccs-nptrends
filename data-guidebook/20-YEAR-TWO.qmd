@@ -322,11 +322,15 @@ setdiff( all.vars, all.questions )
 
 
 
+
+```{r, echo=F, eval=F}
+
 # Response Types 
 
-Preview of the types of raw responses in the qualtrics files prior to recoding: 
+# Preview of the types of raw responses in the qualtrics files prior to recoding: 
 
-```{r, echo=F}
+  
+  
 id <- dd$vname[ dd$group == "id" ] |> na.omit()
 df_preview <- survey_df %>% dplyr::select( - any_of(id) )
 

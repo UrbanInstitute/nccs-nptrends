@@ -992,6 +992,22 @@ show_html( codebook( survey_df[ text_qns[1] ] ))
 
 
 
+```{r, echo=F}
+#### 
+####   CLEANUP
+#### 
+
+# temp file for use in next chapter 
+
+fpath <- "DATA-PREP/02-year-two/02-data-intermediate/"
+fname <- "SURVEYDF-step21.csv"
+write.csv( survey_df, paste0( fpath, fname ), row.names=F )
+
+rdsname <- "SURVEYDF-step21.rds"
+saveRDS( survey_df, paste0( fpath, rdsname ) )
+```
+
+
 
 
 

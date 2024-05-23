@@ -231,7 +231,14 @@ all.vars <- dd$vname[ ! dd$group %in% omit.these.groups ] |> na.omit()
 setdiff( all.vars, all.questions )
 
 
-## ----echo=F-------------------------------------------------------------------
+## ----echo=F, eval=F-----------------------------------------------------------
+
+# Response Types 
+
+# Preview of the types of raw responses in the qualtrics files prior to recoding: 
+
+  
+  
 id <- dd$vname[ dd$group == "id" ] |> na.omit()
 df_preview <- survey_df %>% dplyr::select( - any_of(id) )
 
