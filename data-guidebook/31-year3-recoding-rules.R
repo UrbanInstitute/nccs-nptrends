@@ -368,18 +368,18 @@ rules <- parse_rules( RULES )
 pattern <- rules[[ "pattern" ]]
 replace <- rules[[ "replace" ]]
 
-na_to_zero <- function(x){
-  x[ is.na(x) ] <- 0
-  return(x)
-}
-survey_df[ COLUMNS ] <- 
-  survey_df[ COLUMNS ] %>% 
-  lapply( na_to_zero )
+# na_to_zero <- function(x){
+#   x[ is.na(x) ] <- 0
+#   return(x)
+# }
+# survey_df[ COLUMNS ] <- 
+#   survey_df[ COLUMNS ] %>% 
+#   lapply( na_to_zero )
 
 # MEMISC LABELS AND MISSING VALUE CODES 
 values  <- c( "0", "1" )
 labels  <- c( "No", "Yes" )
-missing <- NULL
+missing <- NA
 
 # RECODE VARIABLES 
 survey_df <- 

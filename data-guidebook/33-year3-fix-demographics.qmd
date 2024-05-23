@@ -374,7 +374,7 @@ While our race and gender columns are individual binary columns, this is not the
 
 #### Aggregated Race Variable
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
+| Original Value | Description | Recode Label | Recode Value | Missing ? |
 |---|---|---|---|---|
 |1|Asian/Pacific Islander|AAPI|1|No|
 |1|Black/African American|Black|2|No|
@@ -424,8 +424,7 @@ survey_df2 <- create_survey_item(
 
 #### Aggregated Gender Variable
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
+| Original Value | Description | Recode Label | Recode Value | Missing ? |
 |1|Man|Man|1|No|
 |1|Woman|Woman|2|No|
 |1|Trans|Trans|3|No|
@@ -470,14 +469,13 @@ survey_df2 <- create_survey_item(
 
 We can see that the number of valid responses for race and gender questions concerning the CEO and Board Chair have increased.
 
-```{r, results="asis"}
+```{r}
 race_gender_qns <- 
   c( race_gender_qns_bool, 
      "CEOrace", "CEOgender", "BChairrace","BChairgender" )
 
-show_html( codebook( survey_df2[ race_gender_qns ] ) )
+codebook( survey_df2[ race_gender_qns ] )
 ```
-
 
 
 
@@ -569,7 +567,7 @@ response_rate_df <-
   response_rate_df %>% 
   dplyr::filter(! ResponseID %in% weighted_survey_df$ResponseId )
 
-response_rate_df %>% knitr::kable()
+response_rate_df
 ```
 
 
@@ -578,8 +576,8 @@ response_rate_df %>% knitr::kable()
 
 
 ```{r}
-fpath <- "DATA-PREP/02-year-two/03-data-final/"
-fname <- "YEAR-02-DATA-RESTRICTED-V01.csv"
+fpath <- "DATA-PREP/02-year-two/02-data-intermediate/"
+fname <- "WAVE-02-DATA-V2-WITH-LABELS.csv"
 write.csv( survey_df2, paste0( fpath, fname ), row.names=F, na="" )
 ```
 

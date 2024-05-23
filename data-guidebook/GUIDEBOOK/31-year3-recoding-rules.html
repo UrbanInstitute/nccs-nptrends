@@ -210,8 +210,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./33-year3-prepping-puf.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Title</span></span></a>
+  <a href="./33-year3-fix-demographics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reconcile Demographic Variables</span></span></a>
   </div>
 </li>
       </ul>
@@ -1231,7 +1231,7 @@ Which of the following best describes the race/ethnicity for your organizationâ€
 <td>No</td>
 </tr>
 <tr class="even">
-<td>22</td>
+<td>21</td>
 <td>No</td>
 <td>Yes</td>
 <td>0</td>
@@ -1257,18 +1257,18 @@ Which of the following best describes the race/ethnicity for your organizationâ€
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> rules[[ <span class="st">"pattern"</span> ]]</span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>replace <span class="ot">&lt;-</span> rules[[ <span class="st">"replace"</span> ]]</span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>na_to_zero <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  x[ <span class="fu">is.na</span>(x) ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>survey_df[ COLUMNS ] <span class="ot">&lt;-</span> </span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  survey_df[ COLUMNS ] <span class="sc">%&gt;%</span> </span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( na_to_zero )</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># na_to_zero &lt;- function(x){</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#   x[ is.na(x) ] &lt;- 0</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#   return(x)</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># survey_df[ COLUMNS ] &lt;- </span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#   survey_df[ COLUMNS ] %&gt;% </span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#   lapply( na_to_zero )</span></span>
 <span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co"># MEMISC LABELS AND MISSING VALUE CODES </span></span>
 <span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>values  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">"0"</span>, <span class="st">"1"</span> )</span>
 <span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>labels  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">"No"</span>, <span class="st">"Yes"</span> )</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>missing <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>missing <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
 <span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co"># RECODE VARIABLES </span></span>
 <span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> </span>
@@ -1308,6 +1308,14 @@ Measurement:
 nominal
 </td>
 </tr>
+<tr>
+<td style="text-align: left;">
+Missing values:
+</td>
+<td style="text-align: left;">
+NA
+</td>
+</tr>
 </tbody></table>
 <p>
 </p>
@@ -1320,7 +1328,10 @@ Values and labels
 N
 </td>
 <td colspan="3" style="text-align: center;">
-Percent
+Valid
+</td>
+<td colspan="3" style="text-align: center;">
+Total
 </td>
 </tr>
 <tr>
@@ -1333,16 +1344,25 @@ Percent
 â€˜Noâ€™
 </td>
 <td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
-563
+283
 </td>
 <td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
-78
+64
 </td>
 <td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
 .
 </td>
 <td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
-3
+5
+</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+39
+</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+.
+</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+4
 </td>
 </tr>
 <tr>
@@ -1358,6 +1378,15 @@ Percent
 156
 </td>
 <td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+35
+</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+.
+</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+5
+</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
 21
 </td>
 <td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
@@ -1365,6 +1394,34 @@ Percent
 </td>
 <td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
 7
+</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+NA
+</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+M
+</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+280
+</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+38
+</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+.
+</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+9
 </td>
 </tr>
 </tbody></table>

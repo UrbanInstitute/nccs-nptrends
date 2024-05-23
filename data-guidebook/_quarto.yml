@@ -23,7 +23,7 @@ book:
       chapters: 
       - 31-year3-recoding-rules.qmd
       - 32-year3-summarize-responses.qmd
-      - 33-year3-prepping-puf.qmd
+      - 33-year3-fix-demographics.qmd
     - part: 40-GEOCODING.qmd
       chapters:
       - 41-validating-addresses.qmd
