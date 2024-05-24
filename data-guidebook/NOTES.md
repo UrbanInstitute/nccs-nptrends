@@ -43,7 +43,7 @@ missing <-  NULL
 
 # RECODE VARIABLES
 
-survey_df <-  recode_columns( ...  )
+survey_df <-  recode_columns( df, COLUMNS, RULES, values, labels, missing  )
 ```
 
 
