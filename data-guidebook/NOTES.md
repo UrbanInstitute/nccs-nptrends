@@ -163,16 +163,18 @@ One challenge in working with the qualtrics book format is that knitting a singl
 
 There are a few solutions such as writing results to the intermediate files library at the end of a chapter, then starting the next chapter by reading those files: 
 
+```
 +- data-raw
-¦  +-- qualtrics_export.csv
-¦
+Â¦  +-- qualtrics_export.csv
+Â¦
 +- data-intermediate
-¦  +-- step-01-output.csv
-¦  +-- step-02-output.csv
-¦
+Â¦  +-- step-01-output.csv
+Â¦  +-- step-02-output.csv
+Â¦
 +-- data-final
    +-- restricted.csv
    +-- puf.csv
+```
 
 One challenge is that the objects we care about are not always datasets. For example, the groups of survey questions used in many of the steps. These can be easily written to file using dump(): 
 
@@ -265,8 +267,8 @@ I poked arond a bit and could not find a way to write memisc files to save them,
 
 
 +- data-intermediate
-¦  +-- step-01.csv    # CSV file
-¦  +-- step-01.rds    # MEMISC object
+Â¦  +-- step-01.csv    # CSV file
+Â¦  +-- step-01.rds    # MEMISC object
 
 
 
