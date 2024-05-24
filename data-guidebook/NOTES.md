@@ -154,6 +154,21 @@ df[k] <- lapply( k, f, df )
 
 
 
+### CREATING PUBLIC USE FILES 
+
+When creating files to share we might consider replacing NAs with empty cells, which makes the CSV files more universal. 
+
+```r
+write.csv( survey_df, "file.csv", na="" )  
+```
+
+I also updated the GROUP column in the data dictionary file so that it includes DROP and ID categories. All non-necessary qualtrics variables are labeled DROP and all variables that can be used to identify respondents are labeled ID. 
+
+It might be helpful to create IDs from EINs so that if we need to merge public use files with other files it would be fairly straight-forward. 
+
+```r
+id <- paste0( "ORG-", hash::hash( EIN ) )
+```
 
 
 
@@ -206,12 +221,13 @@ source(      "20-YEAR-TWO.R" )     # run all chunks in prior step
 
 The only issue I encountered is that it keeps ALL code within chunks, not just R chunks. As a result, I had to convert your epoxy chunk to regular markdown (there was nothing wrong with it otherwise, if you were wondering why I bothered): 
 
+````
 ```{epoxy}
 - **{length(c(program_change_qns_bool, program_change_qns_txt))}** questions about changes to programs and services
 ```
 
 - **`r length(c(program_change_qns_bool, program_change_qns_txt))`** questions about changes to programs and services
-
+````
 
 
 ### FULL BOOK RENDER
@@ -220,12 +236,13 @@ The big limitation is duplication of tasks, especially if we are knitting the en
 
 For example, if CH2 sources CH1, and CH3 sources CH2, then knitting the full book would require CH1 to execute 3 times and CH2 to execute 2 times: 
 
+```
 render CH1
 render CH2 ->> source CH1
 render CH3 ->> source CH2 ->> source CH1
+```
 
 The workaround is to add a parameter to the chapter header, which can be ignored by passing a new version when rendering the full book: 
-
 
 ```r
 ---
@@ -233,19 +250,20 @@ The workaround is to add a parameter to the chapter header, which can be ignored
     chain: TRUE
 ---
 
+# RUNS WHEN YOU RENDER FROM RSTUDIO:
 if( chain ){
   knitr::purl( "20-YEAR-TWO.qmd" ) 
   source(      "20-YEAR-TWO.R" )    
 }
 
-
+# DOESN'T RUN WHEN YOU RENDER THE FULL BOOK: 
 quarto::quarto_render(
   input = here::here("quarto"), 
   output_format = "html", 
   execute_params = list( chain=FALSE) )
 ```
 
-I have not implemented this yet. 
+I have not implemented this yet, though. 
 
 
 
@@ -265,31 +283,19 @@ They both drop all of the useful metadata captured by memisc files.
 
 I poked arond a bit and could not find a way to write memisc files to save them, but they can be preserved as R objects in the usual RDS structure. I experimented with preserving both in case we want to use the memisc object for documentation in subsequent steps. 
 
-
+```
 +- data-intermediate
 ¦  +-- step-01.csv    # CSV file
 ¦  +-- step-01.rds    # MEMISC object
-
-
-
-### SAVING FINAL FILES
-
-When creating files to share we might consider replacing NAs with empty cells, which makes the CSV files more universal. 
-
-```r
-write.csv( survey_df, "file.csv", na="" )  
 ```
 
-I updated the GROUP column in the data dictionary file so that it includes DROP and ID categories. All non-necessary qualtrics variables are labeled DROP and all variables that can be used to identify respondents are labeled ID. 
 
 
-### CREATING PUF IDs
 
-It might be helpful to create IDs from EINs so that if we need to merge public use files with other files it would be fairly straight-forward. 
 
-```r
-id <- paste0( "ORG-", hash::hash( EIN ) )
-```
+
+
+
 
  
 
