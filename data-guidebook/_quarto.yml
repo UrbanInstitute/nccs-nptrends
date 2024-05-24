@@ -9,6 +9,7 @@ book:
   author: 
     - "Thiya"
     - "Jesse Lecy"
+    - "Hannah Martin"
   date: "2/28/2024"
   chapters:
     - index.qmd
