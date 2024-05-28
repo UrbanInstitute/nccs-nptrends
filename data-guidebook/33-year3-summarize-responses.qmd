@@ -14,8 +14,9 @@ library( memisc )
 library( labelled )
 
 # SOURCE PREVIOUS STEPS 
-knitr::purl( "21-year2-recoding-rules.qmd" )   # convert QMD to R script
-source(      "21-year2-recoding-rules.R"   )   # run all chunks in prior step
+# knitr::purl( "32-year3-fix-demographics.qmd" )   # convert QMD to R script
+source(      "32-year3-fix-demographics.R"   )   # run all chunks in prior step
+
 ```
 
 
@@ -41,15 +42,15 @@ all.questions <- c(
   fundraise_qns_bool,fundraise_qns_text,
   majorgift_qn_num,
   extaffairs_qns_fct,
-  primary_cncrn_qn_text )
+  primary_cncrn_qn_text,
+  fiscal_year_fct, fiscal_year_txt,
+  regulation_qns,
+  staffing_plans )
 
 omit.these.groups <- c("id","DROP","MainAddress","Comments")
 all.vars <- dd$vname[ ! dd$group %in% omit.these.groups ] |> na.omit()
 show_html( codebook( survey_df[ all.vars ] ))
 ```
-
-
-
 
 
 
@@ -75,8 +76,33 @@ show_html( codebook( survey_df[ all.vars ] ))
 - **`r length( c(majorgift_qn_num) ) `** questions about **MAJOR GIFT AMOUNTS**
 - **`r length( c(extaffairs_qns_fct) ) `** questions about **EXTERNAL AFFAIRS**  
 - **`r length( c(primary_cncrn_qn_text) ) `** questions about **FUTURE CONCERNS**
+- **`r length( c(fiscal_year_fct, fiscal_year_txt) ) `** questions about **FISCAL YEAR END**
+- **`r length( c(regulation_qns) ) `** questions about **REGULATION**
+- **`r length( c(staffing_plans) ) `** questions about **STAFFING PLANS**
+
+<br>
+<hr>
+<br>
+
+There are **`r nrow(survey_df)`** respondents in the datatset. 
+
+- `r sum(survey_df$Completion_Status == "Complete", na.rm=T)` completed surveys
+- `r sum(survey_df$Completion_Status == "Partial_keep", na.rm=T)` mostly complete surveys
 
 
+```{r}
+id.vars <- dd$vname[ dd$group %in% c("id","MainAddress") ]
+vnames <- names(survey_df)
+
+df <- survey_df[ vnames[ ! vnames %in% id.vars ] ]
+
+non_na_rate <- function(x){ 
+  ( 1 - sum( is.na(x)/length(x) ) ) |> round(3)*100 
+}
+
+completeness.rate <- sapply( df, non_na_rate ) 
+as.data.frame( completeness.rate )
+```
 
 <br>
 <hr>
@@ -168,7 +194,7 @@ COLUMNS <- c(finance_revenue_qns_num, finance_revenue_qns_text)
 show_html( codebook( survey_df[ COLUMNS ] ))
 ```
 
-# FUNDRAISING SOURCES**
+# FUNDRAISING SOURCES
 
 ```{r, results="asis", echo=F}
 COLUMNS <- c(fundraise_skrcv_qns_bool)
@@ -218,9 +244,26 @@ COLUMNS <- c(primary_cncrn_qn_text)
 show_html( codebook( survey_df[ COLUMNS ] ))
 ```
 
+# FISCAL YEAR END
 
+```{r, results="asis", echo=F}
+COLUMNS <- c(fiscal_year_fct, fiscal_year_txt) 
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
 
+# REGULATION
 
+```{r, results="asis", echo=F}
+COLUMNS <- c(regulation_qns)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
+
+# STAFFING PLANS
+
+```{r, results="asis", echo=F}
+COLUMNS <- c(staffing_plans)
+show_html( codebook( survey_df[ COLUMNS ] ))
+```
 
 
 
@@ -228,18 +271,17 @@ show_html( codebook( survey_df[ COLUMNS ] ))
 
 
 ```{r}
-fpath <- "DATA-PREP/02-year-two/03-data-final/"
-fname <- "YEAR-02-DATA-RESTRICTED-V02.csv"
+fpath <- "DATA-PREP/03-year-three/03-data-final/"
+fname <- "YEAR-03-DATA-RESTRICTED-V02.csv"
 write.csv( survey_df, paste0( fpath, fname ), row.names=F, na="" )
 ```
 
 
 ```{r}
-fpath <- "DATA-PREP/02-year-two/02-data-intermediate/"
-fname <- "DATA-CODEBOOK.txt"
-memisc::Write( codebook(survey_df), file=paste0( fpath, fname ) )
+# fpath <- "DATA-PREP/03-year-three/02-data-intermediate/"
+# fname <- "DATA-CODEBOOK.txt"
+# memisc::Write( codebook(survey_df), file=paste0( fpath, fname ) )
 ```
-
 
 
 

@@ -18,13 +18,14 @@ book:
     - part: 20-YEAR-TWO.qmd
       chapters: 
       - 21-year2-recoding-rules.qmd
-      - 22-year2-summarize-responses.qmd
-      - 23-year2-fix-demographics.qmd
+      - 22-year2-fix-demographics.qmd
+      - 23-year2-summarize-responses.qmd
+      - 24-year2-response-rates.qmd
     - part: 30-YEAR-THREE.qmd
       chapters: 
       - 31-year3-recoding-rules.qmd
-      - 32-year3-summarize-responses.qmd
-      - 33-year3-fix-demographics.qmd
+      - 32-year3-fix-demographics.qmd
+      - 33-year3-summarize-responses.qmd
     - part: 40-GEOCODING.qmd
       chapters:
       - 41-validating-addresses.qmd

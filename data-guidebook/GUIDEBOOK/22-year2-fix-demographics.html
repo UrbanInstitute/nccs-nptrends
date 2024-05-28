@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>NP Trends Survey Data Preparation Guide - 5&nbsp; Reconcile Demographic Variables</title>
+<title>NP Trends Survey Data Preparation Guide - 4&nbsp; Reconcile Demographic Variables</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./30-YEAR-THREE.html" rel="next">
-<link href="./22-year2-summarize-responses.html" rel="prev">
+<link href="./23-year2-summarize-responses.html" rel="next">
+<link href="./21-year2-recoding-rules.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20-YEAR-TWO.html">YEAR TWO DATA</a></li><li class="breadcrumb-item"><a href="./23-year2-fix-demographics.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Reconcile Demographic Variables</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20-YEAR-TWO.html">YEAR TWO DATA</a></li><li class="breadcrumb-item"><a href="./22-year2-fix-demographics.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Reconcile Demographic Variables</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -175,14 +175,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./22-year2-summarize-responses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Summary Statistics</span></span></a>
+  <a href="./22-year2-fix-demographics.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Reconcile Demographic Variables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./23-year2-fix-demographics.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Reconcile Demographic Variables</span></span></a>
+  <a href="./23-year2-summarize-responses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24-year2-response-rates.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Response Rate by Question</span></span></a>
   </div>
 </li>
       </ul>
@@ -199,19 +205,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./31-year3-recoding-rules.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Relabeling Qualtrics Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Relabeling Qualtrics Variables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./32-year3-summarize-responses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Summary Statistics</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./33-year3-fix-demographics.html" class="sidebar-item-text sidebar-link">
+  <a href="./32-year3-fix-demographics.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reconcile Demographic Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./33-year3-summarize-responses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Summary Statistics</span></span></a>
   </div>
 </li>
       </ul>
@@ -228,19 +234,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./41-validating-addresses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Validating Addresses</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Validating Addresses</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./42-geocoding-addresses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Geocoding Addresses</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Geocoding Addresses</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./43-adding-geographies.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Adding Census Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Adding Census Data</span></span></a>
   </div>
 </li>
       </ul>
@@ -265,27 +271,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#adding-race-and-gender-answers-from-year-1-survey" id="toc-adding-race-and-gender-answers-from-year-1-survey" class="nav-link active" data-scroll-target="#adding-race-and-gender-answers-from-year-1-survey"><span class="header-section-number">5.1</span> Adding Race and Gender Answers from Year 1 Survey</a>
+  <li><a href="#adding-race-and-gender-answers-from-year-1-survey" id="toc-adding-race-and-gender-answers-from-year-1-survey" class="nav-link active" data-scroll-target="#adding-race-and-gender-answers-from-year-1-survey"><span class="header-section-number">4.1</span> Adding Race and Gender Answers from Year 1 Survey</a>
   <ul class="collapse">
-  <li><a href="#identifying-cases-for-imputation" id="toc-identifying-cases-for-imputation" class="nav-link" data-scroll-target="#identifying-cases-for-imputation"><span class="header-section-number">5.1.1</span> Identifying cases for imputation</a></li>
-  <li><a href="#processing-year-1-data" id="toc-processing-year-1-data" class="nav-link" data-scroll-target="#processing-year-1-data"><span class="header-section-number">5.1.2</span> Processing Year 1 Data</a></li>
-  <li><a href="#create-biracial-categories-in-year-2" id="toc-create-biracial-categories-in-year-2" class="nav-link" data-scroll-target="#create-biracial-categories-in-year-2"><span class="header-section-number">5.1.3</span> Create Biracial Categories in Year 2</a></li>
-  <li><a href="#merge-year-1-race-and-gender-variables-with-year-2" id="toc-merge-year-1-race-and-gender-variables-with-year-2" class="nav-link" data-scroll-target="#merge-year-1-race-and-gender-variables-with-year-2"><span class="header-section-number">5.1.4</span> Merge Year 1 Race and Gender Variables with Year 2</a></li>
-  <li><a href="#recode-new-race-and-gender-variables" id="toc-recode-new-race-and-gender-variables" class="nav-link" data-scroll-target="#recode-new-race-and-gender-variables"><span class="header-section-number">5.1.5</span> Recode New Race and Gender Variables</a></li>
-  <li><a href="#create-single-racegender-column" id="toc-create-single-racegender-column" class="nav-link" data-scroll-target="#create-single-racegender-column"><span class="header-section-number">5.1.6</span> Create single Race/Gender column</a></li>
-  <li><a href="#validate-results" id="toc-validate-results" class="nav-link" data-scroll-target="#validate-results"><span class="header-section-number">5.1.7</span> Validate Results</a></li>
+  <li><a href="#identifying-cases-for-imputation" id="toc-identifying-cases-for-imputation" class="nav-link" data-scroll-target="#identifying-cases-for-imputation"><span class="header-section-number">4.1.1</span> Identifying cases for imputation</a></li>
+  <li><a href="#processing-year-1-data" id="toc-processing-year-1-data" class="nav-link" data-scroll-target="#processing-year-1-data"><span class="header-section-number">4.1.2</span> Processing Year 1 Data</a></li>
+  <li><a href="#create-biracial-categories-in-year-2" id="toc-create-biracial-categories-in-year-2" class="nav-link" data-scroll-target="#create-biracial-categories-in-year-2"><span class="header-section-number">4.1.3</span> Create Biracial Categories in Year 2</a></li>
+  <li><a href="#merge-year-1-race-and-gender-variables-with-year-2" id="toc-merge-year-1-race-and-gender-variables-with-year-2" class="nav-link" data-scroll-target="#merge-year-1-race-and-gender-variables-with-year-2"><span class="header-section-number">4.1.4</span> Merge Year 1 Race and Gender Variables with Year 2</a></li>
+  <li><a href="#recode-new-race-and-gender-variables" id="toc-recode-new-race-and-gender-variables" class="nav-link" data-scroll-target="#recode-new-race-and-gender-variables"><span class="header-section-number">4.1.5</span> Recode New Race and Gender Variables</a></li>
+  <li><a href="#create-single-racegender-column" id="toc-create-single-racegender-column" class="nav-link" data-scroll-target="#create-single-racegender-column"><span class="header-section-number">4.1.6</span> Create single Race/Gender column</a></li>
+  <li><a href="#validate-results" id="toc-validate-results" class="nav-link" data-scroll-target="#validate-results"><span class="header-section-number">4.1.7</span> Validate Results</a></li>
   </ul></li>
-  <li><a href="#evaluating-survey-completion-rates-and-summing-section-completion" id="toc-evaluating-survey-completion-rates-and-summing-section-completion" class="nav-link" data-scroll-target="#evaluating-survey-completion-rates-and-summing-section-completion"><span class="header-section-number">5.2</span> Evaluating Survey Completion Rates and Summing Section Completion</a></li>
-  <li><a href="#save-outputs" id="toc-save-outputs" class="nav-link" data-scroll-target="#save-outputs"><span class="header-section-number">5.3</span> Save outputs</a></li>
+  <li><a href="#evaluating-survey-completion-rates-and-summing-section-completion" id="toc-evaluating-survey-completion-rates-and-summing-section-completion" class="nav-link" data-scroll-target="#evaluating-survey-completion-rates-and-summing-section-completion"><span class="header-section-number">4.2</span> Evaluating Survey Completion Rates and Summing Section Completion</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20-YEAR-TWO.html">YEAR TWO DATA</a></li><li class="breadcrumb-item"><a href="./23-year2-fix-demographics.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Reconcile Demographic Variables</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20-YEAR-TWO.html">YEAR TWO DATA</a></li><li class="breadcrumb-item"><a href="./22-year2-fix-demographics.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Reconcile Demographic Variables</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Reconcile Demographic Variables</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Reconcile Demographic Variables</span></h1>
 </div>
 
 
@@ -302,11 +307,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="adding-race-and-gender-answers-from-year-1-survey" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="adding-race-and-gender-answers-from-year-1-survey"><span class="header-section-number">5.1</span> Adding Race and Gender Answers from Year 1 Survey</h2>
+<section id="adding-race-and-gender-answers-from-year-1-survey" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="adding-race-and-gender-answers-from-year-1-survey"><span class="header-section-number">4.1</span> Adding Race and Gender Answers from Year 1 Survey</h2>
 <p>Questions about the race and gender of CEOs and Board Chairs are only presented to users if they indicate that a leadership change has occurred in Year 2 of the survey. Hence, we will need to impute in race and gender responses for participants who did not indicate a change in leadership.</p>
-<section id="identifying-cases-for-imputation" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="identifying-cases-for-imputation"><span class="header-section-number">5.1.1</span> Identifying cases for imputation</h3>
+<section id="identifying-cases-for-imputation" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="identifying-cases-for-imputation"><span class="header-section-number">4.1.1</span> Identifying cases for imputation</h3>
 <p>These respondents indicate that there were no changes to their CEO in year 2.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>have.changes <span class="ot">&lt;-</span> </span>
@@ -314,317 +319,317 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    survey_df<span class="sc">$</span>LeadershipChng_IntrmCEO <span class="sc">==</span> <span class="dv">1</span>   )</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>no_ceo_chng_ein <span class="ot">&lt;-</span> </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  survey_df2 <span class="sc">%&gt;%</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  survey_df <span class="sc">%&gt;%</span> </span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>( <span class="sc">!</span> have.changes ) <span class="sc">%&gt;%</span> </span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(<span class="st">"EIN"</span>)</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>no_bchair_chng_ein <span class="ot">&lt;-</span> </span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  survey_df2 <span class="sc">%&gt;%</span> </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  survey_df <span class="sc">%&gt;%</span> </span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>( LeadershipChng_ChngBC <span class="sc">!=</span> <span class="dv">1</span> ) <span class="sc">%&gt;%</span> </span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">pull</span>(<span class="st">"EIN"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="processing-year-1-data" class="level3" data-number="5.1.2">
-<h3 data-number="5.1.2" class="anchored" data-anchor-id="processing-year-1-data"><span class="header-section-number">5.1.2</span> Processing Year 1 Data</h3>
+<section id="processing-year-1-data" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="processing-year-1-data"><span class="header-section-number">4.1.2</span> Processing Year 1 Data</h3>
 <p>In Year 1, the survey questions for race and gender are encoded in a single factor variable instead of the multiple boolean variables in Year 2. We will have to wrangle the data from Year 1 into a format for Year 2.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wrangle Data for Year 1 Responses on CEO race and Gender</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>year1_CEOchng <span class="ot">&lt;-</span> year1_raw <span class="sc">%&gt;%</span> </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(EIN, CEOrace, CEOgender) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(EIN <span class="sc">%in%</span> no_ceo_chng_ein,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span> CEOrace <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99</span>, <span class="cn">NA</span>),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span> CEOgender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99</span>, <span class="cn">NA</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">CEOrace =</span> dplyr<span class="sc">::</span><span class="fu">case_match</span>(</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>      CEOrace,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1</span> <span class="sc">~</span> <span class="st">"AAPI"</span>, <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Black"</span>, <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Hisp"</span>, <span class="dv">4</span> <span class="sc">~</span> <span class="st">"NativeAm"</span>, <span class="dv">5</span> <span class="sc">~</span> <span class="st">"White"</span>, <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Bi"</span>, <span class="dv">7</span> <span class="sc">~</span> <span class="st">"Oth"</span>,</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="st">"Oth"</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">CEOgender =</span> dplyr<span class="sc">::</span><span class="fu">case_match</span>(</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>      CEOgender,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Man"</span>, <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Woman"</span>, <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Trans"</span>, <span class="dv">4</span> <span class="sc">~</span> <span class="st">"NB"</span>, <span class="dv">5</span> <span class="sc">~</span> <span class="st">"Oth"</span>,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="st">"Oth"</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">race_check =</span> <span class="dv">1</span>,</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender_check =</span> <span class="dv">1</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> CEOrace,</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"CEOrace_{CEOrace}"</span>,</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> race_check, </span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> CEOgender,</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"CEOgender_{CEOgender}"</span>,</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> gender_check, </span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Wrangle Data for Year 1 Responses on Board Chair Race and Gender</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>year1_BCchng <span class="ot">&lt;-</span> year1_raw <span class="sc">%&gt;%</span> </span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(EIN, BCrace, BCgender) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(EIN <span class="sc">%in%</span> no_bchair_chng_ein,</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span> BCrace <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99</span>, <span class="cn">NA</span>),</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span> BCgender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99</span>, <span class="cn">NA</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">BCrace =</span> dplyr<span class="sc">::</span><span class="fu">case_match</span>(</span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>      BCrace,</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1</span> <span class="sc">~</span> <span class="st">"AAPI"</span>, <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Black"</span>, <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Hisp"</span>, <span class="dv">4</span> <span class="sc">~</span> <span class="st">"NativeAm"</span>, <span class="dv">5</span> <span class="sc">~</span> <span class="st">"White"</span>, <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Bi"</span>, <span class="dv">7</span> <span class="sc">~</span> <span class="st">"Oth"</span>,</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="st">"Oth"</span></span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">BCgender =</span> dplyr<span class="sc">::</span><span class="fu">case_match</span>(</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>      BCgender,</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Man"</span>, <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Woman"</span>, <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Trans"</span>, <span class="dv">4</span> <span class="sc">~</span> <span class="st">"NB"</span>, <span class="dv">5</span> <span class="sc">~</span> <span class="st">"Oth"</span>,</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="st">"Oth"</span></span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>  <span class="at">race_check =</span> <span class="dv">1</span>,</span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender_check =</span> <span class="dv">1</span></span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> BCrace,</span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"BChairrace_{BCrace}"</span>,</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> race_check, </span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span></span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> BCgender,</span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"BChairgender_{BCgender}"</span>,</span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> gender_check, </span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fpath     <span class="ot">&lt;-</span> <span class="st">"DATA-PREP/01-year-one/02-data-intermediate/"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fname     <span class="ot">&lt;-</span> <span class="st">"wave-01-data-intermediate.csv"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>year1_raw <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>( <span class="fu">paste0</span>( fpath, fname ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wrangle Data for Year 1 Responses on CEO race and Gender</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>year1_CEOchng <span class="ot">&lt;-</span> year1_raw <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(EIN, CEOrace, CEOgender) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(EIN <span class="sc">%in%</span> no_ceo_chng_ein,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span> CEOrace <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99</span>, <span class="cn">NA</span>),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span> CEOgender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99</span>, <span class="cn">NA</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">CEOrace =</span> dplyr<span class="sc">::</span><span class="fu">case_match</span>(</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      CEOrace,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1</span> <span class="sc">~</span> <span class="st">"AAPI"</span>, <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Black"</span>, <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Hisp"</span>, <span class="dv">4</span> <span class="sc">~</span> <span class="st">"NativeAm"</span>, <span class="dv">5</span> <span class="sc">~</span> <span class="st">"White"</span>, <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Bi"</span>, <span class="dv">7</span> <span class="sc">~</span> <span class="st">"Oth"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="st">"Oth"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">CEOgender =</span> dplyr<span class="sc">::</span><span class="fu">case_match</span>(</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>      CEOgender,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Man"</span>, <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Woman"</span>, <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Trans"</span>, <span class="dv">4</span> <span class="sc">~</span> <span class="st">"NB"</span>, <span class="dv">5</span> <span class="sc">~</span> <span class="st">"Oth"</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="st">"Oth"</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">race_check =</span> <span class="dv">1</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender_check =</span> <span class="dv">1</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> CEOrace,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"CEOrace_{CEOrace}"</span>,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> race_check, </span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> CEOgender,</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"CEOgender_{CEOgender}"</span>,</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> gender_check, </span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Wrangle Data for Year 1 Responses on Board Chair Race and Gender</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>year1_BCchng <span class="ot">&lt;-</span> year1_raw <span class="sc">%&gt;%</span> </span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(EIN, BCrace, BCgender) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(EIN <span class="sc">%in%</span> no_bchair_chng_ein,</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span> BCrace <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99</span>, <span class="cn">NA</span>),</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>                <span class="sc">!</span> BCgender <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">99</span>, <span class="cn">NA</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">BCrace =</span> dplyr<span class="sc">::</span><span class="fu">case_match</span>(</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>      BCrace,</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1</span> <span class="sc">~</span> <span class="st">"AAPI"</span>, <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Black"</span>, <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Hisp"</span>, <span class="dv">4</span> <span class="sc">~</span> <span class="st">"NativeAm"</span>, <span class="dv">5</span> <span class="sc">~</span> <span class="st">"White"</span>, <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Bi"</span>, <span class="dv">7</span> <span class="sc">~</span> <span class="st">"Oth"</span>,</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="st">"Oth"</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">BCgender =</span> dplyr<span class="sc">::</span><span class="fu">case_match</span>(</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>      BCgender,</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Man"</span>, <span class="dv">2</span> <span class="sc">~</span> <span class="st">"Woman"</span>, <span class="dv">3</span> <span class="sc">~</span> <span class="st">"Trans"</span>, <span class="dv">4</span> <span class="sc">~</span> <span class="st">"NB"</span>, <span class="dv">5</span> <span class="sc">~</span> <span class="st">"Oth"</span>,</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="st">"Oth"</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>  <span class="at">race_check =</span> <span class="dv">1</span>,</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender_check =</span> <span class="dv">1</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> BCrace,</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"BChairrace_{BCrace}"</span>,</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> race_check, </span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> BCgender,</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_glue =</span> <span class="st">"BChairgender_{BCgender}"</span>,</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> gender_check, </span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_fill =</span> <span class="dv">0</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="create-biracial-categories-in-year-2" class="level3" data-number="5.1.3">
-<h3 data-number="5.1.3" class="anchored" data-anchor-id="create-biracial-categories-in-year-2"><span class="header-section-number">5.1.3</span> Create Biracial Categories in Year 2</h3>
+<section id="create-biracial-categories-in-year-2" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="create-biracial-categories-in-year-2"><span class="header-section-number">4.1.3</span> Create Biracial Categories in Year 2</h3>
 <p>Since the Year 1 data has an indicator for biracial CEOs and Board Chairs, we will have to create a boolean Biracial indicator variable in the Year 2 data that returns a 1 if a CEO or Board Chair belongs to 2 or more racial groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>race_ceo_qns_bool <span class="ot">&lt;-</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  race_gender_qns_bool[ <span class="fu">grepl</span>( <span class="st">"CEOrace"</span>, race_gender_qns_bool ) ]</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>race_bchair_qns_bool <span class="ot">&lt;-</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  race_gender_qns_bool[ <span class="fu">grepl</span>( <span class="st">"BChairrace"</span>, race_gender_qns_bool ) ]</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>race_qns <span class="ot">&lt;-</span> <span class="fu">c</span>(race_ceo_qns_bool,race_bchair_qns_bool)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>RULES <span class="ot">&lt;-</span> <span class="fu">c</span>(    </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"  Yes =&gt;&gt; 1  "</span>, </span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"  No  =&gt;&gt; 0  "</span>    )</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>rules <span class="ot">&lt;-</span> <span class="fu">parse_rules</span>( RULES )          </span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> rules[[ <span class="st">"pattern"</span> ]]</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>replace <span class="ot">&lt;-</span> rules[[ <span class="st">"replace"</span> ]]</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>survey_df2[ race_qns ] <span class="ot">&lt;-</span> </span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  survey_df2[ race_qns ] <span class="sc">%&gt;%</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( recode_x, pattern, replace )</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>survey_df2[ race_qns ] <span class="ot">&lt;-</span> </span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  survey_df2[ race_qns ] <span class="sc">%&gt;%</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( as.numeric )</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>survey_df2 <span class="ot">&lt;-</span> </span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  survey_df2 <span class="sc">%&gt;%</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">CEOrace_Bi =</span> <span class="fu">ifelse</span>(dplyr<span class="sc">::</span><span class="fu">between</span>(</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sum</span>(dplyr<span class="sc">::</span><span class="fu">c_across</span>(tidyselect<span class="sc">::</span><span class="fu">all_of</span>(race_ceo_qns_bool)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>, <span class="dv">6</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    ), <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>   <span class="at">BChairrace_Bi =</span> <span class="fu">ifelse</span>(dplyr<span class="sc">::</span><span class="fu">between</span>(</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sum</span>(dplyr<span class="sc">::</span><span class="fu">c_across</span>(tidyselect<span class="sc">::</span><span class="fu">all_of</span>(race_bchair_qns_bool)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>, <span class="dv">6</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>    ), <span class="dv">1</span>, <span class="dv">0</span>)  </span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="merge-year-1-race-and-gender-variables-with-year-2" class="level3" data-number="5.1.4">
-<h3 data-number="5.1.4" class="anchored" data-anchor-id="merge-year-1-race-and-gender-variables-with-year-2"><span class="header-section-number">5.1.4</span> Merge Year 1 Race and Gender Variables with Year 2</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>race_ceo_qns_bool <span class="ot">&lt;-</span> <span class="fu">c</span>( race_ceo_qns_bool, <span class="st">"CEOrace_Bi"</span> )</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (race_var <span class="cf">in</span> race_ceo_qns_bool){</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  survey_df2 <span class="ot">&lt;-</span> </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    survey_df2 <span class="sc">%&gt;%</span> </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!!</span> <span class="at">race_var :=</span> <span class="fu">ifelse</span>(</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>         EIN <span class="sc">%in%</span> year1_CEOchng<span class="sc">$</span>EIN, </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>         year1_CEOchng[[race_var]], </span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        .data[[race_var]] )</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>gender_ceo_qns_bool <span class="ot">&lt;-</span> </span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  race_gender_qns_bool[ <span class="fu">grepl</span>(<span class="st">"CEOgender"</span>, race_gender_qns_bool) ]</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>COLUMNS <span class="ot">&lt;-</span> gender_ceo_qns_bool</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>RULES <span class="ot">&lt;-</span> <span class="fu">c</span>(    </span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"  Yes =&gt;&gt; 1  "</span>, </span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"  No  =&gt;&gt; 0  "</span>    )</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>race_ceo_qns_bool <span class="ot">&lt;-</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  race_gender_qns_bool[ <span class="fu">grepl</span>( <span class="st">"CEOrace"</span>, race_gender_qns_bool ) ]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>race_bchair_qns_bool <span class="ot">&lt;-</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  race_gender_qns_bool[ <span class="fu">grepl</span>( <span class="st">"BChairrace"</span>, race_gender_qns_bool ) ]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>race_qns <span class="ot">&lt;-</span> <span class="fu">c</span>( race_ceo_qns_bool, race_bchair_qns_bool )</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>RULES <span class="ot">&lt;-</span> <span class="fu">c</span>(    <span class="st">"    Yes  =&gt;&gt;   1    "</span>, </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>               <span class="st">"    No   =&gt;&gt;   0    "</span>    )</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>rules <span class="ot">&lt;-</span> <span class="fu">parse_rules</span>( RULES )          </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> rules[[ <span class="st">"pattern"</span> ]]</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>replace <span class="ot">&lt;-</span> rules[[ <span class="st">"replace"</span> ]]</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>survey_df[ race_qns ] <span class="ot">&lt;-</span> </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  survey_df[ race_qns ] <span class="sc">%&gt;%</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( recode_x, pattern, replace )</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>survey_df[ race_qns ] <span class="ot">&lt;-</span> </span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  survey_df[ race_qns ] <span class="sc">%&gt;%</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( as.numeric )</span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>rules <span class="ot">&lt;-</span> <span class="fu">parse_rules</span>( RULES )          </span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> rules[[ <span class="st">"pattern"</span> ]]</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>replace <span class="ot">&lt;-</span> rules[[ <span class="st">"replace"</span> ]]</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>survey_df2[ COLUMNS ] <span class="ot">&lt;-</span> </span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  survey_df2[ COLUMNS ] <span class="sc">%&gt;%</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( recode_x, pattern, replace )</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>survey_df2[ COLUMNS ] <span class="ot">&lt;-</span> </span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>  survey_df2[ COLUMNS ] <span class="sc">%&gt;%</span></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( as.numeric )</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co"># lapply( survey_df2[ COLUMNS ], table )</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ( gender_var <span class="cf">in</span> gender_ceo_qns_bool ){</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>  survey_df2 <span class="ot">&lt;-</span> </span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    survey_df2 <span class="sc">%&gt;%</span> </span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!!</span> <span class="at">gender_var :=</span> <span class="fu">ifelse</span>(</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>        EIN <span class="sc">%in%</span> year1_CEOchng<span class="sc">$</span>EIN <span class="sc">&amp;</span> gender_var <span class="sc">%in%</span> <span class="fu">names</span>( year1_CEOchng ), </span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>        year1_CEOchng[[ gender_var ]], </span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>        .data[[ gender_var ]]</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>race_bchair_qns_bool <span class="ot">&lt;-</span> <span class="fu">c</span>(race_bchair_qns_bool, <span class="st">"BChairrace_Bi"</span>)</span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>COLUMNS <span class="ot">&lt;-</span> race_bchair_qns_bool</span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>RULES <span class="ot">&lt;-</span> <span class="fu">c</span>(    </span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>  <span class="st">"  Yes =&gt;&gt; 1  "</span>, </span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>  <span class="st">"  No  =&gt;&gt; 0  "</span>    )</span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>rules <span class="ot">&lt;-</span> <span class="fu">parse_rules</span>( RULES )          </span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> rules[[ <span class="st">"pattern"</span> ]]</span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>replace <span class="ot">&lt;-</span> rules[[ <span class="st">"replace"</span> ]]</span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>survey_df2[ COLUMNS ] <span class="ot">&lt;-</span> </span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>  survey_df2[ COLUMNS ] <span class="sc">%&gt;%</span></span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( recode_x, pattern, replace )</span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a><span class="co"># lapply( survey_df2[ COLUMNS ], table )</span></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>survey_df2[ COLUMNS ] <span class="ot">&lt;-</span> </span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>  survey_df2[ COLUMNS ] <span class="sc">%&gt;%</span></span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( as.numeric )</span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (race_var <span class="cf">in</span> race_bchair_qns_bool){</span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>  survey_df2 <span class="ot">&lt;-</span> survey_df2 <span class="sc">%&gt;%</span> </span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!!</span> <span class="at">race_var :=</span> <span class="fu">ifelse</span>(</span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>    EIN <span class="sc">%in%</span> year1_BCchng<span class="sc">$</span>EIN, </span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>    year1_BCchng[[race_var]], </span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>    .data[[race_var]]</span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>gender_bchair_qns_bool <span class="ot">&lt;-</span> </span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>  race_gender_qns_bool[ <span class="fu">grepl</span>(<span class="st">"BChairgender"</span>, race_gender_qns_bool) ]</span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>COLUMNS <span class="ot">&lt;-</span> gender_bchair_qns_bool</span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>RULES <span class="ot">&lt;-</span> <span class="fu">c</span>(    </span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>  <span class="st">"     Yes =&gt;&gt; 1  "</span>, </span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>  <span class="st">"     No  =&gt;&gt; 0  "</span>,</span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>  <span class="st">"  Female =&gt;&gt; 1  "</span>, </span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>  <span class="st">"  Male   =&gt;&gt; 1  "</span>  )</span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>rules <span class="ot">&lt;-</span> <span class="fu">parse_rules</span>( RULES )          </span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> rules[[ <span class="st">"pattern"</span> ]]</span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>replace <span class="ot">&lt;-</span> rules[[ <span class="st">"replace"</span> ]]</span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>survey_df2[ COLUMNS ] <span class="ot">&lt;-</span> </span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>  survey_df2[ COLUMNS ] <span class="sc">%&gt;%</span></span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( recode_x, pattern, replace )</span>
-<span id="cb4-106"><a href="#cb4-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-107"><a href="#cb4-107" aria-hidden="true" tabindex="-1"></a><span class="co"># lapply( survey_df[ COLUMNS ], table )</span></span>
-<span id="cb4-108"><a href="#cb4-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-109"><a href="#cb4-109" aria-hidden="true" tabindex="-1"></a>survey_df2[ COLUMNS ] <span class="ot">&lt;-</span> </span>
-<span id="cb4-110"><a href="#cb4-110" aria-hidden="true" tabindex="-1"></a>  survey_df2[ COLUMNS ] <span class="sc">%&gt;%</span></span>
-<span id="cb4-111"><a href="#cb4-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( as.numeric )</span>
-<span id="cb4-112"><a href="#cb4-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-113"><a href="#cb4-113" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (gender_var <span class="cf">in</span> gender_bchair_qns_bool){</span>
-<span id="cb4-114"><a href="#cb4-114" aria-hidden="true" tabindex="-1"></a>  survey_df2 <span class="ot">&lt;-</span> survey_df2 <span class="sc">%&gt;%</span> </span>
-<span id="cb4-115"><a href="#cb4-115" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb4-116"><a href="#cb4-116" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!!</span> <span class="at">gender_var :=</span> <span class="fu">ifelse</span>(</span>
-<span id="cb4-117"><a href="#cb4-117" aria-hidden="true" tabindex="-1"></a>    EIN <span class="sc">%in%</span> year1_BCchng<span class="sc">$</span>EIN <span class="sc">&amp;</span> gender_var <span class="sc">%in%</span> <span class="fu">names</span>(year1_BCchng), </span>
-<span id="cb4-118"><a href="#cb4-118" aria-hidden="true" tabindex="-1"></a>    year1_BCchng[[gender_var]], </span>
-<span id="cb4-119"><a href="#cb4-119" aria-hidden="true" tabindex="-1"></a>    .data[[gender_var]]</span>
-<span id="cb4-120"><a href="#cb4-120" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-121"><a href="#cb4-121" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb4-122"><a href="#cb4-122" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> </span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>  survey_df <span class="sc">%&gt;%</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rowwise</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">CEOrace_Bi =</span> <span class="fu">ifelse</span>(dplyr<span class="sc">::</span><span class="fu">between</span>(</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sum</span>(dplyr<span class="sc">::</span><span class="fu">c_across</span>(tidyselect<span class="sc">::</span><span class="fu">all_of</span>(race_ceo_qns_bool)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>, <span class="dv">6</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    ), <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>   <span class="at">BChairrace_Bi =</span> <span class="fu">ifelse</span>(dplyr<span class="sc">::</span><span class="fu">between</span>(</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>      <span class="fu">sum</span>(dplyr<span class="sc">::</span><span class="fu">c_across</span>(tidyselect<span class="sc">::</span><span class="fu">all_of</span>(race_bchair_qns_bool)), <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="dv">2</span>, <span class="dv">6</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    ), <span class="dv">1</span>, <span class="dv">0</span>)  </span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="recode-new-race-and-gender-variables" class="level3" data-number="5.1.5">
-<h3 data-number="5.1.5" class="anchored" data-anchor-id="recode-new-race-and-gender-variables"><span class="header-section-number">5.1.5</span> Recode New Race and Gender Variables</h3>
+<section id="merge-year-1-race-and-gender-variables-with-year-2" class="level3" data-number="4.1.4">
+<h3 data-number="4.1.4" class="anchored" data-anchor-id="merge-year-1-race-and-gender-variables-with-year-2"><span class="header-section-number">4.1.4</span> Merge Year 1 Race and Gender Variables with Year 2</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>create_survey_item <span class="ot">&lt;-</span> <span class="cf">function</span>( </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    survey_data, </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    qns, </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    recode_vals, </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    recode_labs, </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    missing_vals ){</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  survey_data <span class="ot">&lt;-</span> </span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    survey_data <span class="sc">%&gt;%</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">modify_at</span>(</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">.at =</span> qns,</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">.f =</span> memisc<span class="sc">::</span>as.item,</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">structure</span>(</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">.Data =</span> recode_vals,</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">names =</span> recode_labs ),</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">missing.values =</span> missing_vals )</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>( survey_data )</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>survey_df2 <span class="ot">&lt;-</span> <span class="fu">create_survey_item</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  survey_df2, </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  race_ceo_qns_bool, </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_vals =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">99</span>), </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_labs =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>, <span class="st">"Incomplete"</span>), </span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_vals =</span> <span class="fu">c</span>(<span class="dv">99</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>survey_df2 <span class="ot">&lt;-</span> <span class="fu">create_survey_item</span>(</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  survey_df2, </span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  gender_ceo_qns_bool, </span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_vals =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">99</span>), </span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_labs =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>, <span class="st">"Incomplete"</span>), </span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_vals =</span> <span class="fu">c</span>(<span class="dv">99</span>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>survey_df2 <span class="ot">&lt;-</span> <span class="fu">create_survey_item</span>(</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  survey_df2, </span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  race_bchair_qns_bool, </span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_vals =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">99</span>), </span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_labs =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>, <span class="st">"Incomplete"</span>), </span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_vals =</span> <span class="fu">c</span>(<span class="dv">99</span>)</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>survey_df2 <span class="ot">&lt;-</span> <span class="fu">create_survey_item</span>(</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  survey_df2, </span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  gender_bchair_qns_bool, </span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_vals =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">99</span>), </span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_labs =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>, <span class="st">"Incomplete"</span>), </span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_vals =</span> <span class="fu">c</span>(<span class="dv">99</span>)</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>race_ceo_qns_bool <span class="ot">&lt;-</span> <span class="fu">c</span>( race_ceo_qns_bool, <span class="st">"CEOrace_Bi"</span> )</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (race_var <span class="cf">in</span> race_ceo_qns_bool){</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  survey_df <span class="ot">&lt;-</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    survey_df <span class="sc">%&gt;%</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!!</span> <span class="at">race_var :=</span> <span class="fu">ifelse</span>(</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>         EIN <span class="sc">%in%</span> year1_CEOchng<span class="sc">$</span>EIN, </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>         year1_CEOchng[[race_var]], </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        .data[[race_var]] )</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>gender.qs <span class="ot">&lt;-</span> <span class="fu">grepl</span>( <span class="st">"CEOgender"</span>, race_gender_qns_bool )</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>gender_ceo_qns_bool <span class="ot">&lt;-</span> race_gender_qns_bool[ gender.qs ]</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>COLUMNS <span class="ot">&lt;-</span> gender_ceo_qns_bool</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>RULES <span class="ot">&lt;-</span> <span class="fu">c</span>(    <span class="st">"    Yes   =&gt;&gt;   1    "</span>, </span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>               <span class="st">"     No   =&gt;&gt;   0    "</span>    )</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>rules <span class="ot">&lt;-</span> <span class="fu">parse_rules</span>( RULES )          </span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> rules[[ <span class="st">"pattern"</span> ]]</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>replace <span class="ot">&lt;-</span> rules[[ <span class="st">"replace"</span> ]]</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>survey_df[ COLUMNS ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  survey_df[ COLUMNS ] <span class="sc">%&gt;%</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( recode_x, pattern, replace )</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>survey_df[ COLUMNS ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  survey_df[ COLUMNS ] <span class="sc">%&gt;%</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( as.numeric )</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co"># lapply( survey_df[ COLUMNS ], table )</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ( gender_var <span class="cf">in</span> gender_ceo_qns_bool ){</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>  survey_df <span class="ot">&lt;-</span> </span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    survey_df <span class="sc">%&gt;%</span> </span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>      <span class="sc">!!</span> <span class="at">gender_var :=</span> <span class="fu">ifelse</span>(</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>        EIN <span class="sc">%in%</span> year1_CEOchng<span class="sc">$</span>EIN <span class="sc">&amp;</span> gender_var <span class="sc">%in%</span> <span class="fu">names</span>( year1_CEOchng ), </span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>        year1_CEOchng[[ gender_var ]], </span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>        .data[[ gender_var ]]</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>race_bchair_qns_bool <span class="ot">&lt;-</span> <span class="fu">c</span>(race_bchair_qns_bool, <span class="st">"BChairrace_Bi"</span>)</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>COLUMNS <span class="ot">&lt;-</span> race_bchair_qns_bool</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>RULES <span class="ot">&lt;-</span> <span class="fu">c</span>(    </span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>  <span class="st">"  Yes =&gt;&gt; 1  "</span>, </span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>  <span class="st">"  No  =&gt;&gt; 0  "</span>    )</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>rules <span class="ot">&lt;-</span> <span class="fu">parse_rules</span>( RULES )          </span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> rules[[ <span class="st">"pattern"</span> ]]</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>replace <span class="ot">&lt;-</span> rules[[ <span class="st">"replace"</span> ]]</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>survey_df[ COLUMNS ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>  survey_df[ COLUMNS ] <span class="sc">%&gt;%</span></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( recode_x, pattern, replace )</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="co"># lapply( survey_df[ COLUMNS ], table )</span></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>survey_df[ COLUMNS ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>  survey_df[ COLUMNS ] <span class="sc">%&gt;%</span></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( as.numeric )</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (race_var <span class="cf">in</span> race_bchair_qns_bool){</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>  survey_df <span class="ot">&lt;-</span> survey_df <span class="sc">%&gt;%</span> </span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!!</span> <span class="at">race_var :=</span> <span class="fu">ifelse</span>(</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>    EIN <span class="sc">%in%</span> year1_BCchng<span class="sc">$</span>EIN, </span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>    year1_BCchng[[race_var]], </span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>    .data[[race_var]]</span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>gender_bchair_qns_bool <span class="ot">&lt;-</span> </span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>  race_gender_qns_bool[ <span class="fu">grepl</span>(<span class="st">"BChairgender"</span>, race_gender_qns_bool) ]</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>COLUMNS <span class="ot">&lt;-</span> gender_bchair_qns_bool</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>RULES <span class="ot">&lt;-</span> <span class="fu">c</span>(     <span class="st">"       Yes  =&gt;&gt;   1    "</span>, </span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>                <span class="st">"       No   =&gt;&gt;   0    "</span>,</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>                <span class="st">"    Female  =&gt;&gt;   1    "</span>, </span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>                <span class="st">"    Male    =&gt;&gt;   1    "</span>      )</span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>rules <span class="ot">&lt;-</span> <span class="fu">parse_rules</span>( RULES )          </span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> rules[[ <span class="st">"pattern"</span> ]]</span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>replace <span class="ot">&lt;-</span> rules[[ <span class="st">"replace"</span> ]]</span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>survey_df[ COLUMNS ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>  survey_df[ COLUMNS ] <span class="sc">%&gt;%</span></span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( recode_x, pattern, replace )</span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a><span class="co"># lapply( survey_df[ COLUMNS ], table )</span></span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>survey_df[ COLUMNS ] <span class="ot">&lt;-</span> </span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>  survey_df[ COLUMNS ] <span class="sc">%&gt;%</span></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lapply</span>( as.numeric )</span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (gender_var <span class="cf">in</span> gender_bchair_qns_bool){</span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>  survey_df <span class="ot">&lt;-</span> survey_df <span class="sc">%&gt;%</span> </span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!!</span> <span class="at">gender_var :=</span> <span class="fu">ifelse</span>(</span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>    EIN <span class="sc">%in%</span> year1_BCchng<span class="sc">$</span>EIN <span class="sc">&amp;</span> gender_var <span class="sc">%in%</span> <span class="fu">names</span>(year1_BCchng), </span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a>    year1_BCchng[[gender_var]], </span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a>    .data[[gender_var]]</span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="create-single-racegender-column" class="level3" data-number="5.1.6">
-<h3 data-number="5.1.6" class="anchored" data-anchor-id="create-single-racegender-column"><span class="header-section-number">5.1.6</span> Create single Race/Gender column</h3>
+<section id="recode-new-race-and-gender-variables" class="level3" data-number="4.1.5">
+<h3 data-number="4.1.5" class="anchored" data-anchor-id="recode-new-race-and-gender-variables"><span class="header-section-number">4.1.5</span> Recode New Race and Gender Variables</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>create_survey_item <span class="ot">&lt;-</span> <span class="cf">function</span>( </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    survey_data, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    qns, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    recode_vals, </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    recode_labs, </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    missing_vals ){</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  survey_data <span class="ot">&lt;-</span> </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    survey_data <span class="sc">%&gt;%</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">modify_at</span>(</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">.at =</span> qns,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">.f =</span> memisc<span class="sc">::</span>as.item,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">structure</span>(</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">.Data =</span> recode_vals,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">names =</span> recode_labs ),</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">missing.values =</span> missing_vals )</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>( survey_data )</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> <span class="fu">create_survey_item</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  survey_df, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  race_ceo_qns_bool, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_vals =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">99</span>), </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_labs =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>, <span class="st">"Incomplete"</span>), </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_vals =</span> <span class="fu">c</span>(<span class="dv">99</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> <span class="fu">create_survey_item</span>(</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  survey_df, </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  gender_ceo_qns_bool, </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_vals =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">99</span>), </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_labs =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>, <span class="st">"Incomplete"</span>), </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_vals =</span> <span class="fu">c</span>(<span class="dv">99</span>)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> <span class="fu">create_survey_item</span>(</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  survey_df, </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  race_bchair_qns_bool, </span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_vals =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">99</span>), </span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_labs =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>, <span class="st">"Incomplete"</span>), </span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_vals =</span> <span class="fu">c</span>(<span class="dv">99</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> <span class="fu">create_survey_item</span>(</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  survey_df, </span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  gender_bchair_qns_bool, </span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_vals =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">99</span>), </span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_labs =</span> <span class="fu">c</span>(<span class="st">"No"</span>, <span class="st">"Yes"</span>, <span class="st">"Incomplete"</span>), </span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_vals =</span> <span class="fu">c</span>(<span class="dv">99</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="create-single-racegender-column" class="level3" data-number="4.1.6">
+<h3 data-number="4.1.6" class="anchored" data-anchor-id="create-single-racegender-column"><span class="header-section-number">4.1.6</span> Create single Race/Gender column</h3>
 <p>While our race and gender columns are individual binary columns, this is not the case for year 1 and 3 results. Both those years contain single columns for race and gender variables for CEOs and Board Chairs respectively. For easier comparability, we create a new variable aggregating race and gender values for all our individual binary columns.</p>
-<section id="aggregated-race-variable" class="level4" data-number="5.1.6.1">
-<h4 data-number="5.1.6.1" class="anchored" data-anchor-id="aggregated-race-variable"><span class="header-section-number">5.1.6.1</span> Aggregated Race Variable</h4>
+<section id="aggregated-race-variable" class="level4" data-number="4.1.6.1">
+<h4 data-number="4.1.6.1" class="anchored" data-anchor-id="aggregated-race-variable"><span class="header-section-number">4.1.6.1</span> Aggregated Race Variable</h4>
 <table class="table">
 <colgroup>
 <col style="width: 20%">
@@ -702,42 +707,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create New Race variables</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>survey_df2 <span class="ot">&lt;-</span> survey_df2 <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">CEOrace =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>      CEOrace_AAPI <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      CEOrace_Black <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      CEOrace_Hisp <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      CEOrace_NativeAm <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>      CEOrace_White <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">5</span>,</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      CEOrace_Bi <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">6</span>,</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>      CEOrace_Oth <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">7</span>,</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="cn">NA</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">BChairrace =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>      BChairrace_AAPI <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>      BChairrace_Black <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>      BChairrace_Hisp <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>      BChairrace_NativeAm <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>      BChairrace_White <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">5</span>,</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>      BChairrace_Bi <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">6</span>,</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>      BChairrace_Oth <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">7</span>,</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="cn">NA</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Survey Item</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>survey_df2 <span class="ot">&lt;-</span> <span class="fu">create_survey_item</span>(</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  survey_df2, </span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"CEOrace"</span>, <span class="st">"BChairrace"</span>), </span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_vals =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>), </span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_labs =</span> <span class="fu">c</span>(<span class="st">"AAPI"</span>, <span class="st">"Black"</span>, <span class="st">"Hisp"</span>, <span class="st">"NativeAm"</span>, <span class="st">"White"</span>, <span class="st">"Bi"</span>, <span class="st">"Oth"</span>), </span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_vals =</span> <span class="fu">c</span>()</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create New Race variables</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> survey_df <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">CEOrace =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      CEOrace_AAPI <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      CEOrace_Black <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>      CEOrace_Hisp <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>      CEOrace_NativeAm <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>      CEOrace_White <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">5</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>      CEOrace_Bi <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">6</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>      CEOrace_Oth <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">7</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="cn">NA</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">BChairrace =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>      BChairrace_AAPI <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>      BChairrace_Black <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>      BChairrace_Hisp <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>      BChairrace_NativeAm <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>      BChairrace_White <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">5</span>,</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>      BChairrace_Bi <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">6</span>,</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>      BChairrace_Oth <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">7</span>,</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="cn">NA</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Survey Item</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> <span class="fu">create_survey_item</span>(</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  survey_df, </span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"CEOrace"</span>, <span class="st">"BChairrace"</span>), </span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_vals =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>), </span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_labs =</span> <span class="fu">c</span>(<span class="st">"AAPI"</span>, <span class="st">"Black"</span>, <span class="st">"Hisp"</span>, <span class="st">"NativeAm"</span>, <span class="st">"White"</span>, <span class="st">"Bi"</span>, <span class="st">"Oth"</span>), </span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_vals =</span> <span class="fu">c</span>()</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="aggregated-gender-variable" class="level4" data-number="5.1.6.2">
-<h4 data-number="5.1.6.2" class="anchored" data-anchor-id="aggregated-gender-variable"><span class="header-section-number">5.1.6.2</span> Aggregated Gender Variable</h4>
+<section id="aggregated-gender-variable" class="level4" data-number="4.1.6.2">
+<h4 data-number="4.1.6.2" class="anchored" data-anchor-id="aggregated-gender-variable"><span class="header-section-number">4.1.6.2</span> Aggregated Gender Variable</h4>
 <table class="table">
 <colgroup>
 <col style="width: 20%">
@@ -801,45 +806,45 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create New Race variables</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>survey_df2 <span class="ot">&lt;-</span> survey_df2 <span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">CEOgender =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      CEOgender_Man <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      CEOgender_Woman <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>      CEOgender_Trans <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>      CEOgender_NB <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>      CEOgender_Oth <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">5</span>,</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="cn">NA</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">BChairgender =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>      BChairgender_Man <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>      BChairgender_Woman <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>      BChairgender_Trans <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>      BChairgender_NB <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>      BChairgender_Oth <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">5</span>,</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="cn">NA</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Survey Item</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>survey_df2 <span class="ot">&lt;-</span> <span class="fu">create_survey_item</span>(</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  survey_df2, </span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"CEOgender"</span>, <span class="st">"BChairgender"</span>), </span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_vals =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>), </span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_labs =</span> <span class="fu">c</span>(<span class="st">"Man"</span>, <span class="st">"Woman"</span>, <span class="st">"Trans"</span>, <span class="st">"NB"</span>, <span class="st">"Oth"</span>), </span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_vals =</span> <span class="fu">c</span>()</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create New Race variables</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> survey_df <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">CEOgender =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      CEOgender_Man <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>      CEOgender_Woman <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>      CEOgender_Trans <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>      CEOgender_NB <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>      CEOgender_Oth <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">5</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="cn">NA</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">BChairgender =</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>      BChairgender_Man <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>      BChairgender_Woman <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>      BChairgender_Trans <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>      BChairgender_NB <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">4</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>      BChairgender_Oth <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">5</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">.default =</span> <span class="cn">NA</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Survey Item</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> <span class="fu">create_survey_item</span>(</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  survey_df, </span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"CEOgender"</span>, <span class="st">"BChairgender"</span>), </span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_vals =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>), </span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode_labs =</span> <span class="fu">c</span>(<span class="st">"Man"</span>, <span class="st">"Woman"</span>, <span class="st">"Trans"</span>, <span class="st">"NB"</span>, <span class="st">"Oth"</span>), </span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">missing_vals =</span> <span class="fu">c</span>()</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
-<section id="validate-results" class="level3" data-number="5.1.7">
-<h3 data-number="5.1.7" class="anchored" data-anchor-id="validate-results"><span class="header-section-number">5.1.7</span> Validate Results</h3>
+<section id="validate-results" class="level3" data-number="4.1.7">
+<h3 data-number="4.1.7" class="anchored" data-anchor-id="validate-results"><span class="header-section-number">4.1.7</span> Validate Results</h3>
 <p>We can see that the number of valid responses for race and gender questions concerning the CEO and Board Chair have increased.</p>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>race_gender_qns <span class="ot">&lt;-</span> </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>( race_gender_qns_bool, </span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>     <span class="st">"CEOrace"</span>, <span class="st">"CEOgender"</span>, <span class="st">"BChairrace"</span>,<span class="st">"BChairgender"</span> )</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">show_html</span>( <span class="fu">codebook</span>( survey_df2[ race_gender_qns ] ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>race_gender_qns <span class="ot">&lt;-</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>( race_gender_qns_bool, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>     <span class="st">"CEOrace"</span>, <span class="st">"CEOgender"</span>, <span class="st">"BChairrace"</span>,<span class="st">"BChairgender"</span> )</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">show_html</span>( <span class="fu">codebook</span>( survey_df[ race_gender_qns ] ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="codebook">
 <div class="codebook-entry">
 <div class="cbe-header" style="border-top: 1px solid; border-bottom: 1px solid; padding-left: 3ex;">
@@ -5182,94 +5187,99 @@ M
 </div>
 </section>
 </section>
-<section id="evaluating-survey-completion-rates-and-summing-section-completion" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="evaluating-survey-completion-rates-and-summing-section-completion"><span class="header-section-number">5.2</span> Evaluating Survey Completion Rates and Summing Section Completion</h2>
+<section id="evaluating-survey-completion-rates-and-summing-section-completion" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="evaluating-survey-completion-rates-and-summing-section-completion"><span class="header-section-number">4.2</span> Evaluating Survey Completion Rates and Summing Section Completion</h2>
 <p>We next evaluate survey completion rates for each category of questions. We separate our variables into question categories and compute the proportion of valid responses.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create named list of variables</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>survey_completion_qns_ls <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Program Changes"</span> <span class="ot">=</span> program_change_qns_bool,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"People Served"</span> <span class="ot">=</span> people_served_qns_int,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Next Year's Demand"</span> <span class="ot">=</span> demand_fct_qns,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Staff &amp; Volunteers"</span> <span class="ot">=</span> staff_qns_int,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Volunteer Importance"</span> <span class="ot">=</span> volimportance_qns_fct,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Donor Importance"</span> <span class="ot">=</span> donimportance_qns_fct,</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Fundraising"</span> <span class="ot">=</span> fundraise_qns_bool,</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Major Gift Amount"</span> <span class="ot">=</span> majorgift_qn_num,</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Fundraising Changes"</span> <span class="ot">=</span> fundraise_change_qns_fct,</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Donor Changes"</span> <span class="ot">=</span> fundraise_donor_qns_int,</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Fundraising Sought/Received"</span> <span class="ot">=</span> fundraise_skrcv_qns_bool,</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Revenue Breakdown"</span> <span class="ot">=</span> finance_revenue_qns_num,</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Reserves"</span> <span class="ot">=</span> reserve_qns_num,</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CARES Funding"</span> <span class="ot">=</span> cares_qns_num,</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Finance Changes"</span> <span class="ot">=</span> finance_chng_qns_bool,</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Leadership Changes"</span> <span class="ot">=</span> leadership_chng_qns_bool,</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Race and Gender"</span> <span class="ot">=</span> <span class="fu">c</span>(race_gender_qns_bool, <span class="st">"BChairrace_Bi"</span>, <span class="st">"CEOrace_Bi"</span>),</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"External Affairs"</span> <span class="ot">=</span> extaffairs_qns_fct,</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Primary Concern"</span> <span class="ot">=</span> primary_cncrn_qn_text)</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Include Response IDs into questions</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>survey_completion_qns <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ResponseID"</span>, <span class="fu">unname</span>(<span class="fu">unlist</span>(survey_completion_qns_ls)))</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset Survey to only include questions to calculate response rates</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>survey_subset <span class="ot">&lt;-</span> survey_df2 <span class="sc">%&gt;%</span> </span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    tidyselect<span class="sc">::</span><span class="fu">all_of</span>(survey_completion_qns)</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute response rate</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>response_rate_ls <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">imap</span>(</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">.x =</span> survey_completion_qns_ls,</span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">.f =</span> <span class="cf">function</span>(qns, qn_group) {</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute responses for each question belonging to a group</span></span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    sum_ls <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(qns,</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>           <span class="at">.f =</span> <span class="cf">function</span>(qn){</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>             rs <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(survey_subset[[qn]])</span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>             rs <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="sc">!</span> <span class="fu">is.na</span>(rs), <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>             <span class="fu">return</span>(rs)</span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>           })</span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Perform rowwise sum for questions belonging to a group to get number of valid responses</span></span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>    sum_qn <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">pmap</span>(sum_ls, sum, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>    survey_subset[[qn_group]] <span class="ot">&lt;-</span> <span class="fu">unlist</span>(sum_qn)</span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute response rate based on number of questions in that group</span></span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>    output_df <span class="ot">&lt;-</span> survey_subset <span class="sc">%&gt;%</span> </span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="sc">!!</span><span class="at">qn_group :=</span> .data[[qn_group]] <span class="sc">/</span> <span class="fu">length</span>(qns)) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">select</span>(tidyselect<span class="sc">::</span><span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"ResponseID"</span>, qn_group)))</span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(output_df)</span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>  },</span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">.progress =</span> <span class="cn">TRUE</span></span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>response_rate_df <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">reduce</span>(response_rate_ls,</span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>                                  dplyr<span class="sc">::</span>left_join,</span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">by =</span> <span class="st">"ResponseID"</span>)</span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Exclude Qualtrics Test Responses</span></span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>testcases <span class="ot">=</span> <span class="fu">c</span>(</span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_1lB6u4BoFZWFeXI"</span>,</span>
-<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_3e3RyQttJeNzqLu"</span>,</span>
-<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_3kzeIxsE73IIoq9"</span>,</span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_2BxNQBmrv4Dr9Dn"</span>,</span>
-<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_Q4WjxQdBfeZbn4B"</span>,</span>
-<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_xFNLuOjPbg6iL6N"</span>,</span>
-<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_3McyCOS2Gv7FNcd"</span>,</span>
-<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_9YWW00fssFUBEYh"</span>,</span>
-<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_PNiTwNoQSfvuRkB"</span>,</span>
-<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_111PYLkD7mpeFui"</span>,</span>
-<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_a59rvIufWBZhAhr"</span>,</span>
-<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_3MGb8by31yzxYW7"</span>,</span>
-<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_1exbPd4NNpfWrFt"</span>,</span>
-<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_2PwfUW9idAwPE1w"</span>,</span>
-<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_3EunbLVD5Ce8b93"</span>,</span>
-<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_2uO55NoBulnQTvx"</span>,</span>
-<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_Wl2yqsO0HXhhaTv"</span>,</span>
-<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_1kSRidkXneLKy4u"</span>,</span>
-<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_3j3DCg6oVhQWRe0"</span></span>
-<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>response_rate_df <span class="ot">&lt;-</span> </span>
-<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>  response_rate_df <span class="sc">%&gt;%</span> </span>
-<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span> ResponseID <span class="sc">%in%</span> weighted_survey_df<span class="sc">$</span>ResponseId )</span>
-<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a>response_rate_df <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fpath <span class="ot">&lt;-</span> <span class="st">"DATA-PREP/01-year-one/02-data-intermediate/"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="st">"wave-01-data-intermediate.dta"</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>weighted_survey_df <span class="ot">&lt;-</span> haven<span class="sc">::</span><span class="fu">read_dta</span>( <span class="fu">paste0</span>(fpath,fname) )</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create named list of variables</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>survey_completion_qns_ls <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Program Changes"</span> <span class="ot">=</span> program_change_qns_bool,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"People Served"</span> <span class="ot">=</span> people_served_qns_int,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Next Year's Demand"</span> <span class="ot">=</span> demand_fct_qns,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Staff &amp; Volunteers"</span> <span class="ot">=</span> staff_qns_int,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Volunteer Importance"</span> <span class="ot">=</span> volimportance_qns_fct,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Donor Importance"</span> <span class="ot">=</span> donimportance_qns_fct,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Fundraising"</span> <span class="ot">=</span> fundraise_qns_bool,</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Major Gift Amount"</span> <span class="ot">=</span> majorgift_qn_num,</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Fundraising Changes"</span> <span class="ot">=</span> fundraise_change_qns_fct,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Donor Changes"</span> <span class="ot">=</span> fundraise_donor_qns_int,</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Fundraising Sought/Received"</span> <span class="ot">=</span> fundraise_skrcv_qns_bool,</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Revenue Breakdown"</span> <span class="ot">=</span> finance_revenue_qns_num,</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Reserves"</span> <span class="ot">=</span> reserve_qns_num,</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"CARES Funding"</span> <span class="ot">=</span> cares_qns_num,</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Finance Changes"</span> <span class="ot">=</span> finance_chng_qns_bool,</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Leadership Changes"</span> <span class="ot">=</span> leadership_chng_qns_bool,</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Race and Gender"</span> <span class="ot">=</span> <span class="fu">c</span>(race_gender_qns_bool, <span class="st">"BChairrace_Bi"</span>, <span class="st">"CEOrace_Bi"</span>),</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">"External Affairs"</span> <span class="ot">=</span> extaffairs_qns_fct,</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Primary Concern"</span> <span class="ot">=</span> primary_cncrn_qn_text)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Include Response IDs into questions</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>survey_completion_qns <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ResponseID"</span>, <span class="fu">unname</span>(<span class="fu">unlist</span>(survey_completion_qns_ls)))</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset Survey to only include questions to calculate response rates</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>survey_subset <span class="ot">&lt;-</span> survey_df <span class="sc">%&gt;%</span> </span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    tidyselect<span class="sc">::</span><span class="fu">all_of</span>(survey_completion_qns)</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute response rate</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>response_rate_ls <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">imap</span>(</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">.x =</span> survey_completion_qns_ls,</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">.f =</span> <span class="cf">function</span>(qns, qn_group) {</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute responses for each question belonging to a group</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>    sum_ls <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(qns,</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>           <span class="at">.f =</span> <span class="cf">function</span>(qn){</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>             rs <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(survey_subset[[qn]])</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>             rs <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="sc">!</span> <span class="fu">is.na</span>(rs), <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>             <span class="fu">return</span>(rs)</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>           })</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Perform rowwise sum for questions belonging to a group to get number of valid responses</span></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>    sum_qn <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">pmap</span>(sum_ls, sum, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>    survey_subset[[qn_group]] <span class="ot">&lt;-</span> <span class="fu">unlist</span>(sum_qn)</span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute response rate based on number of questions in that group</span></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>    output_df <span class="ot">&lt;-</span> survey_subset <span class="sc">%&gt;%</span> </span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="sc">!!</span><span class="at">qn_group :=</span> .data[[qn_group]] <span class="sc">/</span> <span class="fu">length</span>(qns)) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>      dplyr<span class="sc">::</span><span class="fu">select</span>(tidyselect<span class="sc">::</span><span class="fu">all_of</span>(<span class="fu">c</span>(<span class="st">"ResponseID"</span>, qn_group)))</span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(output_df)</span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>  },</span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">.progress =</span> <span class="cn">TRUE</span></span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>response_rate_df <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">reduce</span>(response_rate_ls,</span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>                                  dplyr<span class="sc">::</span>left_join,</span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">by =</span> <span class="st">"ResponseID"</span>)</span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Exclude Qualtrics Test Responses</span></span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>testcases <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_1lB6u4BoFZWFeXI"</span>,</span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_3e3RyQttJeNzqLu"</span>,</span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_3kzeIxsE73IIoq9"</span>,</span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_2BxNQBmrv4Dr9Dn"</span>,</span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_Q4WjxQdBfeZbn4B"</span>,</span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_xFNLuOjPbg6iL6N"</span>,</span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_3McyCOS2Gv7FNcd"</span>,</span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_9YWW00fssFUBEYh"</span>,</span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_PNiTwNoQSfvuRkB"</span>,</span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_111PYLkD7mpeFui"</span>,</span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_a59rvIufWBZhAhr"</span>,</span>
+<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_3MGb8by31yzxYW7"</span>,</span>
+<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_1exbPd4NNpfWrFt"</span>,</span>
+<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_2PwfUW9idAwPE1w"</span>,</span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_3EunbLVD5Ce8b93"</span>,</span>
+<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_2uO55NoBulnQTvx"</span>,</span>
+<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_Wl2yqsO0HXhhaTv"</span>,</span>
+<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_1kSRidkXneLKy4u"</span>,</span>
+<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>  <span class="st">"R_3j3DCg6oVhQWRe0"</span></span>
+<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a>response_rate_df <span class="ot">&lt;-</span> </span>
+<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>  response_rate_df <span class="sc">%&gt;%</span> </span>
+<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span> ResponseID <span class="sc">%in%</span> weighted_survey_df<span class="sc">$</span>ResponseId )</span>
+<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>response_rate_df <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <colgroup>
@@ -20525,19 +20535,6 @@ M
 </table>
 </div>
 </div>
-</section>
-<section id="save-outputs" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="save-outputs"><span class="header-section-number">5.3</span> Save outputs</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fpath <span class="ot">&lt;-</span> <span class="st">"DATA-PREP/02-year-two/03-data-final/"</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="st">"YEAR-02-DATA-RESTRICTED-V01.csv"</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>( survey_df2, <span class="fu">paste0</span>( fpath, fname ), <span class="at">row.names=</span>F, <span class="at">na=</span><span class="st">""</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fpath <span class="ot">&lt;-</span> <span class="st">"DATA-PREP/02-year-two/02-data-intermediate/"</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="st">"DATA-CODEBOOK.txt"</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>memisc<span class="sc">::</span><span class="fu">Write</span>( <span class="fu">codebook</span>(survey_df2), <span class="at">file=</span><span class="fu">paste0</span>( fpath, fname ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <style>
 
 h1, h2 {
@@ -20965,13 +20962,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./22-year2-summarize-responses.html" class="pagination-link" aria-label="Summary Statistics">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Summary Statistics</span></span>
+      <a href="./21-year2-recoding-rules.html" class="pagination-link" aria-label="Relabeling Qualtrics Variables">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Relabeling Qualtrics Variables</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./30-YEAR-THREE.html" class="pagination-link" aria-label="YEAR THREE DATA">
-        <span class="nav-page-text">YEAR THREE DATA</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./23-year2-summarize-responses.html" class="pagination-link" aria-label="Summary Statistics">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary Statistics</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -14,8 +14,9 @@ library( memisc )
 library( labelled )
 
 # SOURCE PREVIOUS STEPS 
-knitr::purl( "31-year3-recoding-rules.qmd" )   # convert QMD to R script
-source(      "31-year3-recoding-rules.R"   )   # run all chunks in prior step
+knitr::purl(  "22-year2-fix-demographics.qmd"  )    # convert QMD to R script
+source(       "22-year2-fix-demographics.R"    )    # run all chunks in prior step
+file.remove(  "22-year2-fix-demographics.R"    )    # delete script after execution
 ```
 
 
@@ -41,15 +42,15 @@ all.questions <- c(
   fundraise_qns_bool,fundraise_qns_text,
   majorgift_qn_num,
   extaffairs_qns_fct,
-  primary_cncrn_qn_text,
-  fiscal_year_fct, fiscal_year_txt,
-  regulation_qns,
-  staffing_plans )
+  primary_cncrn_qn_text )
 
 omit.these.groups <- c("id","DROP","MainAddress","Comments")
 all.vars <- dd$vname[ ! dd$group %in% omit.these.groups ] |> na.omit()
 show_html( codebook( survey_df[ all.vars ] ))
 ```
+
+
+
 
 
 
@@ -75,9 +76,7 @@ show_html( codebook( survey_df[ all.vars ] ))
 - **`r length( c(majorgift_qn_num) ) `** questions about **MAJOR GIFT AMOUNTS**
 - **`r length( c(extaffairs_qns_fct) ) `** questions about **EXTERNAL AFFAIRS**  
 - **`r length( c(primary_cncrn_qn_text) ) `** questions about **FUTURE CONCERNS**
-- **`r length( c(fiscal_year_fct, fiscal_year_txt) ) `** questions about **FISCAL YEAR END**
-- **`r length( c(regulation_qns) ) `** questions about **REGULATION**
-- **`r length( c(staffing_plans) ) `** questions about **STAFFING PLANS**
+
 
 
 <br>
@@ -220,26 +219,31 @@ COLUMNS <- c(primary_cncrn_qn_text)
 show_html( codebook( survey_df[ COLUMNS ] ))
 ```
 
-# FISCAL YEAR END
 
-```{r, results="asis", echo=F}
-COLUMNS <- c(fiscal_year_fct, fiscal_year_txt) 
-show_html( codebook( survey_df[ COLUMNS ] ))
+
+
+
+
+
+## Save outputs
+
+
+```{r}
+fpath <- "DATA-PREP/02-year-two/03-data-final/"
+fname <- "YEAR-02-DATA-RESTRICTED-V02.csv"
+write.csv( survey_df, paste0( fpath, fname ), row.names=F, na="" )
 ```
 
-# REGULATION
 
-```{r, results="asis", echo=F}
-COLUMNS <- c(regulation_qns)
-show_html( codebook( survey_df[ COLUMNS ] ))
+```{r}
+fpath <- "DATA-PREP/02-year-two/02-data-intermediate/"
+fname <- "DATA-CODEBOOK.txt"
+memisc::Write( codebook(survey_df), file=paste0( fpath, fname ) )
 ```
 
-# STAFFING PLANS
 
-```{r, results="asis", echo=F}
-COLUMNS <- c(staffing_plans)
-show_html( codebook( survey_df[ COLUMNS ] ))
-```
+
+
 
 
 

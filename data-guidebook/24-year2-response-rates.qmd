@@ -1,0 +1,264 @@
+---
+title: "Response Rate by Question"
+execute:
+  warning: false
+  message: false
+---
+
+```{r, include=FALSE, echo=FALSE}
+library( haven )
+library( dplyr )
+library( tidyr )
+library( epoxy )
+library( memisc )
+library( labelled )
+
+# SOURCE PREVIOUS STEPS
+knitr::purl( "22-year2-fix-demographics.qmd" )   # convert QMD to R script
+source(      "22-year2-fix-demographics.R"   )   # run all chunks in prior step
+file.remove( "22-year2-fix-demographics.R"   )   # delete script after execution
+```
+
+
+
+
+## Response Rate by Question Group
+
+
+
+
+
+```{r, results="asis", echo=F, eval=F}
+all.questions <- c(
+  program_change_qns_bool, program_change_qns_txt,
+  people_served_qns_bool, people_served_qns_int,
+  demand_fct_qns,
+  staff_qns_bool, staff_qns_int, staff_qns_text,
+  volimportance_qns_fct, donimportance_qns_fct,
+  leadership_chng_qns_bool, leadership_chng_qns_text,
+  race_gender_qns_bool, race_gender_qns_text,
+  finance_chng_qns_bool, finance_chng_qns_text,
+  cares_qns_bool, cares_qns_num,
+  reserve_qns_bool, reserve_qns_num,
+  finance_revenue_qns_num, finance_revenue_qns_text,
+  fundraise_skrcv_qns_bool,
+  fundraise_donor_qns_int,
+  fundraise_change_qns_fct,
+  fundraise_qns_bool,fundraise_qns_text,
+  majorgift_qn_num,
+  extaffairs_qns_fct,
+  primary_cncrn_qn_text )
+
+# omit.these.groups <- c("id","DROP","MainAddress","Comments")
+# all.vars <- dd$vname[ ! dd$group %in% omit.these.groups ] |> na.omit()
+```
+
+
+Variables are organized in question groups and the proportion of valid responses (non-missing or non-NAs) are reported at the group level. The following tables contains the group response rate for each survey respondent, one respondent per column. The gradient of each cell corresponds with no missing values within the question group (cells with white background) to groups with no complete responses, or a 0% response rate for the question group (cells with red backgrounds). There is a linear color gradient for response rates between 0% and 100%.  
+ 
+
+ 
+
+```{r, warning=FALSE, echo=F}
+
+fpath <- "DATA-PREP/01-year-one/02-data-intermediate/"
+fname <- "wave-01-data-intermediate.dta"
+weighted_survey_df <- haven::read_dta( paste0(fpath,fname) )
+
+
+# Create named list of variables
+
+survey_completion_qns_ls <- list(
+  "Program Changes" = program_change_qns_bool,
+  "People Served" = people_served_qns_int,
+  "Next Year's Demand" = demand_fct_qns,
+  "Staff & Volunteers" = staff_qns_int,
+  "Volunteer Importance" = volimportance_qns_fct,
+  "Donor Importance" = donimportance_qns_fct,
+  "Fundraising" = fundraise_qns_bool,
+  "Major Gift Amount" = majorgift_qn_num,
+  "Fundraising Changes" = fundraise_change_qns_fct,
+  "Donor Changes" = fundraise_donor_qns_int,
+  "Fundraising Sought/Received" = fundraise_skrcv_qns_bool,
+  "Revenue Breakdown" = finance_revenue_qns_num,
+  "Reserves" = reserve_qns_num,
+  "CARES Funding" = cares_qns_num,
+  "Finance Changes" = finance_chng_qns_bool,
+  "Leadership Changes" = leadership_chng_qns_bool,
+  "Race and Gender" = c(race_gender_qns_bool, "BChairrace_Bi", "CEOrace_Bi"),
+  "External Affairs" = extaffairs_qns_fct,
+  "Primary Concern" = primary_cncrn_qn_text)
+# Include Response IDs into questions
+survey_completion_qns <- c("ResponseID", unname(unlist(survey_completion_qns_ls)))
+# Subset Survey to only include questions to calculate response rates
+survey_subset <- survey_df %>% 
+  dplyr::select(
+    tidyselect::any_of(survey_completion_qns)
+    )
+
+# Compute response rate
+response_rate_ls <- purrr::imap(
+  .x = survey_completion_qns_ls,
+  .f = function(qns, qn_group) {
+    # Compute responses for each question belonging to a group
+    sum_ls <- purrr::map(qns,
+           .f = function(qn){
+             rs <- as.integer(survey_subset[[qn]])
+             rs <- ifelse(! is.na(rs), 1, 0)
+             return(rs)
+           })
+    # Perform rowwise sum for questions belonging to a group to get number of valid responses
+    sum_qn <- purrr::pmap(sum_ls, sum, na.rm = TRUE)
+    survey_subset[[qn_group]] <- unlist(sum_qn)
+    # Compute response rate based on number of questions in that group
+    output_df <- survey_subset %>% 
+      dplyr::mutate(!!qn_group := .data[[qn_group]] / length(qns)) %>% 
+      dplyr::select(tidyselect::all_of(c("ResponseID", qn_group)))
+    return(output_df)
+  },
+  .progress = TRUE
+)
+
+response_rate_df <- purrr::reduce(response_rate_ls,
+                                  dplyr::left_join,
+                                  by = "ResponseID")
+
+# Exclude Qualtrics Test Responses
+testcases = c(
+  "R_1lB6u4BoFZWFeXI",
+  "R_3e3RyQttJeNzqLu",
+  "R_3kzeIxsE73IIoq9",
+  "R_2BxNQBmrv4Dr9Dn",
+  "R_Q4WjxQdBfeZbn4B",
+  "R_xFNLuOjPbg6iL6N",
+  "R_3McyCOS2Gv7FNcd",
+  "R_9YWW00fssFUBEYh",
+  "R_PNiTwNoQSfvuRkB",
+  "R_111PYLkD7mpeFui",
+  "R_a59rvIufWBZhAhr",
+  "R_3MGb8by31yzxYW7",
+  "R_1exbPd4NNpfWrFt",
+  "R_2PwfUW9idAwPE1w",
+  "R_3EunbLVD5Ce8b93",
+  "R_2uO55NoBulnQTvx",
+  "R_Wl2yqsO0HXhhaTv",
+  "R_1kSRidkXneLKy4u",
+  "R_3j3DCg6oVhQWRe0"
+)
+
+response_rate_df <- 
+  response_rate_df %>% 
+  dplyr::filter(! ResponseID %in% weighted_survey_df$ResponseId )
+
+numeric.columns <- which(sapply(response_rate_df,is.numeric))
+
+TOTAL <- 
+  apply( response_rate_df[numeric.columns], 
+         MARGIN=1, 
+         FUN=sum ) %>%
+  round( 2 )
+
+response_rate_df$TOTAL <- TOTAL
+
+nm.order <- 
+c( "TOTAL", 
+  "People Served", "Next Year's Demand", "Program Changes",  
+  "Staff & Volunteers", "Volunteer Importance", "Donor Importance", 
+  "Fundraising", "Major Gift Amount", "Fundraising Changes", 
+  "Donor Changes", "Fundraising Sought/Received", 
+  "Revenue Breakdown", "Reserves", "CARES Funding", 
+  "Finance Changes", "Leadership Changes", "Race and Gender", 
+  "External Affairs", "Primary Concern" )
+
+df <- response_rate_df[ nm.order ]
+df <- dplyr::arrange( df, -TOTAL )
+tdf <- t(df) %>% as.data.frame()
+names(tdf) <- paste0( "ID", 1:ncol(tdf) )
+
+brks <- seq( 0, 1, .05 ) 
+clrs <- round( seq( 20, 255, length.out = length(brks) + 1 ), 0 ) %>%
+  {paste0( "rgb(255,", ., ",", ., ")") }
+
+options( DT.options = list( pageLength = 20, compact=TRUE, fixedColumns = list(leftColumns = 1) ))
+
+tdf %>% 
+  DT::datatable( extensions = "FixedColumns" ) %>% 
+  DT::formatRound( 1:ncol(tdf), digits=2 ) %>%
+  DT::formatStyle( names(tdf), 
+                   backgroundColor = DT::styleInterval(brks, clrs) ) %>%
+  DT::formatStyle( 0, target= 'row', lineHeight='60%')
+
+```
+
+The list of questions contained within each group: 
+
+```{r, echo=F}
+q.list <- sapply( survey_completion_qns_ls, 
+                  function(x){ paste( x, collapse=" ;; ") },
+                  USE.NAMES=FALSE )
+df.qlist <- data.frame( QUESTION_GROUP=names(q.list), QUESTION_ITEMS=q.list )
+row.names( df.qlist ) <- NULL
+df.qlist %>% pander::pander()
+```
+
+
+
+
+## Response Rate By Question
+
+The following table report the proportion of non-missing values (non-NAs) calculated on a question-by-question basis: 
+
+
+```{r, echo=F}
+id.vars <- dd$vname[ dd$group %in% c("id","MainAddress") ]
+vnames <- names(survey_df)
+
+df <- survey_df[ vnames[ ! vnames %in% id.vars ] ]
+
+non_na_rate <- function(x){ 
+  ( 1 - sum( is.na(x)/length(x) ) ) |> round(3)*100 
+}
+
+compl.rate <- sapply( df, non_na_rate ) 
+
+df.cr <- 
+  data.frame( QUESTION_ITEM   = names(compl.rate), 
+              COMPLETION_RATE = compl.rate  ) 
+
+df.cr <- 
+  merge( df.cr, dd[c("vname","group","vlabel","sub")], 
+         by.x="QUESTION_ITEM", 
+         by.y="vname", 
+         all.x=TRUE ) %>% 
+  dplyr::arrange( group )
+
+# ADD MISSING RACE AND GENDER CATEGORY LABELS 
+
+use.sub <- df.cr$group %in% c("CEOgender","CEOrace","BCgender","BCrace")
+
+df.cr$vlabel[ use.sub ] <- 
+  paste0( df.cr$vlabel[ use.sub ], "; ", df.cr$sub[ use.sub ] )
+
+df.cr$vlabel <- gsub( "Selected Choice - ", "", df.cr$vlabel ) 
+
+# LABEL QUESTION ITEMS 
+df.cr$QUESTION_ITEM <- 
+  paste0( toupper(df.cr$QUESTION_ITEM), ": ", df.cr$vlabel )
+
+# PRINT TABLE 
+names(df.cr) <- toupper(names(df.cr))
+df.cr[ c("GROUP","QUESTION_ITEM","COMPLETION_RATE") ] %>% pander::pander()
+```
+
+
+<style>
+
+h1, h2 {
+  margin-top: 80px
+}
+
+.codebook-entry {
+   background-color: beige;
+   margin-top: 20px;
+}
+</style>

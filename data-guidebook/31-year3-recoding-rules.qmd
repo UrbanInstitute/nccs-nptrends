@@ -17,7 +17,7 @@ library( labelled )
 
 knitr::purl( "30-YEAR-THREE.qmd" )   # convert QMD to R script
 source(      "30-YEAR-THREE.R"   )   # run all chunks in prior step
-
+file.remove( "30-YEAR-THREE.R"   )   # delete script after execution
 ```
 
 
@@ -340,25 +340,68 @@ These questions are presented as a checkbox to the respondent. They indicate an 
 
 ## Seek or Receive Fundraising Questions
 
+```{r, eval=F, echo=F}
+
+lapply( survey_df[ fundraise_skrcv_qns_bool ], table, useNA="ifany" )
+```
+
+
 These checkboxes are ticked by the respondent to indicate if they have sought or received funding from a specific source.
 
 | Original Value | Description | Recode Label | Recode Value | Code as Missing? |
 |---|---|---|---|---|
-|(select all that apply)|Checkbox Checked|Yes|1|No|
-|-99|Checkbox Unchecked|No|0|No|
-|NA|Unanswered|NA|NA|Yes|
+|1|Checkbox Checked|Yes|1|No|
+|NA|Checkbox Unchecked|No|0|No|
+|All NA|Unanswered|NA|NA|Yes|
+
+*ALL NA* refers to no responses on all questions in this entire question group (i.e. the respondent skipped the section).
 
 
 ```{r}
 # APPLY TO COLUMNS K:
 COLUMNS <-  fundraise_skrcv_qns_bool
 
+
+# ALL RESPONSES NA IN GROUP:
+# indication that the question
+# was skipped by the respondent
+
+row.id <- apply( survey_df[ COLUMNS ], 
+                 MARGIN = 1, 
+                 FUN = function(x) all(is.na(x)) ) 
+
+# NA means "no"
+
+na_to_zero <- function(x){
+  x[ is.na(x) ] <- 0
+  return(x)
+}
+
+survey_df[ COLUMNS ] <- 
+  survey_df[ COLUMNS ] %>% 
+  lapply( na_to_zero )
+
+# if they do not respond "yes" 
+# to at least one question then
+# assume they skipped them all
+
+zero_to_na <- function( x, rowid ){
+  x[ rowid ] <- NA
+  return(x)
+}
+
+survey_df[ COLUMNS ] <- 
+  survey_df[ COLUMNS ] %>% 
+  lapply( zero_to_na, row.id )
+
+
+
 # VALUES THAT NEED RECODING
 
 RULES <- c(    
   
-  "  (select all that apply)    =>>    1    ", 
-  "                      -99    =>>    0    "    )
+  "    1      =>>    1    ", 
+  "   NA      =>>    0    "    )
 
 
 rules <- parse_rules( RULES )          
@@ -368,7 +411,7 @@ replace <- rules[[ "replace" ]]
 # MEMISC LABELS AND MISSING VALUE CODES 
 values  <- c( "0", "1" )
 labels  <- c( "No", "Yes" )
-missing <- "UNSURE"
+missing <- NA
 
 # RECODE VARIABLES 
 survey_df <- 
@@ -391,75 +434,6 @@ show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 
 
-## Race and Gender Checkboxes
-
-These checkboxes are ticked by the respondent to indicate if their CEO or board chair belong to a specified race or gender identity.
-
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Asian/Pacific Islander|Checkbox Checked|Yes|1|No|
-|Black/African American|Checkbox Checked|Yes|1|No|
-|Latinx/Hispanic|Checkbox Checked|Yes|1|No|
-|Native American/American Indian|Checkbox Checked|Yes|1|No|
-|White|Checkbox Checked|Yes|1|No|
-|Man|Checkbox Checked|Yes|1|No|
-|Woman|Checkbox Checked|Yes|1|No|
-|Trans|Checkbox Checked|Yes|1|No|
-|Gender non-conforming/Non-Binary|Checkbox Checked|Yes|1|No|
-|Other (please specify)|Checkbox Checked|Yes|1|No|
-|0|Checkbox Unchecked|No|0|No|
-|-99|Incomplete|Incomplete|99|Yes|
-|NA|Unanswered|NA|NA|Yes|
-
-
-
-```{r}
-# APPLY TO COLUMNS K:
-COLUMNS <-  race_gender_qns_bool
-
-# VALUES THAT NEED RECODING
-
-RULES <- c(    
-  
-          "          Asian/Pacific Islander    =>>     1   ",
-          "          Black/African American    =>>     1   ",
-          "                 Latinx/Hispanic    =>>     1   ",
-          " Native American/American Indian    =>>     1   ",
-          "                           White    =>>     1   ",
-          "                             Man    =>>     1   ",
-          "                           Woman    =>>     1   ",
-          "                           Trans    =>>     1   ",
-          "Gender non-conforming/Non-Binary    =>>     1   ",
-          "         Other (please specify):    =>>     1   ",
-          "                             -99    =>>     x   ",
-          "                               0    =>>     0   "     )
-
-
-rules <- parse_rules( RULES )          
-pattern <- rules[[ "pattern" ]]
-replace <- rules[[ "replace" ]]
-
-# MEMISC LABELS AND MISSING VALUE CODES 
-values  <- c( "0", "1", "x" )
-labels  <- c( "No", "Yes", "Incomplete" )
-missing <- "x"
-
-# RECODE VARIABLES 
-survey_df <- 
-  survey_df %>% 
-  recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
-```
-
-```{r, eval=F, echo=F}
-codebook( survey_df[ COLUMNS[1] ] )
-```
-
-**Example:**
-
-```{r, results="asis", echo=F}
-show_html(codebook( survey_df[ COLUMNS[1] ] ))
-```
-
 
 
 ## Regulation Checkboxes
@@ -470,39 +444,83 @@ These questions are presented as a checkbox to the user to indicate that a quest
 |---|---|---|---|---|
 |1|Checkbox Checked|Yes|1|No|
 |NA|Unanswered|No|0|No|
-|22|Yes|Yes|1|No|
-|21|No|Yes|0|No|
+|22|Checkbox Checked|Yes|1|No|
+|21|Unchecked Box|No|0|No|
 
 ```{r}
 # APPLY TO COLUMNS K:
-COLUMNS <-  regulation_qns
+
+# exclude OTHER TXT question
+other <- which( regulation_qns == "Regulations_Other_TEXT" )
+COLUMNS <-  regulation_qns[ - other  ]
+
+
+# "did not contact any agencies":
+# ~ NONE CONTACTED
+
+dnc.rows <- survey_df$Regulations == 21 
+
+# all rows NA: 
+# question skipped by respondent
+
+na.rows <- is.na( survey_df$Regulations )
+
+
+# NA means "NO"
+
+na_to_zero <- function(x){
+  x[ is.na(x) ] <- 0
+  return(x)
+}
+
+survey_df[ COLUMNS ] <- 
+  survey_df[ COLUMNS ] %>% 
+  lapply( na_to_zero )
+
+
+# if they responded "NONE CONTACTED" (21) 
+# to the first question code
+# the rest as "NONE CONTACTED"
+
+zero_to_dnc <- function( x, rowid ){
+  x[ rowid ] <- "NONE CONTACTED"
+  return(x)
+}
+
+survey_df[ COLUMNS ] <- 
+  survey_df[ COLUMNS ] %>% 
+  lapply( zero_to_dnc, row.id )
+
+# if the first question was NA 
+# code all as missing ("no response")
+
+zero_to_noresp <- function( x, rowid ){
+  x[ rowid ] <- "NO RESPONSE"
+  return(x)
+}
+
+survey_df[ COLUMNS ] <- 
+  survey_df[ COLUMNS ] %>% 
+  lapply( zero_to_noresp, row.id )
+
 
 # VALUES THAT NEED RECODING
 
-RULES <- c(    
-          
-             "    1    =>>     1   ", 
-             "   NA    =>>     0   ", 
-             "   22    =>>     1   " ,
-             "   21    =>>     0   " )
+RULES <- c(    "   22    =>>     1                ",
+               "   21    =>>     NONE CONTACTED   ",
+               "   NA    =>>     NO RESPONSE      ", 
+               "    1    =>>     1                "    )
 
 
 rules <- parse_rules( RULES )          
 pattern <- rules[[ "pattern" ]]
 replace <- rules[[ "replace" ]]
 
-# na_to_zero <- function(x){
-#   x[ is.na(x) ] <- 0
-#   return(x)
-# }
-# survey_df[ COLUMNS ] <- 
-#   survey_df[ COLUMNS ] %>% 
-#   lapply( na_to_zero )
 
 # MEMISC LABELS AND MISSING VALUE CODES 
-values  <- c( "0", "1" )
-labels  <- c( "No", "Yes" )
-missing <- NA
+values  <- c( "0", "1", "NONE CONTACTED", "NO RESPONSE" )
+labels  <- c( "No", "Yes", "None Contacted", "No Response" )
+missing <- "NO RESPONSE"
 
 # RECODE VARIABLES 
 survey_df <- 
@@ -538,12 +556,16 @@ These questions are presented as a checkbox to the user to indicate that a quest
 # APPLY TO COLUMNS K:
 COLUMNS <-  staffing_plans
 
-# VALUES THAT NEED RECODING
+
+# ALL RESPONSES NA IN GROUP:
+# indication that the question
+# was skipped by the respondent
 
 row.id <- apply( survey_df[ COLUMNS ], 
                  MARGIN = 1, 
-                 FUN = function(x) all(is.na(x)) )  
+                 FUN = function(x) all(is.na(x)) ) 
 
+# VALUES THAT NEED RECODING
 
 RULES <- c(    
           
@@ -555,6 +577,7 @@ rules <- parse_rules( RULES )
 pattern <- rules[[ "pattern" ]]
 replace <- rules[[ "replace" ]]
 
+# NA means "no"
 
 na_to_zero <- function(x){
   x[ is.na(x) ] <- 0
@@ -564,6 +587,10 @@ na_to_zero <- function(x){
 survey_df[ COLUMNS ] <- 
   survey_df[ COLUMNS ] %>% 
   lapply( na_to_zero )
+
+# if they do not respond "yes" 
+# to at least one question then
+# assume they skipped them all
 
 zero_to_na <- function( x, rowid ){
   x[ rowid ] <- NA
@@ -577,7 +604,7 @@ survey_df[ COLUMNS ] <-
 # MEMISC LABELS AND MISSING VALUE CODES 
 values  <- c( "0", "1" )
 labels  <- c( "No", "Yes" )
-missing <- NULL
+missing <- NA
 
 # RECODE VARIABLES 
 survey_df <- 
@@ -597,34 +624,143 @@ show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 
 
+
 ## N/A Checkboxes
 
 These questions are presented as a checkbox to the user to indicate that a question is not applicable. "Yes" here means "Yes, this question is not applicable".
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|C|Yes, this question is not applicable|Yes|1|No|
-|N/A|Yes, this question is not applicable|Yes|1|No|
-|-99|Incomplete|No|0|No|
-|NA|Unanswered|NA|NA|Yes|
+
+### Staff Forecasts
+
+We see three four cases: 
+
+- All answered 
+- Only answer for 2022 but don't forecast 2023 
+- Answer "does not apply to me" 
+- Answer "does apply" but then don't report numbers 
+
+We create an imputed version of 2023 numbers using 2022 numbers for missing cases (new variable x_2023 is saved as x_2023_imp for "imputed" ).
+
+Replace "OK" in the not applicable field with "UNSURE" if they report no staff numbers. These will become NA (missing) when the dataset is saved. 
+
+```{r, echo=F}
+# staff.q <- c("Staff_Fulltime_2022","Staff_Fulltime_2023","Staff_Fulltime_NA")
+# survey_df[ 141:150, staff.q  ] %>% dput()
+
+df.demo <- structure(list(Staff_Fulltime_2022 = c(100L, 1L, 210L, 1L, 0L, 
+NA, NA), Staff_Fulltime_2023 = c(110L, 1L, 225L, NA, NA, NA, 
+NA), Staff_Fulltime_NA = c(0, 0, 0, 0, 0, 1, 0)), row.names = c(142L, 
+144L, 145L, 143L, 146L, 141L, 150L), class = "data.frame")
+
+df.demo
+```
+
+After imputation of 2023 responses (use 2022 values): 
+
+```{r, echo=F}
+na.2022 <- is.na( df.demo$Staff_Fulltime_2022 )
+na.2023 <- is.na( df.demo$Staff_Fulltime_2023 )
+both.na <- na.2022 & na.2023
+
+df.demo$Staff_Fulltime_NA[ is.na( df.demo$Staff_Fulltime_NA) ] <- 0
+df.demo$Staff_Fulltime_NA[ df.demo$Staff_Fulltime_NA == 0 & both.na ] <- 99
+
+# impute missing 2023 values with 2022 values 
+df.demo$Staff_Fulltime_2023[ na.2023 ] <- df.demo$Staff_Fulltime_2022[ na.2023 ]
+
+df.demo
+```
+
 
 ```{r}
-na_bool_qns <- 
-  c( staff_qns_bool, 
-     reserve_qns_bool, 
-     people_served_qns_bool )
+impute_staff <- function( df, v2022, v2023, vNA ){
+  
+  x.2022 <- df[[ v2022 ]]
+  x.2023 <- df[[ v2023 ]]
+  x.NA   <- df[[ vNA   ]]
+  
+  na.2022 <- is.na( x.2022 )
+  na.2023 <- is.na( x.2023 )
+  both.na <- na.2022 & na.2023
+  
+  # Not applicable is "unsure"
+  x.NA[ is.na( x.NA ) ] <- 0
+  x.NA[ x.NA == 0 & both.na ] <- 99
+  
+  # impute missing 2023 values with 2022 values 
+  x.2023[ na.2023 ] <- x.2022[ na.2023 ]
+  v2023i <- paste0( v2023, "_imp" )
+  
+  df[[ v2023i ]] <- x.2023
+  df[[   vNA ]] <- x.NA
+  
+  return(df)
+}
 
 
+survey_df <- 
+  survey_df %>% 
+  impute_staff( v2022="Staff_Fulltime_2022", 
+                v2023="Staff_Fulltime_2023", 
+                vNA="Staff_Fulltime_NA" )
+
+survey_df <- 
+  survey_df %>% 
+  impute_staff( v2022="Staff_Parttime_2022", 
+                v2023="Staff_Parttime_2023", 
+                vNA="Staff_Parttime_NA" )
+
+survey_df <- 
+  survey_df %>% 
+  impute_staff( v2022="Staff_Boardmmbr_2022", 
+                v2023="Staff_Boardmmbr_2023", 
+                vNA="Staff_Boardmmbr_NA" )
+
+survey_df <- 
+  survey_df %>% 
+  impute_staff( v2022="Staff_RegVlntr_2022", 
+                v2023="Staff_RegVlntr_2023", 
+                vNA="Staff_RegVlntr_NA" )
+
+survey_df <- 
+  survey_df %>% 
+  impute_staff( v2022="Staff_EpsdVltnr_2022", 
+                v2023="Staff_EpsdVltnr_2023", 
+                vNA="Staff_EpsdVltnr_NA" )
+
+survey_df <- 
+  survey_df %>% 
+  impute_staff( v2022="Staff_AmerVlntr_2022", 
+                v2023="Staff_AmerVlntr_2023", 
+                vNA="Staff_AmerVlntr_NA" )
+
+survey_df <- 
+  survey_df %>% 
+  impute_staff( v2022="Staff_PdCnslt_2022", 
+                v2023="Staff_PdCnslt_2023", 
+                vNA="Staff_PdCnslt_NA" )
+```
+
+
+
+| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
+|---|---|---|---|---|
+|1|Yes, this question is not applicable|Not Applicable|1|No|
+|NA|No, this question applies to me|OK|1|No|
+|All NA|N/A response conflicts|Unsure|99|Yes|
+
+
+```{r}
 # APPLY TO COLUMNS K:
-COLUMNS <-  na_bool_qns
+COLUMNS <-  staff_qns_bool
 
 # VALUES THAT NEED RECODING
 
 RULES <- c(    
           
-             "    C    =>>     1   ", 
-             "  -99    =>>     0   ", 
-             "  N/A    =>>     1   "     )
+             "    1    =>>      1    ", 
+             "    0    =>>      0    ", 
+             "   99    =>>     99    "     )
 
 
 rules <- parse_rules( RULES )          
@@ -632,9 +768,9 @@ pattern <- rules[[ "pattern" ]]
 replace <- rules[[ "replace" ]]
 
 # MEMISC LABELS AND MISSING VALUE CODES 
-values  <- c( "0", "1" )
-labels  <- c( "No", "Yes" )
-missing <- NULL
+values  <- c( "0", "1", "99" )
+labels  <- c( "OK", "N/A", "UNSURE" )
+missing <- "UNSURE"
 
 # RECODE VARIABLES 
 survey_df <- 
@@ -652,6 +788,153 @@ codebook( survey_df[ COLUMNS[1] ] )
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 ```
 
+
+
+
+### Reserve Questions
+
+
+| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
+|---|---|---|---|---|
+|1|Yes, this question is not applicable|N/A|1|No|
+|NA|This question applies to me|0|OK|No|
+|All NA|N/A response conflicts|Unsure|99|Yes|
+
+```{r}
+# APPLY TO COLUMNS K:
+COLUMNS <-  reserve_qns_bool
+
+survey_df[ COLUMNS ] <- 
+  survey_df[ COLUMNS ] %>% 
+  lapply( na_to_zero )
+
+# did not respond to the reserve questions
+no.resp <- is.na( survey_df$Reserves_Est )
+survey_df$Reserves_NA_X[ no.resp ] <-  99
+    
+
+# VALUES THAT NEED RECODING
+
+RULES <- c(    
+          
+             "    1    =>>     1   ", 
+             "    0    =>>     0   "   )
+
+
+rules <- parse_rules( RULES )          
+pattern <- rules[[ "pattern" ]]
+replace <- rules[[ "replace" ]]
+
+
+# MEMISC LABELS AND MISSING VALUE CODES 
+values  <- c( "0", "1", "99" )
+labels  <- c( "OK", "N/A", "Did Not Answer" )
+missing <- "99"
+
+# RECODE VARIABLES 
+survey_df <- 
+  survey_df %>% 
+  recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
+```
+
+```{r, eval=F, echo=F}
+codebook( survey_df[ COLUMNS[1] ] )
+```
+
+**Example:**
+
+```{r, results="asis", echo=F}
+show_html(codebook( survey_df[ COLUMNS[1] ] ))
+```
+
+
+
+
+
+
+### People Served Questions
+
+| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
+|---|---|---|---|---|
+|1|Yes, this question is not applicable|N/A|1|No|
+|NA|This question applies to me|0|OK|No|
+|All NA|N/A response conflicts|Unsure|99|Yes|
+
+```{r}
+# APPLY TO COLUMNS K:
+COLUMNS <-  people_served_qns_bool
+
+
+# ALL RESPONSES NA IN GROUP:
+# indication that the question
+# was skipped by the respondent
+
+people_qns <- c( "PplSrv_NumServed", "PplSrv_NumWait" )
+
+row.id <- apply( survey_df[ people_qns ], 
+                 MARGIN = 1, 
+                 FUN = function(x){ all(is.na(x)) } ) 
+
+
+# NA means "no"
+
+na_to_zero <- function(x){
+  x[ is.na(x) ] <- 0
+  return(x)
+}
+
+survey_df[ COLUMNS ] <- 
+  survey_df[ COLUMNS ] %>% 
+  lapply( na_to_zero )
+
+# if they do not respond "yes" 
+# to at least one question then
+# assume they skipped them all
+
+zero_to_99 <- function( x, rowid ){
+  x[ rowid ] <- 99
+  return(x)
+}
+
+survey_df[ COLUMNS ] <- 
+  survey_df[ COLUMNS ] %>% 
+  lapply( zero_to_99, row.id )
+
+    
+
+# VALUES THAT NEED RECODING
+
+RULES <- c(    
+          
+             "    1    =>>     1   ", 
+             "    0    =>>     0   "   )
+
+
+rules <- parse_rules( RULES )          
+pattern <- rules[[ "pattern" ]]
+replace <- rules[[ "replace" ]]
+
+
+# MEMISC LABELS AND MISSING VALUE CODES 
+values  <- c( "0", "1", "99" )
+labels  <- c( "OK", "N/A", "Did Not Answer" )
+missing <- "99"
+
+# RECODE VARIABLES 
+survey_df <- 
+  survey_df %>% 
+  recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
+```
+
+```{r, eval=F, echo=F}
+codebook( survey_df[ COLUMNS[1] ] )
+```
+
+**Example:**
+
+```{r, results="asis", echo=F}
+show_html(codebook( survey_df[ COLUMNS[1] ] ))
+```
 
 
 
@@ -1153,11 +1436,6 @@ saveRDS( survey_df, paste0( fpath, rdsname ) )
 
 
 
-```{r}
-fpath <- "DATA-PREP/03-year-three/03-data-final/"
-fname <- "YEAR-03-DATA-RESTRICTED-V01.csv"
-write.csv( survey_df, paste0( fpath, fname ), row.names=F, na="" )
-```
 
 
 
