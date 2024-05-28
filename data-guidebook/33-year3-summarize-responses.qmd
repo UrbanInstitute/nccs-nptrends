@@ -16,7 +16,7 @@ library( labelled )
 # SOURCE PREVIOUS STEPS 
 # knitr::purl( "32-year3-fix-demographics.qmd" )   # convert QMD to R script
 source(      "32-year3-fix-demographics.R"   )   # run all chunks in prior step
-
+# file.remove( "32-year3-fix-demographics.R"    )   # delete script after execution
 ```
 
 

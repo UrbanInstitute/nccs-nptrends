@@ -15,7 +15,8 @@ library( labelled )
 
 # SOURCE PREVIOUS STEPS
 # knitr::purl( "31-year3-recoding-rules.qmd" )   # convert QMD to R script
-source(      "31-year3-recoding-rules.R"   )   # run all chunks in prior step
+source(      "31-year3-recoding-rules.R"   )  # run all chunks in prior step
+# file.remove( "31-year3-recoding-rules.R"   )   # delete script after execution
 ```
 
 ```{r, echo=F}
