@@ -1,0 +1,424 @@
+---
+title: "YEAR TWO DATA"
+execute:
+  warning: false
+  message: false
+  cache: true
+---
+
+Load the data needed to process the second year survey results. 
+
+
+# Required R Packages
+
+This chapter will utilize the following packages: 
+
+```{r, echo=T}
+library( haven )
+library( dplyr )
+library( tidyr )
+library( epoxy )
+library( memisc )
+library( labelled )
+```
+
+
+# Load the Data
+
+```{r, cache=T}
+# LOAD DATA DICTIONARY 
+dd <- 
+  readxl::read_xlsx( 
+   "../data-dictionaries/dd-nptrends-wave-02.xlsx", 
+   sheet = "data dictionary" )
+
+# USE RAW VNAME IF VNAME IS EMPTY:
+dd$vname[ is.na(dd$vname) ] <- 
+   dd$vname_raw[ is.na(dd$vname) ]
+
+# LOAD QUALTRICS SURVEY DATA 
+fpath <- "DATA-PREP/02-year-two/01-data-raw/"
+fname <- "wave-02-qualtrics-download-29mar23.csv"
+survey_df  <- readr::read_csv( paste0( fpath, fname ) )
+survey_df  <- survey_df[ -(1:2), ]                      # drop qualtrics headers  
+
+fname <- "YEAR-02-COMPLETE-CASE-CODES.csv" 
+cases <- read.csv( paste0(fpath,fname) )
+
+cases <- dplyr::select( cases, EIN, Completion_Status )
+survey_df <- merge( survey_df, cases, by="EIN", all.x=T )
+
+survey_df <- 
+  survey_df %>% 
+  dplyr::filter( Completion_Status %in% c("Complete","Partial_keep") ) %>%
+  dplyr::select( - Completion_Status )
+```
+
+Note the raw data is challenging because it contains qualtrics encodings and missing values need context to be used correctly (e.g. were the questions skipped by skip logic, or by the respondent?). 
+
+```{r}
+survey_df[ 1:6, 51:55 ] %>% pander::pander()   # data peek
+```
+
+
+# Data Workflow 
+
+The following chapters describe the workflow used to import qualtrics data and apply cleaning and transformation steps to prepare the restricted use file and public use file for subsequent analysis:
+
+1.  Renaming columns
+2.  Drop nuisance columns (survey deployment attributes)
+3.  Add meaningful labels to response values 
+4.  Dropping duplicates, incomplete responses and test responses
+
+
+
+
+## Renaming Columns
+
+Columns referencing survey questions are renamed with the help of a data dictionary to improve readability.
+
+```{r}
+torename <- 
+  dd %>% 
+  dplyr::select( vname, vname_raw ) %>% 
+  tidyr::drop_na()
+```
+
+
+**Examples:**
+
+```{r, echo=F}
+(names(survey_df))[ 52:55 ] 
+```
+
+Give the data meaningful names so that it is easier to work with. 
+
+```{r, cache=T}
+survey_df <- 
+  survey_df %>% 
+  dplyr::rename_at(
+     vars( torename$vname_raw ), 
+     ~ torename$vname )
+```
+
+**Examples:**
+
+```{r, echo=F}
+(names(survey_df))[ 52:55 ] 
+```
+
+
+
+
+```{r, eval=F, echo=F}
+# Add survey questions as an attribute in the data frame: 
+
+fpath <- "DATA-PREP/02-year-two/01-data-raw/"
+fname <- "wave-02-qualtrics-download-29mar23.csv"
+temp          <- readr::read_csv( paste0( fpath, fname ) )
+question.txt  <- as.character( temp[ 1, ] )
+rm( temp )
+
+names( question.txt ) <- names( survey_df )
+attr( survey_df, "question_txt" ) <- question.txt
+```
+
+
+## Drop Nuisance Fields 
+
+Many of the exported qualtrics fields contain non-useful metadata or are empty. These have been labeled as "DROP" in the **group** field. Remove these for convenience. 
+
+```{r, cache=TRUE}
+# SELECT COLUMNS TO DROP: 
+DROP_THESE <- dd$vname[ dd$group == "DROP" ] |> na.omit()
+
+survey_df <- 
+  survey_df %>% 
+  dplyr::select( -any_of( DROP_THESE ) )
+```
+
+
+
+# Add Survey Weights
+
+```{r}
+# ADD SURVEY WEIGHTS 
+fpath <- "DATA-PREP/00-sample-framework/"
+fname <- "year2wt.csv"
+wt2  <- readr::read_csv( paste0( fpath, fname ) )
+
+survey_df <- merge( survey_df, wt2, by.x="EIN", by.y="ein", all.x=TRUE )
+```
+
+
+
+# Groups of Variables
+
+Each group of survey questions comes with its own set of valid inputs that must be recoded separately. For example, "N/A"'s are options for some survey questions and not for others, and some survey questions allow for manual text inputs.
+
+The below code chunk separates all survey questions into their respective categories before further separating each category into numeric, text or NA inputs.
+
+NA questions here refer to "Check here if not applicable to your organization" questions in the survey, where a "C" indicates that the respondent has checked the N/A box.
+
+```{r, echo=F}
+# Function to get survey questions 
+# by group and data type from data dictionary
+
+get_survey_questions <- function( data_dict, qgroup, qtype ){
+
+    data_dict %>% 
+    dplyr::filter( group == qgroup, type  == qtype ) %>% 
+    dplyr::pull( "vname" )
+
+}
+
+print_qns <- function( qns, data_dict ){
+  
+  data_dict %>% 
+    dplyr::select( vname, type, vlabel ) %>%
+    dplyr::filter( vname %in% qns) %>% 
+    pander::pander()
+  
+}
+```
+
+
+
+```{r, cache=T, echo=F}
+## Changes to Programs and Services
+
+program_change_qns_bool <- get_survey_questions( dd, "ProgChanges", "boolean" )
+program_change_qns_txt  <- get_survey_questions( dd, "ProgChanges", "text" )
+
+## People Served
+
+people_served_qns_int  <- 
+  get_survey_questions( dd, "PeopleServed#1", "integer" )
+people_served_qns_bool <- 
+  get_survey_questions( dd, "PeopleServed#2", "boolean" )
+
+## Demand for future programs and services
+
+demand_fct_qns <- get_survey_questions( dd, "Demand", "factor" ) 
+
+## Staff and Volunteers
+
+staff_qns_int <- 
+  c( get_survey_questions( dd, "Staff#1", "integer" ),
+     get_survey_questions( dd, "Staff#2", "integer" ) )
+
+staff_qns_bool <- get_survey_questions( dd, "Staff#3", "boolean" )
+
+staff_qns_text <- 
+  c( get_survey_questions( dd, "Staff#1", "text" ), 
+     get_survey_questions( dd, "Staff#2", "text" ),
+     get_survey_questions( dd, "Staff#3", "text" )  )
+
+## Importance of Volunteers and Donors
+
+volimportance_qns_fct <- get_survey_questions( dd, "VolImportance", "factor" )
+donimportance_qns_fct <- get_survey_questions( dd, "DonImportance", "factor" )
+
+## Fundraising
+
+fundraise_qns_bool <- get_survey_questions( dd, "FRchanges", "boolean" )
+fundraise_qns_text <- get_survey_questions( dd, "FRchanges", "text" )
+
+## Amount for major gifts
+
+majorgift_qn_num <- get_survey_questions( dd, "Frmajgift", "numeric" )
+
+## Fundraising Changes
+
+fundraise_change_qns_fct <- get_survey_questions( dd, "FRchanges#1", "factor" )
+
+## Number of donors
+
+fundraise_donor_qns_int <- 
+  get_survey_questions( dd, "FRnumberdonors", "integer" )
+
+## Fundraising Sought and Received
+
+fundraise_skrcv_qns_bool <- 
+  c( get_survey_questions( dd, "Funding1#1", "boolean" ),
+     get_survey_questions( dd, "Funding1#2", "boolean" ) )
+
+## Revenue breakdown
+
+finance_revenue_qns_num  <- get_survey_questions( dd, "Finances", "numeric")
+finance_revenue_qns_text <- get_survey_questions( dd, "Finances", "text")
+
+## Financial reserves
+
+reserve_qns_num  <- get_survey_questions( dd, "Reserves", "numeric")
+reserve_qns_bool <- get_survey_questions( dd, "Reserves", "boolean")
+
+## CARES Funding
+
+cares_qns_num  <- get_survey_questions( dd, "CARES", "numeric")
+cares_qns_bool <- get_survey_questions( dd, "CARES", "boolean")
+
+## Changes to finances
+
+finance_chng_qns_bool <- get_survey_questions( dd, "FinanceChanges", "boolean")
+finance_chng_qns_text <- get_survey_questions( dd, "FinanceChanges", "text")
+
+## Leadership Changes
+
+leadership_chng_qns_bool <- 
+  get_survey_questions( dd, "LeadershipChanges", "boolean")
+
+leadership_chng_qns_text <- 
+  get_survey_questions( dd, "LeadershipChanges", "text")
+
+## Race and Gender
+
+race_gender_qns_bool <- 
+  c( get_survey_questions( dd, "CEOrace",   "boolean" ),
+     get_survey_questions( dd, "CEOgender", "boolean" ),
+     get_survey_questions( dd, "BCrace",    "boolean" ),
+     get_survey_questions( dd, "BCgender",  "boolean" ) )
+
+race_gender_qns_text <- 
+  c( get_survey_questions( dd, "CEOrace",   "text" ),
+     get_survey_questions( dd, "CEOgender", "text" ),
+     get_survey_questions( dd, "BCrace",    "text" ),
+     get_survey_questions( dd, "BCgender",  "text" ) )
+
+## External affairs
+
+extaffairs_qns_fct <- get_survey_questions( dd, "ExternalAffairs", "factor")
+
+## Primary concerns
+
+primary_cncrn_qn_text <- get_survey_questions( dd, "PrimaryConcern", "text")
+```
+
+
+
+- **`r length( c(program_change_qns_bool, program_change_qns_txt) ) `** questions about **CHANGES TO PROGRAMS AND SERVICES**
+- **`r length( c(people_served_qns_bool,people_served_qns_int) ) `** questions about the **NUMBER OF PEOPLE EACH ORGANIZATION SERVES**
+- **`r length( c(demand_fct_qns) ) `** question about **OVERALL PROGRAM DEMAND**
+- **`r length( c(staff_qns_bool, staff_qns_int,  staff_qns_text) ) `** questions about **STAFF NUMBERS**
+- **`r length( c(volimportance_qns_fct, donimportance_qns_fct) ) `** questions about **DONOR AND VOLUNTEER IMPORTANCE**
+- **`r length( c(leadership_chng_qns_bool, leadership_chng_qns_text) ) `** questions about **CHANGES TO LEADERSHIP**
+- **`r length( c(race_gender_qns_bool, race_gender_qns_text) ) `** questions about **THE RACE AND GENDER OF CEOS AND BOARD CHAIRS**
+- **`r length( c(finance_chng_qns_bool, finance_chng_qns_text) ) `** questions about **CHANGES TO ORGANIZATIONAL FINANCES**
+- **`r length( c(cares_qns_bool, cares_qns_num) ) `** questions about **CARES FUNDING**
+- **`r length( c(reserve_qns_bool, reserve_qns_num) ) `** questions about **FINANCIAL RESERVES**
+- **`r length( c(finance_revenue_qns_num, finance_revenue_qns_text) ) `** questions about **REVENUE SOURCES**
+- **`r length( c(fundraise_skrcv_qns_bool) ) `** questions about **FUNDRAISING SOURCES**
+- **`r length( c(fundraise_donor_qns_int) ) `** questions about **DONOR TYPES IN FUNDRAISING**
+- **`r length( c(fundraise_change_qns_fct) ) `** questions about **FUNDRAISING YIELDS**
+- **`r length( c(fundraise_qns_bool, fundraise_qns_text) ) `** questions about **FUNDRAISING STRATEGY CHANGES**
+- **`r length( c(majorgift_qn_num) ) `** questions about **MAJOR GIFT AMOUNTS**
+- **`r length( c(extaffairs_qns_fct) ) `** questions about **EXTERNAL AFFAIRS**  
+- **`r length( c(primary_cncrn_qn_text) ) `** questions about **FUTURE CONCERNS**
+
+
+```{r, eval=F, echo=F}
+
+# CHECK FOR MISSED VARIABLES NOT INCLUDED ABOVE 
+
+all.questions <- c(
+  program_change_qns_bool, program_change_qns_txt,
+  people_served_qns_bool, people_served_qns_int,
+  demand_fct_qns,
+  staff_qns_bool, staff_qns_int, staff_qns_text,
+  volimportance_qns_fct, donimportance_qns_fct,
+  leadership_chng_qns_bool, leadership_chng_qns_text,
+  race_gender_qns_bool, race_gender_qns_text,
+  finance_chng_qns_bool, finance_chng_qns_text,
+  cares_qns_bool, cares_qns_num,
+  reserve_qns_bool, reserve_qns_num,
+  finance_revenue_qns_num, finance_revenue_qns_text,
+  fundraise_skrcv_qns_bool,
+  fundraise_donor_qns_int,
+  fundraise_change_qns_fct,
+  fundraise_qns_bool,fundraise_qns_text,
+  majorgift_qn_num,
+  extaffairs_qns_fct,
+  primary_cncrn_qn_text )
+
+omit.these.groups <- c("id","DROP","MainAddress")
+all.vars <- dd$vname[ ! dd$group %in% omit.these.groups ] |> na.omit()
+setdiff( all.vars, all.questions )
+```
+
+
+
+
+
+
+
+```{r, echo=F, eval=F}
+
+# Response Types 
+
+# Preview of the types of raw responses in the qualtrics files prior to recoding: 
+
+  
+  
+id <- dd$vname[ dd$group == "id" ] |> na.omit()
+df_preview <- survey_df %>% dplyr::select( - any_of(id) )
+
+ff <- function( x ){
+  x <- x[ ! is.na(x) ]
+  x <- unique(x) |> sort() |> head(10)
+  if( length(x) == 10 ){ x <- c("{FIRST 10 VALUES ONLY}",x) }
+  paste0( x, collapse=" ;; ")
+}
+
+L   <- sapply( df_preview, ff )
+T   <- table( L ) |> sort( d=TRUE) 
+T   <- T[ T > 1 ]
+tdf <- T |> 
+  as.data.frame() %>% 
+  dplyr::rename( RESPONSE_VALUES = L )
+
+print_qns <- function( val, L ){
+  nm <- names( L[ L == val ] )
+  paste0( nm, collapse=" ;; " )
+}
+
+tdf$QUESTIONS <- purrr::map_chr( tdf$RESPONSE_VALUES, print_qns, L )
+
+tdf[c("QUESTIONS","RESPONSE_VALUES")] %>% pander::pander()
+```
+
+
+
+
+
+
+```{r, echo=F}
+#### 
+####   CLEANUP
+#### 
+
+# temp file for use in next chapter 
+
+fpath <- "DATA-PREP/02-year-two/02-data-intermediate/"
+fname <- "SURVEYDF.csv"
+write.csv( survey_df, paste0( fpath, fname ), row.names=F )
+
+rdsname <- "SURVEYDF.rds"
+saveRDS( survey_df, paste0( fpath, rdsname ) )
+```
+
+
+
+
+
+
+
+<style>
+
+h1, h2 {
+  margin-top: 80px
+}
+
+</style>
+
+
+

@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>NP Trends Survey Data Preparation Guide - 6&nbsp; Response Rate by Question</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./3_00-YEAR-THREE.html" rel="next">
+<link href="./2_03-summarize-responses-y2.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./2_00-YEAR-TWO.html">YEAR TWO DATA</a></li><li class="breadcrumb-item"><a href="./2_04-response-rates-y2.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Response Rate by Question</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">NP Trends Survey Data Preparation Guide</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./0_01-r-setup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R Setup</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./0_02-create-dd-files.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Generating Qualtrics Dictionaries</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./2_00-YEAR-TWO.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">YEAR TWO DATA</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_01-recoding-rules-y2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Relabeling Qualtrics Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_02-fix-demographics-y2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Reconcile Demographic Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_03-summarize-responses-y2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary Statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_04-response-rates-y2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Response Rate by Question</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./3_00-YEAR-THREE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">YEAR THREE DATA</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./3_01-recoding-rules-y3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Relabeling Qualtrics Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./3_02-fix-demographics-y3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reconcile Demographic Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./3_03-summarize-responses-y3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Summary Statistics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./4_00-GEOCODING.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">GEOCODING</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./4_01-validating-addresses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Validating Addresses</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./4_02-geocoding-addresses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Geocoding Addresses</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./4_03-adding-geographies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Adding Census Data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">SURVEY WEIGHTS</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./99-references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#response-rate-by-question-group" id="toc-response-rate-by-question-group" class="nav-link active" data-scroll-target="#response-rate-by-question-group"><span class="header-section-number">6.1</span> Response Rate by Question Group</a></li>
+  <li><a href="#response-rate-by-question" id="toc-response-rate-by-question" class="nav-link" data-scroll-target="#response-rate-by-question"><span class="header-section-number">6.2</span> Response Rate By Question</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./2_00-YEAR-TWO.html">YEAR TWO DATA</a></li><li class="breadcrumb-item"><a href="./2_04-response-rates-y2.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Response Rate by Question</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Response Rate by Question</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="response-rate-by-question-group" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="response-rate-by-question-group"><span class="header-section-number">6.1</span> Response Rate by Question Group</h2>
+<p>Variables are organized in question groups and the proportion of valid responses (non-missing or non-NAs) are reported at the group level. The following tables contains the group response rate for each survey respondent, one respondent per column. The gradient of each cell corresponds with no missing values within the question group (cells with white background) to groups with no complete responses, or a 0% response rate for the question group (cells with red backgrounds). There is a linear color gradient for response rates between 0% and 100%.</p>
+<p>The list of questions contained within each group:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 41%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">QUESTION_GROUP</th>
+<th style="text-align: center;">QUESTION_ITEMS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Program Changes</td>
+<td style="text-align: center;">PrgSrvc_IncrNum ;; PrgSrvc_DcrsNum ;; PrgSrvc_Suspend ;; PrgSrvc_IncrSrvc ;; PrgSrvc_DcrsSrvc ;; PrgSrvc_NewOffc ;; PrgSrvc_ClsdOffc ;; PrgSrvc_IncrArea ;; PrgSrvc_DcrsArea ;; PrgSrvc_IncrFee ;; PrgSrvc_DcrsFee ;; PrgSrvc_ShiftOnline ;; PrgSrvc_AddOnline ;; PrgSrvc_Oth</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">People Served</td>
+<td style="text-align: center;">PplSrv_NumServed ;; PplSrv_NumWait</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Next Year’s Demand</td>
+<td style="text-align: center;">Dmnd_NxtYear</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Staff &amp; Volunteers</td>
+<td style="text-align: center;">Staff_Fulltime_2021 ;; Staff_Parttime_2021 ;; Staff_Boardmmbr_2021 ;; Staff_RegVlntr_2021 ;; Staff_EpsdVltnr_2021 ;; Staff_AmerVlntr_2021 ;; Staff_PdCnslt_2021 ;; Staff_Other_Est_2021 ;; Staff_Fulltime_2022 ;; Staff_Parttime_2022 ;; Staff_Boardmmbr_2022 ;; Staff_RegVlntr_2022 ;; Staff_EpsdVltnr_2022 ;; Staff_AmerVlntr_2022 ;; Staff_PdCnslt_2022 ;; Staff_Other_Est_2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Volunteer Importance</td>
+<td style="text-align: center;">VolImportance</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Donor Importance</td>
+<td style="text-align: center;">DonImportance</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Fundraising</td>
+<td style="text-align: center;">FndRaise_DvlpVirtual ;; FndRaise_IncrExp ;; FndRaise_DcrsExp ;; FndRaise_IncStaff ;; FndRaise_DcrsStaff ;; FndRaise_IncrCnslt ;; FndRaise_DcrsCnslt ;; FndRaise_IncrVolntr ;; FndRaise_DcrsVolntr ;; FndRaise_Othr</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Major Gift Amount</td>
+<td style="text-align: center;">FndRaise_MajGift_Amt</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Fundraising Changes</td>
+<td style="text-align: center;">FndRaise_Overall_Chng ;; FndRaise_Cashbelow250_Chng ;; FndRaise_Cashabove250_Chng ;; FndRaise_MajGift_Chng ;; FndRaise_Corp.Found_Grnt_Chng ;; FndRaise_RstrGift_Chng ;; FndRaise_UnrstrGift_Chng</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Donor Changes</td>
+<td style="text-align: center;">FndRaise_DnrBlw250 ;; FndRaise_DnrAbv250</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Fundraising Sought/Received</td>
+<td style="text-align: center;">FndRaise_LocGvtGrnt_Seek ;; FndRaise_StateGvtGrnt_Seek ;; FndRaise_FedGvtGrnt_Seek ;; FndRaise_LocGvtCntrct_Seek ;; FndRaise_StateGvtCntrct_Seek ;; FndRaise_FedGvtCntrct_Seek ;; FndRaise_PFGrnt_Seek ;; FndRaise_CFGrnt_Seek ;; FndRaise_DAF_Seek ;; FndRaise_Corp.Found_Grnt_Seek ;; FndRaise_UntdWy_Seek ;; FndRaise_CombFedCmpgn_Seek ;; FndRaise_OthrGvngPrgrm_Seek ;; FndRaise_LocGvtGrnt_Rcv ;; FndRaise_StateGvtGrnt_Rcv ;; FndRaise_FedGvtGrnt_Rcv ;; FndRaise_LocGvtCntrct_Rcv ;; FndRaise_StateGvtCntrct_Rcv ;; FndRaise_FedGvtCntrct_Rcv ;; FndRaise_PFGrnt_Rcv ;; FndRaise_CFGrnt_Rcv ;; FndRaise_DAF_Rcv ;; FndRaise_Corp.Found_Grnt_Rcv ;; FndRaise_UntdWy_Rcv ;; FndRaise_CombFedCmpgn_Rcv ;; FndRaise_OthrGvngPrgrm_Rcv</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Revenue Breakdown</td>
+<td style="text-align: center;">Finance_Rev_GovtMain ;; Finance_Rev_Prtcpnt ;; Finance_Rev_Govt3rdParty ;; Finance_Rev_IndvDon ;; Finance_Rev_Gift ;; Finance_Rev_Grnt ;; Finance_Rev_Spnsr ;; Finance_Rev_Oth</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Reserves</td>
+<td style="text-align: center;">Reserves_Est</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">CARES Funding</td>
+<td style="text-align: center;">CARES_Rcv_Est</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Finance Changes</td>
+<td style="text-align: center;">FinanceChng_Reserves ;; FinanceChng_Borrow ;; FinanceChng_DcrsBnft ;; FinanceChng_IncrBnft ;; FinanceChng_IncrExp ;; FinanceChng_DcrsExp ;; FinanceChng_Oth</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Leadership Changes</td>
+<td style="text-align: center;">LeadershipChng_RetCEO ;; LeadershipChng_RsgnCEO ;; LeadershipChng_TrmnCEO ;; LeadershipChng_HireCEO ;; LeadershipChng_IntrmCEO ;; LeadershipChng_ChngBC ;; LeadershipChng_LostBoardMem ;; LeadershipChng_RplcBoardMem ;; LeadershipChng_AddBoardMem ;; LeadershipChng_Oth</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Race and Gender</td>
+<td style="text-align: center;">CEOrace_AAPI ;; CEOrace_Black ;; CEOrace_Hisp ;; CEOrace_NativeAm ;; CEOrace_White ;; CEOrace_Oth ;; CEOgender_Man ;; CEOgender_Woman ;; CEOgender_Trans ;; CEOgender_NB ;; CEOgender_Oth ;; BChairrace_AAPI ;; BChairrace_Black ;; BChairrace_Hisp ;; BChairrace_NativeAm ;; BChairrace_White ;; BChairrace_Oth ;; BChairgender_Man ;; BChairgender_Woman ;; BChairgender_Trans ;; BChairgender_NB ;; BChairgender_Oth ;; BChairrace_Bi ;; CEOrace_Bi</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">External Affairs</td>
+<td style="text-align: center;">ExtAffairs_GenEd ;; ExtAffairs_Media ;; ExtAffairs_Advocacy ;; ExtAffairs_GovtRs ;; ExtAffairs_DiscGovtGrnt ;; ExtAffairs_InfoReq ;; ExtAffairs_Testify ;; ExtAffairs_Lobby ;; ExtAffairs_OrgPrtst ;; ExtAffairs_Mobilize ;; ExtAffairs_Petition ;; ExtAffairs_VoteReg ;; ExtAffairs_VoteEd</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Primary Concern</td>
+<td style="text-align: center;">PrimaryConcern</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="response-rate-by-question" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="response-rate-by-question"><span class="header-section-number">6.2</span> Response Rate By Question</h2>
+<p>The following table report the proportion of non-missing values (non-NAs) calculated on a question-by-question basis:</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 45%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">GROUP</th>
+<th style="text-align: center;">QUESTION_ITEM</th>
+<th style="text-align: center;">COMPLETION_RATE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">BCgender</td>
+<td style="text-align: center;">BCHAIRGENDER_MAN: gender of Board Chair; Male</td>
+<td style="text-align: center;">71.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">BCgender</td>
+<td style="text-align: center;">BCHAIRGENDER_NB: gender of Board Chair; Gender non-conforming/Non-Binary</td>
+<td style="text-align: center;">71.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">BCgender</td>
+<td style="text-align: center;">BCHAIRGENDER_OTH: gender of Board Chair; Other (please specify):</td>
+<td style="text-align: center;">71.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">BCgender</td>
+<td style="text-align: center;">BCHAIRGENDER_SPECIFY: gender of Board Chair; Other (please specify): - Text</td>
+<td style="text-align: center;">0.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">BCgender</td>
+<td style="text-align: center;">BCHAIRGENDER_TRANS: gender of Board Chair; Trans</td>
+<td style="text-align: center;">23.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">BCgender</td>
+<td style="text-align: center;">BCHAIRGENDER_WOMAN: gender of Board Chair; Female</td>
+<td style="text-align: center;">71.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">BCrace</td>
+<td style="text-align: center;">BCHAIRRACE_AAPI: race of Board Chair; Asian/Pacific Islander</td>
+<td style="text-align: center;">71.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">BCrace</td>
+<td style="text-align: center;">BCHAIRRACE_BLACK: race of Board Chair; Black/African American</td>
+<td style="text-align: center;">71.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">BCrace</td>
+<td style="text-align: center;">BCHAIRRACE_HISP: race of Board Chair; Latinx/Hispanic</td>
+<td style="text-align: center;">71.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">BCrace</td>
+<td style="text-align: center;">BCHAIRRACE_NATIVEAM: race of Board Chair; Native American/American Indian</td>
+<td style="text-align: center;">71.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">BCrace</td>
+<td style="text-align: center;">BCHAIRRACE_OTH: race of Board Chair; Other (please specify):</td>
+<td style="text-align: center;">71.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">BCrace</td>
+<td style="text-align: center;">BCHAIRRACE_TEXT: race of Board Chair; Other (please specify): - Text</td>
+<td style="text-align: center;">0.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">BCrace</td>
+<td style="text-align: center;">BCHAIRRACE_WHITE: race of Board Chair; White</td>
+<td style="text-align: center;">71.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">CARES</td>
+<td style="text-align: center;">CARES_RCV: indicate whether organization receive government funding from CARES act</td>
+<td style="text-align: center;">86.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">CARES</td>
+<td style="text-align: center;">CARES_RCV_EST: estimated government funding received from CARES act</td>
+<td style="text-align: center;">64.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">CEOgender</td>
+<td style="text-align: center;">CEOGENDER_MAN: gender of CEO; Man</td>
+<td style="text-align: center;">67.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">CEOgender</td>
+<td style="text-align: center;">CEOGENDER_NB: gender of CEO; Gender non-conforming/Non-Binary</td>
+<td style="text-align: center;">67.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">CEOgender</td>
+<td style="text-align: center;">CEOGENDER_OTH: gender of CEO; Other (please specify):</td>
+<td style="text-align: center;">67.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">CEOgender</td>
+<td style="text-align: center;">CEOGENDER_SPECIFY: gender of CEO; Other (please specify): - Text</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">CEOgender</td>
+<td style="text-align: center;">CEOGENDER_TRANS: gender of CEO; Trans</td>
+<td style="text-align: center;">7.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">CEOgender</td>
+<td style="text-align: center;">CEOGENDER_WOMAN: gender of CEO; Woman</td>
+<td style="text-align: center;">67.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">CEOrace</td>
+<td style="text-align: center;">CEORACE_AAPI: race of CEO; Asian/Pacific Islander</td>
+<td style="text-align: center;">67.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">CEOrace</td>
+<td style="text-align: center;">CEORACE_BLACK: race of CEO; Black/African American</td>
+<td style="text-align: center;">67.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">CEOrace</td>
+<td style="text-align: center;">CEORACE_HISP: race of CEO; Latinx/Hispanic</td>
+<td style="text-align: center;">67.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">CEOrace</td>
+<td style="text-align: center;">CEORACE_NATIVEAM: race of CEO; Native American/American Indian</td>
+<td style="text-align: center;">67.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">CEOrace</td>
+<td style="text-align: center;">CEORACE_OTH: race of CEO; Other (please specify):</td>
+<td style="text-align: center;">67.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">CEOrace</td>
+<td style="text-align: center;">CEORACE_TEXT: race of CEO; Other (please specify): - Text</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">CEOrace</td>
+<td style="text-align: center;">CEORACE_WHITE: race of CEO; White</td>
+<td style="text-align: center;">67.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Demand</td>
+<td style="text-align: center;">DMND_NXTYEAR: Demand for programs or services next year</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">DonImportance</td>
+<td style="text-align: center;">DONIMPORTANCE: importance of donors to organization</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ExternalAffairs</td>
+<td style="text-align: center;">EXTAFFAIRS_ADVOCACY: frequency of collaborations with other organizations to conduct advocacy and/or public education activities</td>
+<td style="text-align: center;">84.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ExternalAffairs</td>
+<td style="text-align: center;">EXTAFFAIRS_DISCGOVTGRNT: frequency of discussions about obtainings grants or contracts with government officials</td>
+<td style="text-align: center;">84.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ExternalAffairs</td>
+<td style="text-align: center;">EXTAFFAIRS_GENED: frequency of activities aimed at educating the general public about a specific policy issue and/or the interests of certain groups</td>
+<td style="text-align: center;">84.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ExternalAffairs</td>
+<td style="text-align: center;">EXTAFFAIRS_GOVTRS: frequency of relationship cultivation with government officials</td>
+<td style="text-align: center;">84.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ExternalAffairs</td>
+<td style="text-align: center;">EXTAFFAIRS_INFOREQ: frequency of responses to information requests from the government</td>
+<td style="text-align: center;">84.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ExternalAffairs</td>
+<td style="text-align: center;">EXTAFFAIRS_LOBBY: frequency of lobbying efforts</td>
+<td style="text-align: center;">84.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ExternalAffairs</td>
+<td style="text-align: center;">EXTAFFAIRS_MEDIA: frequency of activities aimed at publicizing research to the media, the public, or policymakers</td>
+<td style="text-align: center;">84.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ExternalAffairs</td>
+<td style="text-align: center;">EXTAFFAIRS_MOBILIZE: frequency of mobilizations for marches, rallies, protests, boycotts, or demonstrations</td>
+<td style="text-align: center;">84.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ExternalAffairs</td>
+<td style="text-align: center;">EXTAFFAIRS_ORGPRTST: freqeuncy of organizing marches, rallies, protests, boycotts or demonstrations</td>
+<td style="text-align: center;">84.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ExternalAffairs</td>
+<td style="text-align: center;">EXTAFFAIRS_PETITION: frequency of efforts to encourage members or participants to petition policymakers</td>
+<td style="text-align: center;">84.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ExternalAffairs</td>
+<td style="text-align: center;">EXTAFFAIRS_TESTIFY: frequency of testimonies at legislative or administrative hearings and/or drafting sessions</td>
+<td style="text-align: center;">84.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ExternalAffairs</td>
+<td style="text-align: center;">EXTAFFAIRS_VOTEED: freqeuncy of nonpartisan voter education efforts</td>
+<td style="text-align: center;">84.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ExternalAffairs</td>
+<td style="text-align: center;">EXTAFFAIRS_VOTEREG: frequency of nonpartisan voter registration efforts</td>
+<td style="text-align: center;">84.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FRchanges</td>
+<td style="text-align: center;">FNDRAISE_DCRSCNSLT: indicates if nonprofit decreased fundraising consultants</td>
+<td style="text-align: center;">96.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FRchanges</td>
+<td style="text-align: center;">FNDRAISE_DCRSEXP: indicates if nonprofit decreased fundraising expenditures</td>
+<td style="text-align: center;">96.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FRchanges</td>
+<td style="text-align: center;">FNDRAISE_DCRSSTAFF: indicates if nonprofit decreased fundraising staff</td>
+<td style="text-align: center;">96.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FRchanges</td>
+<td style="text-align: center;">FNDRAISE_DCRSVOLNTR: indicates if nonprofit decreased fundraising volunteers</td>
+<td style="text-align: center;">96.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FRchanges</td>
+<td style="text-align: center;">FNDRAISE_DVLPVIRTUAL: indicates if nonprofit developed virtual fundraising appeals, campaigns, events</td>
+<td style="text-align: center;">96.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FRchanges</td>
+<td style="text-align: center;">FNDRAISE_INCRCNSLT: indicates if nonprofit increased fundraising consultants</td>
+<td style="text-align: center;">96.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FRchanges</td>
+<td style="text-align: center;">FNDRAISE_INCREXP: indicates if nonprofit increased fundraising expenditures</td>
+<td style="text-align: center;">96.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FRchanges</td>
+<td style="text-align: center;">FNDRAISE_INCRVOLNTR: indicates if nonprofit increased fundraising volunteers</td>
+<td style="text-align: center;">96.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FRchanges</td>
+<td style="text-align: center;">FNDRAISE_INCSTAFF: indicates if nonprofit increased fundraising staff</td>
+<td style="text-align: center;">96.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FRchanges</td>
+<td style="text-align: center;">FNDRAISE_OTHR: presence of other fundraising changes</td>
+<td style="text-align: center;">96.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FRchanges</td>
+<td style="text-align: center;">FNDRAISE_TEXT: description of other fundraising changes</td>
+<td style="text-align: center;">2.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FRchanges#1</td>
+<td style="text-align: center;">FNDRAISE_CASHABOVE250_CHNG: change in cash donations above $250 from individuals</td>
+<td style="text-align: center;">96.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FRchanges#1</td>
+<td style="text-align: center;">FNDRAISE_CASHBELOW250_CHNG: change in cash donations below $250 from individuals</td>
+<td style="text-align: center;">96.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FRchanges#1</td>
+<td style="text-align: center;">FNDRAISE_CORP.FOUND_GRNT_CHNG: change in corporate or foundation grants/donations</td>
+<td style="text-align: center;">96.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FRchanges#1</td>
+<td style="text-align: center;">FNDRAISE_MAJGIFT_CHNG: change in major gifts from individuals</td>
+<td style="text-align: center;">96.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FRchanges#1</td>
+<td style="text-align: center;">FNDRAISE_OVERALL_CHNG: change in overall donations</td>
+<td style="text-align: center;">96.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FRchanges#1</td>
+<td style="text-align: center;">FNDRAISE_RSTRGIFT_CHNG: change in donations from sources with donor-imposed restrictions</td>
+<td style="text-align: center;">96.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FRchanges#1</td>
+<td style="text-align: center;">FNDRAISE_UNRSTRGIFT_CHNG: change in donations from sources without donor-imposed restrictions</td>
+<td style="text-align: center;">95.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FRnumberdonors</td>
+<td style="text-align: center;">FNDRAISE_DNRABV250: number of individual donors who gave more than $250</td>
+<td style="text-align: center;">96.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FRnumberdonors</td>
+<td style="text-align: center;">FNDRAISE_DNRBLW250: number of individual donors who gave less than $250</td>
+<td style="text-align: center;">96.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FinanceChanges</td>
+<td style="text-align: center;">FINANCECHNG_BORROW: indicates whether organization borrowed funds or increased lines of credit</td>
+<td style="text-align: center;">85.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FinanceChanges</td>
+<td style="text-align: center;">FINANCECHNG_DCRSBNFT: indicates whether organization reduced or paused health, retirement or other staff benefits</td>
+<td style="text-align: center;">85.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FinanceChanges</td>
+<td style="text-align: center;">FINANCECHNG_DCRSEXP: indicates whether organization decreased overall expenses</td>
+<td style="text-align: center;">85.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FinanceChanges</td>
+<td style="text-align: center;">FINANCECHNG_INCRBNFT: indicates whether organization increased health, retirement or other staff benefits</td>
+<td style="text-align: center;">85.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FinanceChanges</td>
+<td style="text-align: center;">FINANCECHNG_INCREXP: indicates whether organization increased overall expenses</td>
+<td style="text-align: center;">85.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FinanceChanges</td>
+<td style="text-align: center;">FINANCECHNG_OTH: indicates other changes in organization’s finances</td>
+<td style="text-align: center;">85.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FinanceChanges</td>
+<td style="text-align: center;">FINANCECHNG_RESERVES: indicates whether organization drew from reserves</td>
+<td style="text-align: center;">85.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">FinanceChanges</td>
+<td style="text-align: center;">FINANCECHNG_TEXT: describes changes in organization’s finances</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Finances</td>
+<td style="text-align: center;">FINANCE_REV_GIFT: total revenue from In-kind gifts (estimated value of donated goods, assets, or services)</td>
+<td style="text-align: center;">88</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Finances</td>
+<td style="text-align: center;">FINANCE_REV_GOVT3RDPARTY: total revenue from government as third-party payer (e.g., Medicaid)</td>
+<td style="text-align: center;">88</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Finances</td>
+<td style="text-align: center;">FINANCE_REV_GOVTMAIN: total revenue from Government agencies (federal, state, or local, including grants and contracts)</td>
+<td style="text-align: center;">88</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Finances</td>
+<td style="text-align: center;">FINANCE_REV_GRNT: total revenue from Private foundation or corporate foundation grants</td>
+<td style="text-align: center;">88</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Finances</td>
+<td style="text-align: center;">FINANCE_REV_INDVDON: total revenue from individual donations (including donations from federated giving programs, United Way, and donor advised funds, but not including in-kind gifts)</td>
+<td style="text-align: center;">88</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Finances</td>
+<td style="text-align: center;">FINANCE_REV_OTH: total revenue from other sources</td>
+<td style="text-align: center;">88</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Finances</td>
+<td style="text-align: center;">FINANCE_REV_OTH_TEXT: names of other revenue sources</td>
+<td style="text-align: center;">14.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Finances</td>
+<td style="text-align: center;">FINANCE_REV_PRTCPNT: total revnue from self-paying participants</td>
+<td style="text-align: center;">87.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Finances</td>
+<td style="text-align: center;">FINANCE_REV_SPNSR: total revenue from Corporate sponsorship</td>
+<td style="text-align: center;">88</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Frmajgift</td>
+<td style="text-align: center;">FNDRAISE_MAJGIFT_AMT: donation amount considered a major gift</td>
+<td style="text-align: center;">96.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Funding1#1</td>
+<td style="text-align: center;">FNDRAISE_CFGRNT_SEEK: indicates if nonprofit sought a community foundation grant</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Funding1#1</td>
+<td style="text-align: center;">FNDRAISE_COMBFEDCMPGN_SEEK: indicates if nonprofit sought funding from the Combined Federal Campaign</td>
+<td style="text-align: center;">97.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Funding1#1</td>
+<td style="text-align: center;">FNDRAISE_CORP.FOUND_GRNT_SEEK: indicates if nonprofit sought corporate grants or donations</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Funding1#1</td>
+<td style="text-align: center;">FNDRAISE_DAF_SEEK: indicates if nonprofit sought donor advised fund funding</td>
+<td style="text-align: center;">97.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Funding1#1</td>
+<td style="text-align: center;">FNDRAISE_FEDGVTCNTRCT_SEEK: indicates if nonprofit sought a federal government contract (other than medicare/medicaid)</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Funding1#1</td>
+<td style="text-align: center;">FNDRAISE_FEDGVTGRNT_SEEK: indicates if nonprofit sought a federal government grant</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Funding1#1</td>
+<td style="text-align: center;">FNDRAISE_LOCGVTCNTRCT_SEEK: indicates if nonprofit sought a local government contract (other than medicare/medicaid)</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Funding1#1</td>
+<td style="text-align: center;">FNDRAISE_LOCGVTGRNT_SEEK: indicates if nonprofit sought a local government grant</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Funding1#1</td>
+<td style="text-align: center;">FNDRAISE_OTHRGVNGPRGRM_SEEK: indicates if nonprofit sought funding from other federated giving programs (e.g.&nbsp;Catholic Charities, Jewish Federations, etc.)</td>
+<td style="text-align: center;">97.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Funding1#1</td>
+<td style="text-align: center;">FNDRAISE_PFGRNT_SEEK: indicates if nonprofit sought a private foundation grant</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Funding1#1</td>
+<td style="text-align: center;">FNDRAISE_STATEGVTCNTRCT_SEEK: indicates if nonprofit sought a state government contract (other than medicare/medicaid)</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Funding1#1</td>
+<td style="text-align: center;">FNDRAISE_STATEGVTGRNT_SEEK: indicates if nonprofit sought a state government grant</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Funding1#1</td>
+<td style="text-align: center;">FNDRAISE_UNTDWY_SEEK: indicates if nonprofit sought funding from United Way</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Funding1#2</td>
+<td style="text-align: center;">FNDRAISE_CFGRNT_RCV: indicates if nonprofit received a community foundation grant</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Funding1#2</td>
+<td style="text-align: center;">FNDRAISE_COMBFEDCMPGN_RCV: indicates if nonprofit received funding from the Combined Federal Campaign</td>
+<td style="text-align: center;">97.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Funding1#2</td>
+<td style="text-align: center;">FNDRAISE_CORP.FOUND_GRNT_RCV: indicates if nonprofit received corporate grants or donations</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Funding1#2</td>
+<td style="text-align: center;">FNDRAISE_DAF_RCV: indicates if nonprofit received donor advised fund funding</td>
+<td style="text-align: center;">97.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Funding1#2</td>
+<td style="text-align: center;">FNDRAISE_FEDGVTCNTRCT_RCV: indicates if nonprofit received a federal government contract (other than medicare/medicaid)</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Funding1#2</td>
+<td style="text-align: center;">FNDRAISE_FEDGVTGRNT_RCV: indicates if nonprofit received a federal government grant</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Funding1#2</td>
+<td style="text-align: center;">FNDRAISE_LOCGVTCNTRCT_RCV: indicates if nonprofit received a local government contract (other than medicare/medicaid)</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Funding1#2</td>
+<td style="text-align: center;">FNDRAISE_LOCGVTGRNT_RCV: indicates if nonprofit received a local government grant</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Funding1#2</td>
+<td style="text-align: center;">FNDRAISE_OTHRGVNGPRGRM_RCV: indicates if nonprofit received funding from other federated giving programs (e.g.&nbsp;Catholic Charities, Jewish Federations, etc.)</td>
+<td style="text-align: center;">97.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Funding1#2</td>
+<td style="text-align: center;">FNDRAISE_PFGRNT_RCV: indicates if nonprofit received a private foundation grant</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Funding1#2</td>
+<td style="text-align: center;">FNDRAISE_STATEGVTCNTRCT_RCV: indicates if nonprofit received a state government contract (other than medicare/medicaid)</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Funding1#2</td>
+<td style="text-align: center;">FNDRAISE_STATEGVTGRNT_RCV: indicates if nonprofit received a state government grant</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Funding1#2</td>
+<td style="text-align: center;">FNDRAISE_UNTDWY_RCV: indicates if nonprofit received funding from United Way</td>
+<td style="text-align: center;">98.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">LeadershipChanges</td>
+<td style="text-align: center;">LEADERSHIPCHNG_ADDBOARDMEM: indicates whether board members were added</td>
+<td style="text-align: center;">85.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">LeadershipChanges</td>
+<td style="text-align: center;">LEADERSHIPCHNG_CHNGBC: indicates whether the Board Chair was changed</td>
+<td style="text-align: center;">85.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">LeadershipChanges</td>
+<td style="text-align: center;">LEADERSHIPCHNG_HIRECEO: indicates whether a executive director or CEO was hired</td>
+<td style="text-align: center;">85.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">LeadershipChanges</td>
+<td style="text-align: center;">LEADERSHIPCHNG_INTRMCEO: indicates whether an interim executive director or CEO was hired</td>
+<td style="text-align: center;">85.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">LeadershipChanges</td>
+<td style="text-align: center;">LEADERSHIPCHNG_LOSTBOARDMEM: indicates whether board members were lost or removed</td>
+<td style="text-align: center;">85.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">LeadershipChanges</td>
+<td style="text-align: center;">LEADERSHIPCHNG_OTH: indicates other leadership changes</td>
+<td style="text-align: center;">85.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">LeadershipChanges</td>
+<td style="text-align: center;">LEADERSHIPCHNG_OTH_TEXT: describes other leadership changes</td>
+<td style="text-align: center;">1.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">LeadershipChanges</td>
+<td style="text-align: center;">LEADERSHIPCHNG_RETCEO: indicates whether the executive director or CEO retired</td>
+<td style="text-align: center;">85.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">LeadershipChanges</td>
+<td style="text-align: center;">LEADERSHIPCHNG_RPLCBOARDMEM: indicates whether existing board members were replaced</td>
+<td style="text-align: center;">85.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">LeadershipChanges</td>
+<td style="text-align: center;">LEADERSHIPCHNG_RSGNCEO: indicates whether the executive director or CEO stepped down</td>
+<td style="text-align: center;">85.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">LeadershipChanges</td>
+<td style="text-align: center;">LEADERSHIPCHNG_TRMNCEO: indicates whether the executive director or CEO was terminated</td>
+<td style="text-align: center;">85.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">PeopleServed#1</td>
+<td style="text-align: center;">PPLSRV_NUMSERVED: Number of people served</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">PeopleServed#1</td>
+<td style="text-align: center;">PPLSRV_NUMWAIT: Number of people waiting to be served</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">PeopleServed#2</td>
+<td style="text-align: center;">PPLSRV_NUMSERVED_NA_X: Number of people served Not Applicable?</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">PeopleServed#2</td>
+<td style="text-align: center;">PPLSRV_NUMWAIT_NA_X: Number of people waiting to be served Not Applicable?</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">PrimaryConcern</td>
+<td style="text-align: center;">PRIMARYCONCERN: primary organizational concern for the year</td>
+<td style="text-align: center;">70.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ProgChanges</td>
+<td style="text-align: center;">PRGSRVC_ADDONLINE: indicates if online programs or services added</td>
+<td style="text-align: center;">99.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ProgChanges</td>
+<td style="text-align: center;">PRGSRVC_CLSDOFFC: indicates the closure of offices or program sites</td>
+<td style="text-align: center;">99.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ProgChanges</td>
+<td style="text-align: center;">PRGSRVC_DCRSAREA: indicates a decrease in geographic area served</td>
+<td style="text-align: center;">99.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ProgChanges</td>
+<td style="text-align: center;">PRGSRVC_DCRSFEE: indicates a decrease in program or service fees</td>
+<td style="text-align: center;">99.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ProgChanges</td>
+<td style="text-align: center;">PRGSRVC_DCRSNUM: indicates a decrease in number of programs or services</td>
+<td style="text-align: center;">99.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ProgChanges</td>
+<td style="text-align: center;">PRGSRVC_DCRSSRVC: indicates a decrease in number of people served</td>
+<td style="text-align: center;">99.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ProgChanges</td>
+<td style="text-align: center;">PRGSRVC_INCRAREA: indicates the an increase in geographic area served</td>
+<td style="text-align: center;">99.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ProgChanges</td>
+<td style="text-align: center;">PRGSRVC_INCRFEE: indicates an increase in program or service fees</td>
+<td style="text-align: center;">99.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ProgChanges</td>
+<td style="text-align: center;">PRGSRVC_INCRNUM: Indicates an increase in number of programs or services</td>
+<td style="text-align: center;">99.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ProgChanges</td>
+<td style="text-align: center;">PRGSRVC_INCRSRVC: Indicates an increase in number of people served</td>
+<td style="text-align: center;">99.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ProgChanges</td>
+<td style="text-align: center;">PRGSRVC_NEWOFFC: indicates the opening of new offices or program sites</td>
+<td style="text-align: center;">99.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ProgChanges</td>
+<td style="text-align: center;">PRGSRVC_OTH: indicates other changes in programs or services</td>
+<td style="text-align: center;">99.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ProgChanges</td>
+<td style="text-align: center;">PRGSRVC_OTHCHNG_TEXT: Other programs or services (text)</td>
+<td style="text-align: center;">14.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ProgChanges</td>
+<td style="text-align: center;">PRGSRVC_SHIFTONLINE: indicates if Programs or services were shifted online</td>
+<td style="text-align: center;">99.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ProgChanges</td>
+<td style="text-align: center;">PRGSRVC_SUSPEND: indicates the suspension of programs or services</td>
+<td style="text-align: center;">99.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Reserves</td>
+<td style="text-align: center;">RESERVES_EST: estimated total operating cash and unrestricted liquid assets in reserve for 2022</td>
+<td style="text-align: center;">86.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Reserves</td>
+<td style="text-align: center;">RESERVES_NA_X: estimated total operating cash and unrestricted liquid assets in reserve is not applicable</td>
+<td style="text-align: center;">86.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Staff#1</td>
+<td style="text-align: center;">STAFF_AMERVLNTR_2021: Number of americorps volunteers</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Staff#1</td>
+<td style="text-align: center;">STAFF_BOARDMMBR_2021: Number of Board Members</td>
+<td style="text-align: center;">98.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Staff#1</td>
+<td style="text-align: center;">STAFF_EPSDVLTNR_2021: Number of episodic volunteers</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Staff#1</td>
+<td style="text-align: center;">STAFF_FULLTIME_2021: Number of full time staff</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Staff#1</td>
+<td style="text-align: center;">STAFF_OTHER_EST_2021: Number of other staff</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Staff#1</td>
+<td style="text-align: center;">STAFF_OTHER_TEXT_2021: Description of other staff</td>
+<td style="text-align: center;">5.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Staff#1</td>
+<td style="text-align: center;">STAFF_PARTTIME_2021: Number of part time staff</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Staff#1</td>
+<td style="text-align: center;">STAFF_PDCNSLT_2021: Number of paid consultants</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Staff#1</td>
+<td style="text-align: center;">STAFF_REGVLNTR_2021: Number of regular volunteers</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Staff#2</td>
+<td style="text-align: center;">STAFF_AMERVLNTR_2022: Number of americorps volunteers</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Staff#2</td>
+<td style="text-align: center;">STAFF_BOARDMMBR_2022: Number of Board Members</td>
+<td style="text-align: center;">98.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Staff#2</td>
+<td style="text-align: center;">STAFF_EPSDVLTNR_2022: Number of episodic volunteers</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Staff#2</td>
+<td style="text-align: center;">STAFF_FULLTIME_2022: Number of full time staff</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Staff#2</td>
+<td style="text-align: center;">STAFF_OTHER_EST_2022: Number of other staff</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Staff#2</td>
+<td style="text-align: center;">STAFF_OTHER_TEXT_2022: Description of other staff</td>
+<td style="text-align: center;">5.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Staff#2</td>
+<td style="text-align: center;">STAFF_PARTTIME_2022: Number of part time staff</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Staff#2</td>
+<td style="text-align: center;">STAFF_PDCNSLT_2022: Number of paid consultants</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Staff#2</td>
+<td style="text-align: center;">STAFF_REGVLNTR_2022: Number of regular volunteers</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Staff#3</td>
+<td style="text-align: center;">STAFF_AMERVLNTR_NA: Number of americorps volunteers not applicable</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Staff#3</td>
+<td style="text-align: center;">STAFF_BOARDMMBR_NA: Number of Board Members not applicable</td>
+<td style="text-align: center;">98.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Staff#3</td>
+<td style="text-align: center;">STAFF_EPSDVLTNR_NA: Number of episodic volunteers not applicable</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Staff#3</td>
+<td style="text-align: center;">STAFF_FULLTIME_NA: Number of full time staff not applicable</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Staff#3</td>
+<td style="text-align: center;">STAFF_OTHER_EST_NA: Description of other, not applicable staff</td>
+<td style="text-align: center;">5.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Staff#3</td>
+<td style="text-align: center;">STAFF_OTHER_TEXT_NA: Number of other staff not applicable</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Staff#3</td>
+<td style="text-align: center;">STAFF_PARTTIME_NA: Number of part time staff not applicable</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Staff#3</td>
+<td style="text-align: center;">STAFF_PDCNSLT_NA: Number of paid consultants not applicable</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Staff#3</td>
+<td style="text-align: center;">STAFF_REGVLNTR_NA: Number of regular volunteers not applicable</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">VolImportance</td>
+<td style="text-align: center;">VOLIMPORTANCE: Importance of volunteers to organization</td>
+<td style="text-align: center;">99.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">BCHAIRGENDER: NA</td>
+<td style="text-align: center;">71.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">BCHAIRRACE: NA</td>
+<td style="text-align: center;">71.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">BCHAIRRACE_BI: NA</td>
+<td style="text-align: center;">100</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">CEOGENDER: NA</td>
+<td style="text-align: center;">67.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">CEORACE: NA</td>
+<td style="text-align: center;">67.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">CEORACE_BI: NA</td>
+<td style="text-align: center;">100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">COMMENTS: NA</td>
+<td style="text-align: center;">81.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">CONTACTINFOUPDATE_1: NA</td>
+<td style="text-align: center;">82.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">CONTACTINFOUPDATE_2: NA</td>
+<td style="text-align: center;">82.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">CONTACTINFOUPDATE_3: NA</td>
+<td style="text-align: center;">82.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">EIN: NA</td>
+<td style="text-align: center;">97.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">FIRSTNAME_Y2_UPDATED: NA</td>
+<td style="text-align: center;">99.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">LASTNAME_Y2_UPDATED: NA</td>
+<td style="text-align: center;">99.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">TITLE_Y2_UPDATED: NA</td>
+<td style="text-align: center;">98.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">YEAR2WT: NA</td>
+<td style="text-align: center;">97.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<style>
+
+h1, h2 {
+  margin-top: 80px
+}
+
+.codebook-entry {
+   background-color: beige;
+   margin-top: 20px;
+}
+</style>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./2_03-summarize-responses-y2.html" class="pagination-link" aria-label="Summary Statistics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Summary Statistics</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./3_00-YEAR-THREE.html" class="pagination-link" aria-label="YEAR THREE DATA">
+        <span class="nav-page-text">YEAR THREE DATA</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

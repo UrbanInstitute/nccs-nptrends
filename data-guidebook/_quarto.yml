@@ -10,28 +10,31 @@ book:
     - "Thiya"
     - "Jesse Lecy"
     - "Hannah Martin"
-  date: "2/28/2024"
+  date: last-modified
+  sidebar: 
+    style: "docked"
+    background: "#1273A1"  
   chapters:
     - index.qmd
-    - 00-r-setup.qmd
-    - 01-create-dd-files.qmd
-    - part: 20-YEAR-TWO.qmd
+    - 0_01-r-setup.qmd
+    - 0_02-create-dd-files.qmd
+    - part: 2_00-YEAR-TWO.qmd
       chapters: 
-      - 21-year2-recoding-rules.qmd
-      - 22-year2-fix-demographics.qmd
-      - 23-year2-summarize-responses.qmd
-      - 24-year2-response-rates.qmd
-    - part: 30-YEAR-THREE.qmd
+      - 2_01-recoding-rules-y2.qmd
+      - 2_02-fix-demographics-y2.qmd
+      - 2_03-summarize-responses-y2.qmd
+      - 2_04-response-rates-y2.qmd
+    - part: 3_00-YEAR-THREE.qmd
       chapters: 
-      - 31-year3-recoding-rules.qmd
-      - 32-year3-fix-demographics.qmd
-      - 33-year3-summarize-responses.qmd
-    - part: 40-GEOCODING.qmd
+      - 3_01-recoding-rules-y3.qmd
+      - 3_02-fix-demographics-y3.qmd
+      - 3_03-summarize-responses-y3.qmd
+    - part: 4_00-GEOCODING.qmd
       chapters:
-      - 41-validating-addresses.qmd
-      - 42-geocoding-addresses.qmd
-      - 43-adding-geographies.qmd
-    - part: 50-WEIGHTS.qmd
+      - 4_01-validating-addresses.qmd
+      - 4_02-geocoding-addresses.qmd
+      - 4_03-adding-geographies.qmd
+    - part: 5_00-WEIGHTS.qmd
     - 99-references.qmd
       
 
@@ -39,9 +42,16 @@ bibliography: references.bib
 
 format:
   html:
-    theme: cosmo
-  pdf: 
-    documentclass: scrbook
+    theme: lux
+    highlight-style: solarized
+    css: style.css
+    grid:
+      sidebar-width: 225px
+      body-width: 900px
+      margin-width: 400px
+      gutter-width: 100px
+  # pdf: 
+  #   documentclass: scrbook
 
 editor: visual
 
