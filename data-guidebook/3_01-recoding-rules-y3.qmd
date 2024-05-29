@@ -51,7 +51,12 @@ Several factor and boolean variables in this survey data set have inconsistent c
 # item with missingness and variable labels
 
 recode_x <- function( x, pattern, replace ){
-  stringi::stri_replace_all_fixed( x, pattern, replace, vectorize_all=F  )
+  x <- stringi::stri_replace_all_fixed( x, pattern, replace, vectorize_all=F  )
+  if( any( pattern=="NA" )){
+    na.val <- replace[ pattern == "NA" ] 
+    x[ is.na(x) ] <- na.val   
+  }
+  return(x)
 }
 
 
@@ -110,7 +115,16 @@ add_q_details <- function( x, df ){
 
 # apply rules to specific columns K
 
-recode_columns <- function( df, k, pattern, replace, val.x, lab.x, mis.x=NULL ){
+recode_columns <- function( df, k, pattern=NULL, replace=NULL, val.x, lab.x, mis.x=NULL, RULES=NULL ){
+  
+  if( ! is.null(RULES) )
+    {
+      rules <- parse_rules( RULES )          
+      pattern <- rules[[ "pattern" ]]
+      replace <- rules[[ "replace" ]]    
+    }
+
+
   df[ k ] <- lapply( df[k], f, pattern, replace, val.x, lab.x, mis.x )
   df[ k ] <- purrr::map( k, add_q_details, df )
   return(df)
@@ -270,14 +284,14 @@ x %>% as.numeric() %>% summary()
 # Yes/No Questions
 
 
-| Original Value | Description | Recode Value | Code as Missing ? |
-|---|---|---|---|
-|Yes|Yes|1|No|
-|No|No|0|No|
-|Unsure|Unsure|97|Yes|
-|N/A|Not Applicable|98|Yes|
-|-99|Incomplete|99|Yes|
-|NA| Unanswered|NA|Yes|
+| Original Value | Description    | Recode Value | Code as Missing ? |
+|----------------|----------------|--------------|-------------------|
+| Yes            | Yes            | 1            | No                |
+| No             | No             | 0            | No                |
+| Unsure         | Unsure         | 97           | Yes               |
+| N/A            | Not Applicable | 98           | Yes               |
+| -99            | Incomplete     | 99           | Yes               |
+| NA             | Unanswered     | NA           | Yes               |
 
 
 ```{r}
@@ -350,11 +364,11 @@ lapply( survey_df[ fundraise_skrcv_qns_bool ], table, useNA="ifany" )
 
 These checkboxes are ticked by the respondent to indicate if they have sought or received funding from a specific source.
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing? |
-|---|---|---|---|---|
-|1|Checkbox Checked|Yes|1|No|
-|NA|Checkbox Unchecked|No|0|No|
-|All NA|Unanswered|NA|NA|Yes|
+| Original Value | Description        | Recode Label | Recode Value | Code as Missing? |
+|----------------|--------------------|--------------|--------------|------------------|
+| 1              | Checkbox Checked   | Yes          | 1            | No               |
+| NA             | Checkbox Unchecked | No           | 0            | No               |
+| All NA         | Unanswered         | NA           | NA           | Yes              |
 
 *ALL NA* refers to no responses on all questions in this entire question group (i.e. the respondent skipped the section).
 
@@ -442,12 +456,12 @@ show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 These questions are presented as a checkbox to the user to indicate that a question is not applicable. "Yes" here means "Yes, this question is not applicable".
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|1|Checkbox Checked|Yes|1|No|
-|NA|Unanswered|No|0|No|
-|22|Checkbox Checked|Yes|1|No|
-|21|Unchecked Box|No|0|No|
+| Original Value | Description      | Recode Label | Recode Value | Code as Missing ? |
+|----------------|------------------|--------------|--------------|-------------------|
+| 1              | Checkbox Checked | Yes          | 1            | No                |
+| NA             | Unanswered       | No           | 0            | No                |
+| 22             | Checkbox Checked | Yes          | 1            | No                |
+| 21             | Unchecked Box    | No           | 0            | No                |
 
 ```{r}
 # APPLY TO COLUMNS K:
@@ -548,10 +562,11 @@ show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 These questions are presented as a checkbox to the user to indicate that a question is not applicable. "Yes" here means "Yes, this question is not applicable".
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|1|Checkbox Checked|Yes|1|No|
-|NA|Unanswered|No|0|No|
+| Original Value | Description      | Recode Label | Recode Value | Code as Missing ? |
+|----------------|------------------|--------------|--------------|-------------------|
+| 1              | Checkbox Checked | Yes          | 1            | No                |
+| NA             | Unanswered       | No           | 0            | No                |
+
 
 
 ```{r}
@@ -745,11 +760,11 @@ survey_df <-
 
 
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|1|Yes, this question is not applicable|Not Applicable|1|No|
-|NA|No, this question applies to me|OK|1|No|
-|All NA|N/A response conflicts|Unsure|99|Yes|
+| Original Value | Description                          | Recode Label   | Recode Value | Code as Missing ? |
+|----------------|--------------------------------------|----------------|--------------|-------------------|
+| 1              | Yes, this question is not applicable | Not Applicable | 1            | No                |
+| NA             | No, this question applies to me      | OK             | 1            | No                |
+| All NA         | N/A response conflicts               | Unsure         | 99           | Yes               |
 
 
 ```{r}
@@ -796,11 +811,11 @@ show_html(codebook( survey_df[ COLUMNS[1] ] ))
 ### Reserve Questions
 
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|1|Yes, this question is not applicable|N/A|1|No|
-|NA|This question applies to me|0|OK|No|
-|All NA|N/A response conflicts|Unsure|99|Yes|
+| Original Value | Description                          | Recode Label | Recode Value | Code as Missing ? |
+|----------------|--------------------------------------|--------------|--------------|-------------------|
+| 1              | Yes, this question is not applicable | N/A          | 1            | No                |
+| NA             | This question applies to me          | 0            | OK           | No                |
+| All NA         | N/A response conflicts               | Unsure       | 99           | Yes               |
 
 ```{r}
 # APPLY TO COLUMNS K:
@@ -856,11 +871,11 @@ show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 ### People Served Questions
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|1|Yes, this question is not applicable|N/A|1|No|
-|NA|This question applies to me|0|OK|No|
-|All NA|N/A response conflicts|Unsure|99|Yes|
+| Original Value | Description                          | Recode Label | Recode Value | Code as Missing ? |
+|----------------|--------------------------------------|--------------|--------------|-------------------|
+| 1              | Yes, this question is not applicable | N/A          | 1            | No                |
+| NA             | This question applies to me          | 0            | OK           | No                |
+| All NA         | N/A response conflicts               | Unsure       | 99           | Yes               |
 
 ```{r}
 # APPLY TO COLUMNS K:
@@ -906,10 +921,9 @@ survey_df[ COLUMNS ] <-
 
 # VALUES THAT NEED RECODING
 
-RULES <- c(    
-          
-             "    1    =>>     1   ", 
-             "    0    =>>     0   "   )
+RULES <- c(    "    1    =>>     1    ", 
+               "    0    =>>     0    ",
+               "   NA    =>>   _NA_   "      )
 
 
 rules <- parse_rules( RULES )          
@@ -918,9 +932,9 @@ replace <- rules[[ "replace" ]]
 
 
 # MEMISC LABELS AND MISSING VALUE CODES 
-values  <- c( "0", "1", "99" )
-labels  <- c( "OK", "N/A", "Did Not Answer" )
-missing <- "99"
+values  <- c( "0", "1", "99", "_NA_" )
+labels  <- c( "OK", "N/A", "No response", "No response" )
+missing <- c( "99", "_NA_" )
 
 # RECODE VARIABLES 
 survey_df <- 

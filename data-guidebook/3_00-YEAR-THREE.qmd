@@ -143,6 +143,7 @@ survey_df <-
 fpath <- "DATA-PREP/00-sample-framework/"
 fname <- "year3wt.csv"
 wt3  <- readr::read_csv( paste0( fpath, fname ) )
+wt3  <- unique( wt3)
 
 survey_df <- merge( survey_df, wt3, by.x="ExternalReference", by.y="ein", all.x=TRUE )
 ```

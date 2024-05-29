@@ -270,22 +270,6 @@ show_html( codebook( survey_df[ COLUMNS ] ))
 
 
 
-## Save outputs
-
-
-```{r}
-fpath <- "DATA-PREP/03-year-three/03-data-final/"
-fname <- "YEAR-03-DATA-RESTRICTED-V02.csv"
-write.csv( survey_df, paste0( fpath, fname ), row.names=F, na="" )
-```
-
-
-```{r}
-# fpath <- "DATA-PREP/03-year-three/02-data-intermediate/"
-# fname <- "DATA-CODEBOOK.txt"
-# memisc::Write( codebook(survey_df), file=paste0( fpath, fname ) )
-```
-
 
 
 

@@ -41,14 +41,16 @@ create_survey_item <- function(survey_data, qns, recode_vals, recode_labs, missi
 
 # Get Year1 Race Variables
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 fpath     <- "DATA-PREP/01-year-one/02-data-intermediate/"
 fname     <- "wave-01-data-intermediate.csv"
 year1_raw <- readr::read_csv( paste0( fpath, fname ) )
 ```
 
 ```{r}
-# Wrangle Data for Year 1 Responses on CEO race and Gender
+# Wrangle Data for Year 1 
+# Responses on CEO race and Gender
+
 year1_ceo <- year1_raw %>% 
   dplyr::select(EIN, CEOrace, CEOgender ) %>% 
   dplyr::filter(  ! CEOrace %in% c(-99, NA),
@@ -137,7 +139,12 @@ c("CEOrace_AAPI", "CEOrace_Black", "CEOrace_Hisp", "CEOrace_NativeAm",
 
 
 # select all race variables plus EIN for merge 
-df.race2022 <- year2_final[ c("EIN",race.vars) ]
+df.race2022 <- year2_final[ c("EIN",race.vars) ] 
+```
+
+
+```{r}
+dupes2 <- df.race2022 %>% group_by(EIN) %>% filter( n()>1 ) %>% ungroup() 
 ```
 
 
@@ -145,23 +152,24 @@ df.race2022 <- year2_final[ c("EIN",race.vars) ]
 
 ```{r}
 # drop 2021 values if there are 2022 versions
+df.race2021$EIN <- as.numeric( df.race2021$EIN )
+df.race2022$EIN <- as.numeric( df.race2022$EIN )
 drop <- intersect( df.race2021$EIN, df.race2022$EIN )
 
-# drop %>% length()  506
+# drop %>% length()  531
 # nrow( df.race2021 )  1656
 # nrow( df.race2022 )  691
 #
-# total nrow:  1656 + 691 - 506 = 1841
+# total nrow:  1656 + 691 - 531 - 17 (dupes) = 1799
 
 df.race2021 <- 
   df.race2021 %>% 
   dplyr::filter( ! EIN %in% drop )
 
-df.race2021$EIN <- as.numeric( df.race2021$EIN )
-df.race2022$EIN <- as.numeric( df.race2022$EIN )
+df.race2022 <- dplyr::filter( df.race2022, ! is.na(EIN) )
 df.race2022 <- dplyr::bind_rows( df.race2022, df.race2021 )
 
-# nrow( df.race2022 )  1841
+# nrow( df.race2022 )  1799
 ```
 
 
@@ -439,21 +447,20 @@ While our race and gender columns are individual binary columns, this is not the
 
 These checkboxes are ticked by the respondent to indicate if their CEO or board chair belong to a specified race or gender identity.
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Asian/Pacific Islander|Checkbox Checked|Yes|1|No|
-|Black/African American|Checkbox Checked|Yes|1|No|
-|Latinx/Hispanic|Checkbox Checked|Yes|1|No|
-|Native American/American Indian|Checkbox Checked|Yes|1|No|
-|White|Checkbox Checked|Yes|1|No|
-|Man|Checkbox Checked|Yes|1|No|
-|Woman|Checkbox Checked|Yes|1|No|
-|Trans|Checkbox Checked|Yes|1|No|
-|Gender non-conforming/Non-Binary|Checkbox Checked|Yes|1|No|
-|Other (please specify)|Checkbox Checked|Yes|1|No|
-|0|Checkbox Unchecked|No|0|No|
-|-99|Incomplete|Incomplete|99|Yes|
-|NA|Unanswered|NA|NA|Yes|
+| Original Value                   | Description        | Recode Label | Recode Value | Code as Missing ? |
+|----------------------------------|--------------------|--------------|--------------|-------------------|
+| Asian/Pacific Islander           | Checkbox Checked   | Yes          | 1            | No                |
+| Black/African American           | Checkbox Checked   | Yes          | 1            | No                |
+| Latinx/Hispanic                  | Checkbox Checked   | Yes          | 1            | No                |
+| Native American/American Indian  | Checkbox Checked   | Yes          | 1            | No                |
+| White                            | Checkbox Checked   | Yes          | 1            | No                |
+| Man                              | Checkbox Checked   | Yes          | 1            | No                |
+| Woman                            | Checkbox Checked   | Yes          | 1            | No                |
+| Trans                            | Checkbox Checked   | Yes          | 1            | No                |
+| Gender non-conforming/Non-Binary | Checkbox Checked   | Yes          | 1            | No                |
+| Other (please specify)           | Checkbox Checked   | Yes          | 1            | No                |
+| 0                                | Checkbox Unchecked | No           | 0            | No                |
+| NA                               | Unanswered         | NA           | NA           | Yes               |
 
 
 
@@ -463,10 +470,11 @@ COLUMNS <-  race_gender_qns_bool
 
 
 # VALUES THAT NEED RECODING
-
-RULES <- c(     "    1    =>>    Yes    ", 
-                "  Yes    =>>    Yes    ", 
-                "   No    =>>     No    "     )
+ 
+RULES <- c(     "    1    =>>      Yes     ", 
+                "  Yes    =>>      Yes     ", 
+                "   No    =>>       No     ",
+                "   NA    =>>      _NA_    "   )
 
 
 rules <- parse_rules( RULES )
@@ -474,9 +482,9 @@ pattern <- rules[[ "pattern" ]]
 replace <- rules[[ "replace" ]]
 
 # MEMISC LABELS AND MISSING VALUE CODES
-values  <- c( "No", "Yes", "", NA )
+values  <- c( "No", "Yes", "", "_NA_" )
 labels  <- c( "No", "Yes", "Missing in 2022", "No Response" )
-missing <- c( "", NA )
+missing <- c( "", "_NA_" )
 
 # RECODE VARIABLES
 survey_df <-
@@ -496,7 +504,7 @@ codebook( survey_df[ COLUMNS[5] ] )
 **Example:**
 
 ```{r, results="asis", echo=F}
-show_html(codebook( survey_df[ COLUMNS[5] ] ))
+show_html( codebook( survey_df[ COLUMNS[5] ] ) )
 ```
 
 
@@ -508,16 +516,19 @@ show_html(codebook( survey_df[ COLUMNS[5] ] ))
 
 ## Aggregated Race Variable
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|1|Asian/Pacific Islander|AAPI|1|No|
-|1|Black/African American|Black|2|No|
-|1|Latinx/Hispanic|Hisp|3|No|
-|1|Native American/American Indian|NativeAm|4|No|
-|1|White|White|5|No|
-|1|Bi/Multi-racial|Bi|6|No|
-|1|Other (please specify)|Oth|7|No|
-|0|Checkbox Unchecked|NA|Yes|
+Create a single categorical field for Race. 
+
+| Original Value            | Description                     | Recode Label | Recode Value | Code as Missing ? |
+|---------------------------|---------------------------------|--------------|--------------|-------------------|
+| 'Yes' in CEOrace_AAPI     | Asian/Pacific Islander          | AAPI         | 1            | No                |
+| 'Yes' in CEOrace_Black    | Black/African American          | Black        | 2            | No                |
+| 'Yes' in CEOrace_Hisp     | Latinx/Hispanic                 | Hispanic     | 3            | No                |
+| 'Yes' in CEOrace_NativeAm | Native American/American Indian | NativeAm     | 4            | No                |
+| 'Yes' in CEOrace_White    | White                           | White        | 5            | No                |
+| 'Yes' in CEOrace_Oth      | Other (please specify)          | Other        | 6            | No                |
+| 'Yes' in CEOrace_Bi       | Bi/Multi-racial                 | Biracial     | 7            | No                |
+| No Reponse                | No race reported                | NA           | NA           | Yes               |
+
 
 ```{r}
 # Create New Race variables
@@ -544,21 +555,46 @@ survey_df <- survey_df %>%
       .default = NA
   ))
 
-race.categories <- c("CEOrace", "BChairrace")
+# Manage any coding conflicts: 
+survey_df$CEOrace[ survey_df$CEOrace_Bi == "Yes" ]       <- 7
+survey_df$BChairrace[ survey_df$BChairrace_Bi == "Yes" ] <- 7
 
-# Create Survey Item
-survey_df <- create_survey_item(
-  survey_df, 
-  race.categories, 
-  recode_vals = c(1, 2, 3, 4, 5, 6, 7), 
-  recode_labs = c("AAPI", "Black", "Hispanic", "NativeAm", "White", "Other","Biracial"), 
-  missing_vals = NULL
-)
+# APPLY TO COLUMNS K:
+race.categories <- c("CEOrace", "BChairrace")
+COLUMNS <- race.categories
+
+# VALUES THAT NEED RECODING
+ 
+RULES <- c(   "   NA    =>>    _NA_    "   )
+
+rules <- parse_rules( RULES )
+pattern <- rules[[ "pattern" ]]
+replace <- rules[[ "replace" ]]
+
+# MEMISC LABELS AND MISSING VALUE CODES
+values  <- c( 1, 2, 3, 4, 5, 6, 7, "_NA_" )
+labels  <- c( "AAPI", "Black", "Hispanic", "NativeAm", 
+              "White", "Other","Biracial", "No Response" )
+missing <- "_NA_"
+
+
+dd.add <- 
+  data.frame( vname=c("CEOrace", "BChairrace"),
+              vlabel=c("Race of the CEO","Race of the Board Chair"),
+              type=c("Categorical","Categorical"),
+              description=c("Race categories combined into a single factor") )
+
+dd <- dplyr::bind_rows( dd, dd.add )
+
+# RECODE VARIABLES
+survey_df <-
+  survey_df %>%
+  recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
 ```
 
 
 ```{r, eval=F, echo=F}
-codebook( survey_df[ race.categories[1] ] )
+codebook( survey_df[ race.categories[2] ] )
 ```
 
 
@@ -570,9 +606,14 @@ show_html(codebook( survey_df[ c("CEOrace", "BChairrace")[1] ] ))
 ```
 
 
-```{r, eval=F, echo=F}
 
-df03 <- survey_df[ c(ceo.race.qns,board.race.qns,"CEOrace","BChairrace") ]
+
+```{r, eval=F, echo=F}
+# DEBUG PROBLEMS WITH COMBINED RACE FIELDS
+df03 <- 
+  survey_df[ 
+    c( ceo.race.qns, board.race.qns,
+       "CEOrace","BChairrace" )   ]
 
 fpath <- "DATA-PREP/03-year-three/03-data-final/"
 
@@ -582,16 +623,18 @@ write.csv( df03, paste0( fpath, fname ), row.names=F, na="" )
 
 
 
+
+
 # Create Combined Gender Field 
 
 | Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
 |---|---|---|---|---|
-|1|Man|Man|1|No|
-|1|Woman|Woman|2|No|
-|1|Trans|Trans|3|No|
-|1|Gender non-conforming/Non-Binary|NB|4|No|
-|1|Other (please specify)|Oth|5|No|
-|0|Checkbox Unchecked|NA|Yes|
+|'Yes' in CEOgender_Man|Man|Man|1|No|
+|'Yes' in CEOgender_Woman|Woman|Woman|2|No|
+|'Yes' in CEOgender_Trans|Trans|Trans|3|No|
+|'Yes' in CEOgender_NB|Gender non-conforming/Non-Binary|NB|4|No|
+|'Yes' in CEOgender_Oth|Other (please specify)|Other|5|No|
+|No response| No gender reported |NA|NA|Yes|
 
 ```{r}
 survey_df <- survey_df %>%
@@ -613,34 +656,33 @@ survey_df <- survey_df %>%
       .default = NA
   ))
 
-# Create Survey Item
-survey_df <- create_survey_item(
-  survey_df, 
-  c("CEOgender", "BChairgender"), 
-  recode_vals = c( 1, 2, 3, 4, 5 ), 
-  recode_labs = c( "Man", "Woman", "Trans", "NB", "Other" ), 
-  missing_vals = NULL
-)
-```
+# APPLY TO COLUMNS K:
+COLUMNS <- c("CEOgender", "BChairgender")
+
+# VALUES THAT NEED RECODING
+RULES <- c(   "   NA    =>>    _NA_    "   )
+rules <- parse_rules( RULES )
+pattern <- rules[[ "pattern" ]]
+replace <- rules[[ "replace" ]]
+
+# MEMISC LABELS AND MISSING VALUE CODES
+values  <- c( 1, 2, 3, 4, 5, "_NA_" )
+labels  <- c( "Man", "Woman", "Trans", "NB", "Other", "No Response" )
+missing <- "_NA_"
 
 
-```{r, eval=F, echo=F}
+dd.add <- 
+  data.frame( vname=c("CEOgender", "BChairgender"),
+              vlabel=c("Race of the CEO","Race of the Board Chair"),
+              type=c("Categorical","Categorical"),
+              description=c("Race categories combined into a single factor") )
 
-df01 <- 
-  survey_df[ c("CEOgender_Man", "CEOgender_Woman", "CEOgender_Trans", 
-               "CEOgender_NB", "CEOgender_Oth","CEOgender") ]
+dd <- dplyr::bind_rows( dd, dd.add )
 
-df02 <- 
-  survey_df[ c("BChairgender_Man", "BChairgender_Woman", "BChairgender_Trans", 
-               "BChairgender_NB", "BChairgender_Oth","BChairgender") ]
-
-fpath <- "DATA-PREP/03-year-three/03-data-final/"
-
-fname <- "YEAR-03-TEMP2.csv"
-write.csv( df01, paste0( fpath, fname ), row.names=F, na="" )
-
-fname <- "YEAR-03-TEMP3.csv"
-write.csv( df02, paste0( fpath, fname ), row.names=F, na="" )
+# RECODE VARIABLES
+survey_df <-
+  survey_df %>%
+  recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
 ```
 
 
@@ -660,16 +702,61 @@ show_html(codebook( survey_df[ c("CEOgender", "BChairgender")[1] ] ))
 
 
 
+```{r, eval=F, echo=F}
+# DEBUG PROBLEMS WITH COMBINED RACE FIELDS 
+
+df01 <- 
+  survey_df[ c("CEOgender_Man", "CEOgender_Woman", 
+               "CEOgender_Trans", "CEOgender_NB", 
+               "CEOgender_Oth","CEOgender") ]
+
+df02 <- 
+  survey_df[ c("BChairgender_Man", "BChairgender_Woman", 
+               "BChairgender_Trans",  "BChairgender_NB", 
+               "BChairgender_Oth","BChairgender") ]
+
+fpath <- "DATA-PREP/03-year-three/03-data-final/"
+
+fname <- "YEAR-03-TEMP2.csv"
+write.csv( df01, paste0( fpath, fname ), row.names=F, na="" )
+
+fname <- "YEAR-03-TEMP3.csv"
+write.csv( df02, paste0( fpath, fname ), row.names=F, na="" )
+```
 
 
 
+
+
+
+
+```{r, echo=F}
 # Inspect Results
-
-```{r}
 fpath <- "DATA-PREP/03-year-three/03-data-final/"
 fname <- "YEAR-03-TEMP.csv"
 write.csv( survey_df, paste0( fpath, fname ), row.names=F, na="" )
 ```
+
+
+
+
+## Save outputs
+
+
+```{r}
+fpath <- "DATA-PREP/03-year-three/03-data-final/"
+fname <- "YEAR-03-DATA-RESTRICTED-V03.csv"
+write.csv( survey_df, paste0( fpath, fname ), row.names=F, na="" )
+```
+
+
+```{r, echo=F}
+# fpath <- "DATA-PREP/03-year-three/02-data-intermediate/"
+# fname <- "DATA-CODEBOOK.txt"
+# memisc::Write( codebook(survey_df), file=paste0( fpath, fname ) )
+```
+
+
 
 
 
