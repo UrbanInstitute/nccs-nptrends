@@ -499,33 +499,32 @@ survey_df[ COLUMNS ] <-
 # the rest as "NONE CONTACTED"
 
 zero_to_dnc <- function( x, rowid ){
-  x[ rowid ] <- "NONE CONTACTED"
+  x[ rowid ] <- "NONE"
   return(x)
 }
 
 survey_df[ COLUMNS ] <- 
   survey_df[ COLUMNS ] %>% 
-  lapply( zero_to_dnc, row.id )
+  lapply( zero_to_dnc, rowid=dnc.rows )
 
 # if the first question was NA 
 # code all as missing ("no response")
 
 zero_to_noresp <- function( x, rowid ){
-  x[ rowid ] <- "NO RESPONSE"
+  x[ rowid ] <- "_NR_"
   return(x)
 }
 
 survey_df[ COLUMNS ] <- 
   survey_df[ COLUMNS ] %>% 
-  lapply( zero_to_noresp, row.id )
+  lapply( zero_to_noresp, rowid=na.rows )
 
 
 # VALUES THAT NEED RECODING
 
 RULES <- c(    "   22    =>>     1                ",
-               "   21    =>>     NONE CONTACTED   ",
-               "   NA    =>>     NO RESPONSE      ", 
-               "    1    =>>     1                "    )
+               "   21    =>>     NONE             ",
+               "   NA    =>>     _NA_             "    )
 
 
 rules <- parse_rules( RULES )          
@@ -534,9 +533,9 @@ replace <- rules[[ "replace" ]]
 
 
 # MEMISC LABELS AND MISSING VALUE CODES 
-values  <- c( "0", "1", "NONE CONTACTED", "NO RESPONSE" )
-labels  <- c( "No", "Yes", "None Contacted", "No Response" )
-missing <- "NO RESPONSE"
+values  <- c( "0", "1", "NONE", "_NR_", "_NA_" )
+labels  <- c( "No", "Yes", "None Contacted", "No Response", "Missing" )
+missing <- "_NA_"
 
 # RECODE VARIABLES 
 survey_df <- 
@@ -545,13 +544,13 @@ survey_df <-
 ```
 
 ```{r, eval=F, echo=F}
-codebook( survey_df[ COLUMNS[2] ] )
+codebook( survey_df[ COLUMNS[2:3] ] )
 ```
 
 **Example:**
 
 ```{r, results="asis", echo=F}
-show_html(codebook( survey_df[ COLUMNS[1] ] ))
+show_html(codebook( survey_df[ COLUMNS[1:2] ] ))
 ```
 
 
