@@ -24,16 +24,16 @@ book:
       - 2_02-fix-demographics-y2.qmd
       - 2_03-summarize-responses-y2.qmd
       - 2_04-response-rates-y2.qmd
+      - 2_05-prepping-puf-y2.qmd
     - part: 3_00-YEAR-THREE.qmd
       chapters: 
       - 3_01-recoding-rules-y3.qmd
       - 3_02-fix-demographics-y3.qmd
       - 3_03-summarize-responses-y3.qmd
+      - 3_04-prepping-puf-y3.qmd
     - part: 4_00-GEOCODING.qmd
       chapters:
       - 4_01-validating-addresses.qmd
-      - 4_02-geocoding-addresses.qmd
-      - 4_03-adding-geographies.qmd
     - part: 5_00-WEIGHTS.qmd
     - 99-references.qmd
       

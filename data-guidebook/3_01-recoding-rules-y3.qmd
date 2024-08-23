@@ -33,7 +33,7 @@ survey_df <- read.csv( paste0( fpath, fname ) )
 # LOAD DATA DICTIONARY 
 
 dd <- readxl::read_xlsx( 
-        "../data-dictionaries/dd-nptrends-wave-03.xlsx", 
+        "../data-dictionaries/dd-nptrends-year-03.xlsx", 
         sheet = "data dictionary" )
 ```
 

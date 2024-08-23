@@ -17,8 +17,8 @@ library( labelled )
 
 options( knitr.duplicate.label = "allow" )
 
-knitr::purl( "3_02-fix-demographics-y3.qmd" )   # convert QMD to R script
-source(      "3_02-fix-demographics-y3.R"   )   # run all chunks in prior step
+knitr::purl( "3_02-fix-demographics-y3.qmd" )    # convert QMD to R script
+source(      "3_02-fix-demographics-y3.R"   )    # run all chunks in prior step
 file.remove( "3_02-fix-demographics-y3.R"    )   # delete script after execution
 ```
 

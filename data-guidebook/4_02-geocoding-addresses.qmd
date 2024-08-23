@@ -2,8 +2,100 @@
 title: "Geocoding Addresses"
 ---
 
-In summary, this book has no content whatsoever.
+
+### Passing Parsed Addresses to Geocoder
+
+This parsed data set can be submitted to the geocoder of choice. In this case, the survey was processed using the Urban Institue's [Internal Geocoder](https://urban-institute.medium.com/choosing-a-geocoder-for-the-urban-institute-86192f656c5f).
+
+
+### Reading Geocoder Outputs
+
+The outputs from the geocoding process are presented below.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+setwd("Y:/CNP/Generosity Commission/")
+
+postmastr_geocoded <-
+  readr::read_csv(
+    "DATA-PREP/02-data-intermediate/02-wave-two/wave-02-postmastr-addresses-geocoded.csv",
+    show_col_types = FALSE
+  )
+
+postmastr_geocoded %>% 
+  dplyr::as_tibble() |> 
+  print()
+```
+
+We do not need all geographic information returned from the geocoder. The variables of interest are listed in the table below.
+
+|Variable|Description|
+|:---:|:---:|
+|row.id|Row number from original data set for merging|
+|Region|State name|
+|RegionAbbr|State abbreviation|
+|Subregion|County name|
+|City|City name|
+|Latitude|10-digit Latitude|
+|Longitude|10-digit Longitude|
+
+We can also pre-emptively drop geographic variables with personally identifiable information such as the postalcode and street address.
 
 ```{r}
-1 + 1
+# Define geocoded variables of interest
+geocode_cols <- c(
+  "row.id",
+  "Region",
+  "RegionAbbr",
+  "Subregion",
+  "City",
+  "Latitude",
+  "Longitude"
+)
+
+# Subset the geocoded data set
+postmastr_geocoded_subset <- postmastr_geocoded %>% 
+  dplyr::select(
+    tidyselect::all_of(geocode_cols)
+  )
+
+# Merge those results via row.id with the processed survey data
+survey_geocoded_df <- survey_recode_df %>% 
+  tidylog::left_join(postmastr_geocoded_subset,
+                     by = "row.id")
+
+# Define geographic variables to exclude from processed data set
+geo_cols_to_exclude <- c(
+  "address",
+  "city",
+  "state",
+  "zip5",
+  "zipcode",
+  "Addr_StreetLocation",
+  "Addr_CityState",
+  "Addr_ZIP",
+  "row.id"
+)
+
+# Exclude Columns and Rename Existing Geographic Columns
+survey_geocoded_df <- survey_geocoded_df %>% 
+  dplyr::select(
+    ! tidyselect::all_of(geo_cols_to_exclude)
+  ) %>% 
+  dplyr::rename(
+    "State" = "Region",
+    "StateAbbr" = "RegionAbbr",
+    "County" = "Subregion"
+  )
+```
+
+### Saving Geocoded Outputs
+
+We can now write these outputs to disk and move on to the next chapter, where we add census level metadata to our survey responses.
+
+```{r, eval=FALSE}
+setwd("Y:/CNP/Generosity Commission/")
+readr::write_csv(
+  survey_geocoded_df,
+  "DATA-PREP/02-data-intermediate/02-wave-two/wave-02-data-intermediate-geocoded.csv"
+)
 ```
