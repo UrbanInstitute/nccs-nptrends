@@ -37,7 +37,9 @@ drop.these <-
     "Staff_Other_Est_NA", "FndRaise_Text", "Finance_Rev_Oth_Text", 
     "FinanceChng_Text", "LeadershipChng_Oth_Text", "CEOrace_Text", 
     "BChairrace_Text", "Regulations_Other_TEXT", "CEOrace_Text_v2022", 
-    "BChairrace_Text_v2022" )
+    "BChairrace_Text_v2022",
+    "ContactUpdateName", "ContactUpdateTitle", 
+    "ContactUpdateEmail", "Comments")
     
 keep <- 
   c("PrgSrvc_IncrNum", "PrgSrvc_DcrsNum", "PrgSrvc_Suspend", "PrgSrvc_IncrSrvc", 
@@ -96,8 +98,7 @@ keep <-
     "StaffingPlans_HireDifferent", "StaffingPlans_HireSame", "StaffingPlans_Layoff", 
     "StaffingPlans_SlowDown", "StaffingPlans_SpeedUp", "StaffingPlans_LoseVoluntary", 
     "StaffingPlans_LoseRetirement", "StaffingPlans_Retrain", "StaffingPlans_NoChange", 
-    "StaffingPlans_DK", "ContactUpdateName", "ContactUpdateTitle", 
-    "ContactUpdateEmail", "Comments", "year3wt", "Staff_Fulltime_2023_imp", 
+    "StaffingPlans_DK", "year3wt", "Staff_Fulltime_2023_imp", 
     "Staff_Parttime_2023_imp", "Staff_Boardmmbr_2023_imp", "Staff_RegVlntr_2023_imp", 
     "Staff_EpsdVltnr_2023_imp", "Staff_AmerVlntr_2023_imp", "Staff_PdCnslt_2023_imp", 
     "CEOrace_AAPI_v2022", "CEOrace_Black_v2022", "CEOrace_Hisp_v2022", 
@@ -134,7 +135,7 @@ financials <-
     "FndRaise_MajGift_Amt", "FndRaise_DnrBlw250", "FndRaise_DnrAbv250", 
     "Finance_Rev_GovtMain", "Finance_Rev_Prtcpnt", "Finance_Rev_IndvDon", 
     "Finance_Rev_Gift", "Finance_Rev_Grnt", "Finance_Rev_Spnsr", 
-    "Finance_Rev_Oth", "Reserves_Est", "CARES_Rcv_Est", "year3wt", 
+    "Finance_Rev_Oth", "Reserves_Est", "CARES_Rcv_Est",  
     "Staff_Fulltime_2023_imp", "Staff_Parttime_2023_imp", "Staff_Boardmmbr_2023_imp", 
     "Staff_RegVlntr_2023_imp", "Staff_EpsdVltnr_2023_imp", "Staff_AmerVlntr_2023_imp", 
     "Staff_PdCnslt_2023_imp", "CEOgender_specify_v2022")

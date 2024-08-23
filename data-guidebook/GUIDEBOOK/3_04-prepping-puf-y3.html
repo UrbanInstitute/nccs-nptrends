@@ -250,18 +250,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Address Validation</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./4_02-geocoding-addresses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Geocoding Addresses</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./4_03-adding-geographies.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Adding Census Data</span></span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -341,81 +329,82 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_Other_Est_NA"</span>, <span class="st">"FndRaise_Text"</span>, <span class="st">"Finance_Rev_Oth_Text"</span>, </span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FinanceChng_Text"</span>, <span class="st">"LeadershipChng_Oth_Text"</span>, <span class="st">"CEOrace_Text"</span>, </span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairrace_Text"</span>, <span class="st">"Regulations_Other_TEXT"</span>, <span class="st">"CEOrace_Text_v2022"</span>, </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairrace_Text_v2022"</span> )</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>keep <span class="ot">&lt;-</span> </span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"PrgSrvc_IncrNum"</span>, <span class="st">"PrgSrvc_DcrsNum"</span>, <span class="st">"PrgSrvc_Suspend"</span>, <span class="st">"PrgSrvc_IncrSrvc"</span>, </span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PrgSrvc_DcrsSrvc"</span>, <span class="st">"PrgSrvc_NewOffc"</span>, <span class="st">"PrgSrvc_ClsdOffc"</span>, <span class="st">"PrgSrvc_IncrArea"</span>, </span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PrgSrvc_DcrsArea"</span>, <span class="st">"PrgSrvc_IncrFee"</span>, <span class="st">"PrgSrvc_DcrsFee"</span>, <span class="st">"PrgSrvc_ShiftOnline"</span>, </span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PrgSrvc_AddOnline"</span>, <span class="st">"PrgSrvc_Oth"</span>, <span class="st">"PplSrv_NumServed"</span>, <span class="st">"PplSrv_NumWait"</span>, </span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PplSrv_NumServed_NA_X"</span>, <span class="st">"PplSrv_NumWait_NA_X"</span>, <span class="st">"Dmnd_NxtYear"</span>, </span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_Fulltime_2022"</span>, <span class="st">"Staff_Parttime_2022"</span>, <span class="st">"Staff_Boardmmbr_2022"</span>, </span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_RegVlntr_2022"</span>, <span class="st">"Staff_EpsdVltnr_2022"</span>, <span class="st">"Staff_AmerVlntr_2022"</span>, </span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_PdCnslt_2022"</span>, <span class="st">"Staff_Other_Est_2022"</span>, <span class="st">"Staff_Fulltime_2023"</span>, </span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_Parttime_2023"</span>, <span class="st">"Staff_Boardmmbr_2023"</span>, <span class="st">"Staff_RegVlntr_2023"</span>, </span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_EpsdVltnr_2023"</span>, <span class="st">"Staff_AmerVlntr_2023"</span>, <span class="st">"Staff_PdCnslt_2023"</span>, </span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_Other_Est_2023"</span>, <span class="st">"Staff_Fulltime_NA"</span>, <span class="st">"Staff_Parttime_NA"</span>, </span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_Boardmmbr_NA"</span>, <span class="st">"Staff_RegVlntr_NA"</span>, <span class="st">"Staff_EpsdVltnr_NA"</span>, </span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_AmerVlntr_NA"</span>, <span class="st">"Staff_PdCnslt_NA"</span>,  <span class="st">"Staff_Other_Text_NA"</span>,</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"VolImportance"</span>, <span class="st">"DonImportance"</span>, <span class="st">"FndRaise_DvlpVirtual"</span>, <span class="st">"FndRaise_IncrExp"</span>, </span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_DcrsExp"</span>, <span class="st">"FndRaise_IncStaff"</span>, <span class="st">"FndRaise_DcrsStaff"</span>, </span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_IncrCnslt"</span>, <span class="st">"FndRaise_DcrsCnslt"</span>, <span class="st">"FndRaise_IncrVolntr"</span>, </span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_DcrsVolntr"</span>, <span class="st">"FndRaise_Othr"</span>, <span class="st">"FndRaise_MajGift_Amt"</span>, </span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_Overall_Chng"</span>, <span class="st">"FndRaise_Cashbelow250_Chng"</span>, <span class="st">"FndRaise_Cashabove250_Chng"</span>, </span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_MajGift_Chng"</span>, <span class="st">"FndRaise_Corp_Found_Grnt_Chng"</span>, <span class="st">"FndRaise_RstrGift_Chng"</span>, </span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_UnrstrGift_Chng"</span>, <span class="st">"FndRaise_DnrBlw250"</span>, <span class="st">"FndRaise_DnrAbv250"</span>, </span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_LocGvtGrnt_Seek"</span>, <span class="st">"FndRaise_StateGvtGrnt_Seek"</span>, <span class="st">"FndRaise_FedGvtGrnt_Seek"</span>, </span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_LocGvtCntrct_Seek"</span>, <span class="st">"FndRaise_StateGvtCntrct_Seek"</span>, </span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_FedGvtCntrct_Seek"</span>, <span class="st">"FndRaise_PFGrnt_Seek"</span>, <span class="st">"FndRaise_CFGrnt_Seek"</span>, </span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_DAF_Seek"</span>, <span class="st">"FndRaise_Corp_Found_Grnt_Seek"</span>, <span class="st">"FndRaise_UntdWy_Seek"</span>, </span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_CombFedCmpgn_Seek"</span>, <span class="st">"FndRaise_OthrGvngPrgrm_Seek"</span>, </span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_LocGvtGrnt_Rcv"</span>, <span class="st">"FndRaise_StateGvtGrnt_Rcv"</span>, <span class="st">"FndRaise_FedGvtGrnt_Rcv"</span>, </span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_LocGvtCntrct_Rcv"</span>, <span class="st">"FndRaise_StateGvtCntrct_Rcv"</span>, <span class="st">"FndRaise_FedGvtCntrct_Rcv"</span>, </span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_PFGrnt_Rcv"</span>, <span class="st">"FndRaise_CFGrnt_Rcv"</span>, <span class="st">"FndRaise_DAF_Rcv"</span>, </span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_Corp_Found_Grnt_Rcv"</span>, <span class="st">"FndRaise_UntdWy_Rcv"</span>, <span class="st">"FndRaise_CombFedCmpgn_Rcv"</span>, </span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_OthrGvngPrgrm_Rcv"</span>, <span class="st">"Finance_Rev_GovtMain"</span>, <span class="st">"Finance_Rev_Prtcpnt"</span>, </span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Finance_Rev_IndvDon"</span>, <span class="st">"Finance_Rev_Gift"</span>, <span class="st">"Finance_Rev_Grnt"</span>, </span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Finance_Rev_Spnsr"</span>, <span class="st">"Finance_Rev_Oth"</span>, <span class="st">"Reserves_Est"</span>, <span class="st">"Reserves_NA_X"</span>, </span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CARES_Rcv"</span>, <span class="st">"CARES_Rcv_Est"</span>, <span class="st">"FinanceChng_Reserves"</span>, <span class="st">"FinanceChng_Borrow"</span>, </span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FinanceChng_DcrsBnft"</span>, <span class="st">"FinanceChng_IncrBnft"</span>, <span class="st">"FinanceChng_IncrExp"</span>, </span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FinanceChng_DcrsExp"</span>, <span class="st">"FinanceChng_Oth"</span>, <span class="st">"LeadershipChng_RetCEO"</span>, </span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LeadershipChng_RsgnCEO"</span>, <span class="st">"LeadershipChng_TrmnCEO"</span>, <span class="st">"LeadershipChng_HireCEO"</span>, </span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LeadershipChng_IntrmCEO"</span>, <span class="st">"LeadershipChng_ChngBC"</span>, <span class="st">"LeadershipChng_LostBoardMem"</span>, </span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LeadershipChng_RplcBoardMem"</span>, <span class="st">"LeadershipChng_AddBoardMem"</span>, </span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LeadershipChng_Oth"</span>, <span class="st">"CEOrace_AAPI"</span>, <span class="st">"CEOrace_Black"</span>, <span class="st">"CEOrace_Hisp"</span>, </span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOrace_NativeAm"</span>, <span class="st">"CEOrace_White"</span>, <span class="st">"CEOrace_Oth"</span>, <span class="st">"CEOgender_Man"</span>, </span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOgender_Woman"</span>, <span class="st">"CEOgender_Trans"</span>, <span class="st">"CEOgender_NB"</span>, <span class="st">"CEOgender_Oth"</span>, </span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOgender_specify"</span>, <span class="st">"BChairrace_AAPI"</span>, <span class="st">"BChairrace_Black"</span>, <span class="st">"BChairrace_Hisp"</span>, </span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairrace_NativeAm"</span>, <span class="st">"BChairrace_White"</span>, <span class="st">"BChairrace_Oth"</span>, </span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairgender_Man"</span>, <span class="st">"BChairgender_Woman"</span>, <span class="st">"BChairgender_Trans"</span>, </span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairgender_NB"</span>, <span class="st">"BChairgender_Oth"</span>, <span class="st">"BChairgender_specify"</span>, </span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ExtAffairs_GenEd"</span>, <span class="st">"ExtAffairs_Media"</span>, <span class="st">"ExtAffairs_Advocacy"</span>, </span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ExtAffairs_GovtRs"</span>, <span class="st">"ExtAffairs_DiscGovtGrnt"</span>, <span class="st">"ExtAffairs_InfoReq"</span>, </span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ExtAffairs_Testify"</span>, <span class="st">"ExtAffairs_Lobby"</span>, <span class="st">"ExtAffairs_OrgPrtst"</span>, </span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ExtAffairs_Mobilize"</span>, <span class="st">"ExtAffairs_Petition"</span>, <span class="st">"ExtAffairs_VoteReg"</span>, </span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ExtAffairs_VoteEd"</span>, <span class="st">"Regulations"</span>, <span class="st">"Regulations_Local"</span>, <span class="st">"Regulations_State"</span>, </span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Regulations_Federal"</span>, <span class="st">"Regulations_Info"</span>, <span class="st">"Regulations_Programming"</span>, </span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Regulations_Forms"</span>, <span class="st">"Regulations_Requests"</span>, <span class="st">"Regulations_Advocate"</span>, </span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Regulations_Research"</span>, <span class="st">"Regulations_Other"</span>, <span class="st">"PrimaryConcern"</span>, </span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    <span class="st">"StaffingPlans_HireDifferent"</span>, <span class="st">"StaffingPlans_HireSame"</span>, <span class="st">"StaffingPlans_Layoff"</span>, </span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    <span class="st">"StaffingPlans_SlowDown"</span>, <span class="st">"StaffingPlans_SpeedUp"</span>, <span class="st">"StaffingPlans_LoseVoluntary"</span>, </span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    <span class="st">"StaffingPlans_LoseRetirement"</span>, <span class="st">"StaffingPlans_Retrain"</span>, <span class="st">"StaffingPlans_NoChange"</span>, </span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    <span class="st">"StaffingPlans_DK"</span>, <span class="st">"ContactUpdateName"</span>, <span class="st">"ContactUpdateTitle"</span>, </span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ContactUpdateEmail"</span>, <span class="st">"Comments"</span>, <span class="st">"year3wt"</span>, <span class="st">"Staff_Fulltime_2023_imp"</span>, </span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_Parttime_2023_imp"</span>, <span class="st">"Staff_Boardmmbr_2023_imp"</span>, <span class="st">"Staff_RegVlntr_2023_imp"</span>, </span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_EpsdVltnr_2023_imp"</span>, <span class="st">"Staff_AmerVlntr_2023_imp"</span>, <span class="st">"Staff_PdCnslt_2023_imp"</span>, </span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOrace_AAPI_v2022"</span>, <span class="st">"CEOrace_Black_v2022"</span>, <span class="st">"CEOrace_Hisp_v2022"</span>, </span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOrace_NativeAm_v2022"</span>, <span class="st">"CEOrace_White_v2022"</span>, <span class="st">"CEOrace_Oth_v2022"</span>, </span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOgender_Man_v2022"</span>, <span class="st">"CEOgender_Woman_v2022"</span>, <span class="st">"CEOgender_Trans_v2022"</span>, </span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOgender_NB_v2022"</span>, <span class="st">"CEOgender_Oth_v2022"</span>, <span class="st">"CEOgender_specify_v2022"</span>, </span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairrace_AAPI_v2022"</span>, <span class="st">"BChairrace_Black_v2022"</span>, <span class="st">"BChairrace_Hisp_v2022"</span>, </span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairrace_NativeAm_v2022"</span>, <span class="st">"BChairrace_White_v2022"</span>, <span class="st">"BChairrace_Oth_v2022"</span>, </span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairgender_Man_v2022"</span>, <span class="st">"BChairgender_Woman_v2022"</span>, <span class="st">"BChairgender_Trans_v2022"</span>, </span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairgender_NB_v2022"</span>, <span class="st">"BChairgender_Oth_v2022"</span>, <span class="st">"BChairgender_specify_v2022"</span>, </span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOrace_Bi"</span>, <span class="st">"BChairrace_Bi"</span>, <span class="st">"CEOrace"</span>, <span class="st">"BChairrace"</span>, <span class="st">"CEOgender"</span>, </span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairgender"</span>)</span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[keep]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairrace_Text_v2022"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ContactUpdateName"</span>, <span class="st">"ContactUpdateTitle"</span>, </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ContactUpdateEmail"</span>, <span class="st">"Comments"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>keep <span class="ot">&lt;-</span> </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"PrgSrvc_IncrNum"</span>, <span class="st">"PrgSrvc_DcrsNum"</span>, <span class="st">"PrgSrvc_Suspend"</span>, <span class="st">"PrgSrvc_IncrSrvc"</span>, </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PrgSrvc_DcrsSrvc"</span>, <span class="st">"PrgSrvc_NewOffc"</span>, <span class="st">"PrgSrvc_ClsdOffc"</span>, <span class="st">"PrgSrvc_IncrArea"</span>, </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PrgSrvc_DcrsArea"</span>, <span class="st">"PrgSrvc_IncrFee"</span>, <span class="st">"PrgSrvc_DcrsFee"</span>, <span class="st">"PrgSrvc_ShiftOnline"</span>, </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PrgSrvc_AddOnline"</span>, <span class="st">"PrgSrvc_Oth"</span>, <span class="st">"PplSrv_NumServed"</span>, <span class="st">"PplSrv_NumWait"</span>, </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"PplSrv_NumServed_NA_X"</span>, <span class="st">"PplSrv_NumWait_NA_X"</span>, <span class="st">"Dmnd_NxtYear"</span>, </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_Fulltime_2022"</span>, <span class="st">"Staff_Parttime_2022"</span>, <span class="st">"Staff_Boardmmbr_2022"</span>, </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_RegVlntr_2022"</span>, <span class="st">"Staff_EpsdVltnr_2022"</span>, <span class="st">"Staff_AmerVlntr_2022"</span>, </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_PdCnslt_2022"</span>, <span class="st">"Staff_Other_Est_2022"</span>, <span class="st">"Staff_Fulltime_2023"</span>, </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_Parttime_2023"</span>, <span class="st">"Staff_Boardmmbr_2023"</span>, <span class="st">"Staff_RegVlntr_2023"</span>, </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_EpsdVltnr_2023"</span>, <span class="st">"Staff_AmerVlntr_2023"</span>, <span class="st">"Staff_PdCnslt_2023"</span>, </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_Other_Est_2023"</span>, <span class="st">"Staff_Fulltime_NA"</span>, <span class="st">"Staff_Parttime_NA"</span>, </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_Boardmmbr_NA"</span>, <span class="st">"Staff_RegVlntr_NA"</span>, <span class="st">"Staff_EpsdVltnr_NA"</span>, </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_AmerVlntr_NA"</span>, <span class="st">"Staff_PdCnslt_NA"</span>,  <span class="st">"Staff_Other_Text_NA"</span>,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">"VolImportance"</span>, <span class="st">"DonImportance"</span>, <span class="st">"FndRaise_DvlpVirtual"</span>, <span class="st">"FndRaise_IncrExp"</span>, </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_DcrsExp"</span>, <span class="st">"FndRaise_IncStaff"</span>, <span class="st">"FndRaise_DcrsStaff"</span>, </span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_IncrCnslt"</span>, <span class="st">"FndRaise_DcrsCnslt"</span>, <span class="st">"FndRaise_IncrVolntr"</span>, </span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_DcrsVolntr"</span>, <span class="st">"FndRaise_Othr"</span>, <span class="st">"FndRaise_MajGift_Amt"</span>, </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_Overall_Chng"</span>, <span class="st">"FndRaise_Cashbelow250_Chng"</span>, <span class="st">"FndRaise_Cashabove250_Chng"</span>, </span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_MajGift_Chng"</span>, <span class="st">"FndRaise_Corp_Found_Grnt_Chng"</span>, <span class="st">"FndRaise_RstrGift_Chng"</span>, </span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_UnrstrGift_Chng"</span>, <span class="st">"FndRaise_DnrBlw250"</span>, <span class="st">"FndRaise_DnrAbv250"</span>, </span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_LocGvtGrnt_Seek"</span>, <span class="st">"FndRaise_StateGvtGrnt_Seek"</span>, <span class="st">"FndRaise_FedGvtGrnt_Seek"</span>, </span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_LocGvtCntrct_Seek"</span>, <span class="st">"FndRaise_StateGvtCntrct_Seek"</span>, </span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_FedGvtCntrct_Seek"</span>, <span class="st">"FndRaise_PFGrnt_Seek"</span>, <span class="st">"FndRaise_CFGrnt_Seek"</span>, </span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_DAF_Seek"</span>, <span class="st">"FndRaise_Corp_Found_Grnt_Seek"</span>, <span class="st">"FndRaise_UntdWy_Seek"</span>, </span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_CombFedCmpgn_Seek"</span>, <span class="st">"FndRaise_OthrGvngPrgrm_Seek"</span>, </span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_LocGvtGrnt_Rcv"</span>, <span class="st">"FndRaise_StateGvtGrnt_Rcv"</span>, <span class="st">"FndRaise_FedGvtGrnt_Rcv"</span>, </span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_LocGvtCntrct_Rcv"</span>, <span class="st">"FndRaise_StateGvtCntrct_Rcv"</span>, <span class="st">"FndRaise_FedGvtCntrct_Rcv"</span>, </span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_PFGrnt_Rcv"</span>, <span class="st">"FndRaise_CFGrnt_Rcv"</span>, <span class="st">"FndRaise_DAF_Rcv"</span>, </span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_Corp_Found_Grnt_Rcv"</span>, <span class="st">"FndRaise_UntdWy_Rcv"</span>, <span class="st">"FndRaise_CombFedCmpgn_Rcv"</span>, </span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_OthrGvngPrgrm_Rcv"</span>, <span class="st">"Finance_Rev_GovtMain"</span>, <span class="st">"Finance_Rev_Prtcpnt"</span>, </span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Finance_Rev_IndvDon"</span>, <span class="st">"Finance_Rev_Gift"</span>, <span class="st">"Finance_Rev_Grnt"</span>, </span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Finance_Rev_Spnsr"</span>, <span class="st">"Finance_Rev_Oth"</span>, <span class="st">"Reserves_Est"</span>, <span class="st">"Reserves_NA_X"</span>, </span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CARES_Rcv"</span>, <span class="st">"CARES_Rcv_Est"</span>, <span class="st">"FinanceChng_Reserves"</span>, <span class="st">"FinanceChng_Borrow"</span>, </span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FinanceChng_DcrsBnft"</span>, <span class="st">"FinanceChng_IncrBnft"</span>, <span class="st">"FinanceChng_IncrExp"</span>, </span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FinanceChng_DcrsExp"</span>, <span class="st">"FinanceChng_Oth"</span>, <span class="st">"LeadershipChng_RetCEO"</span>, </span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LeadershipChng_RsgnCEO"</span>, <span class="st">"LeadershipChng_TrmnCEO"</span>, <span class="st">"LeadershipChng_HireCEO"</span>, </span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LeadershipChng_IntrmCEO"</span>, <span class="st">"LeadershipChng_ChngBC"</span>, <span class="st">"LeadershipChng_LostBoardMem"</span>, </span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LeadershipChng_RplcBoardMem"</span>, <span class="st">"LeadershipChng_AddBoardMem"</span>, </span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    <span class="st">"LeadershipChng_Oth"</span>, <span class="st">"CEOrace_AAPI"</span>, <span class="st">"CEOrace_Black"</span>, <span class="st">"CEOrace_Hisp"</span>, </span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOrace_NativeAm"</span>, <span class="st">"CEOrace_White"</span>, <span class="st">"CEOrace_Oth"</span>, <span class="st">"CEOgender_Man"</span>, </span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOgender_Woman"</span>, <span class="st">"CEOgender_Trans"</span>, <span class="st">"CEOgender_NB"</span>, <span class="st">"CEOgender_Oth"</span>, </span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOgender_specify"</span>, <span class="st">"BChairrace_AAPI"</span>, <span class="st">"BChairrace_Black"</span>, <span class="st">"BChairrace_Hisp"</span>, </span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairrace_NativeAm"</span>, <span class="st">"BChairrace_White"</span>, <span class="st">"BChairrace_Oth"</span>, </span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairgender_Man"</span>, <span class="st">"BChairgender_Woman"</span>, <span class="st">"BChairgender_Trans"</span>, </span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairgender_NB"</span>, <span class="st">"BChairgender_Oth"</span>, <span class="st">"BChairgender_specify"</span>, </span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ExtAffairs_GenEd"</span>, <span class="st">"ExtAffairs_Media"</span>, <span class="st">"ExtAffairs_Advocacy"</span>, </span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ExtAffairs_GovtRs"</span>, <span class="st">"ExtAffairs_DiscGovtGrnt"</span>, <span class="st">"ExtAffairs_InfoReq"</span>, </span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ExtAffairs_Testify"</span>, <span class="st">"ExtAffairs_Lobby"</span>, <span class="st">"ExtAffairs_OrgPrtst"</span>, </span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ExtAffairs_Mobilize"</span>, <span class="st">"ExtAffairs_Petition"</span>, <span class="st">"ExtAffairs_VoteReg"</span>, </span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ExtAffairs_VoteEd"</span>, <span class="st">"Regulations"</span>, <span class="st">"Regulations_Local"</span>, <span class="st">"Regulations_State"</span>, </span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Regulations_Federal"</span>, <span class="st">"Regulations_Info"</span>, <span class="st">"Regulations_Programming"</span>, </span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Regulations_Forms"</span>, <span class="st">"Regulations_Requests"</span>, <span class="st">"Regulations_Advocate"</span>, </span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Regulations_Research"</span>, <span class="st">"Regulations_Other"</span>, <span class="st">"PrimaryConcern"</span>, </span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    <span class="st">"StaffingPlans_HireDifferent"</span>, <span class="st">"StaffingPlans_HireSame"</span>, <span class="st">"StaffingPlans_Layoff"</span>, </span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    <span class="st">"StaffingPlans_SlowDown"</span>, <span class="st">"StaffingPlans_SpeedUp"</span>, <span class="st">"StaffingPlans_LoseVoluntary"</span>, </span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    <span class="st">"StaffingPlans_LoseRetirement"</span>, <span class="st">"StaffingPlans_Retrain"</span>, <span class="st">"StaffingPlans_NoChange"</span>, </span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    <span class="st">"StaffingPlans_DK"</span>, <span class="st">"year3wt"</span>, <span class="st">"Staff_Fulltime_2023_imp"</span>, </span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_Parttime_2023_imp"</span>, <span class="st">"Staff_Boardmmbr_2023_imp"</span>, <span class="st">"Staff_RegVlntr_2023_imp"</span>, </span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_EpsdVltnr_2023_imp"</span>, <span class="st">"Staff_AmerVlntr_2023_imp"</span>, <span class="st">"Staff_PdCnslt_2023_imp"</span>, </span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOrace_AAPI_v2022"</span>, <span class="st">"CEOrace_Black_v2022"</span>, <span class="st">"CEOrace_Hisp_v2022"</span>, </span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOrace_NativeAm_v2022"</span>, <span class="st">"CEOrace_White_v2022"</span>, <span class="st">"CEOrace_Oth_v2022"</span>, </span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOgender_Man_v2022"</span>, <span class="st">"CEOgender_Woman_v2022"</span>, <span class="st">"CEOgender_Trans_v2022"</span>, </span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOgender_NB_v2022"</span>, <span class="st">"CEOgender_Oth_v2022"</span>, <span class="st">"CEOgender_specify_v2022"</span>, </span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairrace_AAPI_v2022"</span>, <span class="st">"BChairrace_Black_v2022"</span>, <span class="st">"BChairrace_Hisp_v2022"</span>, </span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairrace_NativeAm_v2022"</span>, <span class="st">"BChairrace_White_v2022"</span>, <span class="st">"BChairrace_Oth_v2022"</span>, </span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairgender_Man_v2022"</span>, <span class="st">"BChairgender_Woman_v2022"</span>, <span class="st">"BChairgender_Trans_v2022"</span>, </span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairgender_NB_v2022"</span>, <span class="st">"BChairgender_Oth_v2022"</span>, <span class="st">"BChairgender_specify_v2022"</span>, </span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>    <span class="st">"CEOrace_Bi"</span>, <span class="st">"BChairrace_Bi"</span>, <span class="st">"CEOrace"</span>, <span class="st">"BChairrace"</span>, <span class="st">"CEOgender"</span>, </span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairgender"</span>)</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df[keep]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="add-noise-to-numeric-responses" class="level2" data-number="11.3">
@@ -435,7 +424,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"FndRaise_MajGift_Amt"</span>, <span class="st">"FndRaise_DnrBlw250"</span>, <span class="st">"FndRaise_DnrAbv250"</span>, </span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Finance_Rev_GovtMain"</span>, <span class="st">"Finance_Rev_Prtcpnt"</span>, <span class="st">"Finance_Rev_IndvDon"</span>, </span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Finance_Rev_Gift"</span>, <span class="st">"Finance_Rev_Grnt"</span>, <span class="st">"Finance_Rev_Spnsr"</span>, </span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Finance_Rev_Oth"</span>, <span class="st">"Reserves_Est"</span>, <span class="st">"CARES_Rcv_Est"</span>, <span class="st">"year3wt"</span>, </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Finance_Rev_Oth"</span>, <span class="st">"Reserves_Est"</span>, <span class="st">"CARES_Rcv_Est"</span>,  </span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_Fulltime_2023_imp"</span>, <span class="st">"Staff_Parttime_2023_imp"</span>, <span class="st">"Staff_Boardmmbr_2023_imp"</span>, </span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_RegVlntr_2023_imp"</span>, <span class="st">"Staff_EpsdVltnr_2023_imp"</span>, <span class="st">"Staff_AmerVlntr_2023_imp"</span>, </span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_PdCnslt_2023_imp"</span>, <span class="st">"CEOgender_specify_v2022"</span>)</span>
@@ -450,7 +439,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="fu">add_noise</span>( <span class="dv">3000</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2824</code></pre>
+<pre><code>[1] 3285</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>make_noise <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dbl</span>( x, add_noise )</span>
