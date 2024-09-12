@@ -250,18 +250,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Address Validation</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./4_02-geocoding-addresses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Geocoding Addresses</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./4_03-adding-geographies.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Adding Census Data</span></span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -3182,16 +3170,16 @@ QUESTION TXT:
 </thead>
 <tbody>
 <tr class="odd">
-<td>Frequently</td>
+<td>Almost all the time</td>
 <td>Most Frequent</td>
-<td>Frequently</td>
+<td>Most of the time</td>
 <td>4</td>
 <td>No</td>
 </tr>
 <tr class="even">
-<td>Almost all the time</td>
+<td>Frequently</td>
 <td>Second Most Frequent</td>
-<td>More Often Than Not</td>
+<td>Frequently</td>
 <td>3</td>
 <td>No</td>
 </tr>
@@ -3240,8 +3228,8 @@ QUESTION TXT:
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>RULES <span class="ot">&lt;-</span> <span class="fu">c</span>(    </span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>     <span class="st">"             Frequently    =&gt;&gt;     4   "</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>     <span class="st">"    Almost all the time    =&gt;&gt;     3   "</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>     <span class="st">"    Almost all the time    =&gt;&gt;     4   "</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>     <span class="st">"             Frequently    =&gt;&gt;     3   "</span>,</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>     <span class="st">"           Occasionally    =&gt;&gt;     2   "</span>,</span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>     <span class="st">"                 Rarely    =&gt;&gt;     1   "</span>,</span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>     <span class="st">"                  Never    =&gt;&gt;     0   "</span>,</span>
@@ -3253,7 +3241,7 @@ QUESTION TXT:
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># MEMISC LABELS AND MISSING VALUE CODES </span></span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>values  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="st">"X"</span> )</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>labels  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">"Frequently"</span>, <span class="st">"More Often than Not"</span>, </span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>labels  <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">"Most of the time"</span>, <span class="st">"Frequently"</span>,  </span>
 <span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>              <span class="st">"Occasionally"</span>, <span class="st">"Rarely"</span>, <span class="st">"Never"</span>, <span class="st">"Incomplete"</span> )</span>
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>missing <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">"X"</span> )</span>
 <span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
@@ -3421,37 +3409,6 @@ Total
 <td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
 </td>
 <td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
-‘More Often than Not’
-</td>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
-45
-</td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
-7
-</td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
-.
-</td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
-8
-</td>
-<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
-6
-</td>
-<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
-.
-</td>
-<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
-5
-</td>
-</tr>
-<tr>
-<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
-4
-</td>
-<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
-</td>
-<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
 ‘Frequently’
 </td>
 <td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
@@ -3474,6 +3431,37 @@ Total
 </td>
 <td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
 8
+</td>
+</tr>
+<tr>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+4
+</td>
+<td style="text-align: center; padding-left: 0.3em; padding-right: 0.3em;">
+</td>
+<td style="text-align: left; padding-left: 0.3em; padding-right: 0.3em;">
+‘Most of the time’
+</td>
+<td style="text-align: right; padding-left: 0.3em; padding-right: 0.3em;">
+45
+</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+7
+</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+.
+</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+8
+</td>
+<td style="text-align: right; margin-right: 0px; padding-right: 0px; padding-left: 0.3em;">
+6
+</td>
+<td style="text-align: center; margin-left: 0px; margin-right: 0px; padding-right: 0px; padding-left: 0px; width: 1px;">
+.
+</td>
+<td style="text-align: left; margin-left: 0px; padding-left: 0px; padding-right: 0.3em;">
+5
 </td>
 </tr>
 <tr>

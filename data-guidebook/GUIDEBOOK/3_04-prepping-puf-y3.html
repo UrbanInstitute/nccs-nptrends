@@ -331,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairrace_Text"</span>, <span class="st">"Regulations_Other_TEXT"</span>, <span class="st">"CEOrace_Text_v2022"</span>, </span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BChairrace_Text_v2022"</span>,</span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ContactUpdateName"</span>, <span class="st">"ContactUpdateTitle"</span>, </span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ContactUpdateEmail"</span>, <span class="st">"Comments"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ContactUpdateEmail"</span>, <span class="st">"Comments"</span> )</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>keep <span class="ot">&lt;-</span> </span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"PrgSrvc_IncrNum"</span>, <span class="st">"PrgSrvc_DcrsNum"</span>, <span class="st">"PrgSrvc_Suspend"</span>, <span class="st">"PrgSrvc_IncrSrvc"</span>, </span>
@@ -386,7 +386,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ExtAffairs_VoteEd"</span>, <span class="st">"Regulations"</span>, <span class="st">"Regulations_Local"</span>, <span class="st">"Regulations_State"</span>, </span>
 <span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Regulations_Federal"</span>, <span class="st">"Regulations_Info"</span>, <span class="st">"Regulations_Programming"</span>, </span>
 <span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Regulations_Forms"</span>, <span class="st">"Regulations_Requests"</span>, <span class="st">"Regulations_Advocate"</span>, </span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Regulations_Research"</span>, <span class="st">"Regulations_Other"</span>, <span class="st">"PrimaryConcern"</span>, </span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Regulations_Research"</span>, <span class="st">"PrimaryConcern"</span>, </span>
 <span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>    <span class="st">"StaffingPlans_HireDifferent"</span>, <span class="st">"StaffingPlans_HireSame"</span>, <span class="st">"StaffingPlans_Layoff"</span>, </span>
 <span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    <span class="st">"StaffingPlans_SlowDown"</span>, <span class="st">"StaffingPlans_SpeedUp"</span>, <span class="st">"StaffingPlans_LoseVoluntary"</span>, </span>
 <span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    <span class="st">"StaffingPlans_LoseRetirement"</span>, <span class="st">"StaffingPlans_Retrain"</span>, <span class="st">"StaffingPlans_NoChange"</span>, </span>
@@ -415,7 +415,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># names(df)[ (lapply(df,class) |&gt; unlist()) != "character" ] |&gt; dput()</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>financials <span class="ot">&lt;-</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">c</span>(<span class="st">"PplSrv_NumServed"</span>, <span class="st">"PplSrv_NumWait"</span>, <span class="st">"Staff_Fulltime_2022"</span>, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">c</span>(<span class="st">"Staff_Fulltime_2022"</span>, </span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_Parttime_2022"</span>, <span class="st">"Staff_Boardmmbr_2022"</span>, <span class="st">"Staff_RegVlntr_2022"</span>, </span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_EpsdVltnr_2022"</span>, <span class="st">"Staff_AmerVlntr_2022"</span>, <span class="st">"Staff_PdCnslt_2022"</span>, </span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Staff_Other_Est_2022"</span>, <span class="st">"Staff_Fulltime_2023"</span>, <span class="st">"Staff_Parttime_2023"</span>, </span>
@@ -439,7 +439,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="fu">add_noise</span>( <span class="dv">3000</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3285</code></pre>
+<pre><code>[1] 2792</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>make_noise <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dbl</span>( x, add_noise )</span>

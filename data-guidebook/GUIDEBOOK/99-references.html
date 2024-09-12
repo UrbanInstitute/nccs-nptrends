@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>NP Trends Survey Data Preparation Guide - YEAR TWO DATA</title>
+<title>NP Trends Survey Data Preparation Guide - References</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,41 +20,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-</style>
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -64,8 +49,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./2_01-recoding-rules-y2.html" rel="next">
-<link href="./0_02-create-dd-files.html" rel="prev">
+<link href="./5_00-WEIGHTS.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -116,7 +100,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./2_00-YEAR-TWO.html">YEAR TWO DATA</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./99-references.html">References</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -161,7 +145,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./2_00-YEAR-TWO.html" class="sidebar-item-text sidebar-link active">
+            <a href="./2_00-YEAR-TWO.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">YEAR TWO DATA</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -258,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./99-references.html" class="sidebar-item-text sidebar-link">
+  <a href="./99-references.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">References</span></a>
   </div>
 </li>
@@ -268,28 +252,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#required-r-packages" id="toc-required-r-packages" class="nav-link active" data-scroll-target="#required-r-packages">Required R Packages</a></li>
-  <li><a href="#load-the-data" id="toc-load-the-data" class="nav-link" data-scroll-target="#load-the-data">Load the Data</a></li>
-  <li><a href="#data-workflow" id="toc-data-workflow" class="nav-link" data-scroll-target="#data-workflow">Data Workflow</a>
-  <ul class="collapse">
-  <li><a href="#renaming-columns" id="toc-renaming-columns" class="nav-link" data-scroll-target="#renaming-columns">Renaming Columns</a></li>
-  <li><a href="#drop-nuisance-fields" id="toc-drop-nuisance-fields" class="nav-link" data-scroll-target="#drop-nuisance-fields">Drop Nuisance Fields</a></li>
-  </ul></li>
-  <li><a href="#add-survey-weights" id="toc-add-survey-weights" class="nav-link" data-scroll-target="#add-survey-weights">Add Survey Weights</a></li>
-  <li><a href="#groups-of-variables" id="toc-groups-of-variables" class="nav-link" data-scroll-target="#groups-of-variables">Groups of Variables</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">YEAR TWO DATA</h1>
+<h1 class="title">References</h1>
 </div>
 
 
@@ -306,218 +276,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Load the data needed to process the second year survey results.</p>
-<section id="required-r-packages" class="level1">
-<h1>Required R Packages</h1>
-<p>This chapter will utilize the following packages:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( haven )</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( dplyr )</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( tidyr )</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( epoxy )</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( memisc )</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>( labelled )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="load-the-data" class="level1">
-<h1>Load the Data</h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LOAD DATA DICTIONARY </span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  readxl<span class="sc">::</span><span class="fu">read_xlsx</span>( </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>   <span class="st">"../data-dictionaries/dd-nptrends-wave-02.xlsx"</span>, </span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>   <span class="at">sheet =</span> <span class="st">"data dictionary"</span> )</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># USE RAW VNAME IF VNAME IS EMPTY:</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>vname[ <span class="fu">is.na</span>(dd<span class="sc">$</span>vname) ] <span class="ot">&lt;-</span> </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>   dd<span class="sc">$</span>vname_raw[ <span class="fu">is.na</span>(dd<span class="sc">$</span>vname) ]</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># LOAD QUALTRICS SURVEY DATA </span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>fpath <span class="ot">&lt;-</span> <span class="st">"DATA-PREP/02-year-two/01-data-raw/"</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="st">"wave-02-qualtrics-download-29mar23.csv"</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>survey_df  <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>( <span class="fu">paste0</span>( fpath, fname ) )</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>survey_df  <span class="ot">&lt;-</span> survey_df[ <span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>), ]                      <span class="co"># drop qualtrics headers  </span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="st">"YEAR-02-COMPLETE-CASE-CODES.csv"</span> </span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>cases <span class="ot">&lt;-</span> <span class="fu">read.csv</span>( <span class="fu">paste0</span>(fpath,fname) )</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>cases <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">select</span>( cases, EIN, Completion_Status )</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> <span class="fu">merge</span>( survey_df, cases, <span class="at">by=</span><span class="st">"EIN"</span>, <span class="at">all.x=</span>T )</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> </span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  survey_df <span class="sc">%&gt;%</span> </span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>( Completion_Status <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Complete"</span>,<span class="st">"Partial_keep"</span>) ) <span class="sc">%&gt;%</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>( <span class="sc">-</span> Completion_Status )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Note the raw data is challenging because it contains qualtrics encodings and missing values need context to be used correctly (e.g.&nbsp;were the questions skipped by skip logic, or by the respondent?).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>survey_df[ <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">51</span><span class="sc">:</span><span class="dv">55</span> ] <span class="sc">%&gt;%</span> pander<span class="sc">::</span><span class="fu">pander</span>()   <span class="co"># data peek</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="caption-top table table-sm table-striped small">
-<colgroup>
-<col style="width: 26%">
-<col style="width: 21%">
-<col style="width: 17%">
-<col style="width: 17%">
-<col style="width: 17%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">PeopleServed#2_2_1</th>
-<th style="text-align: center;">DemandNextYear</th>
-<th style="text-align: center;">Staff#1_1_1</th>
-<th style="text-align: center;">Staff#1_2_1</th>
-<th style="text-align: center;">Staff#1_3_1</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;">-99</td>
-<td style="text-align: center;">Increase</td>
-<td style="text-align: center;">60</td>
-<td style="text-align: center;">30</td>
-<td style="text-align: center;">-99</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">-99</td>
-<td style="text-align: center;">Increase</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">9</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">-99</td>
-<td style="text-align: center;">Increase</td>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">10</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">-99</td>
-<td style="text-align: center;">Increase</td>
-<td style="text-align: center;">13</td>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">11</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">N/A</td>
-<td style="text-align: center;">Increase</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">-99</td>
-<td style="text-align: center;">14</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">N/A</td>
-<td style="text-align: center;">Increase</td>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">8</td>
-<td style="text-align: center;">11</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<section id="data-workflow" class="level1">
-<h1>Data Workflow</h1>
-<p>The following chapters describe the workflow used to import qualtrics data and apply cleaning and transformation steps to prepare the restricted use file and public use file for subsequent analysis:</p>
-<ol type="1">
-<li>Renaming columns</li>
-<li>Drop nuisance columns (survey deployment attributes)</li>
-<li>Add meaningful labels to response values</li>
-<li>Dropping duplicates, incomplete responses and test responses</li>
-</ol>
-<section id="renaming-columns" class="level2">
-<h2 class="anchored" data-anchor-id="renaming-columns">Renaming Columns</h2>
-<p>Columns referencing survey questions are renamed with the help of a data dictionary to improve readability.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>torename <span class="ot">&lt;-</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  dd <span class="sc">%&gt;%</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>( vname, vname_raw ) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">drop_na</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>Examples:</strong></p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "DemandNextYear" "Staff#1_1_1"    "Staff#1_2_1"    "Staff#1_3_1"   </code></pre>
-</div>
-</div>
-<p>Give the data meaningful names so that it is easier to work with.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  survey_df <span class="sc">%&gt;%</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename_at</span>(</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">vars</span>( torename<span class="sc">$</span>vname_raw ), </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>     <span class="sc">~</span> torename<span class="sc">$</span>vname )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>Examples:</strong></p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Dmnd_NxtYear"         "Staff_Fulltime_2021"  "Staff_Parttime_2021" 
-[4] "Staff_Boardmmbr_2021"</code></pre>
-</div>
-</div>
-</section>
-<section id="drop-nuisance-fields" class="level2">
-<h2 class="anchored" data-anchor-id="drop-nuisance-fields">Drop Nuisance Fields</h2>
-<p>Many of the exported qualtrics fields contain non-useful metadata or are empty. These have been labeled as “DROP” in the <strong>group</strong> field. Remove these for convenience.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># SELECT COLUMNS TO DROP: </span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>DROP_THESE <span class="ot">&lt;-</span> dd<span class="sc">$</span>vname[ dd<span class="sc">$</span>group <span class="sc">==</span> <span class="st">"DROP"</span> ] <span class="sc">|&gt;</span> <span class="fu">na.omit</span>()</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  survey_df <span class="sc">%&gt;%</span> </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>( <span class="sc">-</span><span class="fu">any_of</span>( DROP_THESE ) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="add-survey-weights" class="level1">
-<h1>Add Survey Weights</h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ADD SURVEY WEIGHTS </span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>fpath <span class="ot">&lt;-</span> <span class="st">"DATA-PREP/00-sample-framework/"</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>fname <span class="ot">&lt;-</span> <span class="st">"year2wt.csv"</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>wt2  <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>( <span class="fu">paste0</span>( fpath, fname ) )</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>survey_df <span class="ot">&lt;-</span> <span class="fu">merge</span>( survey_df, wt2, <span class="at">by.x=</span><span class="st">"EIN"</span>, <span class="at">by.y=</span><span class="st">"ein"</span>, <span class="at">all.x=</span><span class="cn">TRUE</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="groups-of-variables" class="level1">
-<h1>Groups of Variables</h1>
-<p>Each group of survey questions comes with its own set of valid inputs that must be recoded separately. For example, “N/A”’s are options for some survey questions and not for others, and some survey questions allow for manual text inputs.</p>
-<p>The below code chunk separates all survey questions into their respective categories before further separating each category into numeric, text or NA inputs.</p>
-<p>NA questions here refer to “Check here if not applicable to your organization” questions in the survey, where a “C” indicates that the respondent has checked the N/A box.</p>
-<ul>
-<li><strong>15</strong> questions about <strong>CHANGES TO PROGRAMS AND SERVICES</strong></li>
-<li><strong>4</strong> questions about the <strong>NUMBER OF PEOPLE EACH ORGANIZATION SERVES</strong></li>
-<li><strong>1</strong> question about <strong>OVERALL PROGRAM DEMAND</strong></li>
-<li><strong>27</strong> questions about <strong>STAFF NUMBERS</strong></li>
-<li><strong>2</strong> questions about <strong>DONOR AND VOLUNTEER IMPORTANCE</strong></li>
-<li><strong>11</strong> questions about <strong>CHANGES TO LEADERSHIP</strong></li>
-<li><strong>26</strong> questions about <strong>THE RACE AND GENDER OF CEOS AND BOARD CHAIRS</strong></li>
-<li><strong>8</strong> questions about <strong>CHANGES TO ORGANIZATIONAL FINANCES</strong></li>
-<li><strong>2</strong> questions about <strong>CARES FUNDING</strong></li>
-<li><strong>2</strong> questions about <strong>FINANCIAL RESERVES</strong></li>
-<li><strong>9</strong> questions about <strong>REVENUE SOURCES</strong></li>
-<li><strong>26</strong> questions about <strong>FUNDRAISING SOURCES</strong></li>
-<li><strong>2</strong> questions about <strong>DONOR TYPES IN FUNDRAISING</strong></li>
-<li><strong>7</strong> questions about <strong>FUNDRAISING YIELDS</strong></li>
-<li><strong>11</strong> questions about <strong>FUNDRAISING STRATEGY CHANGES</strong></li>
-<li><strong>1</strong> questions about <strong>MAJOR GIFT AMOUNTS</strong></li>
-<li><strong>13</strong> questions about <strong>EXTERNAL AFFAIRS</strong><br>
-</li>
-<li><strong>1</strong> questions about <strong>FUTURE CONCERNS</strong></li>
-</ul>
-<style>
+<div id="refs" role="list" style="display: none">
 
-h1, h2 {
-  margin-top: 80px
-}
-
-</style>
+</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -931,14 +694,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./0_02-create-dd-files.html" class="pagination-link" aria-label="Generating Qualtrics Dictionaries">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Generating Qualtrics Dictionaries</span></span>
+      <a href="./5_00-WEIGHTS.html" class="pagination-link" aria-label="SURVEY WEIGHTS">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">SURVEY WEIGHTS</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./2_01-recoding-rules-y2.html" class="pagination-link" aria-label="Relabeling Qualtrics Variables">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Relabeling Qualtrics Variables</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

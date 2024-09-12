@@ -299,7 +299,6 @@ x %>% as.numeric() %>% summary()
 bool_qns <- 
   c( program_change_qns_bool, 
      fundraise_qns_bool, 
-     cares_qns_bool, 
      finance_chng_qns_bool, 
      leadership_chng_qns_bool )
 
@@ -342,6 +341,54 @@ show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 
 
+
+| Original Value | Description    | Recode Value | Code as Missing ? |
+|----------------|----------------|--------------|-------------------|
+| Yes            | Yes            | 1            | No                |
+| No             | No             | 2            | No                |
+| Unsure         | Unsure         | 3            | Yes               |
+| N/A            | Not Applicable | 98           | Yes               |
+| -99            | Incomplete     | 99           | Yes               |
+| NA             | Unanswered     | NA           | Yes               |
+
+
+```{r}
+# APPLY TO COLUMNS K:
+
+COLUMNS <- cares_qns_bool
+
+# VALUES THAT NEED RECODING
+RULES <- c(  "  Yes    =>>  1    ", 
+             "  No     =>>  2    ", 
+             "  Unsure =>>  3    ", 
+             "  N/A    =>>  98   ", 
+             "  -99    =>>  99   "   )
+
+rules <- parse_rules( RULES )          
+pattern <- rules[[ "pattern" ]]
+replace <- rules[[ "replace" ]]
+
+
+# MEMISC LABELS AND MISSING VALUE CODES
+values  <- c( 1, 2, 3, 98, 99 )
+labels  <- c( "Yes", "No", "Unsure", "Not Applicable", "N/A" )
+missing <- c( 3, 98, 99 )
+
+# RECODE VARIABLES 
+survey_df <- 
+  survey_df %>% 
+  recode_columns( k=COLUMNS, pattern, replace, values, labels, missing )
+```
+
+```{r, eval=F, echo=F}
+# codebook( survey_df[ COLUMNS[1] ] )
+```
+
+**Example:**
+
+```{r, results="asis", echo=F}
+show_html(codebook( survey_df[ COLUMNS[1] ] ))
+```
 
 
 
@@ -1165,13 +1212,13 @@ show_html(codebook( survey_df[ COLUMNS[1] ] ))
 
 | Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
 |---|---|---|---|---|
-|Essential, we depend entirely on individual donations to carry out our mission and goals|Maximum Importance|Essential|5|No|
-|Very important, we depend on individual donations for a wide range of activities, but not all|Very Important|4|No|
+|Essential, we depend entirely on individual donations to carry out our mission and goals|Maximum Importance|Essential|1|No|
+|Very important, we depend on individual donations for a wide range of activities, but not all|Very Important|2|No|
 |Important, we depend on individual donations for several key activities|Third Most Important|Somewhat Important|3|No|
-|Not very important, we depend on individual donations for only non-essential activities|Fourth Most Important|Not Very Important|2|No|
-|Not at all important, we could carry out our mission and goals without donations from individuals|Fifth Most Important|Not At All Important|1|No|
-|We do not receive donations from individuals|Sixth Most Important|Not Used|0|No|
-|-99|Incomplete|Incomplete|99|Yes|
+|Not very important, we depend on individual donations for only non-essential activities|Fourth Most Important|Not Very Important|4|No|
+|Not at all important, we could carry out our mission and goals without donations from individuals|Fifth Most Important|Not At All Important|5|No|
+|We do not receive donations from individuals|Sixth Most Important|Not Used|6|No|
+|-99|Incomplete|Incomplete|0|Yes|
 |NA|Unanswered|NA|NA|Yes|
 
 
@@ -1183,13 +1230,13 @@ COLUMNS <-  donimportance_qns_fct
 
 RULES <- c(    
 
-  "          Essential, we depend entirely on individual donations to carry out our mission and goals  =>>  5  ",
-  "     Very important, we depend on individual donations for a wide range of activities, but not all  =>>  4  ",
+  "          Essential, we depend entirely on individual donations to carry out our mission and goals  =>>  1  ",
+  "     Very important, we depend on individual donations for a wide range of activities, but not all  =>>  2  ",
   "                           Important, we depend on individual donations for several key activities  =>>  3  ",
-  "           Not very important, we depend on individual donations for only non-essential activities  =>>  2  ",
-  " Not at all important, we could carry out our mission and goals without donations from individuals  =>>  1  ",
-  "                                                      We do not receive donations from individuals  =>>  0  ",
-  "                                                                                                99  =>>  0  "  )
+  "           Not very important, we depend on individual donations for only non-essential activities  =>>  4  ",
+  " Not at all important, we could carry out our mission and goals without donations from individuals  =>>  5  ",
+  "                                                      We do not receive donations from individuals  =>>  6  ",
+  "                                                                                               -99  =>>  0  "  )
 
 
 rules <- parse_rules( RULES )          
@@ -1197,7 +1244,7 @@ pattern <- rules[[ "pattern" ]]
 replace <- rules[[ "replace" ]]
 
 # MEMISC LABELS AND MISSING VALUE CODES 
-values  <- c( 5, 4, 3, 2, 1, 0  )
+values  <- c( 1, 2, 3, 4, 5, 6  )
 labels  <- c( "Essential", "Very Important", 
               "Somewhat Important", "Not Very Important", 
               "Not At All Important", "Not Used" )
@@ -1235,11 +1282,11 @@ These questions ask respondents to rank the frequency at which they engage in an
 
 | Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
 |---|---|---|---|---|
-|Frequently|Most Frequent|Frequently|4|No|
-|Almost all the time|Second Most Frequent|More Often Than Not|3|No|
-|Occasionally|Third Most Frequent|Occasionally|2|No|
-|Rarely|Fourth Most Frequent|Rarely|1|No|
-|Never|Fifth Most Frequent|Occasionally|0|No|
+|More Often Than Not|Most Frequent|Most of the time|5|No|
+|Frequently|Second Most Frequent|Frequently|4|No|
+|Occasionally|Third Most Frequent|Occasionally|3|No|
+|Rarely|Fourth Most Frequent|Rarely|2|No|
+|Never|Fifth Most Frequent|Occasionally|1|No|
 |-99|Incomplete|Incomplete|99|Yes|
 |NA|Unanswered|NA|NA|Yes|
 
@@ -1252,8 +1299,8 @@ COLUMNS <-  extaffairs_qns_fct
 
 RULES <- c(    
 
-     "             Frequently    =>>     5   ",
-     "    Almost all the time    =>>     4   ",
+     "    More Often Than Not    =>>     5   ",
+     "             Frequently    =>>     4   ",
      "           Occasionally    =>>     3   ",
      "                 Rarely    =>>     2   ",
      "                  Never    =>>     1   "   )
@@ -1264,7 +1311,7 @@ replace <- rules[[ "replace" ]]
 
 # MEMISC LABELS AND MISSING VALUE CODES 
 values  <- c( 5, 4, 3, 2, 1 )
-labels  <- c( "Frequently", "More Often than Not", 
+labels  <- c( "Most of the time", "Frequently", 
               "Occasionally", "Rarely", "Never"  )
 missing <- NA
 

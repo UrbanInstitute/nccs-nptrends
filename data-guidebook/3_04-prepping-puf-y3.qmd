@@ -39,7 +39,7 @@ drop.these <-
     "BChairrace_Text", "Regulations_Other_TEXT", "CEOrace_Text_v2022", 
     "BChairrace_Text_v2022",
     "ContactUpdateName", "ContactUpdateTitle", 
-    "ContactUpdateEmail", "Comments")
+    "ContactUpdateEmail", "Comments" )
     
 keep <- 
   c("PrgSrvc_IncrNum", "PrgSrvc_DcrsNum", "PrgSrvc_Suspend", "PrgSrvc_IncrSrvc", 
@@ -94,7 +94,7 @@ keep <-
     "ExtAffairs_VoteEd", "Regulations", "Regulations_Local", "Regulations_State", 
     "Regulations_Federal", "Regulations_Info", "Regulations_Programming", 
     "Regulations_Forms", "Regulations_Requests", "Regulations_Advocate", 
-    "Regulations_Research", "Regulations_Other", "PrimaryConcern", 
+    "Regulations_Research", "PrimaryConcern", 
     "StaffingPlans_HireDifferent", "StaffingPlans_HireSame", "StaffingPlans_Layoff", 
     "StaffingPlans_SlowDown", "StaffingPlans_SpeedUp", "StaffingPlans_LoseVoluntary", 
     "StaffingPlans_LoseRetirement", "StaffingPlans_Retrain", "StaffingPlans_NoChange", 
@@ -126,7 +126,7 @@ Add noise to numeric responses that could possibly be compared with public recor
 # names(df)[ (lapply(df,class) |> unlist()) != "character" ] |> dput()
 
 financials <-
-   c("PplSrv_NumServed", "PplSrv_NumWait", "Staff_Fulltime_2022", 
+   c("Staff_Fulltime_2022", 
     "Staff_Parttime_2022", "Staff_Boardmmbr_2022", "Staff_RegVlntr_2022", 
     "Staff_EpsdVltnr_2022", "Staff_AmerVlntr_2022", "Staff_PdCnslt_2022", 
     "Staff_Other_Est_2022", "Staff_Fulltime_2023", "Staff_Parttime_2023", 

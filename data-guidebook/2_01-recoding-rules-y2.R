@@ -564,8 +564,8 @@ COLUMNS <-  extaffairs_qns_fct
 
 RULES <- c(    
 
-     "             Frequently    =>>     4   ",
-     "    Almost all the time    =>>     3   ",
+     "    Almost all the time    =>>     4   ",
+     "             Frequently    =>>     3   ",
      "           Occasionally    =>>     2   ",
      "                 Rarely    =>>     1   ",
      "                  Never    =>>     0   ",
@@ -577,7 +577,7 @@ replace <- rules[[ "replace" ]]
 
 # MEMISC LABELS AND MISSING VALUE CODES 
 values  <- c( 4, 3, 2, 1, 0, "X" )
-labels  <- c( "Frequently", "More Often than Not", 
+labels  <- c( "Most of the time", "Frequently",  
               "Occasionally", "Rarely", "Never", "Incomplete" )
 missing <- c( "X" )
 

@@ -794,8 +794,8 @@ These questions ask respondents to rank the frequency at which they engage in an
 
 | Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
 |---|---|---|---|---|
-|Frequently|Most Frequent|Frequently|4|No|
-|Almost all the time|Second Most Frequent|More Often Than Not|3|No|
+|Almost all the time|Most Frequent|Most of the time|4|No|
+|Frequently|Second Most Frequent|Frequently|3|No|
 |Occasionally|Third Most Frequent|Occasionally|2|No|
 |Rarely|Fourth Most Frequent|Rarely|1|No|
 |Never|Fifth Most Frequent|Occasionally|0|No|
@@ -811,8 +811,8 @@ COLUMNS <-  extaffairs_qns_fct
 
 RULES <- c(    
 
-     "             Frequently    =>>     4   ",
-     "    Almost all the time    =>>     3   ",
+     "    Almost all the time    =>>     4   ",
+     "             Frequently    =>>     3   ",
      "           Occasionally    =>>     2   ",
      "                 Rarely    =>>     1   ",
      "                  Never    =>>     0   ",
@@ -824,7 +824,7 @@ replace <- rules[[ "replace" ]]
 
 # MEMISC LABELS AND MISSING VALUE CODES 
 values  <- c( 4, 3, 2, 1, 0, "X" )
-labels  <- c( "Frequently", "More Often than Not", 
+labels  <- c( "Most of the time", "Frequently",  
               "Occasionally", "Rarely", "Never", "Incomplete" )
 missing <- c( "X" )
 
