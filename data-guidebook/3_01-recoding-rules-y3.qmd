@@ -1065,13 +1065,12 @@ There are 2 questions that ask respondents to rank the importance of volunteers 
 
 | **Original Value**                                                                       | **Description**       | **Recode Label**     | **Recode Value** | **Code as Missing ?** |
 |----------------------------|-----------|-----------|-----------|-----------|
-| Essential - we depend entirely on volunteers to carry out our mission and goals          | Maximum Importance    | Essential            | 5                | No                    |
-| Very important - we depend on volunteers for a wide range of tasks, but not all          | Second Most Important | Very Important       | 4                | No                    |
+| Essential - we depend entirely on volunteers to carry out our mission and goals          | Maximum Importance    | Essential            | 1                | No                    |
+| Very important - we depend on volunteers for a wide range of tasks, but not all          | Second Most Important | Very Important       | 2                | No                    |
 | Somewhat important - we depend on volunteers for several key tasks                       | Third Most Important  | Somewhat Important   | 3                | No                    |
-| Not very important - we depend on volunteers for only non-essential tasks                | Fourth Most Important | Not Very Important   | 2                | No                    |
-| Not at all important - we could carry out our mission and goals without using volunteers | Fifth Most Important  | Not At All Important | 1                | No                    |
-| We do not use volunteers                                                                 | Sixth Most Important  | Not Used             | 0                | No                    |
-| -99                                                                                      | Incomplete            | Incomplete           | 99               | Yes                   |
+| Not very important - we depend on volunteers for only non-essential tasks                | Fourth Most Important | Not Very Important   | 4                | No                    |
+| Not at all important - we could carry out our mission and goals without using volunteers | Fifth Most Important  | Not At All Important | 5                | No                    |
+| We do not use volunteers                                                                 | Sixth Most Important  | Not Used             | 99                | No                    |
 | NA                                                                                       | Unanswered            | NA                   | NA               | Yes                   |
 
 
