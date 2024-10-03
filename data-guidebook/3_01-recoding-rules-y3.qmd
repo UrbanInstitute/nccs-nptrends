@@ -22,7 +22,6 @@ source(      "3_00-YEAR-THREE.R"   )   # run all chunks in prior step
 file.remove( "3_00-YEAR-THREE.R"   )   # delete script after execution
 ```
 
-
 ```{r, eval=F, echo=F}
 # LOAD SURVEY DATA FROM SAVED FILE AFTER LAST CHAPTER
 
@@ -37,10 +36,9 @@ dd <- readxl::read_xlsx(
         sheet = "data dictionary" )
 ```
 
+Qualtrics uses some random values like -99 to encode for things like skipped questions, "not sure" categories, or "not applicable" answers. Currently one needs to a dictionary to look up every variable to understand what each value means.
 
-Qualtrics uses some random values like -99 to encode for things like skipped questions, "not sure" categories, or "not applicable" answers. Currently one needs to a dictionary to look up every variable to understand what each value means. 
-
-In addition, some response categories are confusing because they equate to a missing response. For example, from an analytical perspective an answer of "not sure" and skipping the question completely both equate to a missing value when the response categories are yes or no.  
+In addition, some response categories are confusing because they equate to a missing response. For example, from an analytical perspective an answer of "not sure" and skipping the question completely both equate to a missing value when the response categories are yes or no.
 
 The **memisc** package was designed for working with survey data. It allows you to label response categories in the data and also designate different types of missingness (e.g. Unsure, N/A, and -99 can all be coded as missing).
 
@@ -152,8 +150,6 @@ keep_numbers <- function(x){
 }
 ```
 
-
-
 ```{r, eval=F, echo=F}
 
 #####
@@ -176,10 +172,6 @@ d2 <- dplyr::select( survey_df, all_of( COLUMNS ) )
 d3 <- recode_columns( d2, k=COLUMNS, pattern, replace, values, labels, missing )
 codebook( d3 )
 ```
-
-
-
-
 
 ```{r, eval=F, echo=F}
 
@@ -207,8 +199,6 @@ d3 <- recode_columns( d2, k=COLUMNS, pattern, replace, values, labels, missing )
 codebook( d3 )
 
 ```
-
-
 
 ```{r, eval=F, echo=F}
 # NUMERIC ENCODING WITH MEMISC TO PRESERVE MISSING CASES
@@ -267,22 +257,7 @@ x %>% include.missings() %>% as.integer()
 x %>% as.numeric() %>% summary()
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Yes/No Questions
-
 
 | Original Value | Description    | Recode Value | Code as Missing ? |
 |----------------|----------------|--------------|-------------------|
@@ -292,7 +267,6 @@ x %>% as.numeric() %>% summary()
 | N/A            | Not Applicable | 98           | Yes               |
 | -99            | Incomplete     | 99           | Yes               |
 | NA             | Unanswered     | NA           | Yes               |
-
 
 ```{r}
 # APPLY TO COLUMNS K:
@@ -339,9 +313,6 @@ survey_df <-
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 ```
 
-
-
-
 | Original Value | Description    | Recode Value | Code as Missing ? |
 |----------------|----------------|--------------|-------------------|
 | Yes            | Yes            | 1            | No                |
@@ -350,7 +321,6 @@ show_html(codebook( survey_df[ COLUMNS[1] ] ))
 | N/A            | Not Applicable | 98           | Yes               |
 | -99            | Incomplete     | 99           | Yes               |
 | NA             | Unanswered     | NA           | Yes               |
-
 
 ```{r}
 # APPLY TO COLUMNS K:
@@ -390,16 +360,9 @@ survey_df <-
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 ```
 
-
-
-
 # Single Checkboxes
 
 These questions are presented as a checkbox to the respondent. They indicate an affirmative answer to the question.
-
-
-
-
 
 ## Seek or Receive Fundraising Questions
 
@@ -408,17 +371,15 @@ These questions are presented as a checkbox to the respondent. They indicate an 
 lapply( survey_df[ fundraise_skrcv_qns_bool ], table, useNA="ifany" )
 ```
 
-
 These checkboxes are ticked by the respondent to indicate if they have sought or received funding from a specific source.
 
 | Original Value | Description        | Recode Label | Recode Value | Code as Missing? |
-|----------------|--------------------|--------------|--------------|------------------|
+|---------------|---------------|---------------|---------------|---------------|
 | 1              | Checkbox Checked   | Yes          | 1            | No               |
 | NA             | Checkbox Unchecked | No           | 0            | No               |
 | All NA         | Unanswered         | NA           | NA           | Yes              |
 
 *ALL NA* refers to no responses on all questions in this entire question group (i.e. the respondent skipped the section).
-
 
 ```{r}
 # APPLY TO COLUMNS K:
@@ -492,19 +453,12 @@ survey_df <-
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 ```
 
-
-
-
-
-
-
-
 ## Regulation Checkboxes
 
 These questions are presented as a checkbox to the user to indicate that a question is not applicable. "Yes" here means "Yes, this question is not applicable".
 
 | Original Value | Description      | Recode Label | Recode Value | Code as Missing ? |
-|----------------|------------------|--------------|--------------|-------------------|
+|---------------|---------------|---------------|---------------|---------------|
 | 1              | Checkbox Checked | Yes          | 1            | No                |
 | NA             | Unanswered       | No           | 0            | No                |
 | 22             | Checkbox Checked | Yes          | 1            | No                |
@@ -600,20 +554,14 @@ codebook( survey_df[ COLUMNS[2:3] ] )
 show_html(codebook( survey_df[ COLUMNS[1:2] ] ))
 ```
 
-
-
-
-
 ## Staffing Plans
 
 These questions are presented as a checkbox to the user to indicate that a question is not applicable. "Yes" here means "Yes, this question is not applicable".
 
 | Original Value | Description      | Recode Label | Recode Value | Code as Missing ? |
-|----------------|------------------|--------------|--------------|-------------------|
+|---------------|---------------|---------------|---------------|---------------|
 | 1              | Checkbox Checked | Yes          | 1            | No                |
 | NA             | Unanswered       | No           | 0            | No                |
-
-
 
 ```{r}
 # APPLY TO COLUMNS K:
@@ -685,26 +633,22 @@ codebook( survey_df[ COLUMNS[2] ] )
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 ```
 
-
-
-
 ## N/A Checkboxes
 
 These questions are presented as a checkbox to the user to indicate that a question is not applicable. "Yes" here means "Yes, this question is not applicable".
 
-
 ### Staff Forecasts
 
-We see three four cases: 
+We see three four cases:
 
-- All answered 
-- Only answer for 2022 but don't forecast 2023 
-- Answer "does not apply to me" 
-- Answer "does apply" but then don't report numbers 
+-   All answered
+-   Only answer for 2022 but don't forecast 2023
+-   Answer "does not apply to me"
+-   Answer "does apply" but then don't report numbers
 
 We create an imputed version of 2023 numbers using 2022 numbers for missing cases (new variable x_2023 is saved as x_2023_imp for "imputed" ).
 
-Replace "OK" in the not applicable field with "UNSURE" if they report no staff numbers. These will become NA (missing) when the dataset is saved. 
+Replace "OK" in the not applicable field with "UNSURE" if they report no staff numbers. These will become NA (missing) when the dataset is saved.
 
 ```{r, echo=F}
 # staff.q <- c("Staff_Fulltime_2022","Staff_Fulltime_2023","Staff_Fulltime_NA")
@@ -718,7 +662,7 @@ NA), Staff_Fulltime_NA = c(0, 0, 0, 0, 0, 1, 0)), row.names = c(142L,
 df.demo
 ```
 
-After imputation of 2023 responses (use 2022 values): 
+After imputation of 2023 responses (use 2022 values):
 
 ```{r, echo=F}
 na.2022 <- is.na( df.demo$Staff_Fulltime_2022 )
@@ -733,7 +677,6 @@ df.demo$Staff_Fulltime_2023[ na.2023 ] <- df.demo$Staff_Fulltime_2022[ na.2023 ]
 
 df.demo
 ```
-
 
 ```{r}
 impute_staff <- function( df, v2022, v2023, vNA ){
@@ -804,14 +747,11 @@ survey_df <-
                 vNA="Staff_PdCnslt_NA" )
 ```
 
-
-
 | Original Value | Description                          | Recode Label   | Recode Value | Code as Missing ? |
-|----------------|--------------------------------------|----------------|--------------|-------------------|
+|-------------|---------------------|-------------|-------------|-------------|
 | 1              | Yes, this question is not applicable | Not Applicable | 1            | No                |
 | NA             | No, this question applies to me      | OK             | 1            | No                |
 | All NA         | N/A response conflicts               | Unsure         | 99           | Yes               |
-
 
 ```{r}
 # APPLY TO COLUMNS K:
@@ -851,14 +791,10 @@ codebook( survey_df[ COLUMNS[1] ] )
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 ```
 
-
-
-
 ### Reserve Questions
 
-
 | Original Value | Description                          | Recode Label | Recode Value | Code as Missing ? |
-|----------------|--------------------------------------|--------------|--------------|-------------------|
+|-------------|---------------------|-------------|-------------|-------------|
 | 1              | Yes, this question is not applicable | N/A          | 1            | No                |
 | NA             | This question applies to me          | 0            | OK           | No                |
 | All NA         | N/A response conflicts               | Unsure       | 99           | Yes               |
@@ -910,15 +846,10 @@ codebook( survey_df[ COLUMNS[1] ] )
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 ```
 
-
-
-
-
-
 ### People Served Questions
 
 | Original Value | Description                          | Recode Label | Recode Value | Code as Missing ? |
-|----------------|--------------------------------------|--------------|--------------|-------------------|
+|-------------|---------------------|-------------|-------------|-------------|
 | 1              | Yes, this question is not applicable | N/A          | 1            | No                |
 | NA             | This question applies to me          | 0            | OK           | No                |
 | All NA         | N/A response conflicts               | Unsure       | 99           | Yes               |
@@ -998,28 +929,23 @@ codebook( survey_df[ COLUMNS[1] ] )
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 ```
 
-
-
-
 # Multi-selection Inputs
 
 These questions offer the user with multiple options to select one from. Since the options are ordered categories, they are coded on an ordinal scale.
 
 ## Increase - Decrease Questions
 
-There 2 questions that ask respondents to define changes via an increase or decrease
-relative to previous years. They are recoded on an ordinal scale.
+There 2 questions that ask respondents to define changes via an increase or decrease relative to previous years. They are recoded on an ordinal scale.
 
 ## Changes in Demand Questions
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Increase|Increase|Increase|2|No|
-|Stay the same|Stay the same|Unchanged|1|No|
-|Decrease|Decrease|Decrease|0|No|
-|-99|Incomplete|No|99|Yes|
-|NA|Unanswered|NA|NA|Yes|
-
+| Original Value | Description   | Recode Label | Recode Value | Code as Missing ? |
+|---------------|---------------|---------------|---------------|---------------|
+| Increase       | Increase      | Increase     | 2            | No                |
+| Stay the same  | Stay the same | Unchanged    | 1            | No                |
+| Decrease       | Decrease      | Decrease     | 0            | No                |
+| -99            | Incomplete    | No           | 99           | Yes               |
+| NA             | Unanswered    | NA           | NA           | Yes               |
 
 ```{r}
 # APPLY TO COLUMNS K:
@@ -1059,26 +985,19 @@ codebook( survey_df[ COLUMNS[1] ] )
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 ```
 
-
-
-
-
-
 ## Changes in Fundraising Questions
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Increased significantly (by more than 10%)|Largest Increase|Increase Significantly|5|No|
-|Increased moderately (by less than 10%)|Second Largest Increase|Increase Moderately|4|No|
-|Stayed more or less the same|Third Largest Increase|Unchanged|3|No|
-|Decreased moderately (by less than 10%)|Fourth Largest Increase|Decrease Moderately|2|No|
-|Decreased significantly (by more than 10%)|Fifth Largest Increase|Decrease Significantly|1|No|
-|Unsure|Unsure|Unsure|99|Missing|
-|-99|Incomplete|Incomplete|98|Yes|
-|N/A|Not Applicable|Not Applicable|97|Yes|
-|NA|Unanswered|NA|NA|Yes|
-
-
+| Original Value                             | Description             | Recode Label           | Recode Value | Code as Missing ? |
+|---------------|---------------|---------------|---------------|---------------|
+| Increased significantly (by more than 10%) | Largest Increase        | Increase Significantly | 5            | No                |
+| Increased moderately (by less than 10%)    | Second Largest Increase | Increase Moderately    | 4            | No                |
+| Stayed more or less the same               | Third Largest Increase  | Unchanged              | 3            | No                |
+| Decreased moderately (by less than 10%)    | Fourth Largest Increase | Decrease Moderately    | 2            | No                |
+| Decreased significantly (by more than 10%) | Fifth Largest Increase  | Decrease Significantly | 1            | No                |
+| Unsure                                     | Unsure                  | Unsure                 | 99           | Missing           |
+| -99                                        | Incomplete              | Incomplete             | 98           | Yes               |
+| N/A                                        | Not Applicable          | Not Applicable         | 97           | Yes               |
+| NA                                         | Unanswered              | NA                     | NA           | Yes               |
 
 ```{r}
 # APPLY TO COLUMNS K:
@@ -1138,27 +1057,23 @@ codebook( survey_df[ COLUMNS[1] ] )
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 ```
 
-
-
-
-
-
 # Level of Importance Questions
 
 There are 2 questions that ask respondents to rank the importance of volunteers and donors respectively. However, both sets of options' are not identical. Hence, they are recoded to common values for reproducibility.
 
 ## Volunteer Importance
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Essential - we depend entirely on volunteers to carry out our mission and goals|Maximum Importance|Essential|5|No|
-|Very important - we depend on volunteers for a wide range of tasks, but not all|Second Most Important|Very Important|4|No|
-|Somewhat important - we depend on volunteers for several key tasks|Third Most Important|Somewhat Important|3|No|
-|Not very important - we depend on volunteers for only non-essential tasks|Fourth Most Important|Not Very Important|2|No|
-|Not at all important - we could carry out our mission and goals without using volunteers|Fifth Most Important|Not At All Important|1|No|
-|We do not use volunteers|Sixth Most Important|Not Used|0|No|
-|-99|Incomplete|Incomplete|99|Yes|
-|NA|Unanswered|NA|NA|Yes|
+| **Original Value**                                                                       | **Description**       | **Recode Label**     | **Recode Value** | **Code as Missing ?** |
+|----------------------------|-----------|-----------|-----------|-----------|
+| Essential - we depend entirely on volunteers to carry out our mission and goals          | Maximum Importance    | Essential            | 5                | No                    |
+| Very important - we depend on volunteers for a wide range of tasks, but not all          | Second Most Important | Very Important       | 4                | No                    |
+| Somewhat important - we depend on volunteers for several key tasks                       | Third Most Important  | Somewhat Important   | 3                | No                    |
+| Not very important - we depend on volunteers for only non-essential tasks                | Fourth Most Important | Not Very Important   | 2                | No                    |
+| Not at all important - we could carry out our mission and goals without using volunteers | Fifth Most Important  | Not At All Important | 1                | No                    |
+| We do not use volunteers                                                                 | Sixth Most Important  | Not Used             | 0                | No                    |
+| -99                                                                                      | Incomplete            | Incomplete           | 99               | Yes                   |
+| NA                                                                                       | Unanswered            | NA                   | NA               | Yes                   |
+
 
 
 ```{r}
@@ -1169,20 +1084,19 @@ COLUMNS <-  volimportance_qns_fct
 
 RULES <- c(    
 
-"           Essential - we depend entirely on volunteers to carry out our mission and goals    =>>     5   ",
-"           Very important - we depend on volunteers for a wide range of tasks, but not all    =>>     4   ",
+"           Essential - we depend entirely on volunteers to carry out our mission and goals    =>>     1   ",
+"           Very important - we depend on volunteers for a wide range of tasks, but not all    =>>     2   ",
 "                        Somewhat important - we depend on volunteers for several key tasks    =>>     3   ",
-"                 Not very important - we depend on volunteers for only non-essential tasks    =>>     2   ",
-"  Not at all important - we could carry out our mission and goals without using volunteers    =>>     1   ",
-"                                                                  We do not use volunteers    =>>     0   ",
-"                                                                                        99    =>>     0   "    )
+"                 Not very important - we depend on volunteers for only non-essential tasks    =>>     4   ",
+"  Not at all important - we could carry out our mission and goals without using volunteers    =>>     5   ",
+"                                                                  We do not use volunteers    =>>     99  "    )
 
 rules <- parse_rules( RULES )          
 pattern <- rules[[ "pattern" ]]
 replace <- rules[[ "replace" ]]
 
 # MEMISC LABELS AND MISSING VALUE CODES 
-values  <- c( 5, 4, 3, 2, 1, 0 )
+values  <- c( 1, 2, 3, 4, 5, 99 )
 labels  <- c( "Essential", "Very Important", "Somewhat Important", 
               "Not Very Important", "Not At All Important", "Not Used" )
 missing <- NA
@@ -1203,24 +1117,18 @@ codebook( survey_df[ COLUMNS[1] ] )
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 ```
 
-
-
-
-
-
 ## Donor Importance
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Essential, we depend entirely on individual donations to carry out our mission and goals|Maximum Importance|Essential|1|No|
-|Very important, we depend on individual donations for a wide range of activities, but not all|Very Important|2|No|
-|Important, we depend on individual donations for several key activities|Third Most Important|Somewhat Important|3|No|
-|Not very important, we depend on individual donations for only non-essential activities|Fourth Most Important|Not Very Important|4|No|
-|Not at all important, we could carry out our mission and goals without donations from individuals|Fifth Most Important|Not At All Important|5|No|
-|We do not receive donations from individuals|Sixth Most Important|Not Used|6|No|
-|-99|Incomplete|Incomplete|0|Yes|
-|NA|Unanswered|NA|NA|Yes|
-
+| Original Value                                                                                    | Description           | Recode Label         | Recode Value | Code as Missing ? |
+|--------------------------------|----------|----------|----------|----------|
+| Essential, we depend entirely on individual donations to carry out our mission and goals          | Maximum Importance    | Essential            | 1            | No                |
+| Very important, we depend on individual donations for a wide range of activities, but not all     | Very Important        | 2                    | No           |                   |
+| Important, we depend on individual donations for several key activities                           | Third Most Important  | Somewhat Important   | 3            | No                |
+| Not very important, we depend on individual donations for only non-essential activities           | Fourth Most Important | Not Very Important   | 4            | No                |
+| Not at all important, we could carry out our mission and goals without donations from individuals | Fifth Most Important  | Not At All Important | 5            | No                |
+| We do not receive donations from individuals                                                      | Sixth Most Important  | Not Used             | 6            | No                |
+| -99                                                                                               | Incomplete            | Incomplete           | 0            | Yes               |
+| NA                                                                                                | Unanswered            | NA                   | NA           | Yes               |
 
 ```{r}
 # APPLY TO COLUMNS K:
@@ -1235,8 +1143,7 @@ RULES <- c(
   "                           Important, we depend on individual donations for several key activities  =>>  3  ",
   "           Not very important, we depend on individual donations for only non-essential activities  =>>  4  ",
   " Not at all important, we could carry out our mission and goals without donations from individuals  =>>  5  ",
-  "                                                      We do not receive donations from individuals  =>>  6  ",
-  "                                                                                               -99  =>>  0  "  )
+  "                                                      We do not receive donations from individuals  =>>  99 "  )
 
 
 rules <- parse_rules( RULES )          
@@ -1244,7 +1151,7 @@ pattern <- rules[[ "pattern" ]]
 replace <- rules[[ "replace" ]]
 
 # MEMISC LABELS AND MISSING VALUE CODES 
-values  <- c( 1, 2, 3, 4, 5, 6  )
+values  <- c( 1, 2, 3, 4, 5, 99  )
 labels  <- c( "Essential", "Very Important", 
               "Somewhat Important", "Not Very Important", 
               "Not At All Important", "Not Used" )
@@ -1266,30 +1173,19 @@ codebook( survey_df[ COLUMNS[1] ] )
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 ```
 
-
-
-
-
-
-
-
-
-
-
 # Frequency Questions
 
 These questions ask respondents to rank the frequency at which they engage in an activity.
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|More Often Than Not|Most Frequent|Most of the time|5|No|
-|Frequently|Second Most Frequent|Frequently|4|No|
-|Occasionally|Third Most Frequent|Occasionally|3|No|
-|Rarely|Fourth Most Frequent|Rarely|2|No|
-|Never|Fifth Most Frequent|Occasionally|1|No|
-|-99|Incomplete|Incomplete|99|Yes|
-|NA|Unanswered|NA|NA|Yes|
-
+| Original Value      | Description          | Recode Label        | Recode Value | Code as Missing ? |
+|---------------|---------------|---------------|---------------|---------------|
+| More Often Than Not | Most Frequent        | More Often Than Not | 5            | No                |
+| Frequently          | Second Most Frequent | Frequently          | 4            | No                |
+| Occasionally        | Third Most Frequent  | Occasionally        | 3            | No                |
+| Rarely              | Fourth Most Frequent | Rarely              | 2            | No                |
+| Never               | Fifth Most Frequent  | Occasionally        | 1            | No                |
+| -99                 | Incomplete           | Incomplete          | 99           | Yes               |
+| NA                  | Unanswered           | NA                  | NA           | Yes               |
 
 ```{r}
 # APPLY TO COLUMNS K:
@@ -1311,7 +1207,7 @@ replace <- rules[[ "replace" ]]
 
 # MEMISC LABELS AND MISSING VALUE CODES 
 values  <- c( 5, 4, 3, 2, 1 )
-labels  <- c( "Most of the time", "Frequently", 
+labels  <- c( "More often than not", "Frequently", 
               "Occasionally", "Rarely", "Never"  )
 missing <- NA
 
@@ -1331,27 +1227,16 @@ codebook( survey_df[ COLUMNS[1] ] )
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 ```
 
-
-
-
-
-
-
-
-
-
-
-
 # Integer Inputs
 
-These questions accept an integer input from users to indicate the number of staff they have, people they served, or donors they have. 
+These questions accept an integer input from users to indicate the number of staff they have, people they served, or donors they have.
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Whole Number|Number of Staff, People or Donors|NA|Integer Value|No|
-|N/A|Not Applicable|NA|-1|Yes|
-|-99|Incomplete|NA|-2|Yes|
-|NA|Unanswered|NA|NA|Yes|
+| Original Value | Description                       | Recode Label | Recode Value  | Code as Missing ? |
+|---------------|---------------|---------------|---------------|---------------|
+| Whole Number   | Number of Staff, People or Donors | NA           | Integer Value | No                |
+| N/A            | Not Applicable                    | NA           | -1            | Yes               |
+| -99            | Incomplete                        | NA           | -2            | Yes               |
+| NA             | Unanswered                        | NA           | NA            | Yes               |
 
 ```{r}
 int_qns <- 
@@ -1376,7 +1261,6 @@ survey_df[ COLUMNS ] <-
 survey_df[ COLUMNS ] <- purrr::map( COLUMNS, add_q_details, survey_df )
 ```
 
-
 ```{r, eval=F, echo=F}
 codebook( survey_df[ COLUMNS[1] ] )
 ```
@@ -1387,22 +1271,15 @@ codebook( survey_df[ COLUMNS[1] ] )
 show_html(codebook( survey_df[ COLUMNS[1] ] ))
 ```
 
-
-
-
-
-
-
 # Numeric Inputs
 
-These questions accept a numeric input from users to denote dollar values.
-For some variables, additional processing is done to remove commas and "$" signs.
+These questions accept a numeric input from users to denote dollar values. For some variables, additional processing is done to remove commas and "\$" signs.
 
-| Original Value | Description | Recode Label | Recode Value | Code as Missing ? |
-|---|---|---|---|---|
-|Dollar Amount|Dollar Amount|NA|Numeric Value|No|
-|-99|Incomplete|NA|-1|Yes|
-|NA|Unanswered|NA|NA|Yes|
+| Original Value | Description   | Recode Label | Recode Value  | Code as Missing ? |
+|---------------|---------------|---------------|---------------|---------------|
+| Dollar Amount  | Dollar Amount | NA           | Numeric Value | No                |
+| -99            | Incomplete    | NA           | -1            | Yes               |
+| NA             | Unanswered    | NA           | NA            | Yes               |
 
 ```{r, warning=FALSE}
 numeric_qns <- 
@@ -1424,7 +1301,6 @@ survey_df[ COLUMNS ] <-
 survey_df[ COLUMNS ] <- purrr::map( COLUMNS, add_q_details, survey_df )
 ```
 
-
 ```{r, eval=F, echo=F}
 codebook( survey_df[ COLUMNS[2] ] )
 ```
@@ -1434,9 +1310,6 @@ codebook( survey_df[ COLUMNS[2] ] )
 ```{r, results="asis", echo=F}
 show_html( codebook( survey_df[ COLUMNS[1] ] ))
 ```
-
-
-
 
 # Text Inputs
 
@@ -1466,7 +1339,6 @@ survey_df[ text_qns ] <- purrr::map( text_qns, add_q_details, survey_df )
 codebook( survey_df[ text_qns[1] ] )
 ```
 
-
 ```{r, eval=F, echo=F}
 # codebook( survey_df[ COLUMNS[1] ] )
 ```
@@ -1476,10 +1348,6 @@ codebook( survey_df[ text_qns[1] ] )
 ```{r, results="asis", echo=F}
 show_html( codebook( survey_df[ text_qns[1] ] ))
 ```
-
-
-
-
 
 ```{r, echo=F}
 #### 
@@ -1496,12 +1364,7 @@ rdsname <- "SURVEYDF-step31.rds"
 saveRDS( survey_df, paste0( fpath, rdsname ) )
 ```
 
-
-
-
-
-
-
+```{=html}
 <style>
 
 h1, h2 {
@@ -1513,4 +1376,4 @@ h1, h2 {
    margin-top: 20px;
 }
 </style>
-
+```
