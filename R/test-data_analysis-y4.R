@@ -7,7 +7,10 @@
 # Date created: 2025-06-13
 # Date last modified: 2025-06-13
 # Raw Data:
+# Year 4 nptrends data: Y:/CNP/Generosity Commission/Year 4/Restricted Dataset/RESTRICTED_Y4.csv
 # Details:
+# (1) - Load Survey data
+# (2) - Aggregate desired survey variables
 ##########################################################
 
 # libraries
