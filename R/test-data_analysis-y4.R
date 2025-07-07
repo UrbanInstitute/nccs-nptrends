@@ -15,7 +15,6 @@
 
 # libraries
 library(data.table)
-library(data.table)
 
 # Helper scripts
 source(here::here("R", "summarize_survey_results.R"))
