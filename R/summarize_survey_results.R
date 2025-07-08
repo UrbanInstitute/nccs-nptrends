@@ -1,151 +1,194 @@
-#' Summarize Survey Variable Across Multiple Groups
-#'
-#' This function applies weighted mean calculations to a survey variable across
-#' multiple grouping variables. It processes each group-weight combination and
-#' returns combined results.
-#'
-#' @param group_ls A named list where names are grouping variable names and
-#'   values are weight variable names to use for each group
-#' @param survey_df A data frame containing the survey data
-#' @param survey_var Character string specifying the name of the survey variable
-#'   to summarize
-#'
-#' @return A data frame with columns:
-#'   \describe{
-#'     \item{group}{Character vector of group values}
-#'     \item{[survey_var]}{Numeric vector of weighted means (NA if group has < 25 observations)}
-#'   }
-#'
-#' @details
-#' The function calculates weighted means only for groups with 25 or more observations.
-#' Groups with fewer observations receive NA values.
-#'
-#' @examples
-#' \dontrun{
-#' # Example usage
-#' group_weights <- list(
-#'   "region" = "survey_weight",
-#'   "age_group" = "age_weight"
-#' )
-#' results <- summarise_single_variable(
-#'   group_ls = group_weights,
-#'   survey_df = my_survey_data,
-#'   survey_var = "satisfaction_score"
-#' )
-#' }
-#'
-#' @seealso \code{\link{summarise_single_group}}
-#' @export
-summarise_single_variable <- function(group_ls, survey_df, survey_var) {
-  # Input validation
-  if (!is.list(group_ls) || is.null(names(group_ls))) {
-    stop("group_ls must be a named list")
-  }
-  
-  if (!is.data.frame(survey_df)) {
-    stop("survey_df must be a data frame")
-  }
-  
-  if (!is.character(survey_var) || length(survey_var) != 1) {
-    stop("survey_var must be a single character string")
-  }
-  
-  # Process each group-weight combination
-  single_var_results <- purrr::imap_dfr(
-    group_ls,
-    function(weight_var, group_var) {
-      summarise_single_group(
-        group = group_var,
-        wt = weight_var,
-        survey_df = survey_df,
-        survey_var = survey_var
-      )
+#------------------------------------------------------------------------
+# File: survey_analysis.R
+# Authors: Thiyaghessan [tpoongundranar@urban.org], Christina Prinvil [cprinvil@urban.org]
+# Purpose: This file contains the functions used to analyse year 4 NP Trends and Impacts Survey Data
+#
+# Usage: The file should be called in R/nptrends-y4-analysis.R
+#
+# Dependencies:
+#   - dplyr
+#   - purrr
+#   - spatstat
+#   - rlang
+#   - stats
+#------------------------------------------------------------------------
+
+#' @title Main survey analysis function
+#' 
+#' @description This function performs the filter, groupby and summary functions for each metric based on user parameters. It nests the groupbys based on conditional logic and computes either weighted median, weighted mean or proportion
+#' 
+#' @param groupby_2_vec character vector. additional groupby variables for nesting
+#' @param groupby_1 character scalar. first groupby for aggregation
+#' @param metric character scalar. Name of survey variable to analyse
+#' @param method character scalar. Name of summary statistic to compute
+#' @param df data.frame. Data.frame containing survey data
+#' 
+#' @return data.frame of summary statistic for each subgroup
+svy_tfm <- function(groupby_2_vec,
+                    groupby_1,
+                    metric,
+                    method,
+                    df) {
+  df_filtered <- dplyr::filter(df, !is.na(.data[[metric]]))
+  df_grouped <- svy_grpby(groupby_1, 
+                          "filterOpt", 
+                          df_filtered)
+  df_summarised <- purrr::map(
+    .x = groupby_2_vec,
+    .f = function(groupby_2) {
+      wt <- svy_wt(groupby_2)
+      weighted_count <- sum(df_grouped[[wt]], na.rm = TRUE)
+      # Optional nesting for subgroups
+      if (groupby_2 != groupby_1) {
+        df_nested <- svy_grpby(groupby_2, 
+                               "splitByOpt_category", 
+                               df_grouped)
+      } else {
+        df_nested <- df_grouped
+      }
+      # Optional nesting for categorical variables
+      if (method == "% of respondents") {
+        df_nested <- svy_grpby(metric, 
+                               "responseOpt", 
+                               df_nested)
+        current_metric <- "responseOpt"
+      } else {
+        df_nested <- df_nested
+        current_metric <- metric
+      }
+      # Summary steps
+      df_summarised <- df_nested |>
+        dplyr::summarise(value = {
+          # Determine if there are enough non-NA records
+          x_values <- .data[[current_metric]]
+          w_values <- .data[[wt]]
+          valid_rows <- validate_metric(x_values, w_values)
+          if (valid_rows == 0) {
+            NA_real_
+          }
+          else {
+            if (method == "median") {
+              spatstat.univar::weighted.median(
+                x = !!sym(current_metric),
+                w = !!sym(wt),
+                na.rm = TRUE
+              )
+            } else if (method == "average of %") {
+              stats::weighted.mean(
+                x = !!sym(current_metric),
+                w = !!sym(wt),
+                na.rm = TRUE
+              )
+            } else if (method == "% of respondents") {
+              sum(!!sym(wt), na.rm = TRUE) / weighted_count
+            }
+            
+          }
+          
+        }   , .groups = 'drop') |>
+        # Add remaining columns
+        dplyr::mutate(filterType = {{groupby_1}},
+                      splitByOpt = {{groupby_2}},
+                      weight = {{wt}})
+      df_final <- recode_metric(current_metric, df_summarised)
+      return(df_final)
     }
-  )
-  
-  return(single_var_results)
+  ) |> purrr::list_rbind()
+  return(df_summarised)
 }
 
-#' Summarize Survey Variable for a Single Group
-#'
-#' This function calculates weighted means for a survey variable within groups
-#' defined by a grouping variable, applying a minimum sample size threshold.
-#'
-#' @param group Character string specifying the name of the grouping variable
-#' @param wt Character string specifying the name of the weight variable
-#' @param survey_df A data frame containing the survey data
-#' @param survey_var Character string specifying the name of the survey variable
-#'   to summarize
-#'
-#' @return A data frame with columns:
-#'   \describe{
-#'     \item{group}{Character vector of group values}
-#'     \item{[survey_var]}{Numeric vector of weighted means (NA if group has < 25 observations)}
-#'   }
-#'
-#' @details
-#' The function:
-#' \itemize{
-#'   \item Groups data by the specified grouping variable
-#'   \item Calculates weighted means only for groups with 25+ observations
-#'   \item Returns NA for groups with fewer than 25 observations
-#'   \item Converts group values to character for consistency
-#' }
-#'
-#' @examples
-#' \dontrun{
-#' # Example usage
-#' result <- summarise_single_group(
-#'   group = "region",
-#'   wt = "survey_weight",
-#'   survey_df = my_survey_data,
-#'   survey_var = "satisfaction_score"
-#' )
-#' }
-#'
-#' @importFrom dplyr group_by summarise ungroup rename mutate n
-#' @importFrom rlang sym
-#' @export
-summarise_single_group <- function(group, wt, survey_df, survey_var) {
-  # Input validation
-  if (!is.character(group) || length(group) != 1) {
-    stop("group must be a single character string")
+#' @title Validate survey variable before computing summary statistics
+#' 
+#' @description This function checks if there are enough non-NA values to compute summary statistics
+#' 
+#' @param x_values numeric vector. Values of the survey variable
+#' @param w_values numeric vector. Weights for the survey variable
+#' 
+#' @return integer. Number of valid rows that can be used for summary statistics
+validate_metric <- function(x_values, w_values) {
+  sum(!is.na(x_values) &
+        !is.na(w_values) & is.finite(w_values) & w_values >= 0)
+}
+
+#' @title survey-specific groupby function
+#' 
+#' @description This function groups the data frame by a specified variable and renames it
+#' 
+#' @param grpby_var character scalar. The variable to group by
+#' @param newname character scalar. The new name for the grouped variable
+#' @param df data.frame. The data frame to group
+#' 
+#' @return data.frame. The grouped data frame with the renamed variable
+svy_grpby <- function(grpby_var, newname, df) {
+  df <- df |>
+    dplyr::group_by(!!sym(grpby_var), .add = TRUE) |>
+    dplyr::rename({{newname}} := !!sym(grpby_var))
+  return(df)
+}
+
+#' @title survey-specific weight function
+#' 
+#' @description This function returns the appropriate weight variable based on the groupby variable
+#' 
+#' @param grpby character scalar. The groupby variable
+#' 
+#' @return character scalar. The name of the weight variable to use
+svy_wt <- function(grpby) {
+  if (grpby == "state") {
+    wt <- "stateweight"
   }
-  
-  if (!is.character(wt) || length(wt) != 1) {
-    stop("wt must be a single character string")
+  else {
+    wt <- "year4wt"
   }
-  
-  if (!is.data.frame(survey_df)) {
-    stop("survey_df must be a data frame")
+  return(wt)
+}
+
+#' @title Recode survey variable being analysed
+#' 
+#' @description This function recodes the survey variable being analysed to a standard name based on whether it is a categorical response
+#' 
+#' @param metric character scalar. The survey variable being analysed
+#' @param df data.frame. The data frame containing the survey data
+#' 
+#' @return data.frame. The data frame with the recoded survey variable
+recode_metric <- function(metric, df) {
+  if (metric != "responseOpt") {
+    df <- dplyr::mutate(responseOpt = {{metric}}, df)
+  } else {
+    df <- dplyr::mutate(responseOpt = as.character(responseOpt), df)
   }
+  return(df)
+}
+
+#' Calculate a combined binary flag vector-wise for specific columns.
+#'
+#' @param .data The input data frame.
+#' @param ... Quosures of column names (e.g., `c(col1, col2, col3)`).
+#'   These should be columns containing 0s, 1s, or NAs.
+#' @return A numeric vector (0, 1, or NA_real_).
+binary_flag <- function(data, ...) {
+  # Capture the column names as symbols
+  # Select the relevant columns
+  cols <- rlang::enquos(...)
+  selected_data <- data |> dplyr::select(!!!cols)
   
-  if (!is.character(survey_var) || length(survey_var) != 1) {
-    stop("survey_var must be a single character string")
-  }
+  # Convert to a matrix for easier row-wise processing in a vectorized way
+  # Or iterate row by row using apply if memory is an issue for large matrices
+  # For 0/1/NA data, a matrix is often efficient.
+  mat <- as.matrix(selected_data)
   
-  # Check if variables exist in the data frame
-  missing_vars <- setdiff(c(group, wt, survey_var), names(survey_df))
-  if (length(missing_vars) > 0) {
-    stop(paste(
-      "The following variables are not found in survey_df:",
-      paste(missing_vars, collapse = ", ")
-    ))
-  }
-  
-  # Calculate weighted means with minimum sample size threshold
-  summary_results <- survey_df |>
-    dplyr::group_by(!!rlang::sym(group)) |>
-    dplyr::summarise(
-      !!survey_var := ifelse(
-        dplyr::n() >= 25,
-        stats::weighted.mean(!!rlang::sym(survey_var), !!rlang::sym(wt), na.rm = TRUE),
-        NA_real_
-      ),
-      .groups = "drop"
-    ) |>
-    dplyr::rename(group = !!rlang::sym(group)) |>
-    dplyr::mutate(group = as.character(group))
-  
-  return(summary_results)
+  # Apply the logic row-wise using apply
+  apply(mat, 1, function(row_values) {
+    any_is_one <- any(row_values == 1, na.rm = TRUE)
+    all_are_zero <- all(row_values == 0, na.rm = FALSE)
+    has_non_na <- any(!is.na(row_values))
+    
+    if (any_is_one) {
+      1
+    } else if (all_are_zero && has_non_na) {
+      0
+    } else {
+      NA_real_
+    }
+  })
 }
