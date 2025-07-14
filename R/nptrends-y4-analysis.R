@@ -117,7 +117,7 @@ nptrends_y4 <- nptrends_y4_raw |>
       Staff_Fulltime_2023 >= 2 &  Staff_Fulltime_2023 <= 9 ~ "2-9",
       Staff_Fulltime_2023 >= 10 & Staff_Fulltime_2023 <= 49 ~ "10-49",
       Staff_Fulltime_2023 >= 50 ~ "50+",
-      Staff_Fulltime_NA == 1 & is.na(Staff_Fulltime_2023) ~ NA_character_,
+      Staff_Fulltime_NA == 1 & is.na(Staff_Fulltime_2023) ~ 0,
       .default = NA_character_
     ),
     Staff_Parttime_2023 = dplyr::case_when(
@@ -126,7 +126,7 @@ nptrends_y4 <- nptrends_y4_raw |>
       Staff_Parttime_2023 >= 2 &  Staff_Parttime_2023 <= 9 ~ "2-9",
       Staff_Parttime_2023 >= 10 & Staff_Parttime_2023 <= 49 ~ "10-49",
       Staff_Parttime_2023 >= 50 ~ "50+",
-      Staff_Parttime_NA == 1 & is.na(Staff_Parttime_2023) ~ NA_character_,
+      Staff_Parttime_NA == 1 & is.na(Staff_Parttime_2023) ~ 0,
       .default = NA_character_
     )
   )
