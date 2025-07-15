@@ -66,6 +66,10 @@ nptrends_y4 <- nptrends_y4_raw |>
       ntmaj12 == "RE" ~ "Religion",
       .default = NA
     ),
+    census_urban_area = dplyr::case_when(
+      census_urban_area == 1 ~ "Urban",
+      census_urban_area == 0 ~ "Rural",
+    ),
     CensusRegion4 = factor(
       CensusRegion4,
       levels = c(1, 2, 3, 4),
@@ -104,7 +108,7 @@ nptrends_y4 <- nptrends_y4_raw |>
     PplSrv_NumWait = dplyr::case_when(
       PplSrv_NumWait == NA & 
         !is.na(PplSrv_NumServed) ~ 0,
-      .default = PplSrv_NumWait
+      .default = NA_integer_
     ),
     Staff_Boardmmbr_2023 = dplyr::case_when(
       Staff_Boardmmbr_2023 == NA & 
@@ -117,7 +121,7 @@ nptrends_y4 <- nptrends_y4_raw |>
       Staff_Fulltime_2023 >= 2 &  Staff_Fulltime_2023 <= 9 ~ "2-9",
       Staff_Fulltime_2023 >= 10 & Staff_Fulltime_2023 <= 49 ~ "10-49",
       Staff_Fulltime_2023 >= 50 ~ "50+",
-      Staff_Fulltime_NA == 1 & is.na(Staff_Fulltime_2023) ~ 0,
+      Staff_Fulltime_NA == 1 & is.na(Staff_Fulltime_2023) ~ "0",
       .default = NA_character_
     ),
     Staff_Parttime_2023 = dplyr::case_when(
@@ -126,8 +130,34 @@ nptrends_y4 <- nptrends_y4_raw |>
       Staff_Parttime_2023 >= 2 &  Staff_Parttime_2023 <= 9 ~ "2-9",
       Staff_Parttime_2023 >= 10 & Staff_Parttime_2023 <= 49 ~ "10-49",
       Staff_Parttime_2023 >= 50 ~ "50+",
-      Staff_Parttime_NA == 1 & is.na(Staff_Parttime_2023) ~ 0,
+      Staff_Parttime_NA == 1 & is.na(Staff_Parttime_2023) ~ "0",
       .default = NA_character_
+    ),
+    Dem_BChair_Under35 = dplyr::case_when(
+      Dem_BChair_Age %in% c(1, 2) ~ "Yes",
+      Dem_BChair_Age %in% c(3, 4, 6, 7, 8, 9) ~ "No",
+      .default = NA_character_
+    ),
+    BChair_POC = dplyr::case_when(
+      BChairrace %in% c(1, 2, 3, 4, 6, 7) ~ "POC",
+      BChairrace %in% c(5) ~ "Non-POC",
+      .default = NA_character_
+    ),
+    CEOrace_POC = dplyr::case_when(
+      CEOrace %in% c(1, 2, 3, 4, 6, 7) ~ "POC",
+      CEOrace %in% c(5) ~ "Non-POC",
+      .default = NA_character_
+    )
+  ) |>
+  # recoding 1 or 2 (served) and 0 did not serve
+  dplyr::mutate(
+    dplyr::across(
+      .cols = dplyr::starts_with("ProgDem_"),
+      .fns = ~ dplyr::case_when(
+        .x == 1 | .x == 2 ~ "Served",
+        .x == 0 ~ "Did not Serve",
+        .default = NA_character_
+      )
     )
   )
 
@@ -169,14 +199,13 @@ metrics <- list(
   ProgDem_YoungAdults = "% of respondents",
   ProgDem_Adults = "% of respondents",
   ProgDem_Elders = "% of respondents",
-  PplSrv_NumServed = "% of respondents",
   PplSrv_NumWait = "% of respondents",
   PrgSrvc_Suspend = "% of respondents",
   PrgSrvc_Amt_Srvc = "% of respondents",
   PrgSrvc_Amt_Num = "% of respondents",
   Dmnd_NxtYear = "% of respondents",
-  FndRaise_DnrBlw250 = "% of respondents",
-  FndRaise_DnrAbv250 = "% of respondents",
+  FndRaise_DnrBlw250 = "average of %",
+  FndRaise_DnrAbv250 = "average of %",
   FndRaise_DAF_Rcv = "% of respondents",
   FndRaise_PFGrnt_Rcv = "% of respondents",
   FndRaise_Corp_Found_Grnt_Rcv = "% of respondents",
@@ -203,14 +232,14 @@ metrics <- list(
   PercentDem_ReceivedServices_Staff = "average of %",
   Staff_Boardmmbr_2023 = "median",
   PercentDem_POC_Board = "average of %",
-  CEOrace = "% of respondents",
+  CEOrace_POC = "% of respondents",
   Dem_CEO_LGBTQ = "% of respondents",
   Dem_CEO_Disabled = "% of respondents",
   Dem_CEO_Age = "% of respondents",
-  BChairrace = "% of respondents",
+  BChair_POC = "% of respondents",
   Dem_BChair_LGBTQ = "% of respondents",
   Dem_BChair_Disabled = "% of respondents",
-  Dem_BChair_Age = "% of respondents",
+  Dem_BChair_Under35 = "% of respondents",
   Staff_Fulltime_2023 = "% of respondents",
   Staff_Parttime_2023 = "% of respondents",
   CEOgender_Man = "% of respondents",
@@ -228,15 +257,18 @@ groupby_ls <- list(
     "CensusRegion4", 
     "state", 
     "SizeStrata", 
-    "Subsector" 
+    "Subsector",
+    "census_urban_area"
   ), 
   "CensusRegion4" = c("CensusRegion4", 
                       "state", 
                       "SizeStrata",  
-                      "Subsector"), 
+                      "Subsector",
+                      "census_urban_area"), 
   "state" = c("state", 
               "SizeStrata", 
-              "Subsector") 
+              "Subsector",
+              "census_urban_area") 
 )
 
 # (2.2) - Perform transformations for each metric. Single function call

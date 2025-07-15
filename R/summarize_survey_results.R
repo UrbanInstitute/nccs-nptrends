@@ -82,14 +82,14 @@ svy_tfm <- function(groupby_2_vec,
             } else if (method == "% of respondents") {
               sum(!!sym(wt), na.rm = TRUE) / weighted_count
             }
-            
           }
           
         }   , .groups = 'drop') |>
         # Add remaining columns
         dplyr::mutate(filterType = {{groupby_1}},
                       splitByOpt = {{groupby_2}},
-                      weight = {{wt}})
+                      weight = {{wt}},
+                      metricname = {{metric}})
       df_final <- recode_metric(current_metric, df_summarised)
       return(df_final)
     }
