@@ -104,9 +104,8 @@ nptrends_y5 <- nptrends_y5_raw |>
       FndRaise_FedGvtGrnt_Rcv, FndRaise_LocGvtLn_Rcv,
       FndRaise_StateGvtLn_Rcv, FndRaise_FedGvtLn_Rcv,
       FndRaise_LocGvtCntrct_Rcv, FndRaise_StateGvtCntrct_Rcv,
-      FndRaise_FedGvtCntrct_Rcv, FndRaise_FeeOth_Rcv,
-      FndRaise_FeeMed_Rcv, FndRaise_FeeOth_Rcv,
-      FndRaise_Tribal_Rcv, and FndRaise_GovOth_Rcv
+      FndRaise_FedGvtCntrct_Rcv, FndRaise_FeeOth_Rcv,FndRaise_FeeMed_Rcv,
+      FndRaise_FeeOth_Rcv,FndRaise_Tribal_Rcv, FndRaise_GovOth_Rcv
     ), 
     Reserves_Est = dplyr::case_when(
       Reserves_Est == NA & 
@@ -313,7 +312,7 @@ survey_metrics <- purrr::imap(
       .f = svy_tfm,
       metric = metric,
       method = method,
-      df = nptrends_y4,
+      df = nptrends_y5,
       .progress = TRUE
     ) |>
       purrr::list_rbind()
