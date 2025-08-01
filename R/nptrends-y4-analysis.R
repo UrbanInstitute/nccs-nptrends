@@ -106,9 +106,11 @@ nptrends_y4 <- nptrends_y4_raw |>
       .default = Staff_Boardmmbr_2023
     ),
     PplSrv_NumWait = dplyr::case_when(
-      PplSrv_NumWait == NA & 
-        !is.na(PplSrv_NumServed) ~ 0,
-      .default = NA_integer_
+      !is.na(PplSrv_NumServed_NA_X) &
+        is.na(PplSrv_NumWait) &
+      PplSrv_NumWait_X == 1,
+       ~ 0,
+      .default = PplSrv_NumWait
     ),
     Staff_Boardmmbr_2023 = dplyr::case_when(
       Staff_Boardmmbr_2023 == NA & 
