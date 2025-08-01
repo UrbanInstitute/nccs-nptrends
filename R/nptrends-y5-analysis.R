@@ -2,7 +2,7 @@
 # Title: nptrends-y5-analysis.R
 # Author: Thiyaghessan Poongundranar [tpoongundranar@urban.org], Christina Prinvil [cprinvil@urban.org]
 # Date Created: 2025-07-15
-# Date Last Modified: 2025-07-15
+# Date Last Modified: 2025-08-01
 #
 # Purpose: This script contains all of the data engineering code for the Fidelity Nonprofit Trends and Impacts Year 5 Survey analysis.
 #
@@ -131,9 +131,11 @@ nptrends_y5 <- nptrends_y5_raw |>
       .default = Staff_Boardmmbr_2024
     ),
     PplSrv_NumWait = dplyr::case_when(
-      PplSrv_NumWait == NA & 
-        !is.na(PplSrv_NumServed) ~ 0,
-      .default = NA_integer_
+      !is.na(PplSrv_NumServed_NA_X) &
+        is.na(PplSrv_NumWait) &
+        PplSrv_NumWait_X == 1,
+      ~ 0,
+      .default = PplSrv_NumWait
     ),
     
     Staff_Fulltime_2024= dplyr::case_when(
