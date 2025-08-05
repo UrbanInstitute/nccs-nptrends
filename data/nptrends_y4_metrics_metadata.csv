@@ -1,0 +1,78 @@
+metricID,metricname,theme,category,vizType,responseOpts
+1,TotRev_clean,Finances,General,quantSingle,Total revenue
+2,FinanceChng_Reserves,Finances,General,quantSingle,Total expenses
+5,FinanceChng_TotExp,Finances,General,portionMultipleChoice,"Significant decrease, Decrease, No change, Increase, Significant increase"
+6,FinanceChng_Salaries,Finances,General,portionMultipleChoice,"Significant decrease, Decrease, No change, Increase, Significant increase"
+7,FinanceChng_Benefits,Finances,General,portionMultipleChoice,"Significant decrease, Decrease, No change, Increase, Significant increase"
+8,FinanceChng_TotRent,Finances,General,portionMultipleChoice,"Significant decrease, Decrease, No change, Increase, Significant increase"
+9,FinanceChng_TotTech,Finances,General,portionMultipleChoice,"Significant decrease, Decrease, No change, Increase, Significant increase"
+10,GeoAreas_ServedLocal,Populations served,Geographic Reach,portionSingle,"Served local, Did not serve local"
+11,GeoAreas_State,Populations served,Geographic Reach,portionSingle,"Served state-wide, Did not serve state-wide"
+12,GeoAreas_Servedmultistate,Populations served,Geographic Reach,portionSingle,"Served multi state, Did not serve multi state"
+13,GeoAreas_National,Populations served,Geographic Reach,portionSingle,"Served national, Did not serve national"
+14,GeoAreas_International,Populations served,Geographic Reach,portionSingle,"Served international, Did not serve international"
+15,ProgDem_BelowFPL,Populations served,Demographics,portionSingle,"Served families and individuals in poverty, Did not serve families and individuals in poverty"
+16,ProgDem_Disabled,Populations served,Demographics,portionSingle,"Served individuals with physical or cognitive disabilities, Did not serve individuals with physical or cognitive disabilities"
+17,ProgDem_Veterans,Populations served,Demographics,portionSingle,"Served veterans, Did not serve veterans"
+18,ProgDem_LGBTQ,Populations served,Demographics,portionSingle,"Served LGBTQ+ , Did not serve LGBTQ+"
+19,ProgDem_Foreign,Populations served,Demographics,portionSingle,"Served foreign born population, Did not serve foreign born populations"
+20,ProgDem_Latinx,Populations served,Demographics,portionSingle,"Served Latinx/Hispanic/Hispanic Origin, Did not serve Latinx/Hispanic/Hispanic Origin"
+21,ProgDem_Black,Populations served,Demographics,portionSingle,"Served Black/African American, Did not serve Black/African American"
+22,ProgDem_Indigenous,Populations served,Demographics,portionSingle,"Served indigenous/Native American/Native Alaskan, Did not serve indigenous/Native American/Native Alaskan"
+23,ProgDem_Asian,Populations served,Demographics,portionSingle,"Served Asian/Native Hawaiian/other Pacific Islander, Did not serve Asian/Native Hawaiian/other Pacific Islander"
+24,ProgDem_Men,Populations served,Demographics,portionSingle,"Served men/boys, Did not serve men/boys"
+26,ProgDem_Women,Populations served,Demographics,portionSingle,"Served women/girls, Did not serve women/girls"
+28,ProgDem_Nonbinary,Populations served,Demographics,portionSingle,"Served individuals of non-binary gender, Did not serve individuals of non-binary gender"
+29,ProgDem_Children,Populations served,Demographics,portionSingle,"Served children and youth, Did not serve children and youth"
+30,ProgDem_YoungAdults,Populations served,Demographics,portionSingle,"Served young adults, Did not serve young adults"
+31,ProgDem_Adults,Populations served,Demographics,portionSingle,"Served adults, Did not serve adults"
+32,ProgDem_Elders,Populations served,Demographics,portionSingle,"Served seniors, Did not serve seniors"
+33,PplSrv_NumWait,Programs and Services,General,portionSingle,"Met demand, Did not meet demand"
+34,PrgSrvc_Suspend,Programs and Services,General,portionSingle,"Experiencing, Not experiencing"
+35,PrgSrvc_Amt_Srvc,Programs and Services,General,portionMultipleChoice,"Significant decrease, Decrease, No change, Increase, Significant increase"
+36,PrgSrvc_Amt_Num,Programs and Services,General,portionMultipleChoice,"Significant decrease, Decrease, No change, Increase, Significant increase"
+37,Dmnd_NxtYear,Programs and Services,General,portionMultipleChoice,"Anticipated increase, No change, Anticipated decrease"
+39,FndRaise_DnrBlw250,Sources of Revenue,Individual donations,quantSingle,<$250
+40,FndRaise_DnrAbv250,Sources of Revenue,Individual donations,quantSingle,>=$250
+46,FndRaise_DAF_Rcv,Sources of Revenue,Donor Advised Funds,portionSingle,"Received, Did not receive"
+47,FndRaise_PFGrnt_Rcv,Sources of Revenue,Private foundation grants,portionSingle,"Received, Did not receive"
+48,FndRaise_Corp_Found_Grnt_Rcv,Sources of Revenue,Corporate foundation or giving program grants,portionSingle,"Received, Did not receive"
+49,FndRaise_CFGrnt_Rcv,Sources of Revenue,Community foundations,portionSingle,"Received, Did not receive"
+52,CARES_Rcv,Sources of Revenue,Government funding,portionSingle,"Received, Did not receive"
+56,PrgSrvc_Amt_Fee,Sources of Revenue,Earned Revenue,portionMultipleChoice,"Significant decrease, Decrease, No change, Increase, Significant increase"
+57,FndRaise_TotExp,Sources of Revenue,Fundraising,portionMultipleChoice,"Significant decrease, Decrease, No change, Increase, Significant increase"
+58,FndRaise_TotDigAppeal,Sources of Revenue,Fundraising,portionMultipleChoice,"Significant decrease, Decrease, No change, Increase, Significant increase"
+59,FndRaise_TotDirMail,Sources of Revenue,Fundraising,portionMultipleChoice,"Significant decrease, Decrease, No change, Increase, Significant increase"
+60,FndRaise_TotVirtEvent,Sources of Revenue,Fundraising,portionMultipleChoice,"Significant decrease, Decrease, No change, Increase, Significant increase"
+61,FndRaise_TotInPersEvent,Sources of Revenue,Fundraising,portionMultipleChoice,"Significant decrease, Decrease, No change, Increase, Significant increase"
+63,PercentDem_Women_Staff,Workforce,Paid staff demographics,quantSingle,Women
+65,Staff_RegVlntr_2023,Workforce,Paid staff demographics,quantSingle,Regular volunteers
+66,Staff_EpsdVltnr_2023,Workforce,Paid staff demographics,quantSingle,Episodic volunteers
+68,PercentDem_Women_Board,Workforce,Board member demographics,quantSingle,Women
+70,PercentDem_LGBTQ_Board,Workforce,Board member demographics,quantSingle,LGBTQ+
+71,PercentDem_Disabled_Board,Workforce,Board member demographics,quantSingle,Disabled
+72,PercentDem_Young_Board,Workforce,Board member demographics,quantSingle,Under 35 years old
+73,PercentDem_ReceivedServices_Board,Workforce,Board member demographics,quantSingle,Past or current recipient of nonprofits’ services
+74,PercentDem_POC_Staff,Workforce,Paid staff demographics,quantSingle,Person of color
+75,PercentDem_LGBTQ_Staff,Workforce,Paid staff demographics,quantSingle,LGBTQ+
+76,PercentDem_Disabled_Staff,Workforce,Paid staff demographics,quantSingle,Disabled
+77,PercentDem_Young_Staff,Workforce,Paid staff demographics,quantSingle,Under 35 years old
+78,PercentDem_ReceivedServices_Staff,Workforce,Paid staff demographics,quantSingle,Past or current recipient of nonprofits’ services
+79,Staff_Boardmmbr_2023,Workforce,Board member demographics,quantSingle,Number of board members
+80,PercentDem_POC_Board,Workforce,Board member demographics,quantSingle,Person of color
+85,CEOrace_POC,Workforce,CEO demographics,portionSingle,"Person of color, Not person of color"
+86,Dem_CEO_LGBTQ,Workforce,CEO demographics,portionSingle,"LGBTQ+, Not LGBTQ+"
+87,Dem_CEO_Disabled,Workforce,CEO demographics,portionSingle,"Disabled, Not disabled"
+88,Dem_CEO_Age,Workforce,CEO demographics,portionSingle,"Under 35 years old, Not under 35 years old"
+89,BChair_POC,Workforce,Board chair demographics,portionSingle,"Person of color, Not person of color"
+90,Dem_BChair_LGBTQ,Workforce,Board chair demographics,portionSingle,"LGBTQ+, Not LGBTQ+"
+91,Dem_BChair_Disabled,Workforce,Board chair demographics,portionSingle,"Disabled, Not disabled"
+92,Dem_BChair_Under35,Workforce,Board chair demographics,portionSingle,"Under 35 years old, Not under 35 years old"
+93,Staff_Fulltime_2023,Workforce,Staff and Volunteers,portionMultipleChoice,"0, 1, 2-9, 10-49, 50+"
+94,Staff_Parttime_2023,Workforce,Staff and Volunteers,portionMultipleChoice,"0, 1, 2-9, 10-49, 50+"
+95,CEOgender_Man,Workforce,CEO demographics,portionSingle,"Man, Not a man"
+96,CEOgender_Woman,Workforce,CEO demographics,portionSingle,"Woman, Not a woman"
+97,CEOgender_NB,Workforce,CEO demographics,portionSingle,"Individual of non-binary gender, Not individual of non-binary gender"
+98,BChairgender_Man,Workforce,Board chair demographics,portionSingle,"Man, Not a man"
+99,BChairgender_Woman,Workforce,Board chair demographics,portionSingle,"Woman, Not a woman"
+100,BChairgender_NB,Workforce,Board chair demographics,portionSingle,"Individual of non-binary gender, Not individual of non-binary gender"
