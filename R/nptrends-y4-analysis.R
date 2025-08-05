@@ -321,7 +321,7 @@ survey_formatted <- survey_processed |>
     )
   ) |>
   tidylog::left_join(metrics_metadata, by = "metricname") |>
-  dplyr::select(! responseOpt) |>
+  dplyr::rename(responseOpt_value = responseOpt) |>
   dplyr::mutate(year = "2024")
 
 # (3.3) - Save outputs
