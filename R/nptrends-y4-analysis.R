@@ -1,26 +1,3 @@
-#-----------------------------------------------------------
-# Title: nptrends-y5-analysis.R
-# Author: Thiyaghessan Poongundranar [tpoongundranar@urban.org], Christina Prinvil [cprinvil@urban.org]
-# Date Created: 2025-07-07
-# Date Last Modified: 2025-08-01
-#
-# Purpose: This script contains all of the data engineering code for the Fidelity Nonprofit Trends and Impacts Year 4 Survey analysis.
-#
-# Usage: This script is a standalone script that calls several helper function scripts
-#
-# Dependences:
-#  - spatstat
-#  - tidyverse
-#  - rlang
-#  - here
-#  - data.table
-# Notes:
-# - Data is in the long format for each metric and group by option.
-# - Data is formatted according to the data template supplied by Jeff MacInnes [jeff@decimalpoint.studio] and the steps follow the supplied guide
-# - Each metric is denoted by a metricID.
-# - groupbys: national, size, sector, region, state
-#---------------------------------------------------------
-
 # Libraries
 library(data.table)
 library(tidyverse)
@@ -108,9 +85,10 @@ nptrends_y4 <- nptrends_y4_raw |>
     PplSrv_NumWait = dplyr::case_when(
       !is.na(PplSrv_NumServed_NA_X) &
         is.na(PplSrv_NumWait) &
-      PplSrv_NumWait_X == 1,
+      PplSrv_NumWait_NA_X == 1
        ~ 0,
-      .default = PplSrv_NumWait
+      PplSrv_NumWait == 0 ~ 0,
+      .default = NA_integer_
     ),
     Staff_Boardmmbr_2023 = dplyr::case_when(
       Staff_Boardmmbr_2023 == NA & 
@@ -314,9 +292,41 @@ survey_processed <- survey_metrics |>
     filterOpt = ifelse(is.na(filterOpt), "", filterOpt)
   )
 
-# (3.2) - Merge with original metrics file
+# (3.2) - Merge with metric metadata
+
+metrics_metadata <- data.table::fread(
+  "data/nptrends_y4_metrics_metadata.csv"
+)
+
+survey_formatted <- survey_processed |>
+  dplyr::mutate(
+    splitByOpt = dplyr::case_when(
+      splitByOpt_category %in% c(
+        "<$100,000", 
+        "$100,000-$499,999", 
+        "$500,000-$999,999", 
+        "$1 million-$9,999,999", 
+        "$10 million and above"
+      ) ~ "Size",
+      splitByOpt_category %in% c(
+        "Arts, culture, and humanities", 
+        "Education", 
+        "Environment and animals", 
+        "Health", "Human services", 
+        "International, foreign affairs", 
+        "Public, societal benefit"
+      ) ~ "Sector",
+      splitByOpt_category %in% c("Rural", "Urban") ~ "Rural/Urban",
+      .default = splitByOpt
+    )
+  ) |>
+  tidylog::left_join(metrics_metadata, by = "metricname") |>
+  dplyr::select(! responseOpt) |>
+  dplyr::mutate(year = "2024")
 
 # (3.3) - Save outputs
 
-# TODO:
-# Steps 3.2 and 3.3 after Christina has finished reviewing methods
+data.table::fwrite(
+  survey_formatted,
+  "data/processed/nptrends_y4_formatted.csv"
+)
