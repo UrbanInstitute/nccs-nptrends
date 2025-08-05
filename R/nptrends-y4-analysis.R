@@ -65,33 +65,30 @@ nptrends_y4 <- nptrends_y4_raw |>
                                             GeoAreas_MultipleState, 
                                             GeoAreas_RegionalAcross
     ),
-    FndRaise_DnrBlw250_ratio = FndRaise_DnrBlw250 / FndRaise_DnrAbv250 + FndRaise_DnrBlw250,
-    FndRaise_DnrAbv250_ratio = FndRaise_DnrAbv250 / FndRaise_DnrBlw250 + FndRaise_DnrAbv250,
+    FndRaise_DnrBlw250_ratio = FndRaise_DnrBlw250 / (FndRaise_DnrAbv250 + FndRaise_DnrBlw250),
+    FndRaise_DnrAbv250_ratio = FndRaise_DnrAbv250 / (FndRaise_DnrBlw250 + FndRaise_DnrAbv250),
     Staff_RegVlntr_2023 = dplyr::case_when(
-      Staff_RegVlntr_2023 == NA & 
+      is.na(Staff_RegVlntr_2023) & 
         Staff_RegVlntr_NA == 1 ~ 0,
       .default = Staff_RegVlntr_2023
     ),
     Staff_EpsdVltnr_2023 = dplyr::case_when(
-      Staff_EpsdVltnr_2023 == NA & 
+      is.na(Staff_EpsdVltnr_2023) & 
         Staff_EpsdVltnr_NA == 1 ~ 0,
       .default = Staff_EpsdVltnr_2023
     ),
     Staff_Boardmmbr_2023 = dplyr::case_when(
-      Staff_Boardmmbr_2023 == NA & 
+      is.na(Staff_Boardmmbr_2023) & 
         Staff_Boardmmbr_NA == 1 ~ 0,
       .default = Staff_Boardmmbr_2023
     ),
     PplSrv_NumWait = dplyr::case_when(
-      !is.na(PplSrv_NumServed_NA_X) &
-        is.na(PplSrv_NumWait) &
-      PplSrv_NumWait_NA_X == 1
-       ~ 0,
+      PplSrv_NumWait_NA_X == 1 ~ NA_integer_,
       PplSrv_NumWait == 0 ~ 0,
       .default = NA_integer_
     ),
     Staff_Boardmmbr_2023 = dplyr::case_when(
-      Staff_Boardmmbr_2023 == NA & 
+      is.na(Staff_Boardmmbr_2023) & 
         Staff_Boardmmbr_NA == 1 ~ 0,
       .default = Staff_Boardmmbr_2023
     ),
