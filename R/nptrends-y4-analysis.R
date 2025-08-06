@@ -83,7 +83,7 @@ nptrends_y4 <- nptrends_y4_raw |>
       .default = Staff_Boardmmbr_2023
     ),
     PplSrv_NumWait = dplyr::case_when(
-      PplSrv_NumWait_NA_X == 1 ~ NA_integer_,
+      PplSrv_NumServed_NA_X == 1 ~ NA_integer_,
       PplSrv_NumWait == 0 ~ 0,
       .default = NA_integer_
     ),
@@ -113,6 +113,11 @@ nptrends_y4 <- nptrends_y4_raw |>
     Dem_BChair_Under35 = dplyr::case_when(
       Dem_BChair_Age %in% c(1, 2) ~ "Yes",
       Dem_BChair_Age %in% c(3, 4, 6, 7, 8, 9) ~ "No",
+      .default = NA_character_
+    ),
+    Dem_CEO_Under35 = dplyr::case_when(
+      Dem_CEO_Age %in% c(1, 2) ~ "Yes",
+      Dem_CEO_Age %in% c(3, 4, 6, 7, 8, 9) ~ "No",
       .default = NA_character_
     ),
     BChair_POC = dplyr::case_when(
@@ -212,7 +217,7 @@ metrics <- list(
   CEOrace_POC = "% of respondents",
   Dem_CEO_LGBTQ = "% of respondents",
   Dem_CEO_Disabled = "% of respondents",
-  Dem_CEO_Age = "% of respondents",
+  Dem_CEO_Under35 = "% of respondents",
   BChair_POC = "% of respondents",
   Dem_BChair_LGBTQ = "% of respondents",
   Dem_BChair_Disabled = "% of respondents",
@@ -296,6 +301,7 @@ metrics_metadata <- data.table::fread(
 )
 
 survey_formatted <- survey_processed |>
+  dplyr::filter(num_responses > 25) |>
   dplyr::mutate(
     splitByOpt = dplyr::case_when(
       splitByOpt_category %in% c(
