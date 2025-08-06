@@ -20,6 +20,28 @@ metrics_metadata <- readxl::read_xlsx(
 
 
 nptrends_y4 <- nptrends_y4_raw |>
+  dplyr::filter(
+    ! state %in% c(
+      "AK",
+      "CT",
+      "DC",
+      "DE",
+      "HI",
+      "IA",
+      "KS",
+      "ME",
+      "ND",
+      "NE",
+      "NH",
+      "NJ",
+      "RI",
+      "SC",
+      "SD",
+      "VT",
+      "WV",
+      "WY"
+    )
+  ) |>
   dplyr::mutate(
     SizeStrata = factor(
       SizeStrata,
@@ -302,6 +324,7 @@ metrics_metadata <- data.table::fread(
 
 survey_formatted <- survey_processed |>
   dplyr::filter(num_responses > 25) |>
+  dplyr::filter()
   dplyr::mutate(
     splitByOpt = dplyr::case_when(
       splitByOpt_category %in% c(
