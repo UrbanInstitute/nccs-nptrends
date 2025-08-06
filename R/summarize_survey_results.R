@@ -1,17 +1,4 @@
-#------------------------------------------------------------------------
-# File: survey_analysis.R
-# Authors: Thiyaghessan [tpoongundranar@urban.org], Christina Prinvil [cprinvil@urban.org]
-# Purpose: This file contains the functions used to analyse year 4 NP Trends and Impacts Survey Data
-#
-# Usage: The file should be called in R/nptrends-y4-analysis.R
-#
-# Dependencies:
-#   - dplyr
-#   - purrr
-#   - spatstat
-#   - rlang
-#   - stats
-#------------------------------------------------------------------------
+# Helper functions for nptrends year 4 and 5 survey analysis
 
 #' @title Main survey analysis function
 #' 
@@ -30,9 +17,7 @@ svy_tfm <- function(groupby_2_vec,
                     method,
                     df) {
   df_filtered <- dplyr::filter(df, !is.na(.data[[metric]]))
-  df_grouped <- svy_grpby(groupby_1, 
-                          "filterOpt", 
-                          df_filtered)
+  df_grouped <- svy_grpby(groupby_1, "filterOpt", df_filtered)
   df_summarised <- purrr::map(
     .x = groupby_2_vec,
     .f = function(groupby_2) {
@@ -40,17 +25,13 @@ svy_tfm <- function(groupby_2_vec,
       weighted_count <- sum(df_grouped[[wt]], na.rm = TRUE)
       # Optional nesting for subgroups
       if (groupby_2 != groupby_1) {
-        df_nested <- svy_grpby(groupby_2, 
-                               "splitByOpt_category", 
-                               df_grouped)
+        df_nested <- svy_grpby(groupby_2, "splitByOpt_category", df_grouped)
       } else {
         df_nested <- df_grouped
       }
       # Optional nesting for categorical variables
       if (method == "% of respondents") {
-        df_nested <- svy_grpby(metric, 
-                               "responseOpt", 
-                               df_nested)
+        df_nested <- svy_grpby(metric, "responseOpt", df_nested)
         current_metric <- "responseOpt"
       } else {
         df_nested <- df_nested
@@ -58,38 +39,58 @@ svy_tfm <- function(groupby_2_vec,
       }
       # Summary steps
       df_summarised <- df_nested |>
-        dplyr::summarise(value = {
-          # Determine if there are enough non-NA records
-          x_values <- .data[[current_metric]]
-          w_values <- .data[[wt]]
-          valid_rows <- validate_metric(x_values, w_values)
-          if (valid_rows == 0) {
-            NA_real_
-          }
-          else {
-            if (method == "median") {
-              spatstat.univar::weighted.median(
-                x = !!sym(current_metric),
-                w = !!sym(wt),
-                na.rm = TRUE
-              )
-            } else if (method == "average of %") {
-              stats::weighted.mean(
-                x = !!sym(current_metric),
-                w = !!sym(wt),
-                na.rm = TRUE
-              )
-            } else if (method == "% of respondents") {
-              sum(!!sym(wt), na.rm = TRUE) / weighted_count
+        dplyr::summarise(
+          num_responses = sum(!!sym(wt), na.rm = TRUE),
+          value = {
+            # Determine if there are enough non-NA records
+            x_values <- .data[[current_metric]]
+            w_values <- .data[[wt]]
+            valid_rows <- validate_metric(x_values, w_values)
+            if (valid_rows == 0) {
+              NA_real_
             }
-          }
-          
-        }   , .groups = 'drop') |>
+            else {
+              if (method == "median") {
+                spatstat.univar::weighted.median(
+                  x = !!sym(current_metric),
+                  w = !!sym(wt),
+                  na.rm = TRUE
+                )
+              } else if (method == "average of %") {
+                stats::weighted.mean(
+                  x = !!sym(current_metric),
+                  w = !!sym(wt),
+                  na.rm = TRUE
+                )
+              } else if (method == "% of respondents") {
+                sum(!!sym(wt), na.rm = TRUE)
+              }
+            }
+            
+          }   ,
+          .groups = 'drop'
+        ) %>% 
         # Add remaining columns
-        dplyr::mutate(filterType = {{groupby_1}},
-                      splitByOpt = {{groupby_2}},
-                      weight = {{wt}},
-                      metricname = {{metric}})
+        dplyr::mutate(
+          filterType = {{groupby_1}},
+          splitByOpt = {{groupby_2}},
+          weight = {{wt}},
+          metricname = {{metric}})
+      if (! "splitByOpt_category" %in% names(df_summarised)){
+        df_summarised$splitByOpt_category <- "None"
+      }
+      # Get weighted counts of the number of survey respondents
+      df_summarised <- df_summarised |>
+        dplyr::group_by(splitByOpt_category) |>
+        dplyr::mutate(num_responses = sum(num_responses, na.rm = TRUE)) |>
+        dplyr::ungroup()
+      # Get weighted proportions for each category for categorical variables
+      if (method == "% of respondents") {
+        df_summarised <- df_summarised |>
+          dplyr::group_by(splitByOpt_category) |>
+          dplyr::mutate(value = value / sum(value, na.rm = TRUE)) |>
+          dplyr::ungroup()
+      }
       df_final <- recode_metric(current_metric, df_summarised)
       return(df_final)
     }
