@@ -324,7 +324,6 @@ metrics_metadata <- data.table::fread(
 
 survey_formatted <- survey_processed |>
   dplyr::filter(num_responses > 25) |>
-  dplyr::filter()
   dplyr::mutate(
     splitByOpt = dplyr::case_when(
       splitByOpt_category %in% c(
