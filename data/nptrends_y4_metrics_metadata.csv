@@ -63,7 +63,7 @@ metricID,metricname,theme,category,vizType,responseOpts
 85,CEOrace_POC,Workforce,CEO demographics,portionSingle,"Person of color, Not person of color"
 86,Dem_CEO_LGBTQ,Workforce,CEO demographics,portionSingle,"LGBTQ+, Not LGBTQ+"
 87,Dem_CEO_Disabled,Workforce,CEO demographics,portionSingle,"Disabled, Not disabled"
-88,Dem_CEO_Age,Workforce,CEO demographics,portionSingle,"Under 35 years old, Not under 35 years old"
+88,Dem_CEO_Under35,Workforce,CEO demographics,portionSingle,"Under 35 years old, Not under 35 years old"
 89,BChair_POC,Workforce,Board chair demographics,portionSingle,"Person of color, Not person of color"
 90,Dem_BChair_LGBTQ,Workforce,Board chair demographics,portionSingle,"LGBTQ+, Not LGBTQ+"
 91,Dem_BChair_Disabled,Workforce,Board chair demographics,portionSingle,"Disabled, Not disabled"
