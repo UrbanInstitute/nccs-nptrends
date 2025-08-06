@@ -26,8 +26,10 @@ svy_tfm <- function(groupby_2_vec,
       # Optional nesting for subgroups
       if (groupby_2 != groupby_1) {
         df_nested <- svy_grpby(groupby_2, "splitByOpt_category", df_grouped)
+        nest_var <- "splitByOpt_category"
       } else {
         df_nested <- df_grouped
+        nest_var <- "filterOpt"
       }
       # Optional nesting for categorical variables
       if (method == "% of respondents") {
@@ -76,18 +78,15 @@ svy_tfm <- function(groupby_2_vec,
           splitByOpt = {{groupby_2}},
           weight = {{wt}},
           metricname = {{metric}})
-      if (! "splitByOpt_category" %in% names(df_summarised)){
-        df_summarised$splitByOpt_category <- "None"
-      }
       # Get weighted counts of the number of survey respondents
       df_summarised <- df_summarised |>
-        dplyr::group_by(splitByOpt_category) |>
+        dplyr::group_by(.data[[nest_var]]) |>
         dplyr::mutate(num_responses = sum(num_responses, na.rm = TRUE)) |>
         dplyr::ungroup()
       # Get weighted proportions for each category for categorical variables
       if (method == "% of respondents") {
         df_summarised <- df_summarised |>
-          dplyr::group_by(splitByOpt_category) |>
+          dplyr::group_by(.data[[nest_var]]) |>
           dplyr::mutate(value = value / sum(value, na.rm = TRUE)) |>
           dplyr::ungroup()
       }
