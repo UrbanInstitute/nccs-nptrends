@@ -106,9 +106,9 @@ nptrends_y4 <- nptrends_y4_raw |>
     ),
     PplSrv_NumWait = dplyr::case_when(
       PplSrv_NumServed_NA_X == 1 ~ NA_integer_,
-      PplSrv_NumWait == 0 ~ 0,
+      PplSrv_NumWait == 0 ~ 1,
       is.na(PplSrv_NumWait) ~ NA_integer_,
-      .default = 1
+      .default = 0
     ),
     Staff_Boardmmbr_2023 = dplyr::case_when(
       is.na(Staff_Boardmmbr_2023) & 
@@ -328,10 +328,10 @@ survey_formatted <- survey_processed |>
   dplyr::mutate(
     splitByOpt = dplyr::case_when(
       splitByOpt_category %in% c(
-        "<$100,000", 
-        "$100,000-$499,999", 
-        "$500,000-$999,999", 
-        "$1 million-$9,999,999", 
+        "< $100,000", 
+        "$100,000 - $499,999", 
+        "$500,000 - $999,999", 
+        "$1 million - $9,999,999", 
         "$10 million and above"
       ) ~ "Size",
       splitByOpt_category %in% c(
