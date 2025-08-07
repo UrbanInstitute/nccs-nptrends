@@ -334,10 +334,11 @@ survey_formatted <- survey_processed |>
         "$10 million and above"
       ) ~ "Size",
       splitByOpt_category %in% c(
-        "Arts, culture, and humanities", 
+        "Arts, Culture, and Humanities", 
         "Education", 
-        "Environment and animals", 
-        "Health", "Human services", 
+        "Environment and Animals", 
+        "Health", 
+        "Human Services", 
         "International, foreign affairs", 
         "Public, societal benefit"
       ) ~ "Sector",
