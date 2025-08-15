@@ -16,8 +16,6 @@ metrics_metadata <- readxl::read_xlsx(
 
 # (1.1) - Preprocess data
 
-# Variables to recode with 1 if any are 1, otherwise 0 if all are 0
-
 
 nptrends_y4 <- nptrends_y4_raw |>
   dplyr::filter(
@@ -94,10 +92,10 @@ nptrends_y4 <- nptrends_y4_raw |>
         Staff_RegVlntr_NA == 1 ~ 0,
       .default = Staff_RegVlntr_2023
     ),
-    Staff_EpsdVltnr_2023 = dplyr::case_when(
+    Staff_EpsdVlntr_2023 = dplyr::case_when(
       is.na(Staff_EpsdVltnr_2023) & 
         Staff_EpsdVltnr_NA == 1 ~ 0,
-      .default = Staff_EpsdVltnr_2023
+      .default = Staff_EpsdVlntr_2023
     ),
     Staff_Boardmmbr_2023 = dplyr::case_when(
       is.na(Staff_Boardmmbr_2023) & 
@@ -105,10 +103,10 @@ nptrends_y4 <- nptrends_y4_raw |>
       .default = Staff_Boardmmbr_2023
     ),
     PplSrv_NumWait = dplyr::case_when(
-      PplSrv_NumServed_NA_X == 1 ~ NA_integer_,
-      PplSrv_NumWait == 0 ~ 1,
-      is.na(PplSrv_NumWait) ~ NA_integer_,
-      .default = 0
+      PplSrv_NumServed_NA_X == 1 ~ NA_character_,
+      PplSrv_NumWait == 0 ~ "Met demand",
+      is.na(PplSrv_NumWait) ~ NA_character_,
+      .default = "Did not meet demand"
     ),
     Staff_Boardmmbr_2023 = dplyr::case_when(
       is.na(Staff_Boardmmbr_2023) & 
@@ -134,33 +132,206 @@ nptrends_y4 <- nptrends_y4_raw |>
       .default = NA_character_
     ),
     Dem_BChair_Under35 = dplyr::case_when(
-      Dem_BChair_Age %in% c(1, 2) ~ "Yes",
-      Dem_BChair_Age %in% c(3, 4, 6, 7, 8, 9) ~ "No",
+      Dem_BChair_Age %in% c(1, 2) ~ "Under 35 years old",
+      Dem_BChair_Age %in% c(3, 4, 6, 7, 8, 9) ~ "Not under 35 years old",
       .default = NA_character_
     ),
     Dem_CEO_Under35 = dplyr::case_when(
-      Dem_CEO_Age %in% c(1, 2) ~ "Yes",
-      Dem_CEO_Age %in% c(3, 4, 6, 7, 8, 9) ~ "No",
+      Dem_CEO_Age %in% c(1, 2) ~ "Under 35 years old",
+      Dem_CEO_Age %in% c(3, 4, 6, 7, 8, 9) ~ "Not under 35 years old",
       .default = NA_character_
     ),
     BChair_POC = dplyr::case_when(
-      BChairrace %in% c(1, 2, 3, 4, 6, 7) ~ "POC",
-      BChairrace %in% c(5) ~ "Non-POC",
+      BChairrace %in% c(1, 2, 3, 4, 6, 7) ~ "Person of color",
+      BChairrace %in% c(5) ~ "Not person of color",
       .default = NA_character_
     ),
     CEOrace_POC = dplyr::case_when(
-      CEOrace %in% c(1, 2, 3, 4, 6, 7) ~ "POC",
-      CEOrace %in% c(5) ~ "Non-POC",
+      CEOrace %in% c(1, 2, 3, 4, 6, 7) ~ "Person of color",
+      CEOrace %in% c(5) ~ "Not person of color",
       .default = NA_character_
     )
   ) |>
-  # recoding 1 or 2 (served) and 0 did not serve
   dplyr::mutate(
     dplyr::across(
       .cols = dplyr::starts_with("ProgDem_"),
       .fns = ~ dplyr::case_when(
-        .x == 1 | .x == 2 ~ "Served",
-        .x == 0 ~ "Did not Serve",
+        .x == 1 | .x == 2 ~ 1,
+        .x == 0 ~ 0,
+        .default = NA_integer_
+      )
+    ),
+    FinanceChng_Reserves = dplyr::case_when(
+      FinanceChng_Reserves == 1 ~ "Drew on cash reserves",
+      FinanceChng_Reserves == 0 ~ "Did not draw on cash reserves",
+      .default = NA_character_
+    ),
+    GeoAreas_ServedLocal = dplyr::case_when(
+      GeoAreas_ServedLocal == 1 ~ "Served local",
+      GeoAreas_ServedLocal == 0 ~ "Did not serve local",
+      .default = NA_character_
+    ),
+    GeoAreas_State = dplyr::case_when(
+      GeoAreas_State == 1 ~ "Served state-wide",
+      GeoAreas_State == 0 ~ "Did not serve state-wide",
+      .default = NA_character_
+    ),
+    GeoAreas_MultipleState = dplyr::case_when(
+      GeoAreas_MultipleState == 1 ~ "Served multi state",
+      GeoAreas_MultipleState == 0 ~ "Did not serve multi state",
+      .default = NA_character_
+    ),
+    GeoAreas_National = dplyr::case_when(
+      GeoAreas_National == 1 ~ "Served national",
+      GeoAreas_National == 0 ~ "Did not serve national",
+      .default = NA_character_
+    ),
+    GeoAreas_International = dplyr::case_when(
+      GeoAreas_International == 1 ~ "Served international",
+      GeoAreas_International == 0 ~ "Did not serve international",
+      .default = NA_character_
+    ),
+    ProgDem_BelowFPL = dplyr::case_when(
+      ProgDem_BelowFPL == 1 ~ "Served families and individuals in poverty",
+      ProgDem_BelowFPL == 0 ~ "Did not serve families and individuals in poverty",
+      .default = NA_character_
+    ),
+    ProgDem_Disabled = dplyr::case_when(
+      ProgDem_Disabled == 1 ~ "Served individuals with physical or cognitive disabilities",
+      ProgDem_Disabled == 0 ~ "Did not serve individuals with physical or cognitive disabilities",
+      .default = NA_character_
+    ),
+    ProgDem_Veterans = dplyr::case_when(
+      ProgDem_Veterans == 1 ~ "Served veterans",
+      ProgDem_Veterans == 0 ~ "Did not serve veterans",
+      .default = NA_character_
+    ),
+    ProgDem_LGBTQ = dplyr::case_when(
+      ProgDem_LGBTQ == 1 ~ "Served LGBTQ+",
+      ProgDem_LGBTQ == 0 ~ "Did not serve LGBTQ+",
+      .default = NA_character_
+    ),
+    ProgDem_Foreign = dplyr::case_when(
+      ProgDem_Foreign == 1 ~ "Served foreign born population",
+      ProgDem_Foreign == 0 ~ "Did not serve foreign born populations",
+      .default = NA_character_
+    ),
+    ProgDem_Latinx = dplyr::case_when(
+      ProgDem_Latinx == 1 ~ "Served Latinx/Hispanic/Hispanic Origin",
+      ProgDem_Latinx == 0 ~ "Did not serve Latinx/Hispanic/Hispanic Origin",
+      .default = NA_character_
+    ),
+    ProgDem_Black = dplyr::case_when(
+      ProgDem_Black == 1 ~ "Served Black/African American",
+      ProgDem_Black == 0 ~ "Did not serve Black/African American",
+      .default = NA_character_
+    ),
+    ProgDem_Indigenous = dplyr::case_when(
+      ProgDem_Indigenous == 1 ~ "Served indigenous/Native American/Native Alaskan",
+      ProgDem_Indigenous == 0 ~ "Did not serve indigenous/Native American/Native Alaskan",
+      .default = NA_character_
+    ),
+    ProgDem_Asian = dplyr::case_when(
+      ProgDem_Asian == 1 ~ "Served Asian/Native Hawaiian/other Pacific Islander",
+      ProgDem_Asian == 0 ~ "Did not serve Asian/Native Hawaiian/other Pacific Islander",
+      .default = NA_character_
+    ),
+    ProgDem_Men = dplyr::case_when(
+      ProgDem_Men == 1 ~ "Served men/boys",
+      ProgDem_Men == 0 ~ "Did not serve men/boys",
+      .default = NA_character_
+    ),
+    ProgDem_Women = dplyr::case_when(
+      ProgDem_Women == 1 ~ "Served women/girls",
+      ProgDem_Women == 0 ~ "Did not serve women/girls",
+      .default = NA_character_
+    ),
+    ProgDem_Nonbinary = dplyr::case_when(
+      ProgDem_Nonbinary == 1 ~ "Served individuals of non-binary gender",
+      ProgDem_Nonbinary == 0 ~ "Did not serve individuals of non-binary gender",
+      .default = NA_character_
+    ),
+    ProgDem_Children = dplyr::case_when(
+      ProgDem_Children == 1 ~ "Served children and youth",
+      ProgDem_Children == 0 ~ "Did not serve children and youth",
+      .default = NA_character_
+    ),
+    ProgDem_YoungAdults = dplyr::case_when(
+      ProgDem_YoungAdults == 1 ~ "Served young adults",
+      ProgDem_YoungAdults == 0 ~ "Did not serve young adults",
+      .default = NA_character_
+    ),
+    ProgDem_Adults = dplyr::case_when(
+      ProgDem_Adults == 1 ~ "Served adults",
+      ProgDem_Adults == 0 ~ "Did not serve adults",
+      .default = NA_character_
+    ),
+    ProgDem_Elders = dplyr::case_when(
+      ProgDem_Elders == 1 ~ "Served seniors",
+      ProgDem_Elders == 0 ~ "Did not serve seniors",
+      .default = NA_character_
+    ),
+    PrgSrvc_Suspend = dplyr::case_when(
+      PrgSrvc_Suspend == 1 ~ "Experiencing",
+      PrgSrvc_Suspend == 0 ~ "Not Experiencing",
+      .default = NA_character_
+    ),
+    Dmnd_NxtYear  = dplyr::case_when(
+      Dmnd_NxtYear  == 2 ~ "Anticipated increase",
+      Dmnd_NxtYear == 1 ~ "No change",
+      Dmnd_NxtYear == 0 ~ "Anticipated decrease",
+      .default = NA_character_
+    ),
+    Dem_CEO_LGBTQ = dplyr::case_when(
+      Dem_CEO_LGBTQ == 1 ~ "LGBTQ+",
+      Dem_CEO_LGBTQ == 0 ~ "Not LGBTQ+",
+      .default = NA_character_
+    ),
+    Dem_CEO_Disabled = dplyr::case_when(
+      Dem_CEO_Disabled == 1 ~ "Disabled",
+      Dem_CEO_Disabled == 0 ~ "Not disabled",
+      .default = NA_character_
+    ),
+    dplyr::across(
+      .cols = c("CEOgender_Man", "BChairgender_Man"),
+      .fns = ~ dplyr::case_when(
+        .x == 1 ~ "Man",
+        .x == 0 ~ "Not a man",
+        .default = NA_character_
+      )
+    ),
+    dplyr::across(
+      .cols = c("CEOgender_Woman", "BChairgender_Woman"),
+      .fns = ~ dplyr::case_when(
+        .x == 1 ~ "Woman",
+        .x == 0 ~ "Not a woman",
+        .default = NA_character_
+      )
+    ),
+    dplyr::across(
+      .cols = c("CEOgender_NB", "BChairgender_NB"),
+      .fns = ~ dplyr::case_when(
+        .x == 1 ~ "Individual of non-binary gender",
+        .x == 0 ~ "Not individual of non-binary gender",
+        .default = NA_character_
+      )
+    ),
+    dplyr::across(
+      .cols = dplyr::all_of(multi_select_cols),
+      .fns = ~ dplyr::case_when(
+        .x == 1 ~ "Significant decrease",
+        .x == 2 ~ "Decrease",
+        .x == 3 ~ "No change",
+        .x == 4 ~ "Increase",
+        .x == 5 ~ "Significant increase",
+        .default = NA_character_
+      )
+    ),
+    dplyr::across(
+      .cols = dplyr::all_of(binary_rcv_cols),
+      .fns = ~ dplyr::case_when(
+        .x == 1 ~ "Received",
+        .x == 0 ~ "Did not receive",
         .default = NA_character_
       )
     )
@@ -324,8 +495,8 @@ metrics_metadata <- data.table::fread(
 )
 
 survey_formatted <- survey_processed |>
-  dplyr::filter(num_responses > 25) |>
   dplyr::mutate(
+    value = format(value, digits = 2, scientific = TRUE),
     splitByOpt = dplyr::case_when(
       splitByOpt_category %in% c(
         "< $100,000", 
@@ -349,7 +520,30 @@ survey_formatted <- survey_processed |>
   ) |>
   tidylog::left_join(metrics_metadata, by = "metricname") |>
   dplyr::rename(responseOpt_value = responseOpt) |>
-  dplyr::mutate(year = "2024")
+  dplyr::mutate(year = "2024") |>
+  dplyr::mutate(
+    responseOpt_value = dplyr::case_when(
+      responseOpt_value == "TotRev_clean" ~ "Total Revenue",
+      responseOpt_value == "FndRaise_DnrBlw250_ratio" ~ "< $250",
+      responseOpt_value == "FndRaise_DnrAbv250_ratio" ~ ">= $250",
+      responseOpt_value == "PercentDem_Women_Staff" ~ "Women",
+      responseOpt_value == "Staff_RegVlntr_2023" ~ "Regular volunteers",
+      responseOpt_value == "Staff_EpsdVlntr_2023" ~ "Episodic volunteers",
+      responseOpt_value == "PercentDem_Women_Board" ~ "Women",
+      responseOpt_value == "PercentDem_LGBTQ_Board" ~ "LGBTQ+",
+      responseOpt_value == "PercentDem_Disabled_Board" ~ "Disabled",
+      responseOpt_value == "PercentDem_Young_Board" ~ "Under 35 years old",
+      responseOpt_value == "PercentDem_ReceivedServices_Board" ~ "Past or current recipient of nonprofits’ services",
+      responseOpt_value == "PercentDem_POC_Staff" ~ "Person of color",
+      responseOpt_value == "PercentDem_LGBTQ_Staff" ~ "LGBTQ+",
+      responseOpt_value == "PercentDem_Disabled_Staff" ~ "Disabled",
+      responseOpt_value == "PercentDem_Young_Staff" ~ "Under 35 years old",
+      responseOpt_value == "PercentDem_ReceivedServices_Staff" ~ "Past or current recipient of nonprofits’ services",
+      responseOpt_value == "Staff_Boardmmbr_2023" ~ "Number of board members",
+      responseOpt_value == "PercentDem_POC_Board" ~ "Person of color",
+      .default = responseOpt_value
+    )
+  )
 
 # (3.3) - Save outputs
 
