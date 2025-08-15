@@ -14,10 +14,10 @@ source(here::here("R", "config.R"))
 # Load in raw survey data
 nptrends_y4_raw <- data.table::fread(nptrends_y4_raw_path, 
                                      select = survey_analysis_vars) |>
-  dplyr::mutate(Year = "2023")
+  dplyr::mutate(year = "2023")
 nptrends_y5_raw <- data.table::fread(nptrends_y5_raw_path,
                                      select = survey_analysis_vars) |>
-  dplyr::mutate(Year = "2024")
+  dplyr::mutate(year = "2024")
 nptrends_full_raw <- nptrends_y4_raw |>
   dplyr::bind_rows(nptrends_y5_raw)
 
@@ -52,6 +52,15 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       levels = c(1, 2, 3, 4),
       labels = c("Northeast", "Midwest", "South", "West")
     ),
+    state = dplyr::coalesce(state, State),
+    CensusRegion4 = dplyr::case_when(
+      state == "NY" & CensusRegion4 == "West" ~ "Northeast",
+      state == "CO" & CensusRegion4 == "Midwest" ~ "West",
+      state == "MO" & CensusRegion4 == "West" ~ "Midwest",
+      state == "CA" & CensusRegion4 == "South" ~ "West",
+      state == "AZ" & CensusRegion4 == "South" ~ "West",
+      .default = CensusRegion4
+    ),
     National = "National"
   ) %>%
   # Binary flags for new variables where 1 if any of the variables are 1 and 0 if all are 0
@@ -72,6 +81,11 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
                                             GeoAreas_RegionalAcross),
     FndRaise_DnrBlw250_ratio = FndRaise_DnrBlw250 / (FndRaise_DnrAbv250 + FndRaise_DnrBlw250),
     FndRaise_DnrAbv250_ratio = FndRaise_DnrAbv250 / (FndRaise_DnrBlw250 + FndRaise_DnrAbv250),
+    GovFunding = dplyr::case_when(
+      rowSums(across(all_of(gvt_fndraise_vars)), na.rm = TRUE) > 0 ~ "Received",
+      rowSums(across(all_of(gvt_fndraise_vars)), na.rm = TRUE) == 0 ~ "Did not receive",
+      .default = NA_character_
+    ),
     Staff_RegVlntr_2023 = dplyr::case_when(
       is.na(Staff_RegVlntr_2023) &
         Staff_RegVlntr_NA == 1 ~ 0,
@@ -98,7 +112,7 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       .default = Staff_Boardmmbr_2023
     ),
     Staff_Boardmmbr_2024 = dplyr::case_when(
-      Year == "2024" &
+      year == "2024" &
       is.na(Staff_Boardmmbr_2024) &
         Staff_Boardmmbr_NA == 1 ~ 0,
       .default = Staff_Boardmmbr_2024
@@ -108,11 +122,6 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       PplSrv_NumWait == 0 ~ "Met demand",
       is.na(PplSrv_NumWait) ~ NA_character_,
       .default = "Did not meet demand"
-    ),
-    Staff_Boardmmbr_2023 = dplyr::case_when(
-      is.na(Staff_Boardmmbr_2023) &
-        Staff_Boardmmbr_NA == 1 ~ 0,
-      .default = Staff_Boardmmbr_2023
     ),
     dplyr::across(
       .cols = dplyr::all_of(names(numstaff_ls)),
@@ -169,9 +178,9 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       GeoAreas_State == 0 ~ "Did not serve state-wide",
       .default = NA_character_
     ),
-    GeoAreas_MultipleState = dplyr::case_when(
-      GeoAreas_MultipleState == 1 ~ "Served multi state",
-      GeoAreas_MultipleState == 0 ~ "Did not serve multi state",
+    GeoAreas_Servedmultistate = dplyr::case_when(
+      GeoAreas_Servedmultistate == 1 ~ "Served multi state",
+      GeoAreas_Servedmultistate == 0 ~ "Did not serve multi state",
       .default = NA_character_
     ),
     GeoAreas_National = dplyr::case_when(
@@ -275,16 +284,6 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       Dmnd_NxtYear == 0 ~ "Anticipated decrease",
       .default = NA_character_
     ),
-    Dem_CEO_LGBTQ = dplyr::case_when(
-      Dem_CEO_LGBTQ == 1 ~ "LGBTQ+",
-      Dem_CEO_LGBTQ == 0 ~ "Not LGBTQ+",
-      .default = NA_character_
-    ),
-    Dem_CEO_Disabled = dplyr::case_when(
-      Dem_CEO_Disabled == 1 ~ "Disabled",
-      Dem_CEO_Disabled == 0 ~ "Not disabled",
-      .default = NA_character_
-    ),
     dplyr::across(
       .cols = c("CEOgender_Man", "BChairgender_Man"),
       .fns = ~ dplyr::case_when(.x == 1 ~ "Man", 
@@ -298,12 +297,24 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
                                 .default = NA_character_)
     ),
     dplyr::across(
+      .cols = c("Dem_CEO_LGBTQ", "Dem_BChair_LGBTQ"),
+      .fns = ~ dplyr::case_when(.x == 1 ~ "LGBTQ+", 
+                                .x == 0 ~ "Not LGBTQ+", 
+                                .default = NA_character_)
+    ),
+    dplyr::across(
       .cols = c("CEOgender_NB", "BChairgender_NB"),
       .fns = ~ dplyr::case_when(
         .x == 1 ~ "Individual of non-binary gender",
         .x == 0 ~ "Not individual of non-binary gender",
         .default = NA_character_
       )
+    ),
+    dplyr::across(
+      .cols = c("Dem_CEO_Disabled", "Dem_BChair_Disabled"),
+      .fns = ~ dplyr::case_when(.x == 1 ~ "Disabled", 
+                                .x == 0 ~ "Not Disabled", 
+                                .default = NA_character_)
     ),
     dplyr::across(
       .cols = dplyr::all_of(multi_select_cols),
@@ -322,25 +333,21 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
                                 .x == 0 ~ "Did not receive", 
                                 .default = NA_character_)
     ),
-    GovFunding = dplyr::case_when(
-      rowSums(across(all_of(gvt_fndraise_vars)), na.rm = TRUE) > 0 ~ "Received",
-      rowSums(across(all_of(gvt_fndraise_vars)), na.rm = TRUE) == 0 ~ "Did not receive",
-      .default = NA_character_
-    ),
-    dplyr::across(
-      .cols = dplyr::all_of(qns_invalid_2024),
-      .fns = ~ dplyr::case_when(
-        Year == "2024" ~ NA_integer_,
-        .default = .x
-      )
-    ),
     dplyr::across(
       .cols = dplyr::all_of(percentdem_vars),
       .fns = ~ dplyr::case_when(
         .x == 97 ~ NA_integer_,
         .default = .x
       )
-    )
+    ),
+    svywt = dplyr::coalesce(year4wt, year5wt)
+  ) |>
+  dplyr::mutate(
+    Staff_RegVlntr = dplyr::coalesce(Staff_RegVlntr_2023, Staff_RegVlntr_2024),
+    Staff_EpsdVlntr = dplyr::coalesce(Staff_EpsdVlntr_2023, Staff_EpsdVltnr_2024),
+    Staff_Boardmmbr = dplyr::coalesce(Staff_Boardmmbr_2023, Staff_Boardmmbr_2024),
+    Staff_Fulltime = dplyr::coalesce(Staff_Fulltime_2023, Staff_Fulltime_2024),
+    Staff_Parttime = dplyr::coalesce(Staff_Parttime_2023, Staff_Parttime_2024)
   )
 
 # Save intermediate file
