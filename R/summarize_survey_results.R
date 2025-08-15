@@ -16,8 +16,10 @@ svy_tfm <- function(groupby_2_vec,
                     metric,
                     method,
                     df) {
-  df_filtered <- dplyr::filter(df, !is.na(.data[[metric]]))
-  df_grouped <- svy_grpby(groupby_1, "filterOpt", df_filtered)
+  df_filtered_byyear <- df |>
+    dplyr::filter(!is.na(.data[[metric]])) |>
+    dplyr::group_by(year)
+  df_grouped <- svy_grpby(groupby_1, "filterOpt", df_filtered_byyear)
   df_summarised <- purrr::map(
     .x = groupby_2_vec,
     .f = function(groupby_2) {
@@ -80,13 +82,13 @@ svy_tfm <- function(groupby_2_vec,
           metricname = {{metric}})
       # Get weighted counts of the number of survey respondents
       df_summarised <- df_summarised |>
-        dplyr::group_by(.data[[nest_var]]) |>
+        dplyr::group_by(year, .data[[nest_var]]) |>
         dplyr::mutate(num_responses = sum(num_responses, na.rm = TRUE)) |>
         dplyr::ungroup()
       # Get weighted proportions for each category for categorical variables
       if (method == "% of respondents") {
         df_summarised <- df_summarised |>
-          dplyr::group_by(.data[[nest_var]]) |>
+          dplyr::group_by(year, .data[[nest_var]]) |>
           dplyr::mutate(value = value / sum(value, na.rm = TRUE)) |>
           dplyr::ungroup()
       }
@@ -138,7 +140,7 @@ svy_wt <- function(grpby) {
     wt <- "stateweight"
   }
   else {
-    wt <- "year4wt"
+    wt <- "svywt"
   }
   return(wt)
 }
