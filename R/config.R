@@ -1,8 +1,14 @@
 # Params for NP Trends survey analysis
 
-# Path to raw year 4 survey data
+# Path to files
 nptrends_y4_raw_path <- "Y:/CNP/Generosity Commission/Year 4/Restricted Dataset/RESTRICTED_Y4.csv"
 nptrends_y5_raw_path <- "Y:/CNP/Generosity Commission/Year 5/Restricted Dataset/RESTRICTED_Y5.csv"
+nptrends_full_preproc_path <- "data/intermediate/nptrends_full_preprocessed.csv"
+nptrends_full_transformed_path <- "data/intermediate/nptrends_full_transformed.csv"
+nptrends_full_postproc_path <- "data/processed/nptrends_full_postprocessed.csv"
+template_path <- "data/validate/dataTemplate.csv"
+combinations_validate_path <- "data/validate/combinations_validate.csv"
+template_metadata_path <- "data/validate/nptrends_template_metadata.csv"
 
 # Variable names needed for analysis
 survey_analysis_vars <- c(
@@ -10,6 +16,8 @@ survey_analysis_vars <- c(
   "ntmaj12",
   "census_urban_area",
   "CensusRegion4",
+  "state",
+  "State",
   "year4wt",
   "stateweight",
   "year5wt",
@@ -146,7 +154,10 @@ multi_select_cols <- c(
   "FndRaise_TotDigAppeal",
   "FndRaise_TotDirMail",
   "FndRaise_TotVirtEvent",
-  "FndRaise_TotInPersEvent"
+  "FndRaise_TotInPersEvent",
+  "FndRaise_DAF_Grnt_Chng",
+  "FndRaise_Priv_Grnt_Chng",
+  "FndRaise_Corp_Grnt_Chng"
 )
 
 # Questions with 2 possible answers: Received, did not receive
@@ -206,4 +217,126 @@ numstaff_ls <- c(
   "Staff_Fulltime_2024" = "Staff_Fulltime_NA",
   "Staff_Parttime_2023" = "Staff_Parttime_NA",
   "Staff_Parttime_2024" = "Staff_Parttime_NA"
+)
+
+# List containing the summary methods for each survey variable, variable names are mapped to their corresponding summaryVariable in the output dataset. Except "% of respondents, by type", are left as "% of respondents" since the methods used are the same.
+metrics <- list(
+  TotRev_clean = "median",
+  TotExp = "median",
+  Reserves_Est = "average of %",
+  FinanceChng_Reserves = "% of respondents",
+  FinanceChng_TotExp = "% of respondents",
+  FinanceChng_Salaries = "% of respondents",
+  FinanceChng_Benefits = "% of respondents",
+  FinanceChng_TotRent = "% of respondents",
+  FinanceChng_TotTech = "% of respondents",
+  GeoAreas_ServedLocal = "% of respondents",
+  GeoAreas_State = "% of respondents",
+  GeoAreas_Servedmultistate = "% of respondents",
+  GeoAreas_National = "% of respondents",
+  GeoAreas_International = "% of respondents",
+  ProgDem_BelowFPL = "% of respondents",
+  ProgDem_Disabled = "% of respondents",
+  ProgDem_Veterans = "% of respondents",
+  ProgDem_LGBTQ = "% of respondents",
+  ProgDem_Foreign = "% of respondents",
+  ProgDem_Latinx = "% of respondents",
+  ProgDem_Black = "% of respondents",
+  ProgDem_Indigenous = "% of respondents",
+  ProgDem_Asian = "% of respondents",
+  ProgDem_Men = "% of respondents",
+  ProgDem_Women = "% of respondents",
+  ProgDem_Nonbinary = "% of respondents",
+  ProgDem_Children = "% of respondents",
+  ProgDem_YoungAdults = "% of respondents",
+  ProgDem_Adults = "% of respondents",
+  ProgDem_Elders = "% of respondents",
+  PplSrv_NumWait = "% of respondents",
+  PrgSrvc_Suspend = "% of respondents",
+  PrgSrvc_Amt_Srvc = "% of respondents",
+  PrgSrvc_Amt_Num = "% of respondents",
+  Dmnd_NxtYear = "% of respondents",
+  PercentDon_Tot = "average of %",
+  FndRaise_DnrBlw250_ratio = "average of %",
+  FndRaise_DnrAbv250_ratio = "average of %",
+  PercentDAF_Tot = "average of %",
+  PercentPriv_Tot = "average of %",
+  PercentCorp_Tot = "average of %",
+  PercentGov = "average of %",
+  PercentEarned = "average of %",
+  FndRaise_DAF_Rcv = "% of respondents",
+  FndRaise_PFGrnt_Rcv = "% of respondents",
+  FndRaise_Corp_Found_Grnt_Rcv = "% of respondents",
+  FndRaise_CFGrnt_Rcv = "% of respondents",
+  GovFunding = "% of respondents",
+  CARES_Rcv = "% of respondents",
+  FndRaise_DAF_Grnt_Chng = "% of respondents",
+  FndRaise_Priv_Grnt_Chng  = "% of respondents",
+  FndRaise_Corp_Grnt_Chng  = "% of respondents",
+  PrgSrvc_Amt_Fee = "% of respondents",
+  FndRaise_TotExp = "% of respondents",
+  FndRaise_TotDigAppeal = "% of respondents",
+  FndRaise_TotDirMail = "% of respondents",
+  FndRaise_TotVirtEvent = "% of respondents",
+  FndRaise_TotInPersEvent = "% of respondents",
+  PercentDem_Women_Staff = "average of %",
+  Staff_RegVlntr = "median",
+  Staff_EpsdVlntr = "median",
+  PercentDem_Women_Board = "average of %",
+  PercentDem_LGBTQ_Board = "average of %",
+  PercentDem_Disabled_Board = "average of %",
+  PercentDem_Young_Board = "average of %",
+  PercentDem_ReceivedServices_Board = "average of %",
+  PercentDem_POC_Staff = "average of %",
+  PercentDem_LGBTQ_Staff = "average of %",
+  PercentDem_Disabled_Staff = "average of %",
+  PercentDem_Young_Staff = "average of %",
+  PercentDem_ReceivedServices_Staff = "average of %",
+  Staff_Boardmmbr = "median",
+  PercentDem_POC_Board = "average of %",
+  CEOrace_POC = "% of respondents",
+  Dem_CEO_LGBTQ = "% of respondents",
+  Dem_CEO_Disabled = "% of respondents",
+  Dem_CEO_Under35 = "% of respondents",
+  BChair_POC = "% of respondents",
+  Dem_BChair_LGBTQ = "% of respondents",
+  Dem_BChair_Disabled = "% of respondents",
+  Dem_BChair_Under35 = "% of respondents",
+  Staff_Fulltime = "% of respondents",
+  Staff_Parttime = "% of respondents",
+  CEOgender_Man = "% of respondents",
+  CEOgender_Woman = "% of respondents",
+  CEOgender_NB = "% of respondents",
+  BChairgender_Man = "% of respondents",
+  BChairgender_Woman = "% of respondents",
+  BChairgender_NB = "% of respondents"
+)
+
+# Groupby combinations
+groupby_ls <- list(
+  "National" = c(
+    "National",
+    "CensusRegion4", 
+    "state", 
+    "SizeStrata", 
+    "Subsector",
+    "census_urban_area"
+  ), 
+  "CensusRegion4" = c("CensusRegion4", 
+                      "state", 
+                      "SizeStrata",  
+                      "Subsector",
+                      "census_urban_area"), 
+  "state" = c("state", 
+              "SizeStrata", 
+              "Subsector",
+              "census_urban_area") 
+)
+
+# There are several observations with NA values for Urban/Rural that we want to exclude
+rows_to_exclude <- tibble(
+  filterType = c("National", "Region", "State"),
+  filterOpt = c("National", "Midwest", "MI"),
+  splitByOpt = c("Rural/Urban", "Rural/Urban", "Rural/Urban"),
+  splitByOpt_category = c("", "", "")
 )
