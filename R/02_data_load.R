@@ -8,7 +8,7 @@ source(here::here("R", "config.R"))
 source(here::here("R", "metadata.R"))
 
 # Load in transformed survey data
-nptrends_full_transformed <- data.table::fread(nptrends_full_transformed_path)
+nptrends_full_transformed <- data.table::fread(nptrends_full_transformed_path, na.strings = "")
 
 # Postprocess data
 nptrends_full_postprocessed <- nptrends_full_transformed |>
