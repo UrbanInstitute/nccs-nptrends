@@ -11,7 +11,7 @@ source(here::here("R", "config.R"))
 source(here::here("R", "summarize_survey_results.R"))
 
 # Load preprocessed survey data
-nptrends_full_preprocessed = data.table::fread(nptrends_full_preproc_path)
+nptrends_full_preprocessed = data.table::fread(nptrends_full_preproc_path, na.strings = "")
 
 # Transform survey data and calculate all the aggregates needed
 nptrends_full_transformed <- purrr::imap(
@@ -28,7 +28,7 @@ nptrends_full_transformed <- purrr::imap(
       purrr::list_rbind()
     return(rs)
   },
-  .progress = TRUE
+  .progress = "Computing weighted estimates"
 ) |> purrr::list_rbind()
 
 # Save data
