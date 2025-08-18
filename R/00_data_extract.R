@@ -14,10 +14,10 @@ source(here::here("R", "config.R"))
 # Load in raw survey data
 nptrends_y4_raw <- data.table::fread(nptrends_y4_raw_path, 
                                      select = survey_analysis_vars) |>
-  dplyr::mutate(year = "2023")
+  dplyr::mutate(year = "2024")
 nptrends_y5_raw <- data.table::fread(nptrends_y5_raw_path,
                                      select = survey_analysis_vars) |>
-  dplyr::mutate(year = "2024")
+  dplyr::mutate(year = "2025")
 nptrends_full_raw <- nptrends_y4_raw |>
   dplyr::bind_rows(nptrends_y5_raw)
 
