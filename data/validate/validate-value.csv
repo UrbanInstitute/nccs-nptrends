@@ -1,0 +1,561 @@
+metricID,responseOpt,splitByOpt_category,year,value
+4,Did not draw on cash reserves,"",2024,6.6e-01
+4,Did not draw on cash reserves,"",2025,6.4e-01
+4,Drew on cash reserves,"",2024,3.4e-01
+4,Drew on cash reserves,"",2025,3.6e-01
+62,Women,"",2024,5.9e+00
+62,Women,"",2025,6.1e+00
+1,Total revenue,"",2024,4.7e+05
+1,Total revenue,"",2025,5.1e+05
+4,Did not draw on cash reserves,Northeast,2024,6.3e-01
+4,Did not draw on cash reserves,Northeast,2025,6.4e-01
+4,Drew on cash reserves,Northeast,2024,3.7e-01
+4,Drew on cash reserves,Northeast,2025,3.6e-01
+4,Did not draw on cash reserves,Midwest,2024,6.8e-01
+4,Did not draw on cash reserves,Midwest,2025,6.4e-01
+4,Drew on cash reserves,Midwest,2024,3.2e-01
+4,Drew on cash reserves,Midwest,2025,3.6e-01
+4,Did not draw on cash reserves,South,2024,6.7e-01
+4,Did not draw on cash reserves,South,2025,6.6e-01
+4,Drew on cash reserves,South,2024,3.3e-01
+4,Drew on cash reserves,South,2025,3.4e-01
+4,Did not draw on cash reserves,West,2024,6.3e-01
+4,Did not draw on cash reserves,West,2025,6.1e-01
+4,Drew on cash reserves,West,2024,3.7e-01
+4,Drew on cash reserves,West,2025,3.9e-01
+62,Women,Northeast,2024,6.1e+00
+62,Women,Northeast,2025,5.9e+00
+62,Women,Midwest,2024,5.8e+00
+62,Women,Midwest,2025,6.0e+00
+62,Women,South,2024,5.8e+00
+62,Women,South,2025,6.1e+00
+62,Women,West,2024,6.1e+00
+62,Women,West,2025,6.2e+00
+1,Total revenue,Northeast,2024,5.0e+05
+1,Total revenue,Northeast,2025,6.2e+05
+1,Total revenue,Midwest,2024,4.1e+05
+1,Total revenue,Midwest,2025,4.5e+05
+1,Total revenue,South,2024,4.5e+05
+1,Total revenue,South,2025,5.0e+05
+1,Total revenue,West,2024,5.1e+05
+1,Total revenue,West,2025,5.5e+05
+4,Did not draw on cash reserves,"< $100,000",2024,6.9e-01
+4,Did not draw on cash reserves,"< $100,000",2025,7.1e-01
+4,Drew on cash reserves,"< $100,000",2024,3.1e-01
+4,Drew on cash reserves,"< $100,000",2025,2.9e-01
+4,Did not draw on cash reserves,"$100,000 - $499,999",2024,6.7e-01
+4,Did not draw on cash reserves,"$100,000 - $499,999",2025,6.3e-01
+4,Drew on cash reserves,"$100,000 - $499,999",2024,3.3e-01
+4,Drew on cash reserves,"$100,000 - $499,999",2025,3.7e-01
+4,Did not draw on cash reserves,"$500,000 - $999,999",2024,6.4e-01
+4,Did not draw on cash reserves,"$500,000 - $999,999",2025,6.3e-01
+4,Drew on cash reserves,"$500,000 - $999,999",2024,3.6e-01
+4,Drew on cash reserves,"$500,000 - $999,999",2025,3.7e-01
+4,Did not draw on cash reserves,"$1 million - $9,999,999",2024,6.1e-01
+4,Did not draw on cash reserves,"$1 million - $9,999,999",2025,6.2e-01
+4,Drew on cash reserves,"$1 million - $9,999,999",2024,3.9e-01
+4,Drew on cash reserves,"$1 million - $9,999,999",2025,3.8e-01
+4,Did not draw on cash reserves,$10 million and above,2024,6.6e-01
+4,Did not draw on cash reserves,$10 million and above,2025,5.7e-01
+4,Drew on cash reserves,$10 million and above,2024,3.4e-01
+4,Drew on cash reserves,$10 million and above,2025,4.3e-01
+62,Women,"< $100,000",2024,6.3e+00
+62,Women,"< $100,000",2025,6.7e+00
+62,Women,"$100,000 - $499,999",2024,6.2e+00
+62,Women,"$100,000 - $499,999",2025,6.3e+00
+62,Women,"$500,000 - $999,999",2024,5.5e+00
+62,Women,"$500,000 - $999,999",2025,5.7e+00
+62,Women,"$1 million - $9,999,999",2024,5.6e+00
+62,Women,"$1 million - $9,999,999",2025,5.7e+00
+62,Women,$10 million and above,2024,5.2e+00
+62,Women,$10 million and above,2025,5.4e+00
+1,Total revenue,"< $100,000",2024,1.0e+05
+1,Total revenue,"< $100,000",2025,1.1e+05
+1,Total revenue,"$100,000 - $499,999",2024,3.0e+05
+1,Total revenue,"$100,000 - $499,999",2025,3.3e+05
+1,Total revenue,"$500,000 - $999,999",2024,9.0e+05
+1,Total revenue,"$500,000 - $999,999",2025,9.4e+05
+1,Total revenue,"$1 million - $9,999,999",2024,2.3e+06
+1,Total revenue,"$1 million - $9,999,999",2025,3.0e+06
+1,Total revenue,$10 million and above,2024,2.0e+07
+1,Total revenue,$10 million and above,2025,1.8e+07
+4,Did not draw on cash reserves,"Arts, culture, and humanities",2024,6.0e-01
+4,Did not draw on cash reserves,"Arts, culture, and humanities",2025,6.1e-01
+4,Drew on cash reserves,"Arts, culture, and humanities",2024,4.0e-01
+4,Drew on cash reserves,"Arts, culture, and humanities",2025,3.9e-01
+4,Did not draw on cash reserves,Education,2024,6.6e-01
+4,Did not draw on cash reserves,Education,2025,6.8e-01
+4,Drew on cash reserves,Education,2024,3.4e-01
+4,Drew on cash reserves,Education,2025,3.2e-01
+4,Did not draw on cash reserves,Environment and animals,2024,6.3e-01
+4,Did not draw on cash reserves,Environment and animals,2025,6.4e-01
+4,Drew on cash reserves,Environment and animals,2024,3.7e-01
+4,Drew on cash reserves,Environment and animals,2025,3.6e-01
+4,Did not draw on cash reserves,Health,2024,6.9e-01
+4,Did not draw on cash reserves,Health,2025,5.9e-01
+4,Drew on cash reserves,Health,2024,3.1e-01
+4,Drew on cash reserves,Health,2025,4.1e-01
+4,Did not draw on cash reserves,Human services,2024,6.8e-01
+4,Did not draw on cash reserves,Human services,2025,6.4e-01
+4,Drew on cash reserves,Human services,2024,3.2e-01
+4,Drew on cash reserves,Human services,2025,3.6e-01
+4,Did not draw on cash reserves,"International, foreign affairs",2024,6.7e-01
+4,Did not draw on cash reserves,"International, foreign affairs",2025,7.2e-01
+4,Drew on cash reserves,"International, foreign affairs",2024,3.3e-01
+4,Drew on cash reserves,"International, foreign affairs",2025,2.8e-01
+4,Did not draw on cash reserves,"Public, societal benefit",2024,6.2e-01
+4,Did not draw on cash reserves,"Public, societal benefit",2025,6.6e-01
+4,Drew on cash reserves,"Public, societal benefit",2024,3.8e-01
+4,Drew on cash reserves,"Public, societal benefit",2025,3.4e-01
+62,Women,"Arts, culture, and humanities",2024,5.7e+00
+62,Women,"Arts, culture, and humanities",2025,5.8e+00
+62,Women,Education,2024,6.3e+00
+62,Women,Education,2025,6.7e+00
+62,Women,Environment and animals,2024,7.0e+00
+62,Women,Environment and animals,2025,7.0e+00
+62,Women,Health,2024,6.0e+00
+62,Women,Health,2025,6.2e+00
+62,Women,Human services,2024,5.8e+00
+62,Women,Human services,2025,5.9e+00
+62,Women,"International, foreign affairs",2024,5.2e+00
+62,Women,"International, foreign affairs",2025,5.0e+00
+62,Women,"Public, societal benefit",2024,5.7e+00
+62,Women,"Public, societal benefit",2025,6.3e+00
+1,Total revenue,"Arts, culture, and humanities",2024,3.0e+05
+1,Total revenue,"Arts, culture, and humanities",2025,3.4e+05
+1,Total revenue,Education,2024,3.5e+05
+1,Total revenue,Education,2025,4.2e+05
+1,Total revenue,Environment and animals,2024,3.0e+05
+1,Total revenue,Environment and animals,2025,3.7e+05
+1,Total revenue,Health,2024,7.5e+05
+1,Total revenue,Health,2025,6.6e+05
+1,Total revenue,Human services,2024,6.4e+05
+1,Total revenue,Human services,2025,6.3e+05
+1,Total revenue,"International, foreign affairs",2024,3.0e+05
+1,Total revenue,"International, foreign affairs",2025,3.5e+05
+1,Total revenue,"Public, societal benefit",2024,5.6e+05
+1,Total revenue,"Public, societal benefit",2025,7.3e+05
+4,Did not draw on cash reserves,AK,2024,
+4,Did not draw on cash reserves,AK,2025,
+4,Drew on cash reserves,AK,2024,
+4,Drew on cash reserves,AK,2025,
+4,Did not draw on cash reserves,AL,2024,6.3e-01
+4,Did not draw on cash reserves,AL,2025,7.6e-01
+4,Drew on cash reserves,AL,2024,3.7e-01
+4,Drew on cash reserves,AL,2025,2.4e-01
+4,Did not draw on cash reserves,AR,2024,7.3e-01
+4,Did not draw on cash reserves,AR,2025,6.9e-01
+4,Drew on cash reserves,AR,2024,2.7e-01
+4,Drew on cash reserves,AR,2025,3.1e-01
+4,Did not draw on cash reserves,AZ,2024,6.2e-01
+4,Did not draw on cash reserves,AZ,2025,6.0e-01
+4,Drew on cash reserves,AZ,2024,3.8e-01
+4,Drew on cash reserves,AZ,2025,4.0e-01
+4,Did not draw on cash reserves,CA,2024,6.5e-01
+4,Did not draw on cash reserves,CA,2025,5.7e-01
+4,Drew on cash reserves,CA,2024,3.5e-01
+4,Drew on cash reserves,CA,2025,4.3e-01
+4,Did not draw on cash reserves,CO,2024,6.0e-01
+4,Did not draw on cash reserves,CO,2025,6.0e-01
+4,Drew on cash reserves,CO,2024,4.0e-01
+4,Drew on cash reserves,CO,2025,4.0e-01
+4,Did not draw on cash reserves,CT,2024,
+4,Did not draw on cash reserves,CT,2025,
+4,Drew on cash reserves,CT,2024,
+4,Drew on cash reserves,CT,2025,
+4,Did not draw on cash reserves,DC,2024,4.2e-01
+4,Did not draw on cash reserves,DC,2025,
+4,Drew on cash reserves,DC,2024,5.8e-01
+4,Drew on cash reserves,DC,2025,
+4,Did not draw on cash reserves,DE,2024,
+4,Did not draw on cash reserves,DE,2025,
+4,Drew on cash reserves,DE,2024,
+4,Drew on cash reserves,DE,2025,
+4,Did not draw on cash reserves,FL,2024,6.9e-01
+4,Did not draw on cash reserves,FL,2025,6.3e-01
+4,Drew on cash reserves,FL,2024,3.1e-01
+4,Drew on cash reserves,FL,2025,3.7e-01
+4,Did not draw on cash reserves,GA,2024,5.6e-01
+4,Did not draw on cash reserves,GA,2025,6.7e-01
+4,Drew on cash reserves,GA,2024,4.4e-01
+4,Drew on cash reserves,GA,2025,3.3e-01
+4,Did not draw on cash reserves,HI,2024,
+4,Did not draw on cash reserves,HI,2025,
+4,Drew on cash reserves,HI,2024,
+4,Drew on cash reserves,HI,2025,
+4,Did not draw on cash reserves,IA,2024,
+4,Did not draw on cash reserves,IA,2025,
+4,Drew on cash reserves,IA,2024,
+4,Drew on cash reserves,IA,2025,
+4,Did not draw on cash reserves,ID,2024,6.2e-01
+4,Did not draw on cash reserves,ID,2025,6.3e-01
+4,Drew on cash reserves,ID,2024,3.8e-01
+4,Drew on cash reserves,ID,2025,3.7e-01
+4,Did not draw on cash reserves,IL,2024,6.7e-01
+4,Did not draw on cash reserves,IL,2025,6.5e-01
+4,Drew on cash reserves,IL,2024,3.3e-01
+4,Drew on cash reserves,IL,2025,3.5e-01
+4,Did not draw on cash reserves,IN,2024,6.9e-01
+4,Did not draw on cash reserves,IN,2025,
+4,Drew on cash reserves,IN,2024,3.1e-01
+4,Drew on cash reserves,IN,2025,
+4,Did not draw on cash reserves,KS,2024,
+4,Did not draw on cash reserves,KS,2025,
+4,Drew on cash reserves,KS,2024,
+4,Drew on cash reserves,KS,2025,
+4,Did not draw on cash reserves,KY,2024,8.5e-01
+4,Did not draw on cash reserves,KY,2025,8.5e-01
+4,Drew on cash reserves,KY,2024,1.5e-01
+4,Drew on cash reserves,KY,2025,1.5e-01
+4,Did not draw on cash reserves,LA,2024,7.8e-01
+4,Did not draw on cash reserves,LA,2025,
+4,Drew on cash reserves,LA,2024,2.2e-01
+4,Drew on cash reserves,LA,2025,
+4,Did not draw on cash reserves,MA,2024,6.7e-01
+4,Did not draw on cash reserves,MA,2025,6.6e-01
+4,Drew on cash reserves,MA,2024,3.3e-01
+4,Drew on cash reserves,MA,2025,3.4e-01
+4,Did not draw on cash reserves,MD,2024,7.0e-01
+4,Did not draw on cash reserves,MD,2025,7.0e-01
+4,Drew on cash reserves,MD,2024,3.0e-01
+4,Drew on cash reserves,MD,2025,3.0e-01
+4,Did not draw on cash reserves,ME,2024,
+4,Did not draw on cash reserves,ME,2025,
+4,Drew on cash reserves,ME,2024,
+4,Drew on cash reserves,ME,2025,
+4,Did not draw on cash reserves,MI,2024,6.7e-01
+4,Did not draw on cash reserves,MI,2025,5.7e-01
+4,Drew on cash reserves,MI,2024,3.3e-01
+4,Drew on cash reserves,MI,2025,4.3e-01
+4,Did not draw on cash reserves,MN,2024,7.5e-01
+4,Did not draw on cash reserves,MN,2025,7.8e-01
+4,Drew on cash reserves,MN,2024,2.5e-01
+4,Drew on cash reserves,MN,2025,2.2e-01
+4,Did not draw on cash reserves,MO,2024,7.2e-01
+4,Did not draw on cash reserves,MO,2025,6.1e-01
+4,Drew on cash reserves,MO,2024,2.8e-01
+4,Drew on cash reserves,MO,2025,3.9e-01
+4,Did not draw on cash reserves,MS,2024,5.2e-01
+4,Did not draw on cash reserves,MS,2025,5.0e-01
+4,Drew on cash reserves,MS,2024,4.8e-01
+4,Drew on cash reserves,MS,2025,5.0e-01
+4,Did not draw on cash reserves,MT,2024,5.5e-01
+4,Did not draw on cash reserves,MT,2025,6.0e-01
+4,Drew on cash reserves,MT,2024,4.5e-01
+4,Drew on cash reserves,MT,2025,4.0e-01
+4,Did not draw on cash reserves,NC,2024,6.3e-01
+4,Did not draw on cash reserves,NC,2025,6.1e-01
+4,Drew on cash reserves,NC,2024,3.7e-01
+4,Drew on cash reserves,NC,2025,3.9e-01
+4,Did not draw on cash reserves,ND,2024,
+4,Did not draw on cash reserves,ND,2025,
+4,Drew on cash reserves,ND,2024,
+4,Drew on cash reserves,ND,2025,
+4,Did not draw on cash reserves,NE,2024,
+4,Did not draw on cash reserves,NE,2025,
+4,Drew on cash reserves,NE,2024,
+4,Drew on cash reserves,NE,2025,
+4,Did not draw on cash reserves,NH,2024,
+4,Did not draw on cash reserves,NH,2025,
+4,Drew on cash reserves,NH,2024,
+4,Drew on cash reserves,NH,2025,
+4,Did not draw on cash reserves,NJ,2024,7.0e-01
+4,Did not draw on cash reserves,NJ,2025,
+4,Drew on cash reserves,NJ,2024,3.0e-01
+4,Drew on cash reserves,NJ,2025,
+4,Did not draw on cash reserves,NM,2024,7.0e-01
+4,Did not draw on cash reserves,NM,2025,6.9e-01
+4,Drew on cash reserves,NM,2024,3.0e-01
+4,Drew on cash reserves,NM,2025,3.1e-01
+4,Did not draw on cash reserves,NV,2024,7.1e-01
+4,Did not draw on cash reserves,NV,2025,
+4,Drew on cash reserves,NV,2024,2.9e-01
+4,Drew on cash reserves,NV,2025,
+4,Did not draw on cash reserves,NY,2024,6.0e-01
+4,Did not draw on cash reserves,NY,2025,6.4e-01
+4,Drew on cash reserves,NY,2024,4.0e-01
+4,Drew on cash reserves,NY,2025,3.6e-01
+4,Did not draw on cash reserves,OH,2024,6.5e-01
+4,Did not draw on cash reserves,OH,2025,6.7e-01
+4,Drew on cash reserves,OH,2024,3.5e-01
+4,Drew on cash reserves,OH,2025,3.3e-01
+4,Did not draw on cash reserves,OK,2024,6.7e-01
+4,Did not draw on cash reserves,OK,2025,7.2e-01
+4,Drew on cash reserves,OK,2024,3.3e-01
+4,Drew on cash reserves,OK,2025,2.8e-01
+4,Did not draw on cash reserves,OR,2024,5.8e-01
+4,Did not draw on cash reserves,OR,2025,
+4,Drew on cash reserves,OR,2024,4.2e-01
+4,Drew on cash reserves,OR,2025,
+4,Did not draw on cash reserves,PA,2024,5.9e-01
+4,Did not draw on cash reserves,PA,2025,5.6e-01
+4,Drew on cash reserves,PA,2024,4.1e-01
+4,Drew on cash reserves,PA,2025,4.4e-01
+4,Did not draw on cash reserves,RI,2024,
+4,Did not draw on cash reserves,RI,2025,
+4,Drew on cash reserves,RI,2024,
+4,Drew on cash reserves,RI,2025,
+4,Did not draw on cash reserves,SC,2024,
+4,Did not draw on cash reserves,SC,2025,
+4,Drew on cash reserves,SC,2024,
+4,Drew on cash reserves,SC,2025,
+4,Did not draw on cash reserves,SD,2024,
+4,Did not draw on cash reserves,SD,2025,
+4,Drew on cash reserves,SD,2024,
+4,Drew on cash reserves,SD,2025,
+4,Did not draw on cash reserves,TN,2024,6.9e-01
+4,Did not draw on cash reserves,TN,2025,5.7e-01
+4,Drew on cash reserves,TN,2024,3.1e-01
+4,Drew on cash reserves,TN,2025,4.3e-01
+4,Did not draw on cash reserves,TX,2024,6.6e-01
+4,Did not draw on cash reserves,TX,2025,6.3e-01
+4,Drew on cash reserves,TX,2024,3.4e-01
+4,Drew on cash reserves,TX,2025,3.7e-01
+4,Did not draw on cash reserves,UT,2024,6.6e-01
+4,Did not draw on cash reserves,UT,2025,6.0e-01
+4,Drew on cash reserves,UT,2024,3.4e-01
+4,Drew on cash reserves,UT,2025,4.0e-01
+4,Did not draw on cash reserves,VA,2024,6.8e-01
+4,Did not draw on cash reserves,VA,2025,7.5e-01
+4,Drew on cash reserves,VA,2024,3.2e-01
+4,Drew on cash reserves,VA,2025,2.5e-01
+4,Did not draw on cash reserves,VT,2024,
+4,Did not draw on cash reserves,VT,2025,
+4,Drew on cash reserves,VT,2024,
+4,Drew on cash reserves,VT,2025,
+4,Did not draw on cash reserves,WA,2024,6.6e-01
+4,Did not draw on cash reserves,WA,2025,4.7e-01
+4,Drew on cash reserves,WA,2024,3.4e-01
+4,Drew on cash reserves,WA,2025,5.3e-01
+4,Did not draw on cash reserves,WI,2024,5.9e-01
+4,Did not draw on cash reserves,WI,2025,5.2e-01
+4,Drew on cash reserves,WI,2024,4.1e-01
+4,Drew on cash reserves,WI,2025,4.8e-01
+4,Did not draw on cash reserves,WV,2024,
+4,Did not draw on cash reserves,WV,2025,
+4,Drew on cash reserves,WV,2024,
+4,Drew on cash reserves,WV,2025,
+4,Did not draw on cash reserves,WY,2024,6.9e-01
+4,Did not draw on cash reserves,WY,2025,
+4,Drew on cash reserves,WY,2024,3.1e-01
+4,Drew on cash reserves,WY,2025,
+62,Women,AK,2024,
+62,Women,AK,2025,
+62,Women,AL,2024,5.3e+00
+62,Women,AL,2025,5.4e+00
+62,Women,AR,2024,6.2e+00
+62,Women,AR,2025,6.9e+00
+62,Women,AZ,2024,6.2e+00
+62,Women,AZ,2025,6.1e+00
+62,Women,CA,2024,5.8e+00
+62,Women,CA,2025,6.4e+00
+62,Women,CO,2024,6.1e+00
+62,Women,CO,2025,6.1e+00
+62,Women,CT,2024,6.4e+00
+62,Women,CT,2025,
+62,Women,DC,2024,5.7e+00
+62,Women,DC,2025,
+62,Women,DE,2024,
+62,Women,DE,2025,
+62,Women,FL,2024,5.3e+00
+62,Women,FL,2025,5.4e+00
+62,Women,GA,2024,5.8e+00
+62,Women,GA,2025,6.2e+00
+62,Women,HI,2024,
+62,Women,HI,2025,
+62,Women,IA,2024,5.7e+00
+62,Women,IA,2025,
+62,Women,ID,2024,6.7e+00
+62,Women,ID,2025,6.8e+00
+62,Women,IL,2024,6.0e+00
+62,Women,IL,2025,5.9e+00
+62,Women,IN,2024,5.9e+00
+62,Women,IN,2025,6.2e+00
+62,Women,KS,2024,
+62,Women,KS,2025,
+62,Women,KY,2024,6.1e+00
+62,Women,KY,2025,6.5e+00
+62,Women,LA,2024,6.5e+00
+62,Women,LA,2025,
+62,Women,MA,2024,6.1e+00
+62,Women,MA,2025,5.9e+00
+62,Women,MD,2024,6.1e+00
+62,Women,MD,2025,6.2e+00
+62,Women,ME,2024,
+62,Women,ME,2025,
+62,Women,MI,2024,5.3e+00
+62,Women,MI,2025,6.3e+00
+62,Women,MN,2024,5.5e+00
+62,Women,MN,2025,6.2e+00
+62,Women,MO,2024,5.1e+00
+62,Women,MO,2025,
+62,Women,MS,2024,5.7e+00
+62,Women,MS,2025,6.7e+00
+62,Women,MT,2024,6.1e+00
+62,Women,MT,2025,6.2e+00
+62,Women,NC,2024,5.9e+00
+62,Women,NC,2025,7.3e+00
+62,Women,ND,2024,
+62,Women,ND,2025,
+62,Women,NE,2024,
+62,Women,NE,2025,
+62,Women,NH,2024,
+62,Women,NH,2025,
+62,Women,NJ,2024,5.9e+00
+62,Women,NJ,2025,
+62,Women,NM,2024,6.2e+00
+62,Women,NM,2025,6.4e+00
+62,Women,NV,2024,7.2e+00
+62,Women,NV,2025,
+62,Women,NY,2024,6.1e+00
+62,Women,NY,2025,5.9e+00
+62,Women,OH,2024,5.9e+00
+62,Women,OH,2025,5.1e+00
+62,Women,OK,2024,5.9e+00
+62,Women,OK,2025,6.4e+00
+62,Women,OR,2024,6.1e+00
+62,Women,OR,2025,
+62,Women,PA,2024,5.9e+00
+62,Women,PA,2025,6.0e+00
+62,Women,RI,2024,
+62,Women,RI,2025,
+62,Women,SC,2024,
+62,Women,SC,2025,
+62,Women,SD,2024,
+62,Women,SD,2025,
+62,Women,TN,2024,5.8e+00
+62,Women,TN,2025,6.1e+00
+62,Women,TX,2024,5.7e+00
+62,Women,TX,2025,5.9e+00
+62,Women,UT,2024,5.3e+00
+62,Women,UT,2025,5.8e+00
+62,Women,VA,2024,5.3e+00
+62,Women,VA,2025,6.0e+00
+62,Women,VT,2024,
+62,Women,VT,2025,
+62,Women,WA,2024,6.7e+00
+62,Women,WA,2025,6.5e+00
+62,Women,WI,2024,6.0e+00
+62,Women,WI,2025,5.7e+00
+62,Women,WV,2024,
+62,Women,WV,2025,
+62,Women,WY,2024,5.6e+00
+62,Women,WY,2025,
+1,Total revenue,AK,2024,
+1,Total revenue,AK,2025,
+1,Total revenue,AL,2024,4.2e+05
+1,Total revenue,AL,2025,5.4e+05
+1,Total revenue,AR,2024,4.5e+05
+1,Total revenue,AR,2025,3.0e+05
+1,Total revenue,AZ,2024,6.1e+05
+1,Total revenue,AZ,2025,7.0e+05
+1,Total revenue,CA,2024,7.5e+05
+1,Total revenue,CA,2025,7.8e+05
+1,Total revenue,CO,2024,4.8e+05
+1,Total revenue,CO,2025,5.5e+05
+1,Total revenue,CT,2024,4.0e+05
+1,Total revenue,CT,2025,
+1,Total revenue,DC,2024,1.2e+06
+1,Total revenue,DC,2025,
+1,Total revenue,DE,2024,
+1,Total revenue,DE,2025,
+1,Total revenue,FL,2024,4.5e+05
+1,Total revenue,FL,2025,6.3e+05
+1,Total revenue,GA,2024,3.7e+05
+1,Total revenue,GA,2025,3.5e+05
+1,Total revenue,HI,2024,
+1,Total revenue,HI,2025,
+1,Total revenue,IA,2024,2.7e+05
+1,Total revenue,IA,2025,
+1,Total revenue,ID,2024,2.9e+05
+1,Total revenue,ID,2025,3.0e+05
+1,Total revenue,IL,2024,4.0e+05
+1,Total revenue,IL,2025,4.0e+05
+1,Total revenue,IN,2024,4.4e+05
+1,Total revenue,IN,2025,
+1,Total revenue,KS,2024,
+1,Total revenue,KS,2025,
+1,Total revenue,KY,2024,4.5e+05
+1,Total revenue,KY,2025,6.5e+05
+1,Total revenue,LA,2024,6.5e+05
+1,Total revenue,LA,2025,4.6e+05
+1,Total revenue,MA,2024,7.7e+05
+1,Total revenue,MA,2025,9.7e+05
+1,Total revenue,MD,2024,5.0e+05
+1,Total revenue,MD,2025,3.5e+05
+1,Total revenue,ME,2024,
+1,Total revenue,ME,2025,
+1,Total revenue,MI,2024,2.8e+05
+1,Total revenue,MI,2025,4.5e+05
+1,Total revenue,MN,2024,7.5e+05
+1,Total revenue,MN,2025,5.0e+05
+1,Total revenue,MO,2024,8.9e+05
+1,Total revenue,MO,2025,
+1,Total revenue,MS,2024,2.3e+05
+1,Total revenue,MS,2025,3.4e+05
+1,Total revenue,MT,2024,4.0e+05
+1,Total revenue,MT,2025,5.5e+05
+1,Total revenue,NC,2024,5.6e+05
+1,Total revenue,NC,2025,6.0e+05
+1,Total revenue,ND,2024,
+1,Total revenue,ND,2025,
+1,Total revenue,NE,2024,
+1,Total revenue,NE,2025,
+1,Total revenue,NH,2024,
+1,Total revenue,NH,2025,
+1,Total revenue,NJ,2024,3.5e+05
+1,Total revenue,NJ,2025,
+1,Total revenue,NM,2024,4.6e+05
+1,Total revenue,NM,2025,6.5e+05
+1,Total revenue,NV,2024,4.5e+05
+1,Total revenue,NV,2025,
+1,Total revenue,NY,2024,5.0e+05
+1,Total revenue,NY,2025,7.5e+05
+1,Total revenue,OH,2024,4.0e+05
+1,Total revenue,OH,2025,6.6e+05
+1,Total revenue,OK,2024,4.3e+05
+1,Total revenue,OK,2025,3.1e+05
+1,Total revenue,OR,2024,3.7e+05
+1,Total revenue,OR,2025,
+1,Total revenue,PA,2024,3.6e+05
+1,Total revenue,PA,2025,2.8e+05
+1,Total revenue,RI,2024,
+1,Total revenue,RI,2025,
+1,Total revenue,SC,2024,
+1,Total revenue,SC,2025,
+1,Total revenue,SD,2024,
+1,Total revenue,SD,2025,
+1,Total revenue,TN,2024,3.8e+05
+1,Total revenue,TN,2025,5.8e+05
+1,Total revenue,TX,2024,4.5e+05
+1,Total revenue,TX,2025,5.5e+05
+1,Total revenue,UT,2024,3.6e+05
+1,Total revenue,UT,2025,4.0e+05
+1,Total revenue,VA,2024,4.5e+05
+1,Total revenue,VA,2025,1.0e+06
+1,Total revenue,VT,2024,
+1,Total revenue,VT,2025,
+1,Total revenue,WA,2024,7.5e+05
+1,Total revenue,WA,2025,4.7e+05
+1,Total revenue,WI,2024,3.0e+05
+1,Total revenue,WI,2025,3.0e+05
+1,Total revenue,WV,2024,
+1,Total revenue,WV,2025,
+1,Total revenue,WY,2024,5.6e+05
+1,Total revenue,WY,2025,
+4,Did not draw on cash reserves,Rural,2024,6.5e-01
+4,Did not draw on cash reserves,Rural,2025,6.3e-01
+4,Drew on cash reserves,Rural,2024,3.5e-01
+4,Drew on cash reserves,Rural,2025,3.7e-01
+4,Did not draw on cash reserves,Urban,2024,6.6e-01
+4,Did not draw on cash reserves,Urban,2025,6.4e-01
+4,Drew on cash reserves,Urban,2024,3.4e-01
+4,Drew on cash reserves,Urban,2025,3.6e-01
+62,Women,Rural,2024,6.2e+00
+62,Women,Rural,2025,6.3e+00
+62,Women,Urban,2024,5.9e+00
+62,Women,Urban,2025,6.0e+00
+1,Total revenue,Rural,2024,2.5e+05
+1,Total revenue,Rural,2025,3.3e+05
+1,Total revenue,Urban,2024,5.0e+05
+1,Total revenue,Urban,2025,5.5e+05
