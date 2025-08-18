@@ -8,7 +8,8 @@ library(tidyverse)
 # Datasets used across multiplte testthat functions
 root <- "../../"
 nptrends_full_postprocessed <- data.table::fread(
-  paste0(root, nptrends_full_postproc_path)
+  paste0(root, nptrends_full_postproc_path),
+  na.strings = ""
 )
 template <- data.table::fread(paste0(root, template_path))
 
