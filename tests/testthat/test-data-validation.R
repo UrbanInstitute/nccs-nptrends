@@ -10,8 +10,11 @@ root <- "../../"
 nptrends_full_postprocessed <- data.table::fread(
   paste0(root, nptrends_full_postproc_path),
   na.strings = ""
-)
-template <- data.table::fread(paste0(root, template_path))
+) |>
+  dplyr::mutate(responseOpt = tolower(responseOpt))
+template <- data.table::fread(paste0(root, template_path)) |>
+  dplyr::mutate(responseOpt = tolower(responseOpt),
+                responseOpt = gsub("’", "'", responseOpt))
 
 # Tests
 testthat::test_that("All permutations in template present", {
@@ -20,7 +23,6 @@ testthat::test_that("All permutations in template present", {
   )
   
   postproc_combinations <- nptrends_full_postprocessed |>
-    dplyr::mutate(responseOpt = tolower(responseOpt)) |>
     dplyr::select(filterType,
                   filterOpt,
                   splitByOpt,
@@ -38,6 +40,7 @@ testthat::test_that("Values were computed correctly", {
   validation_df <- data.table::fread("../../data/validate/validate-value.csv", 
                                      na.strings = "")
   validation_df <- validation_df |>
+    dplyr::mutate(responseOpt = tolower(responseOpt)) |>
     dplyr::mutate(key = paste0(metricID, 
                                responseOpt, 
                                splitByOpt_category, 
@@ -72,9 +75,11 @@ testthat::test_that("Values were computed correctly", {
 testthat::test_that("Metrics are numbered and ordered correctly", {
   templateids <- template |>
     dplyr::select(metricID, responseOpt) |>
-    unique()
+    unique() |>
+    dplyr::arrange(responseOpt)
   myids <- nptrends_full_postprocessed |>
     dplyr::select(metricID, responseOpt) |>
-    unique()
+    unique()  |>
+    dplyr::arrange(responseOpt)
   testthat::expect_equal(templateids, myids)
 })
