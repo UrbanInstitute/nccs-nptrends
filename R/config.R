@@ -1,4 +1,5 @@
 # Params for NP Trends survey analysis
+library(tibble)
 
 # Path to files
 nptrends_y4_raw_path <- "Y:/CNP/Generosity Commission/Year 4/Restricted Dataset/RESTRICTED_Y4.csv"
@@ -7,6 +8,7 @@ nptrends_full_preproc_path <- "data/intermediate/nptrends_full_preprocessed.csv"
 nptrends_full_transformed_path <- "data/intermediate/nptrends_full_transformed.csv"
 nptrends_full_postproc_path <- "data/processed/nptrends_full_postprocessed.csv"
 template_path <- "data/validate/dataTemplate.csv"
+# template source: https://docs.google.com/spreadsheets/d/e/2PACX-1vSODdsROILUW9ozh8yQlAQx_zCHk_0uGCgjXrdfxJyGIH9aFC713ZJDnj7gFhyZ0V7GCzBtnJRmFUBd/pub?gid=0&single=true&output=csv)
 combinations_validate_path <- "data/validate/combinations_validate.csv"
 template_metadata_path <- "data/validate/nptrends_template_metadata.csv"
 
