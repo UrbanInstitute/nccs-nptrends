@@ -5,6 +5,7 @@ library(tidyverse)
 library(data.table)
 library(purrr)
 library(rlang)
+library(spatstat.univar)
 
 # Helper scripts
 source(here::here("R", "config.R"))
