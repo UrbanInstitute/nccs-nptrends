@@ -74,17 +74,8 @@ nptrends_full_postprocessed <- nptrends_full_transformed |>
     )
   )
 
-# Save output dataset
-data.table::fwrite(nptrends_full_postprocessed, nptrends_full_postproc_path)
-
 # Perform validation checks
 testthat::test_dir("tests/testthat")
 
-# TODO:
-# Check that values are correct
-# mentiopn that some responseOpt are numbers
-# mention that variables have been removed
-# tell Hannah that I am not doing the filtering out. and tell Jeff about the recoding
-# validation checks for some manual calculations of each type
-# let jeff know I made the subgroups equal as well. e.g. AK, Size < $100,000
-# ask about years
+# Save output dataset
+data.table::fwrite(nptrends_full_postprocessed, nptrends_full_postproc_path)
