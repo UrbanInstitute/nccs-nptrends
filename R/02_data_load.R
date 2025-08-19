@@ -59,7 +59,6 @@ nptrends_full_postprocessed <- nptrends_full_transformed |>
     value
   ) |>
   dplyr::rename(responseOpt = responseOpt_lookup, vizType = dataVizType) |>
-  dplyr::mutate(responseOpt = stringr::str_to_sentence(responseOpt)) |>
   tidyr::complete(
     tidyr::nesting(metricID, theme, category, vizType, year, responseOpt),
     tidyr::nesting(filterType, filterOpt),
