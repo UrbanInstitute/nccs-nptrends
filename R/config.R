@@ -1,6 +1,11 @@
 # Params for NP Trends survey analysis
 library(tibble)
 
+# Setup googlesheets (optional)
+# library(googlesheets4)
+# googlesheets4::gs4_auth(email = "your_google_email@gmail.com",
+#                         scopes = "https://www.googleapis.com/auth/spreadsheets")
+
 # Path to files
 nptrends_y5_id_path <-   "Y:/CNP/Generosity Commission/Year 5/Restricted Dataset/Identifiable/RESTRICTED_Y5_Identifiable_Vars.csv"
 nptrends_y4_id_path <-   "Y:/CNP/Generosity Commission/Year 4/Restricted Dataset/Identifiable/RESTRICTED_Y4_Identifiable_Vars.csv"
@@ -10,8 +15,12 @@ nptrends_full_preproc_path <- "data/intermediate/nptrends_full_preprocessed.csv"
 nptrends_full_transformed_path <- "data/intermediate/nptrends_full_transformed.csv"
 nptrends_full_postproc_path <- "data/processed/nptrends_full_postprocessed.csv"
 template_path <- "data/validate/dataTemplate.csv"
+dataTemplate_url <- "https://docs.google.com/spreadsheets/d/1ZD2niTLxDAuIhaw_RR-Rg9iVlu1tEuX5OXFcYODv-8k/edit?gid=2005883929#gid=2005883929"
 combinations_validate_path <- "data/validate/combinations_validate.csv"
 metricsMaster_gsheet_url <- "https://docs.google.com/spreadsheets/d/1HMoQymn4F6q0qOqTX9njTLujYwHFXXtSGnhgR0_Ohjk/edit?gid=0#gid=0"
+
+# Download template if it doesn't exist
+download_and_cache_sheet(dataTemplate_url, template_path)
 
 # Variable names needed for analysis
 survey_analysis_vars <- c(

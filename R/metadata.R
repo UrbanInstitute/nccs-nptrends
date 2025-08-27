@@ -1,8 +1,4 @@
-# Setup googlesheets
-library(googlesheets4)
-
-# googlesheets4::gs4_auth(email = "your_google_email@gmail.com",
-#                         scopes = "https://www.googleapis.com/auth/spreadsheets")
+# Internal data objects used for data processing and validation
 
 # metricsMaster table for validation
 metricsMaster <- googlesheets4::read_sheet(metricsMaster_gsheet_url)
@@ -120,11 +116,11 @@ responseOpt_lookup <- tibble::tribble(
   "Number of board members", "Staff_Boardmmbr"
 )
 
-# Template containing desired outputs, excluding values for survey metrics
+# Template containing desired outputs, excluding values for survey metrics used for validation
 # Provided by data-visualization developer Jeff MacIness [jeff@decimalpointstudio.com]
 template <- data.table::fread(template_path)
 
-# Dataset containing all desired permutations of filters in dashboard
+# Dataset containing all desired permutations of filters in dashboard for validation
 combinations_validate_df <- template |>
   dplyr::mutate(
     splitByOpt_category = dplyr::case_when(
