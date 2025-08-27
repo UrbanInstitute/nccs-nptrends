@@ -2,15 +2,16 @@
 library(tibble)
 
 # Path to files
+nptrends_y5_id_path <-   "Y:/CNP/Generosity Commission/Year 5/Restricted Dataset/Identifiable/RESTRICTED_Y5_Identifiable_Vars.csv"
+nptrends_y4_id_path <-   "Y:/CNP/Generosity Commission/Year 4/Restricted Dataset/Identifiable/RESTRICTED_Y4_Identifiable_Vars.csv"
 nptrends_y4_raw_path <- "Y:/CNP/Generosity Commission/Year 4/Restricted Dataset/RESTRICTED_Y4.csv"
 nptrends_y5_raw_path <- "Y:/CNP/Generosity Commission/Year 5/Restricted Dataset/RESTRICTED_Y5.csv"
 nptrends_full_preproc_path <- "data/intermediate/nptrends_full_preprocessed.csv"
 nptrends_full_transformed_path <- "data/intermediate/nptrends_full_transformed.csv"
 nptrends_full_postproc_path <- "data/processed/nptrends_full_postprocessed.csv"
 template_path <- "data/validate/dataTemplate.csv"
-# template source: https://docs.google.com/spreadsheets/d/e/2PACX-1vSODdsROILUW9ozh8yQlAQx_zCHk_0uGCgjXrdfxJyGIH9aFC713ZJDnj7gFhyZ0V7GCzBtnJRmFUBd/pub?gid=0&single=true&output=csv)
 combinations_validate_path <- "data/validate/combinations_validate.csv"
-template_metadata_path <- "data/validate/nptrends_template_metadata.csv"
+metricsMaster_gsheet_url <- "https://docs.google.com/spreadsheets/d/1HMoQymn4F6q0qOqTX9njTLujYwHFXXtSGnhgR0_Ohjk/edit?gid=0#gid=0"
 
 # Variable names needed for analysis
 survey_analysis_vars <- c(
@@ -100,7 +101,6 @@ survey_analysis_vars <- c(
   "Dem_BChair_LGBTQ",
   "Dem_BChair_Disabled",
   "Dem_BChair_Age",
-  "Staff_Fulltime_2023",
   "Staff_Fulltime_NA",
   "Staff_Parttime_2023",
   "Staff_Parttime_NA",
@@ -109,6 +109,7 @@ survey_analysis_vars <- c(
   "CEOgender_NB",
   "BChairgender_Man",
   "BChairgender_Woman",
+  "Staff_Fulltime_2023",
   "BChairgender_NB",
   "TotExp",
   "Reserves_Est",
@@ -205,6 +206,7 @@ percentdem_vars <- c(
   "PercentDem_Disabled_Board",
   "PercentDem_Young_Board",
   "PercentDem_ReceivedServices_Board",
+  "PercentDem_Women_Staff",
   "PercentDem_POC_Staff",
   "PercentDem_LGBTQ_Staff",
   "PercentDem_Disabled_Staff",
@@ -281,21 +283,21 @@ metrics <- list(
   FndRaise_TotDirMail = "% of respondents",
   FndRaise_TotVirtEvent = "% of respondents",
   FndRaise_TotInPersEvent = "% of respondents",
-  PercentDem_Women_Staff = "average of %",
+  PercentDem_Women_Staff = "% of respondents",
   Staff_RegVlntr = "median",
   Staff_EpsdVlntr = "median",
-  PercentDem_Women_Board = "average of %",
-  PercentDem_LGBTQ_Board = "average of %",
-  PercentDem_Disabled_Board = "average of %",
-  PercentDem_Young_Board = "average of %",
-  PercentDem_ReceivedServices_Board = "average of %",
-  PercentDem_POC_Staff = "average of %",
-  PercentDem_LGBTQ_Staff = "average of %",
-  PercentDem_Disabled_Staff = "average of %",
-  PercentDem_Young_Staff = "average of %",
-  PercentDem_ReceivedServices_Staff = "average of %",
+  PercentDem_Women_Board = "% of respondents",
+  PercentDem_LGBTQ_Board = "% of respondents",
+  PercentDem_Disabled_Board = "% of respondents",
+  PercentDem_Young_Board = "% of respondents",
+  PercentDem_ReceivedServices_Board = "% of respondents",
+  PercentDem_POC_Staff = "% of respondents",
+  PercentDem_LGBTQ_Staff = "% of respondents",
+  PercentDem_Disabled_Staff = "% of respondents",
+  PercentDem_Young_Staff = "% of respondents",
+  PercentDem_ReceivedServices_Staff = "% of respondents",
   Staff_Boardmmbr = "median",
-  PercentDem_POC_Board = "average of %",
+  PercentDem_POC_Board = "% of respondents",
   CEOrace_POC = "% of respondents",
   Dem_CEO_LGBTQ = "% of respondents",
   Dem_CEO_Disabled = "% of respondents",
