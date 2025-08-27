@@ -42,6 +42,7 @@ nptrends_full_postprocessed <- nptrends_full_transformed |>
   tidylog::left_join(responseOpt_lookup, by = "metricname") |>
   dplyr::mutate(
     responseOpt_lookup = dplyr::coalesce(responseOpt_lookup, responseOpt),
+    responseOpt_lookup = gsub("'", "’", responseOpt_lookup),
     value = ifelse(num_responses < 25, NA, value)
   ) |>
   tidylog::left_join(template_metadata, by = "metricname") |>
@@ -74,8 +75,8 @@ nptrends_full_postprocessed <- nptrends_full_transformed |>
     )
   )
 
-# Perform validation checks
-testthat::test_dir("tests/testthat")
-
 # Save output dataset
 data.table::fwrite(nptrends_full_postprocessed, nptrends_full_postproc_path)
+
+# Perform validation checks
+testthat::test_dir("tests/testthat")
