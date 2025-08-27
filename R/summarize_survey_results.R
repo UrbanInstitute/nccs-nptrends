@@ -194,3 +194,29 @@ binary_flag <- function(data, ...) {
     }
   })
 }
+
+#' Download a Google Sheet and save as CSV if the file does not exist
+#'
+#' This function checks if a file exists at the specified path. If it does not,
+#' it downloads a Google Sheet using its URL and saves it as a CSV file.
+#'
+#' @param spreadsheet_url The URL of the Google Sheet.
+#' @param dest_path The destination path to save the CSV file.
+#' @return The data frame read from the Google Sheet or the local CSV file.
+#'
+download_and_cache_sheet <- function(spreadsheet_url, dest_path) {
+  # Check if the file already exists at the destination path
+  if (file.exists(dest_path)) {
+    message("File already exists. Reading from local cache...")
+    # Read the data from the local CSV file
+    df <- readr::read_csv(dest_path)
+  } else {
+    message("File not found. Downloading from Google Sheets...")
+    # Download the data from the Google Sheet
+    df <- googlesheets4::read_sheet(spreadsheet_url)
+    # Write the data to a CSV file at the destination path
+    readr::write_csv(df, dest_path)
+    message("Download complete and file saved.")
+  }
+  return(df)
+}
