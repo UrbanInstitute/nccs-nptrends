@@ -275,7 +275,7 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
     ),
     PrgSrvc_Suspend = dplyr::case_when(
       PrgSrvc_Suspend == 1 ~ "Experiencing",
-      PrgSrvc_Suspend == 0 ~ "Not Experiencing",
+      PrgSrvc_Suspend == 0 ~ "Not experiencing",
       .default = NA_character_
     ),
     Dmnd_NxtYear  = dplyr::case_when(
@@ -313,7 +313,7 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
     dplyr::across(
       .cols = c("Dem_CEO_Disabled", "Dem_BChair_Disabled"),
       .fns = ~ dplyr::case_when(.x == 1 ~ "Disabled", 
-                                .x == 0 ~ "Not Disabled", 
+                                .x == 0 ~ "Not disabled", 
                                 .default = NA_character_)
     ),
     dplyr::across(
@@ -336,8 +336,15 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
     dplyr::across(
       .cols = dplyr::all_of(percentdem_vars),
       .fns = ~ dplyr::case_when(
-        .x == 97 ~ NA_integer_,
-        .default = .x
+        .x == 0 ~ "0%",
+        .x %in% c(1, 2) ~ "1-20%",
+        .x %in% c(3, 4) ~ "21-40%",
+        .x %in% c(5, 6) ~ "41-60%",
+        .x %in% c(7, 8) ~ "61-80%",
+        .x %in% c(9, 10) ~ "81-99%",
+        .x == 11 ~ "100%",
+        .x == 97 ~ NA_character_,
+        .default = NA_character_
       )
     ),
     svywt = dplyr::coalesce(year4wt, year5wt)
