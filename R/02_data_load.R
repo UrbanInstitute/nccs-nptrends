@@ -14,7 +14,41 @@ nptrends_full_transformed <- data.table::fread(nptrends_full_transformed_path, n
 nptrends_full_postprocessed <- nptrends_full_transformed |>
   dplyr::filter(responseOpt != "",
                 is.na(splitByOpt_category) |
-                  splitByOpt_category != "Religion") |>
+                  splitByOpt_category != "Religion",
+                ! responseOpt %in% c(
+                  "Did not serve local",
+                  "Did not serve state-wide",
+                  "Did not serve multi state",
+                  "Did not serve national",
+                  "Did not serve international",
+                  "Did not serve families and individuals in poverty",
+                  "Did not serve individuals with physical or cognitive disabilities",
+                  "Did not serve veterans",
+                  "Did not serve LGBTQ+",
+                  "Did not serve foreign born populations",
+                  "Did not serve Latinx/Hispanic/Hispanic Origin",
+                  "Did not serve Black/African American",
+                  "Did not serve indigenous/Native American/Native Alaskan",
+                  "Did not serve Asian/Native Hawaiian/other Pacific Islander",
+                  "Did not serve men/boys",
+                  "Did not serve women/girls",
+                  "Did not serve individuals of non-binary gender",
+                  "Did not serve children and youth",
+                  "Did not serve young adults",
+                  "Did not serve adults",
+                  "Did not serve seniors",
+                  "Not experiencing",
+                  "Did not meet demand",
+                  "Did not receive",
+                  "Not person of color",
+                  "Not under 35 years old",
+                  "Not disabled",
+                  "Not individual of non-binary gender",
+                  "Not LGBTQ+",
+                  "Not a man",
+                  "Not a woman",
+                  "Did not draw on cash reserves"
+                )) |>
   dplyr::mutate(
     value = format(value, digits = 2, scientific = TRUE),
     dplyr::across(

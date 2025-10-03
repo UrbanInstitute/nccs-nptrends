@@ -9,7 +9,7 @@ library(tibble)
 # Path to files
 nptrends_y5_id_path <-   "Y:/CNP/Generosity Commission/Year 5/Restricted Dataset/Identifiable/RESTRICTED_Y5_Identifiable_Vars.csv"
 nptrends_y4_id_path <-   "Y:/CNP/Generosity Commission/Year 4/Restricted Dataset/Identifiable/RESTRICTED_Y4_Identifiable_Vars.csv"
-nptrends_y4_raw_path <- "Y:/CNP/Generosity Commission/Year 4/Restricted Dataset/RESTRICTED_Y4.csv"
+nptrends_y4_raw_path <- "Y:/CNP/Generosity Commission/Year 4/Restricted Dataset/RESTRICTED_Y4_w_DK_NA.csv"
 nptrends_y5_raw_path <- "Y:/CNP/Generosity Commission/Year 5/Restricted Dataset/RESTRICTED_Y5.csv"
 nptrends_full_preproc_path <- "data/intermediate/nptrends_full_preprocessed.csv"
 nptrends_full_transformed_path <- "data/intermediate/nptrends_full_transformed.csv"
@@ -20,7 +20,7 @@ combinations_validate_path <- "data/validate/combinations_validate.csv"
 metricsMaster_gsheet_url <- "https://docs.google.com/spreadsheets/d/1HMoQymn4F6q0qOqTX9njTLujYwHFXXtSGnhgR0_Ohjk/edit?gid=0#gid=0"
 
 # Download template if it doesn't exist
-download_and_cache_sheet(dataTemplate_url, template_path)
+#googlesheets4::download_and_cache_sheet(dataTemplate_url, template_path)
 
 # Variable names needed for analysis
 survey_analysis_vars <- c(
@@ -64,6 +64,7 @@ survey_analysis_vars <- c(
   "ProgDem_YoungAdults",
   "ProgDem_Adults",
   "ProgDem_Elders",
+  "PplSrv_NumServed",
   "PplSrv_NumServed_NA_X",
   "PplSrv_NumWait",
   "PplSrv_NumWait_NA_X",
@@ -77,7 +78,6 @@ survey_analysis_vars <- c(
   "FndRaise_PFGrnt_Rcv",
   "FndRaise_Corp_Found_Grnt_Rcv",
   "FndRaise_CFGrnt_Rcv",
-  "CARES_Rcv",
   "PrgSrvc_Amt_Fee",
   "FndRaise_TotExp",
   "FndRaise_TotDigAppeal",
@@ -177,8 +177,7 @@ binary_rcv_cols <- c(
   "FndRaise_DAF_Rcv",
   "FndRaise_PFGrnt_Rcv",
   "FndRaise_Corp_Found_Grnt_Rcv",
-  "FndRaise_CFGrnt_Rcv",
-  "CARES_Rcv"
+  "FndRaise_CFGrnt_Rcv"
 )
 
 # Government funding questions
@@ -264,7 +263,7 @@ metrics <- list(
   ProgDem_YoungAdults = "% of respondents",
   ProgDem_Adults = "% of respondents",
   ProgDem_Elders = "% of respondents",
-  PplSrv_NumWait = "% of respondents",
+  PplSrv_MeetDemand = "% of respondents",
   PrgSrvc_Suspend = "% of respondents",
   PrgSrvc_Amt_Srvc = "% of respondents",
   PrgSrvc_Amt_Num = "% of respondents",
@@ -281,8 +280,6 @@ metrics <- list(
   FndRaise_PFGrnt_Rcv = "% of respondents",
   FndRaise_Corp_Found_Grnt_Rcv = "% of respondents",
   FndRaise_CFGrnt_Rcv = "% of respondents",
-  GovFunding = "% of respondents",
-  CARES_Rcv = "% of respondents",
   FndRaise_DAF_Grnt_Chng = "% of respondents",
   FndRaise_Priv_Grnt_Chng  = "% of respondents",
   FndRaise_Corp_Grnt_Chng  = "% of respondents",

@@ -81,11 +81,6 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
                                             GeoAreas_RegionalAcross),
     FndRaise_DnrBlw250_ratio = FndRaise_DnrBlw250 / (FndRaise_DnrAbv250 + FndRaise_DnrBlw250),
     FndRaise_DnrAbv250_ratio = FndRaise_DnrAbv250 / (FndRaise_DnrBlw250 + FndRaise_DnrAbv250),
-    GovFunding = dplyr::case_when(
-      rowSums(across(all_of(gvt_fndraise_vars)), na.rm = TRUE) > 0 ~ "Received",
-      rowSums(across(all_of(gvt_fndraise_vars)), na.rm = TRUE) == 0 ~ "Did not receive",
-      .default = NA_character_
-    ),
     Staff_RegVlntr_2023 = dplyr::case_when(
       is.na(Staff_RegVlntr_2023) &
         Staff_RegVlntr_NA == 1 ~ 0,
@@ -117,11 +112,10 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
         Staff_Boardmmbr_NA == 1 ~ 0,
       .default = Staff_Boardmmbr_2024
     ),
-    PplSrv_NumWait = dplyr::case_when(
-      PplSrv_NumServed_NA_X == 1 ~ NA_character_,
-      PplSrv_NumWait == 0 ~ "Met demand",
-      is.na(PplSrv_NumWait) ~ NA_character_,
-      .default = "Did not meet demand"
+    PplSrv_MeetDemand = dplyr::case_when(
+      PplSrv_NumWait == 0 | (PplSrv_NumWait_NA_X == 1 & PplSrv_NumServed > 0) ~ "Did not meet demand",
+      PplSrv_NumWait > 0 ~ "Met demand",
+      .default = NA_character_
     ),
     dplyr::across(
       .cols = dplyr::all_of(names(numstaff_ls)),
@@ -137,12 +131,12 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
     ),
     Dem_BChair_Under35 = dplyr::case_when(
       Dem_BChair_Age %in% c(1, 2) ~ "Under 35 years old",
-      Dem_BChair_Age %in% c(3, 4, 6, 7, 8, 9) ~ "Not under 35 years old",
+      Dem_BChair_Age %in% c(3, 4, 6, 7, 8, 9, 97) ~ "Not under 35 years old",
       .default = NA_character_
     ),
     Dem_CEO_Under35 = dplyr::case_when(
       Dem_CEO_Age %in% c(1, 2) ~ "Under 35 years old",
-      Dem_CEO_Age %in% c(3, 4, 6, 7, 8, 9) ~ "Not under 35 years old",
+      Dem_CEO_Age %in% c(3, 4, 6, 7, 8, 9, 97) ~ "Not under 35 years old",
       .default = NA_character_
     ),
     BChair_POC = dplyr::case_when(
@@ -165,7 +159,7 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
     ),
     FinanceChng_Reserves = dplyr::case_when(
       FinanceChng_Reserves == 1 ~ "Drew on cash reserves",
-      FinanceChng_Reserves == 0 ~ "Did not draw on cash reserves",
+      FinanceChng_Reserves %in% c(97, 0) ~ "Did not draw on cash reserves",
       .default = NA_character_
     ),
     GeoAreas_ServedLocal = dplyr::case_when(
@@ -275,7 +269,7 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
     ),
     PrgSrvc_Suspend = dplyr::case_when(
       PrgSrvc_Suspend == 1 ~ "Experiencing",
-      PrgSrvc_Suspend == 0 ~ "Not experiencing",
+      PrgSrvc_Suspend %in% c(0, 97) ~ "Not experiencing",
       .default = NA_character_
     ),
     Dmnd_NxtYear  = dplyr::case_when(
@@ -299,7 +293,7 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
     dplyr::across(
       .cols = c("Dem_CEO_LGBTQ", "Dem_BChair_LGBTQ"),
       .fns = ~ dplyr::case_when(.x == 1 ~ "LGBTQ+", 
-                                .x == 0 ~ "Not LGBTQ+", 
+                                .x %in% c(0, 97) ~ "Not LGBTQ+", 
                                 .default = NA_character_)
     ),
     dplyr::across(
@@ -313,17 +307,16 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
     dplyr::across(
       .cols = c("Dem_CEO_Disabled", "Dem_BChair_Disabled"),
       .fns = ~ dplyr::case_when(.x == 1 ~ "Disabled", 
-                                .x == 0 ~ "Not disabled", 
+                                .x %in% c(0, 97) ~ "Not disabled", 
                                 .default = NA_character_)
     ),
     dplyr::across(
       .cols = dplyr::all_of(multi_select_cols),
       .fns = ~ dplyr::case_when(
-        .x == 1 ~ "Significant decrease",
-        .x == 2 ~ "Decrease",
+        .x %in% c(1, 2) ~ "Decrease",
         .x == 3 ~ "No change",
-        .x == 4 ~ "Increase",
-        .x == 5 ~ "Significant increase",
+        .x %in% c(4, 5) ~ "Increase",
+        .x == 97 ~ "Unsure",
         .default = NA_character_
       )
     ),
