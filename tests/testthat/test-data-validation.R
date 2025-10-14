@@ -37,15 +37,16 @@ testthat::test_that("Values were computed correctly", {
   validation_df <- data.table::fread("../../data/validate/validate-value.csv", 
                                      na.strings = "")
   validation_df <- validation_df |>
-    dplyr::filter(metricID %in% c(1, 4)) |>
+    dplyr::filter(metricID %in% c(1, 82)) |>
     dplyr::mutate(key = paste0(metricID, 
                                responseOpt, 
                                splitByOpt_category, 
-                               year)) |>
+                               year),
+                  value = as.numeric(value)) |>
     dplyr::select(key, value) |>
     arrange(key)
   postproc_validate <- nptrends_full_postprocessed |>
-    dplyr::filter(metricID %in% c(1, 4),
+    dplyr::filter(metricID %in% c(1, 82),
                   filterType == "National",
                   filterOpt == "National") |>
     dplyr::select(
@@ -63,7 +64,8 @@ testthat::test_that("Values were computed correctly", {
     dplyr::mutate(key = paste0(metricID, 
                                responseOpt, 
                                splitByOpt_category, 
-                               year)) |>
+                               year),
+                  value = as.numeric(value)) |>
     dplyr::select(key, value) |>
     dplyr::arrange(key)
   testthat::expect_equal(validation_df, postproc_validate, tolerance = 0.02)
@@ -89,6 +91,16 @@ testthat::test_that("ResponseOpt values are formatted correctly", {
   templateresponseOpt <- template |>
     dplyr::pull(responseOpt) |>
     unique() |>
+    sort()
+  testthat::expect_equal(myresponseOpt, templateresponseOpt)
+})
+
+testthat::test_that("Correct column names are present", {
+  myresponseOpt <- nptrends_full_postprocessed |>
+    names() |>
+    sort()
+  templateresponseOpt <- template |>
+    names() |>
     sort()
   testthat::expect_equal(myresponseOpt, templateresponseOpt)
 })
