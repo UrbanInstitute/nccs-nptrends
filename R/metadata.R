@@ -1,7 +1,7 @@
 # Internal data objects used for data processing and validation
 
 # metricsMaster table for validation
-metricsMaster <- googlesheets4::read_sheet(metricsMaster_gsheet_url)
+metricsMaster <- gsheet::gsheet2tbl(metricsMaster_gsheet_url)
 
 # lookup table mapping variable names in the survey to metricID values
 metricID_lookup <- tibble::tribble(
@@ -60,8 +60,8 @@ metricID_lookup <- tibble::tribble(
   54, "FndRaise_TotExp",
   55, "FndRaise_TotDigAppeal",
   56, "FndRaise_TotDirMail",
-  57, "FndRaise_TotVirtEvent",
-  58, "FndRaise_TotInPersEvent",
+  57, "FndRaise_TotInPersEvent",
+  58, "FndRaise_TotVirtEvent",
   59, "PercentDem_Women_Staff",
   60, "Staff_RegVlntr",
   61, "Staff_EpsdVlntr",

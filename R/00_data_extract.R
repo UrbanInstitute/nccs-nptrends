@@ -63,10 +63,17 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
     ),
     National = "National"
   ) %>%
+  # Percent variables shouold be under 100%
+  dplyr::mutate(
+    dplyr::across(
+      .cols = percent_vars,
+      .fns = ~ ifelse(.x > 1, NA_real_, .x)
+    )
+  ) %>% 
   # Binary flags for new variables where 1 if any of the variables are 1 and 0 if all are 0
   dplyr::mutate(
     Reserves_Est = dplyr::case_when(
-      is.na(Reserves_Est) & Reserves_NA_X == 1 ~ NA_real_,
+      is.na(Reserves_Est) & Reserves_NA_X == 1 ~ 0,
       is.na(TotExp) | TotExp == 0 ~ NA_real_,
       .default = Reserves_Est / TotExp
     ),
@@ -107,7 +114,6 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       .default = Staff_Boardmmbr_2023
     ),
     Staff_Boardmmbr_2024 = dplyr::case_when(
-      year == "2024" &
       is.na(Staff_Boardmmbr_2024) &
         Staff_Boardmmbr_NA == 1 ~ 0,
       .default = Staff_Boardmmbr_2024
@@ -118,25 +124,37 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       .default = NA_character_
     ),
     dplyr::across(
-      .cols = dplyr::all_of(names(numstaff_ls)),
+      .cols = numstaff_vars[grepl("Fulltime", numstaff_vars)],
       .fns = ~ dplyr::case_when(
+        Staff_Fulltime_NA == 1 & is.na(.x) ~ "0",
         .x == 0 ~ "0",
         .x == 1 ~ "1",
         .x >= 2 &  .x <= 9 ~ "2-9",
         .x >= 10 & .x <= 49 ~ "10-49",
         .x >= 50 ~ "50+",
-        numstaff_ls[[expr(.x)]] == 1 & is.na(.x) ~ "0",
+        .default = NA_character_
+      )
+    ),
+    dplyr::across(
+      .cols = numstaff_vars[grepl("Parttime", numstaff_vars)],
+      .fns = ~ dplyr::case_when(
+        Staff_Parttime_NA == 1 & is.na(.x) ~ "0",
+        .x == 0 ~ "0",
+        .x == 1 ~ "1",
+        .x >= 2 &  .x <= 9 ~ "2-9",
+        .x >= 10 & .x <= 49 ~ "10-49",
+        .x >= 50 ~ "50+",
         .default = NA_character_
       )
     ),
     Dem_BChair_Under35 = dplyr::case_when(
       Dem_BChair_Age %in% c(1, 2) ~ "Under 35 years old",
-      Dem_BChair_Age %in% c(3, 4, 6, 7, 8, 9, 97) ~ "Not under 35 years old",
+      Dem_BChair_Age %in% c(3, 4, 5, 6, 7, 8, 9, 97) ~ "Not under 35 years old",
       .default = NA_character_
     ),
     Dem_CEO_Under35 = dplyr::case_when(
       Dem_CEO_Age %in% c(1, 2) ~ "Under 35 years old",
-      Dem_CEO_Age %in% c(3, 4, 6, 7, 8, 9, 97) ~ "Not under 35 years old",
+      Dem_CEO_Age %in% c(3, 4, 5, 6, 7, 8, 9, 97) ~ "Not under 35 years old",
       .default = NA_character_
     ),
     BChair_POC = dplyr::case_when(

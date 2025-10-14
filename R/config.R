@@ -224,18 +224,28 @@ percentdem_vars <- c(
 )
 
 # Number of staff questions
-numstaff_ls <- c(
-  "Staff_Fulltime_2023" = "Staff_Fulltime_NA",
-  "Staff_Fulltime_2024" = "Staff_Fulltime_NA",
-  "Staff_Parttime_2023" = "Staff_Parttime_NA",
-  "Staff_Parttime_2024" = "Staff_Parttime_NA"
+numstaff_vars <- c(
+  "Staff_Fulltime_2023",
+  "Staff_Fulltime_2024",
+  "Staff_Parttime_2023",
+  "Staff_Parttime_2024" 
+)
+
+# Variables with percentages
+percent_vars <- c(
+  "PercentDon_Tot",
+  "PercentDAF_Tot",
+  "PercentPriv_Tot",
+  "PercentCorp_Tot",
+  "PercentGov",
+  "PercentEarned"
 )
 
 # List containing the summary methods for each survey variable, variable names are mapped to their corresponding summaryVariable in the output dataset. Except "% of respondents, by type", are left as "% of respondents" since the methods used are the same.
 metrics <- list(
   TotRev_clean = "median",
   TotExp = "median",
-  Reserves_Est = "average of %",
+  Reserves_Est = "median",
   FinanceChng_Reserves = "% of respondents",
   FinanceChng_TotExp = "% of respondents",
   FinanceChng_Salaries = "% of respondents",

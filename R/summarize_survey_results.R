@@ -52,8 +52,7 @@ svy_tfm <- function(groupby_2_vec,
             valid_rows <- validate_metric(x_values, w_values)
             if (valid_rows == 0) {
               NA_real_
-            }
-            else {
+            } else {
               if (method == "median") {
                 spatstat.univar::weighted.median(
                   x = !!sym(current_metric),
@@ -68,7 +67,7 @@ svy_tfm <- function(groupby_2_vec,
                 )
               } else if (method == "% of respondents") {
                 sum(!!sym(wt), na.rm = TRUE)
-              }
+              } 
             }
             
           }   ,
@@ -80,11 +79,6 @@ svy_tfm <- function(groupby_2_vec,
           splitByOpt = {{groupby_2}},
           weight = {{wt}},
           metricname = {{metric}})
-      # Get weighted counts of the number of survey respondents
-      df_summarised <- df_summarised |>
-        dplyr::group_by(year, .data[[nest_var]]) |>
-        dplyr::mutate(num_responses = sum(num_responses, na.rm = TRUE)) |>
-        dplyr::ungroup()
       # Get weighted proportions for each category for categorical variables
       if (method == "% of respondents") {
         df_summarised <- df_summarised |>

@@ -76,8 +76,7 @@ nptrends_full_postprocessed <- nptrends_full_transformed |>
   tidylog::left_join(responseOpt_lookup, by = "metricname") |>
   dplyr::mutate(
     responseOpt_lookup = dplyr::coalesce(responseOpt_lookup, responseOpt),
-    responseOpt_lookup = gsub("'", "’", responseOpt_lookup),
-    value = ifelse(num_responses < 25, NA, value)
+    responseOpt_lookup = gsub("'", "’", responseOpt_lookup)
   ) |>
   tidylog::left_join(template_metadata, by = "metricname") |>
   dplyr::select(
@@ -91,7 +90,8 @@ nptrends_full_postprocessed <- nptrends_full_transformed |>
     splitByOpt,
     splitByOpt_category,
     responseOpt_lookup,
-    value
+    value,
+    num_responses
   ) |>
   dplyr::rename(responseOpt = responseOpt_lookup, vizType = dataVizType) |>
   tidyr::complete(
@@ -108,6 +108,18 @@ nptrends_full_postprocessed <- nptrends_full_transformed |>
       "splitByOpt_category"
     )
   )
+
+# Postprocessing to remove metrics where at least one subcategory has under 25 weighted responses
+nptrends_full_postprocessed <- nptrends_full_postprocessed |>
+  dplyr::group_by(metricID, year, filterType, filterOpt, splitByOpt) |>
+  dplyr::mutate(
+    value = dplyr::case_when(
+      any(num_responses < 25) & !is.na(value) ~ NA,
+      .default = value
+    )
+  ) |>
+  dplyr::select(! num_responses) |>
+  dplyr::ungroup() 
 
 # Save output dataset
 data.table::fwrite(nptrends_full_postprocessed, nptrends_full_postproc_path)
