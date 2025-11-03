@@ -11,7 +11,7 @@ source(here::here("R", "metadata.R"))
 nptrends_full_transformed <- data.table::fread(nptrends_full_transformed_path, na.strings = "")
 
 # Postprocess data
-nptrends_full_postprocessed <- nptrends_full_transformed |>
+nptrends_full_formatted <- nptrends_full_transformed |>
   dplyr::filter(responseOpt != "",
                 is.na(splitByOpt_category) |
                   splitByOpt_category != "Religion",
@@ -109,20 +109,57 @@ nptrends_full_postprocessed <- nptrends_full_transformed |>
     )
   )
 
-# Postprocessing to remove metrics where at least one subcategory has under 25 weighted responses
-nptrends_full_postprocessed <- nptrends_full_postprocessed |>
-  dplyr::group_by(metricID, year, filterType, filterOpt, splitByOpt) |>
-  dplyr::mutate(
-    value = dplyr::case_when(
-      any(num_responses < 25) & !is.na(value) ~ NA,
-      .default = value
-    )
+data.table::fwrite(nptrends_full_formatted, nptrends_full_formatted_path)
+
+# Filtering to remove metrics where at least one subcategory has under 25 weighted responses
+nptrends_minresponse <- nptrends_full_formatted |>
+  dplyr::filter(splitByOpt %in% c("Rural/Urban", "Size", "Subsector")) |>
+  dplyr::group_by(
+    year, 
+    metricID, 
+    filterType,
+    filterOpt,
+    splitByOpt
   ) |>
-  dplyr::select(! num_responses) |>
-  dplyr::ungroup() 
+  dplyr::mutate(
+    min_sum = min(num_responses, na.rm = TRUE),
+  ) |>
+  dplyr::ungroup() |>
+  dplyr::mutate(value = ifelse(min_sum < 25, NA, value)) |>
+  dplyr::select(-min_sum)
+
+nptrends_totresponse <- nptrends_full_formatted |>
+  dplyr::filter(!splitByOpt %in% c("Rural/Urban", "Size", "Subsector")) |>
+  dplyr::group_by(year,
+                  metricID,
+                  filterType,
+                  filterOpt,
+                  splitByOpt,
+                  splitByOpt_category) |>
+  dplyr::mutate(
+    group_sum = sum(num_responses, na.rm = TRUE),
+  ) |>
+  dplyr::ungroup() |>
+  dplyr::mutate(value = ifelse(group_sum < 25, NA, value)) |>
+  dplyr::select(-group_sum)
+
+nptrends_full_responseFiltered <- dplyr::bind_rows(nptrends_minresponse, nptrends_totresponse) |>
+  dplyr::select(!num_responses) |>
+  dplyr::filter(
+    (
+      year == 2024 &
+        !filterOpt %in% states_to_exclude[["2024"]] &
+        !splitByOpt_category %in% states_to_exclude[["2024"]]
+    ) | (
+      year == 2025 &
+        !filterOpt %in% states_to_exclude[["2025"]] &
+        !splitByOpt_category %in% states_to_exclude[["2025"]]
+    )
+  )
+
 
 # Save output dataset
-data.table::fwrite(nptrends_full_postprocessed, nptrends_full_postproc_path)
+data.table::fwrite(nptrends_full_responseFiltered, nptrends_full_filtered_path)
 
 # Perform validation checks
 testthat::test_dir("tests/testthat")
