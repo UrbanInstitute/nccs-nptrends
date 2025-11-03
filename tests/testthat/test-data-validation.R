@@ -7,19 +7,48 @@ library(tidyverse)
 
 # Datasets used across multiplte testthat functions
 root <- "../../"
-nptrends_full_postprocessed <- data.table::fread(
-  paste0(root, nptrends_full_postproc_path),
+nptrends_full_formatted <- data.table::fread(
+  paste0(root, nptrends_full_formatted_path),
+  colClasses = list(character = c("responseOpt")),
   na.strings = ""
 )
-template <- data.table::fread(paste0(root, template_path))
+nptrends_full_filtered <- data.table::fread(
+  paste0(root, nptrends_full_filtered_path),
+  colClasses = list(character = c("responseOpt")),
+  na.strings = ""
+)
+template <- data.table::fread(paste0(root, template_path),
+                              colClasses = list(character = c("responseOpt")))
 
 # Tests
+testthat::test_that("Correct states have been excluded", {
+  
+  extract_valid_states <- function(data, yr) {
+    data |>
+      dplyr::filter(year == yr) |>
+      tidyr::pivot_longer(cols = c(filterOpt, splitByOpt_category),
+                          values_to = "disaggregations") |>
+      distinct(disaggregations) |>
+      dplyr::filter(disaggregations %in% usdata::state_stats$abbr) |>
+      dplyr::pull(disaggregations)
+  }
+  
+  states_present_2024 <- extract_valid_states(nptrends_full_filtered, 2024)
+  states_present_2025 <- extract_valid_states(nptrends_full_filtered, 2025)  
+  
+  excluded_2024 <- states_to_exclude[["2024"]]
+  excluded_2025 <- states_to_exclude[["2025"]]
+  
+  testthat::expect_false(any(states_present_2024 %in% excluded_2024))
+  testthat::expect_false(any(states_present_2025 %in% excluded_2025))
+})
+
 testthat::test_that("All permutations in template present", {
   combinations_validate_df <- data.table::fread(
     paste0(root, combinations_validate_path)
   )
   
-  postproc_combinations <- nptrends_full_postprocessed |>
+  formatted_combinations <- nptrends_full_formatted |>
     dplyr::select(filterType,
                   filterOpt,
                   splitByOpt,
@@ -27,47 +56,48 @@ testthat::test_that("All permutations in template present", {
                   responseOpt) |>
     unique()
   testthat::expect_true(data.table::fsetequal(
-    data.table::setDT(postproc_combinations),
+    data.table::setDT(formatted_combinations),
     data.table::setDT(combinations_validate_df)
   ))
 })
 
 testthat::test_that("Values were computed correctly", {
-  # Values computed using Hannah's scripts in Y:\CNP\Generosity Commission\Year 5\Analyses\Dashboard Checking
+  # Values computed by Hannah
   validation_df <- data.table::fread("../../data/validate/validate-value.csv", 
                                      na.strings = "")
   validation_df <- validation_df |>
-    dplyr::filter(metricID %in% c(1, 82)) |>
-    dplyr::mutate(key = paste0(metricID, 
-                               responseOpt, 
+    dplyr::mutate(splitByOpt = ifelse(is.na(splitByOpt), "", splitByOpt),
+                  splitByOpt_category = ifelse(is.na(splitByOpt_category), 
+                                               "", 
+                                               splitByOpt_category),
+                  responseOpt = dplyr::case_when(
+                    responseOpt == "Oct-49" ~ "10-49",
+                    responseOpt == "9-Feb" ~ "2-9",
+                    .default = responseOpt
+                  )) |>
+    dplyr::mutate(key = paste0(metricID,
+                               year,
+                               filterType,
+                               filterOpt,
+                               splitByOpt,
                                splitByOpt_category, 
-                               year),
+                               responseOpt),
                   value = as.numeric(value)) |>
     dplyr::select(key, value) |>
     arrange(key)
-  postproc_validate <- nptrends_full_postprocessed |>
-    dplyr::filter(metricID %in% c(1, 82),
-                  filterType == "National",
-                  filterOpt == "National") |>
-    dplyr::select(
-      metricID,
-      responseOpt,
-      splitByOpt_category,
-      year,
-      value
-    ) |>
-    unique() |>
-    dplyr::mutate(
-      year = as.character(year),
-      metricID = as.integer(metricID)
-    ) |>
-    dplyr::mutate(key = paste0(metricID, 
-                               responseOpt, 
+  postproc_validate <- nptrends_full_filtered |>
+    dplyr::mutate(key = paste0(metricID,
+                               year,
+                               filterType,
+                               filterOpt,
+                               splitByOpt,
                                splitByOpt_category, 
-                               year),
+                               responseOpt),
                   value = as.numeric(value)) |>
     dplyr::select(key, value) |>
-    dplyr::arrange(key)
+    dplyr::filter(key %in% validation_df$key) |>
+    arrange(key) |>
+    unique()
   testthat::expect_equal(validation_df, postproc_validate, tolerance = 0.02)
 })
 
@@ -76,7 +106,7 @@ testthat::test_that("Metrics are numbered and ordered correctly", {
     dplyr::select(metricID, responseOpt) |>
     unique() |>
     dplyr::arrange(responseOpt)
-  myids <- nptrends_full_postprocessed |>
+  myids <- nptrends_full_filtered |>
     dplyr::select(metricID, responseOpt) |>
     unique()  |>
     dplyr::arrange(responseOpt)
@@ -84,7 +114,7 @@ testthat::test_that("Metrics are numbered and ordered correctly", {
 })
 
 testthat::test_that("ResponseOpt values are formatted correctly", {
-  myresponseOpt <- nptrends_full_postprocessed |>
+  myresponseOpt <- nptrends_full_filtered |>
     dplyr::pull(responseOpt) |>
     unique() |>
     sort()
@@ -96,7 +126,7 @@ testthat::test_that("ResponseOpt values are formatted correctly", {
 })
 
 testthat::test_that("Correct column names are present", {
-  myresponseOpt <- nptrends_full_postprocessed |>
+  myresponseOpt <- nptrends_full_filtered |>
     names() |>
     sort()
   templateresponseOpt <- template |>
