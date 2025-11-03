@@ -114,9 +114,10 @@ responseOpt_lookup <- tibble::tribble(
   "Number of board members", "Staff_Boardmmbr"
 )
 
-# Template containing desired outputs, excluding values for survey metrics used for validation
+# Template containing desired outputs, excluding values for survey metrics used for validation. URL: https://observablehq.com/@jeffmacinnes/urban-nonprofit-donor-trends
 # Provided by data-visualization developer Jeff MacIness [jeff@decimalpointstudio.com]
-template <- data.table::fread(template_path)
+template <- data.table::fread(template_path, 
+                              colClasses = list(character = c("responseOpt")))
 
 # Dataset containing all desired permutations of filters in dashboard for validation
 combinations_validate_df <- template |>
@@ -133,7 +134,7 @@ combinations_validate_df <- template |>
                 filterOpt,
                 splitByOpt,
                 splitByOpt_category,
-                responseOpt,) |>
+                responseOpt) |>
   unique()
 data.table::fwrite(combinations_validate_df, combinations_validate_path)
 
