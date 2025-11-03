@@ -1,10 +1,8 @@
 # Params for NP Trends survey analysis
 library(tibble)
 
-# Setup googlesheets (optional)
-# library(googlesheets4)
-# googlesheets4::gs4_auth(email = "your_google_email@gmail.com",
-#                         scopes = "https://www.googleapis.com/auth/spreadsheets")
+# URLS
+# Template URL: https://observablehq.com/@jeffmacinnes/urban-nonprofit-donor-trends
 
 # Path to files
 nptrends_y5_id_path <-   "Y:/CNP/Generosity Commission/Year 5/Restricted Dataset/Identifiable/RESTRICTED_Y5_Identifiable_Vars.csv"
@@ -13,14 +11,11 @@ nptrends_y4_raw_path <- "Y:/CNP/Generosity Commission/Year 4/Restricted Dataset/
 nptrends_y5_raw_path <- "Y:/CNP/Generosity Commission/Year 5/Restricted Dataset/RESTRICTED_Y5.csv"
 nptrends_full_preproc_path <- "data/intermediate/nptrends_full_preprocessed.csv"
 nptrends_full_transformed_path <- "data/intermediate/nptrends_full_transformed.csv"
-nptrends_full_postproc_path <- "data/processed/nptrends_full_postprocessed.csv"
+nptrends_full_formatted_path <- "data/processed/nptrends_full_formatted.csv"
+nptrends_full_filtered_path <- "data/processed/nptrends_full_filtered.csv"
 template_path <- "data/validate/dataTemplate.csv"
-dataTemplate_url <- "https://docs.google.com/spreadsheets/d/1ZD2niTLxDAuIhaw_RR-Rg9iVlu1tEuX5OXFcYODv-8k/edit?gid=2005883929#gid=2005883929"
 combinations_validate_path <- "data/validate/combinations_validate.csv"
 metricsMaster_gsheet_url <- "https://docs.google.com/spreadsheets/d/1HMoQymn4F6q0qOqTX9njTLujYwHFXXtSGnhgR0_Ohjk/edit?gid=0#gid=0"
-
-# Download template if it doesn't exist
-#googlesheets4::download_and_cache_sheet(dataTemplate_url, template_path)
 
 # Variable names needed for analysis
 survey_analysis_vars <- c(
@@ -359,4 +354,57 @@ rows_to_exclude <- tibble(
   filterOpt = c("National", "Midwest", "MI"),
   splitByOpt = c("Rural/Urban", "Rural/Urban", "Rural/Urban"),
   splitByOpt_category = c("", "", "")
+)
+
+# States to exclude due to insufficient responses
+states_to_exclude <- list(
+  "2025" = c(
+    "AK",
+    "CT",
+    "DC",
+    "DE",
+    "GA",
+    "HI",
+    "IA",
+    "IN",
+    "KS",
+    "LA",
+    "MD",
+    "ME",
+    "MO",
+    "MS",
+    "ND",
+    "NE",
+    "NH",
+    "NJ",
+    "NV",
+    "OR",
+    "RI",
+    "SC",
+    "SD",
+    "VT",
+    "WI",
+    "WV",
+    "WY"
+  ),
+  "2024" = c(
+    "AK",
+    "CT",
+    "DC",
+    "DE",
+    "HI",
+    "IA",
+    "KS",
+    "ME",
+    "ND",
+    "NE",
+    "NH",
+    "NJ",
+    "RI",
+    "SC",
+    "SD",
+    "VT",
+    "WV",
+    "WY"
+  )
 )
