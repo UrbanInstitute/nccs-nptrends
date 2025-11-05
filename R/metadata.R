@@ -98,20 +98,20 @@ metricID_lookup <- tibble::tribble(
 # lookup table to recode responseOpt for continuous variables
 responseOpt_lookup <- tibble::tribble(
   ~responseOpt_lookup, ~metricname,
-  "Total revenue", "TotRev_clean",
-  "Total expenses", "TotExp",
-  "Cash reserves", "Reserves_Est",
+  "Median total revenue", "TotRev_clean",
+  "Median total expenses", "TotExp",
+  "In cash reserves", "Reserves_Est",
   "Individual donations", "PercentDon_Tot",
-  "<$250", "FndRaise_DnrBlw250_ratio",
-  ">=$250", "FndRaise_DnrAbv250_ratio",
-  "Donor advised funds", "PercentDAF_Tot",
+  "Individual donors who gave < $250 (average %)", "FndRaise_DnrBlw250_ratio",
+  "Individual donors who gave >=$250", "FndRaise_DnrAbv250_ratio",
+  "Donor-advised funds", "PercentDAF_Tot",
   "Private foundations", "PercentPriv_Tot",
   "Corporate foundations or giving programs", "PercentCorp_Tot",
-  "Government", "PercentGov",
-  "Earned Revenue", "PercentEarned",
+  "Government funding", "PercentGov",
+  "Earned revenue", "PercentEarned",
   "Regular volunteers", "Staff_RegVlntr",
   "Episodic volunteers", "Staff_EpsdVlntr",
-  "Number of board members", "Staff_Boardmmbr"
+  "Number of members", "Staff_Boardmmbr"
 )
 
 # Template containing desired outputs, excluding values for survey metrics used for validation. URL: https://observablehq.com/@jeffmacinnes/urban-nonprofit-donor-trends
@@ -143,8 +143,8 @@ template_metadata <- metricsMaster |>
   tidylog::left_join(metricID_lookup, by = "metricID") |>
   dplyr::mutate(metricID = as.integer(metricID)) |>
   dplyr::select(metricID,
-                theme,
                 category,
+                subcategory,
                 dataVizType,
                 metricname) |>
   as.data.frame()

@@ -13,7 +13,7 @@ nptrends_full_preproc_path <- "data/intermediate/nptrends_full_preprocessed.csv"
 nptrends_full_transformed_path <- "data/intermediate/nptrends_full_transformed.csv"
 nptrends_full_formatted_path <- "data/processed/nptrends_full_formatted.csv"
 nptrends_full_filtered_path <- "data/processed/nptrends_full_filtered.csv"
-template_path <- "data/validate/dataTemplate.csv"
+template_path <- "data/validate/dataTemplate_20250511.csv"
 combinations_validate_path <- "data/validate/combinations_validate.csv"
 metricsMaster_gsheet_url <- "https://docs.google.com/spreadsheets/d/1HMoQymn4F6q0qOqTX9njTLujYwHFXXtSGnhgR0_Ohjk/edit?gid=0#gid=0"
 
@@ -168,11 +168,35 @@ multi_select_cols <- c(
 )
 
 # Questions with 2 possible answers: Received, did not receive
-binary_rcv_cols <- c(
-  "FndRaise_DAF_Rcv",
-  "FndRaise_PFGrnt_Rcv",
-  "FndRaise_Corp_Found_Grnt_Rcv",
-  "FndRaise_CFGrnt_Rcv"
+binary_rcv_cols_ls <- list(
+  "FndRaise_DAF_Rcv" = "Received funding from donor-advised funds",
+  "FndRaise_PFGrnt_Rcv" = "Received grants from private foundations",
+  "FndRaise_Corp_Found_Grnt_Rcv" = "Received grants from corporate foundations or giving programs",
+  "FndRaise_CFGrnt_Rcv" = "Received grants from community foundations"
+)
+
+# CEO and Board chair binary questions
+ceo_bchair_binary_ls <- list(
+  "Dem_CEO_Disabled" = list("CEO has a disability", 
+                            "CEO does not have a disability"),
+  "Dem_BChair_Disabled" = list("Board chair has a disability",
+                               "Board chair does not have a disability"),
+  "CEOgender_NB" = list("CEO is nonbinary",
+                        "CEO is not nonbinary"), 
+  "BChairgender_NB" = list("Board chair is nonbinary",
+                           "Board chair is not nonbinary"),
+  "Dem_CEO_LGBTQ" = list("CEO is LGBTQ",
+                         "CEO is not LGBTQ"), 
+  "Dem_BChair_LGBTQ" = list("Board chair is LGBTQ",
+                            "Board chair is not LGBTQ"),
+  "CEOgender_Woman" = list("CEO is a woman",
+                           "CEO is not a woman"), 
+  "BChairgender_Woman" = list("Board chair is a woman",
+                              "Board chair is not a woman"),
+  "CEOgender_Man" = list("CEO is a man",
+                          "CEO is not a man"), 
+  "BChairgender_Man" = list("Board chair is a man",
+                            "Board chair is not a man")
 )
 
 # Government funding questions
