@@ -81,8 +81,8 @@ nptrends_full_formatted <- nptrends_full_transformed |>
   tidylog::left_join(template_metadata, by = "metricname") |>
   dplyr::select(
     metricID,
-    theme,
     category,
+    subcategory,
     dataVizType,
     filterType,
     filterOpt,
@@ -95,7 +95,7 @@ nptrends_full_formatted <- nptrends_full_transformed |>
   ) |>
   dplyr::rename(responseOpt = responseOpt_lookup, vizType = dataVizType) |>
   tidyr::complete(
-    tidyr::nesting(metricID, theme, category, vizType, year, responseOpt),
+    tidyr::nesting(metricID, category, subcategory, vizType, year, responseOpt),
     tidyr::nesting(filterType, filterOpt),
     tidyr::nesting(splitByOpt, splitByOpt_category)
   ) |>
