@@ -119,8 +119,8 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       .default = Staff_Boardmmbr_2024
     ),
     PplSrv_MeetDemand = dplyr::case_when(
-      PplSrv_NumWait == 0 | (PplSrv_NumWait_NA_X == 1 & PplSrv_NumServed > 0) ~ "Unable to meet demand",
-      PplSrv_NumWait > 0 ~ "Able to meet demand",
+      PplSrv_NumWait == 0 | (PplSrv_NumWait_NA_X == 1 & PplSrv_NumServed > 0) ~ "Able to meet demand",
+      PplSrv_NumWait > 0 ~ "Unable to meet demand",
       .default = NA_character_
     ),
     dplyr::across(
