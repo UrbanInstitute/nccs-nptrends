@@ -102,7 +102,7 @@ responseOpt_lookup <- tibble::tribble(
   "Median total expenses", "TotExp",
   "In cash reserves", "Reserves_Est",
   "Individual donations", "PercentDon_Tot",
-  "Individual donors who gave < $250 (average %)", "FndRaise_DnrBlw250_ratio",
+  "Individual donors who gave < $250", "FndRaise_DnrBlw250_ratio",
   "Individual donors who gave >=$250", "FndRaise_DnrAbv250_ratio",
   "Donor-advised funds", "PercentDAF_Tot",
   "Private foundations", "PercentPriv_Tot",
@@ -112,6 +112,53 @@ responseOpt_lookup <- tibble::tribble(
   "Regular volunteers", "Staff_RegVlntr",
   "Episodic volunteers", "Staff_EpsdVlntr",
   "Number of members", "Staff_Boardmmbr"
+)
+
+# Negative responseOpt for binary variables that should not be included in postprocessing
+
+negative_responseOpts <- c(
+  "Not serving local areas",
+  "Not serving statewide",
+  "Not serving multiple states",
+  "Not serving nationally",
+  "Not serving internationally",
+  "Not serving people living in poverty",
+  "Not serving people with disabilities",
+  "Not serving veterans",
+  "Not serving LGBTQ people",
+  "Not serving immigrants",
+  "Not serving Latinx/Hispanic populations",
+  "Not serving Black/African American populations",
+  "Not serving Indigenous/Native American and Alaska Native populations",
+  "Not serving Asian populations",
+  "Not serving men and boys",
+  "Not serving women and girls",
+  "Not serving nonbinary people",
+  "Not serving children and youth",
+  "Not serving young adults",
+  "Not serving adults",
+  "Not serving seniors",
+  "Unable to meet demand",
+  "Did not pause or suspend services",
+  "Individual donors who gave < $250 (average %)",
+  "Did not receive funding from donor-advised funds",
+  "Did not receive grants from private foundations",
+  "Did not receive grants from corporate foundations or giving programs",
+  "Did not receive grants from community foundations",
+  "CEO is not a person of color",
+  "CEO is not LGBTQ",
+  "CEO does not have a disability",
+  "CEO is not under age 35",
+  "Board chair is not a person of color",
+  "Board chair is not LGBTQ",
+  "Board chair does not have a disability",
+  "Board chair is not under age 35",
+  "CEO is not a man",
+  "CEO is not a woman",
+  "CEO is not nonbinary",
+  "Board chair is not a man",
+  "Board chair is not a woman",
+  "Board chair is not nonbinary"
 )
 
 # Template containing desired outputs, excluding values for survey metrics used for validation. URL: https://observablehq.com/@jeffmacinnes/urban-nonprofit-donor-trends

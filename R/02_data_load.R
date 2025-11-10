@@ -107,7 +107,8 @@ nptrends_full_formatted <- nptrends_full_transformed |>
       "splitByOpt",
       "splitByOpt_category"
     )
-  )
+  ) |>
+  dplyr::filter(! responseOpt %in% negative_responseOpts)
 
 data.table::fwrite(nptrends_full_formatted, nptrends_full_formatted_path)
 
