@@ -103,7 +103,7 @@ responseOpt_lookup <- tibble::tribble(
   "In cash reserves", "Reserves_Est",
   "Individual donations", "PercentDon_Tot",
   "Individual donors who gave < $250", "FndRaise_DnrBlw250_ratio",
-  "Individual donors who gave >=$250", "FndRaise_DnrAbv250_ratio",
+  "Individual donors who gave ≥ $250", "FndRaise_DnrAbv250_ratio",
   "Donor-advised funds", "PercentDAF_Tot",
   "Private foundations", "PercentPriv_Tot",
   "Corporate foundations or giving programs", "PercentCorp_Tot",
@@ -166,24 +166,6 @@ negative_responseOpts <- c(
 template <- data.table::fread(template_path, 
                               colClasses = list(character = c("responseOpt")))
 
-# Dataset containing all desired permutations of filters in dashboard for validation
-combinations_validate_df <- template |>
-  dplyr::mutate(
-    splitByOpt_category = dplyr::case_when(
-      splitByOpt_category == "<$100,000" ~ "< $100,000",
-      splitByOpt_category == "$100,000-$499,999" ~ "$100,000 - $499,999",
-      splitByOpt_category == "$500,000-$999,999" ~ "$500,000 - $999,999",
-      splitByOpt_category == "$1 million-$9,999,999" ~ "$1 million - $9,999,999",
-      .default = splitByOpt_category
-    )
-  ) |>
-  dplyr::select(filterType,
-                filterOpt,
-                splitByOpt,
-                splitByOpt_category,
-                responseOpt) |>
-  unique()
-data.table::fwrite(combinations_validate_df, combinations_validate_path)
 
 # Metadata to merge with postprocessed data to resemble data template
 template_metadata <- metricsMaster |>
