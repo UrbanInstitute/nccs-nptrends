@@ -28,10 +28,10 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       SizeStrata,
       levels = c(1, 2, 3, 4, 5),
       labels = c(
-        "< $100,000",
-        "$100,000 - $499,999",
-        "$500,000 - $999,999",
-        "$1 million - $9,999,999",
+        "$50,000–$99,999",
+        "$100,000–$499,999",
+        "$500,000–$999,999",
+        "$1 million–$9,999,999",
         "$10 million and above"
       )
     ),
@@ -41,8 +41,8 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       ntmaj12 == "EN" ~ "Environment and animals",
       ntmaj12 == "HE" ~ "Health",
       ntmaj12 == "HU" ~ "Human services",
-      ntmaj12 == "IN" ~ "International, foreign affairs",
-      ntmaj12 == "PU" ~ "Public, societal benefit",
+      ntmaj12 == "IN" ~ "International and foreign affairs",
+      ntmaj12 == "PU" ~ "Public and societal benefit",
       ntmaj12 == "RE" ~ "Religion",
       .default = NA
     ),
@@ -226,8 +226,8 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       .default = NA_character_
     ),
     ProgDem_Foreign = dplyr::case_when(
-      ProgDem_Foreign == 1 ~ "Serving immigrants",
-      ProgDem_Foreign == 0 ~ "Not serving immigrants",
+      ProgDem_Foreign == 1 ~ "Serving foreign-born people",
+      ProgDem_Foreign == 0 ~ "Not serving foreign-born people",
       .default = NA_character_
     ),
     ProgDem_Latinx = dplyr::case_when(
