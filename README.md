@@ -5,6 +5,8 @@ Impacts survey dashboard.
 
 ## Requirements
 
+**Always check that the latest template is downloaded and specified in `R/config.R`**
+
 - `Y://` drive access
 - Google Sheets access to the [`metricsMaster`](https://docs.google.com/spreadsheets/d/1HMoQymn4F6q0qOqTX9njTLujYwHFXXtSGnhgR0_Ohjk/edit?gid=0#gid=0) and [`dataTemplate`](https://docs.google.com/spreadsheets/d/1ZD2niTLxDAuIhaw_RR-Rg9iVlu1tEuX5OXFcYODv-8k/edit?gid=2005883929#gid=2005883929) sheet.
 - Alternative data template [URL](https://observablehq.com/@jeffmacinnes/urban-nonprofit-donor-trends). Has download links for `dataTemplate` and `metricsmaster`.
@@ -21,4 +23,6 @@ Non-numbered scripts containing either helper functions or configuration paramet
     `_formatted`: string formatting without removing metrics where n < 25
     `_full_postprocessed`: numeric variables for validation/inspection
   - `validate`
+    - Validation datasets used in unittests.
 - `data_requests` contains additional code used to run ad-hoc data pulls.
+- `tests` contains `testthat` unit tests
