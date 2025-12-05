@@ -8,71 +8,36 @@ source(here::here("R", "config.R"))
 source(here::here("R", "metadata.R"))
 
 # Load in transformed survey data
-nptrends_full_transformed <- data.table::fread(nptrends_full_transformed_path, na.strings = "")
+nptrends_full_transformed <- data.table::fread(nptrends_full_transformed_path)
 
 # Postprocess data
 nptrends_full_formatted <- nptrends_full_transformed |>
-  dplyr::filter(responseOpt != "",
-                is.na(splitByOpt_category) |
-                  splitByOpt_category != "Religion",
-                ! responseOpt %in% c(
-                  "Did not serve local",
-                  "Did not serve state-wide",
-                  "Did not serve multi state",
-                  "Did not serve national",
-                  "Did not serve international",
-                  "Did not serve families and individuals in poverty",
-                  "Did not serve individuals with physical or cognitive disabilities",
-                  "Did not serve veterans",
-                  "Did not serve LGBTQ+",
-                  "Did not serve foreign born populations",
-                  "Did not serve Latinx/Hispanic/Hispanic Origin",
-                  "Did not serve Black/African American",
-                  "Did not serve indigenous/Native American/Native Alaskan",
-                  "Did not serve Asian/Native Hawaiian/other Pacific Islander",
-                  "Did not serve men/boys",
-                  "Did not serve women/girls",
-                  "Did not serve individuals of non-binary gender",
-                  "Did not serve children and youth",
-                  "Did not serve young adults",
-                  "Did not serve adults",
-                  "Did not serve seniors",
-                  "Not experiencing",
-                  "Did not meet demand",
-                  "Did not receive",
-                  "Not person of color",
-                  "Not under 35 years old",
-                  "Not disabled",
-                  "Not individual of non-binary gender",
-                  "Not LGBTQ+",
-                  "Not a man",
-                  "Not a woman",
-                  "Did not draw on cash reserves"
-                )) |>
   dplyr::mutate(
     value = format(value, digits = 2, scientific = TRUE),
-    dplyr::across(
-      .cols = dplyr::all_of(c("filterType", "splitByOpt")),
-      .fns = ~ dplyr::case_when(
-        .x == "CensusRegion4" ~ "Region",
-        .x == "state" ~ "State",
-        .x == "SizeStrata" ~ "Size",
-        .x == "census_urban_area" ~ "Rural/Urban",
-        .x == "Subsector" ~ "Sector",
-        .default = .x
-      )
+    filterType = dplyr::case_when(
+      filterType == "National" ~ "National",
+      filterType == "CensusRegion4" ~ "Region",
+      filterType == "state" ~ "State",
+      .default = filterType
     ),
+    splitByOpt = dplyr::case_when(
+      splitByOpt == "National" ~ "National",
+      splitByOpt == "CensusRegion4" ~ "All regions",
+      splitByOpt == "state" ~ "Available states",
+      splitByOpt == "SizeStrata" ~ "Size of annual expenses",
+      splitByOpt == "census_urban_area" ~ "Urban or rural designation",
+      splitByOpt == "Subsector" ~ "Nonprofit subsector",
+        .default = splitByOpt
+      ),
     splitByOpt = dplyr::case_when(
       filterType == "National" &
         filterOpt == "National" & splitByOpt == "National" ~ "",
-      filterType == "Region" & splitByOpt == "Region" ~ "",
-      filterType == "State" & splitByOpt == "State" ~ "",
+      filterType == "Region" & splitByOpt == "All regions" ~ "",
+      filterType == "State" & splitByOpt == "Available states" ~ "",
       .default = splitByOpt
-    ),
-    splitByOpt_category = dplyr::case_when(is.na(splitByOpt_category) ~ "", .default = splitByOpt_category)
+    )
   ) |>
-  dplyr::filter(!(splitByOpt ==  "Rural/Urban" &
-                    splitByOpt_category == "")) |>
+  dplyr::filter(splitByOpt_category != "Religion") |>
   tidylog::left_join(responseOpt_lookup, by = "metricname") |>
   dplyr::mutate(
     responseOpt_lookup = dplyr::coalesce(responseOpt_lookup, responseOpt),
@@ -93,28 +58,18 @@ nptrends_full_formatted <- nptrends_full_transformed |>
     value,
     num_responses
   ) |>
-  dplyr::rename(responseOpt = responseOpt_lookup, vizType = dataVizType) |>
-  tidyr::complete(
-    tidyr::nesting(metricID, category, subcategory, vizType, year, responseOpt),
-    tidyr::nesting(filterType, filterOpt),
-    tidyr::nesting(splitByOpt, splitByOpt_category)
-  ) |>
-  dplyr::semi_join(
-    combinations_validate_df,
-    by = c(
-      "filterType",
-      "filterOpt",
-      "splitByOpt",
-      "splitByOpt_category"
-    )
-  ) |>
-  dplyr::filter(! responseOpt %in% negative_responseOpts)
+  dplyr::rename(responseOpt = responseOpt_lookup, 
+                vizType = dataVizType)
 
 data.table::fwrite(nptrends_full_formatted, nptrends_full_formatted_path)
+# Check that recoded groupby/disaggregation variables match template
+testthat::test_file("tests/testthat/test-template_permutations.R")
 
-# Filtering to remove metrics where at least one subcategory has under 25 weighted responses
+# Exclude data with minimum number of responses
+
+# Exclusion criteria 1: If one subcategory  has less than 25 responses, exclude the entire disaggregation. Only for Size or Urban/Rural designation.
 nptrends_minresponse <- nptrends_full_formatted |>
-  dplyr::filter(splitByOpt %in% c("Rural/Urban", "Size", "Subsector")) |>
+  dplyr::filter(splitByOpt %in% groupbys_to_exclude) |>
   dplyr::group_by(
     year, 
     metricID, 
@@ -129,8 +84,9 @@ nptrends_minresponse <- nptrends_full_formatted |>
   dplyr::mutate(value = ifelse(min_sum < 25, NA, value)) |>
   dplyr::select(-min_sum)
 
+# Exclusion criteria 2: Only exclude subcategories with less than 25 responses.
 nptrends_totresponse <- nptrends_full_formatted |>
-  dplyr::filter(!splitByOpt %in% c("Rural/Urban", "Size", "Subsector")) |>
+  dplyr::filter(!splitByOpt %in% groupbys_to_exclude) |>
   dplyr::group_by(year,
                   metricID,
                   filterType,
@@ -144,7 +100,10 @@ nptrends_totresponse <- nptrends_full_formatted |>
   dplyr::mutate(value = ifelse(group_sum < 25, NA, value)) |>
   dplyr::select(-group_sum)
 
-nptrends_full_responseFiltered <- dplyr::bind_rows(nptrends_minresponse, nptrends_totresponse) |>
+# Combine and exclude data belonging to specific states in specific years
+nptrends_full_responseFiltered <- data.table::rbindlist(
+  list(nptrends_minresponse, nptrends_totresponse)
+) |>
   dplyr::select(!num_responses) |>
   dplyr::filter(
     (
@@ -158,9 +117,30 @@ nptrends_full_responseFiltered <- dplyr::bind_rows(nptrends_minresponse, nptrend
     )
   )
 
+# Remove data belonging to negative responseOpts
+nptrends_full_responseOptFiltered <- nptrends_full_responseFiltered[! responseOpt %in% negative_responseOpts, ]
+
+
+# Merge with template
+template_merge <- template[, value := NULL]
+
+nptrends_full_formatted_merged <- template_merge[
+  nptrends_full_responseOptFiltered,
+  value := i.value,
+  on = .(metricID = metricID,
+         category = category,
+         subcategory = subcategory,
+         vizType = vizType,
+         filterType = filterType,
+         filterOpt = filterOpt,
+         year = year,
+         splitByOpt = splitByOpt,
+         splitByOpt_category = splitByOpt_category,
+         responseOpt = responseOpt)
+]
 
 # Save output dataset
-data.table::fwrite(nptrends_full_responseFiltered, nptrends_full_filtered_path)
+data.table::fwrite(nptrends_full_formatted_merged, nptrends_full_filtered_path)
 
-# Perform validation checks
-testthat::test_dir("tests/testthat")
+# Check that computed values align with HMartin's[HMartin@urban.org] values
+testthat::test_file("tests/testthat/test-data-validation.R")
