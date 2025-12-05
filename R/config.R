@@ -13,8 +13,8 @@ nptrends_full_preproc_path <- "data/intermediate/nptrends_full_preprocessed.csv"
 nptrends_full_transformed_path <- "data/intermediate/nptrends_full_transformed.csv"
 nptrends_full_formatted_path <- "data/processed/nptrends_full_formatted.csv"
 nptrends_full_filtered_path <- "data/processed/nptrends_full_filtered.csv"
-template_path <- "data/validate/dataTemplate_20251110.csv"
-combinations_validate_path <- "data/validate/combinations_validate.csv"
+
+template_path <- "data/validate/dataTemplate_20251205.csv"
 metricsMaster_gsheet_url <- "https://docs.google.com/spreadsheets/d/1HMoQymn4F6q0qOqTX9njTLujYwHFXXtSGnhgR0_Ohjk/edit?gid=0#gid=0"
 
 # Variable names needed for analysis
@@ -371,6 +371,9 @@ groupby_ls <- list(
               "Subsector",
               "census_urban_area") 
 )
+
+groupbys_to_exclude <- c("Urban or rural designation",
+                         "Size of annual expenses")
 
 # There are several observations with NA values for Urban/Rural that we want to exclude
 rows_to_exclude <- tibble(
