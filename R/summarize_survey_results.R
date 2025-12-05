@@ -117,6 +117,7 @@ validate_metric <- function(x_values, w_values) {
 #' @return data.frame. The grouped data frame with the renamed variable
 svy_grpby <- function(grpby_var, newname, df) {
   df <- df |>
+    dplyr::filter(! is.na(!!sym(grpby_var))) |>
     dplyr::group_by(!!sym(grpby_var), .add = TRUE) |>
     dplyr::rename({{newname}} := !!sym(grpby_var))
   return(df)
