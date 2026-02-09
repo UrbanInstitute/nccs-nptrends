@@ -144,7 +144,9 @@ survey_analysis_vars <- c(
   "Staff_EpsdVltnr_2024",
   "Staff_Boardmmbr_2024",
   "Staff_Fulltime_2024",
-  "Staff_Parttime_2024"
+  "Staff_Parttime_2024",
+  "FndRaise_Cashbelow250_Chng",
+  "FndRaise_Cashabove250_Chng"
 )
 
 # Questions with 5 possible answers: Significant decrease, decrease, stay the same, increase, significant increase
@@ -164,7 +166,9 @@ multi_select_cols <- c(
   "FndRaise_TotInPersEvent",
   "FndRaise_DAF_Grnt_Chng",
   "FndRaise_Priv_Grnt_Chng",
-  "FndRaise_Corp_Grnt_Chng"
+  "FndRaise_Corp_Grnt_Chng",
+  "FndRaise_Cashbelow250_Chng",
+  "FndRaise_Cashabove250_Chng"
 )
 
 # Questions with 2 possible answers: Received, did not receive
@@ -348,7 +352,10 @@ metrics <- list(
   CEOgender_NB = "% of respondents",
   BChairgender_Man = "% of respondents",
   BChairgender_Woman = "% of respondents",
-  BChairgender_NB = "% of respondents"
+  BChairgender_NB = "% of respondents",
+  FndRaise_Cashbelow250_Chng = "% of respondents",
+  FndRaise_Cashabove250_Chng = "% of respondents",
+  Cash_Reserves = "% of respondents"
 )
 
 # Groupby combinations

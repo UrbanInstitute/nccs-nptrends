@@ -345,6 +345,14 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
     Staff_Boardmmbr = dplyr::coalesce(Staff_Boardmmbr_2023, Staff_Boardmmbr_2024),
     Staff_Fulltime = dplyr::coalesce(Staff_Fulltime_2023, Staff_Fulltime_2024),
     Staff_Parttime = dplyr::coalesce(Staff_Parttime_2023, Staff_Parttime_2024)
+  ) |>
+  dplyr::mutate(
+    Cash_Reserves = dplyr::case_when(
+      Reserves_NA_X == 1 ~ 0,
+      Reserves_Est > 0 ~ 1,
+      Reserves_Est <= 0 ~ 0,
+      .default = NA_real_
+    )
   )
 
 # Save intermediate file

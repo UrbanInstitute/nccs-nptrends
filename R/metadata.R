@@ -92,7 +92,10 @@ metricID_lookup <- tibble::tribble(
   86, "CEOgender_NB",
   87, "BChairgender_Man",
   88, "BChairgender_Woman",
-  89, "BChairgender_NB"
+  89, "BChairgender_NB",
+  90, "FndRaise_Cashbelow250_Chng",
+  91, "FndRaise_Cashabove250_Chng",
+  92, "Cash_Reserves"
 )
 
 # lookup table to recode responseOpt for continuous variables
