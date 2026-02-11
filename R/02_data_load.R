@@ -139,6 +139,12 @@ nptrends_full_formatted_merged <- template_merge[
          responseOpt = responseOpt)
 ]
 
+# Remove all 2024 values for metric 3
+nptrends_full_formatted_merged <- nptrends_full_formatted_merged[
+  metricID == 3 & year == 2024,
+  value := NA
+]
+
 # Save output dataset
 data.table::fwrite(nptrends_full_formatted_merged, nptrends_full_filtered_path)
 
