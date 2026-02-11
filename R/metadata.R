@@ -1,7 +1,8 @@
 # Internal data objects used for data processing and validation
 
 # metricsMaster table for validation
-metricsMaster <- gsheet::gsheet2tbl(metricsMaster_gsheet_url)
+# metricsMaster <- gsheet::gsheet2tbl(metricsMaster_path)
+metricsMaster <- data.table::fread(metricsMaster_path)
 
 # lookup table mapping variable names in the survey to metricID values
 metricID_lookup <- tibble::tribble(
@@ -42,8 +43,8 @@ metricID_lookup <- tibble::tribble(
   34, "PrgSrvc_Amt_Num",
   35, "Dmnd_NxtYear",
   36, "PercentDon_Tot",
-  37, "FndRaise_DnrBlw250_ratio",
-  38, "FndRaise_DnrAbv250_ratio",
+  37, "FndRaise_Cashbelow250_Chng",
+  38, "FndRaise_Cashabove250_Chng",
   39, "PercentDAF_Tot",
   40, "PercentPriv_Tot",
   41, "PercentCorp_Tot",
@@ -58,10 +59,6 @@ metricID_lookup <- tibble::tribble(
   52, "FndRaise_Corp_Grnt_Chng",
   53, "PrgSrvc_Amt_Fee",
   54, "FndRaise_TotExp",
-  55, "FndRaise_TotDigAppeal",
-  56, "FndRaise_TotDirMail",
-  57, "FndRaise_TotInPersEvent",
-  58, "FndRaise_TotVirtEvent",
   59, "PercentDem_Women_Staff",
   60, "Staff_RegVlntr",
   61, "Staff_EpsdVlntr",
@@ -93,10 +90,16 @@ metricID_lookup <- tibble::tribble(
   87, "BChairgender_Man",
   88, "BChairgender_Woman",
   89, "BChairgender_NB",
-  90, "FndRaise_Cashbelow250_Chng",
-  91, "FndRaise_Cashabove250_Chng",
-  92, "Cash_Reserves"
+  90, "Cash_Reserves"
 )
+
+# Deleted Metric IDs
+# 55, "FndRaise_TotDigAppeal",
+# 56, "FndRaise_TotDirMail",
+# 57, "FndRaise_TotInPersEvent",
+# 58, "FndRaise_TotVirtEvent",
+# 37, "FndRaise_DnrBlw250_ratio",
+# 38, "FndRaise_DnrAbv250_ratio",
 
 # lookup table to recode responseOpt for continuous variables
 responseOpt_lookup <- tibble::tribble(
