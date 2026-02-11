@@ -348,10 +348,10 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
   ) |>
   dplyr::mutate(
     Cash_Reserves = dplyr::case_when(
-      Reserves_NA_X == 1 ~ 0,
-      Reserves_Est > 0 ~ 1,
-      Reserves_Est <= 0 ~ 0,
-      .default = NA_real_
+      Reserves_NA_X == 1 ~ "Did not have cash reserves",
+      Reserves_Est > 0 ~ "Had cash reserves",
+      Reserves_Est <= 0 ~ "Did not have cash reserves",
+      .default = NA_character_
     )
   )
 
