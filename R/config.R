@@ -14,8 +14,9 @@ nptrends_full_transformed_path <- "data/intermediate/nptrends_full_transformed.c
 nptrends_full_formatted_path <- "data/processed/nptrends_full_formatted.csv"
 nptrends_full_filtered_path <- "data/processed/nptrends_full_filtered.csv"
 
-template_path <- "data/validate/dataTemplate_20251205.csv"
+template_path <- "data/validate/dataTemplate_20260211.csv"
 metricsMaster_gsheet_url <- "https://docs.google.com/spreadsheets/d/1HMoQymn4F6q0qOqTX9njTLujYwHFXXtSGnhgR0_Ohjk/edit?gid=0#gid=0"
+metricsMaster_path <- "data/validate/metricsMaster_20260211.csv"
 
 # Variable names needed for analysis
 survey_analysis_vars <- c(
