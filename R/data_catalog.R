@@ -4,12 +4,13 @@
 library(data.table)
 
 # Helper Scripts
-source(here::here("R", "config.R"))
-source(here::here("R", "metadata.R"))
 
 # Load survey dashboard data from Box
 nptrends_tracker_data_url <- "https://urbanorg.box.com/shared/static/adozu2flmjfppsllyh7r7iwu9qqxl6ac.csv"
 nptrends_tracker_data <- data.table::fread(nptrends_tracker_data_url)
+# Load metrics master
+metricsMaster_path <- "data/validate/metricsMaster_20260219.csv"
+metricsMaster <- data.table::fread(metricsMaster_path)
 # Filter metricsMaster to only include chart title
 metricsMaster <- metricsMaster |>
   dplyr::select(metricID, chartTitle)
