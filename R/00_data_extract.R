@@ -72,7 +72,7 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
   ) %>% 
   # Binary flags for new variables where 1 if any of the variables are 1 and 0 if all are 0
   dplyr::mutate(
-    Reserves_Est = dplyr::case_when(
+    percent_expenses_inCashReserves = dplyr::case_when(
       is.na(Reserves_Est) & Reserves_NA_X == 1 ~ 0,
       is.na(TotExp) | TotExp == 0 ~ NA_real_,
       .default = Reserves_Est / TotExp
@@ -316,6 +316,26 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       )
     ),
     dplyr::across(
+      .cols = dplyr::all_of(total_expenditure_cols),
+      .fns = ~ dplyr::case_when(
+        .x %in% c(1, 2) ~ "Decrease in expenditures",
+        .x == 3 ~ "No change",
+        .x %in% c(4, 5) ~ "Increase in expenditures",
+        .x == 97 ~ "Unsure",
+        .default = NA_character_
+      )
+    ),
+    dplyr::across(
+      .cols = dplyr::all_of(grant_value_change_cols),
+      .fns = ~ dplyr::case_when(
+        .x %in% c(1, 2) ~ "Decrease in value",
+        .x == 3 ~ "No change",
+        .x %in% c(4, 5) ~ "Increase in value",
+        .x == 97 ~ "Unsure",
+        .default = NA_character_
+      )
+    ),
+    dplyr::across(
       .cols = dplyr::all_of(names(binary_rcv_cols_ls)),
       .fns = ~ dplyr::case_when(.x == 1 ~ binary_rcv_cols_ls[[dplyr::cur_column()]],
                                 .x == 0 ~ gsub("Received",
@@ -348,9 +368,46 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
   ) |>
   dplyr::mutate(
     Cash_Reserves = dplyr::case_when(
-      Reserves_NA_X == 1 ~ "Did not have cash reserves",
+      is.na(Reserves_Est) & Reserves_NA_X == 1 ~ "Did not have cash reserves",
       Reserves_Est > 0 ~ "Had cash reserves",
       Reserves_Est <= 0 ~ "Did not have cash reserves",
+      .default = NA_character_
+    ),
+    FndRaise_Cashbelow250_Chng = dplyr::case_when(
+      FndRaise_Cashbelow250_Chng %in% c(1, 2) ~ "Decrease in donations < $250",
+      FndRaise_Cashbelow250_Chng == 3 ~ "No change",
+      FndRaise_Cashbelow250_Chng %in% c(4, 5) ~ "Increase in donations < $250",
+      year == 2024 & FndRaise_Cashbelow250_Chng == 98 ~ "Unsure",
+      year == 2025 & FndRaise_Cashbelow250_Chng == 97 ~ "Unsure",
+      .default = NA_character_
+    ),
+    FndRaise_Cashabove250_Chng = dplyr::case_when(
+      FndRaise_Cashabove250_Chng %in% c(1, 2) ~ "Decrease in donations ≥ $250",
+      FndRaise_Cashabove250_Chng == 3 ~ "No change",
+      FndRaise_Cashabove250_Chng %in% c(4, 5) ~ "Increase in donations ≥ $250",
+      year == 2024 & FndRaise_Cashabove250_Chng == 98 ~ "Unsure",
+      year == 2025 & FndRaise_Cashabove250_Chng == 97 ~ "Unsure",
+      .default = NA_character_
+    ),
+    FinanceChng_TotExp = dplyr::case_when(
+      FinanceChng_TotExp %in% c(1, 2) ~ "Decrease in expenses",
+      FinanceChng_TotExp == 3 ~ "No change",
+      FinanceChng_TotExp %in% c(4, 5) ~ "Increase in expenses",
+      FinanceChng_TotExp == 97 ~ "Unsure",
+      .default = NA_character_
+    ),
+    FinanceChng_Salaries = dplyr::case_when(
+      FinanceChng_Salaries %in% c(1, 2) ~ "Decrease in salaries and wages",
+      FinanceChng_Salaries == 3 ~ "No change",
+      FinanceChng_Salaries %in% c(4, 5) ~ "Increase in salaries and wages",
+      FinanceChng_Salaries == 97 ~ "Unsure",
+      .default = NA_character_
+    ),
+    PrgSrvc_Amt_Fee = dplyr::case_when(
+      PrgSrvc_Amt_Fee %in% c(1, 2) ~ "Decrease in $ amount",
+      PrgSrvc_Amt_Fee == 3 ~ "No change",
+      PrgSrvc_Amt_Fee %in% c(4, 5) ~ "Increase in $ amount",
+      PrgSrvc_Amt_Fee == 97 ~ "Unsure",
       .default = NA_character_
     )
   )

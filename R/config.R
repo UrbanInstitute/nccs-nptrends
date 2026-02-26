@@ -14,9 +14,9 @@ nptrends_full_transformed_path <- "data/intermediate/nptrends_full_transformed.c
 nptrends_full_formatted_path <- "data/processed/nptrends_full_formatted.csv"
 nptrends_full_filtered_path <- "data/processed/nptrends_full_filtered.csv"
 
-template_path <- "data/validate/dataTemplate_20260211.csv"
+template_path <- "data/validate/dataTemplate_20260219.csv"
 metricsMaster_gsheet_url <- "https://docs.google.com/spreadsheets/d/1HMoQymn4F6q0qOqTX9njTLujYwHFXXtSGnhgR0_Ohjk/edit?gid=0#gid=0"
-metricsMaster_path <- "data/validate/metricsMaster_20260211.csv"
+metricsMaster_path <- "data/validate/metricsMaster_20260219.csv"
 
 # Variable names needed for analysis
 survey_analysis_vars <- c(
@@ -152,24 +152,25 @@ survey_analysis_vars <- c(
 
 # Questions with 5 possible answers: Significant decrease, decrease, stay the same, increase, significant increase
 multi_select_cols <- c(
-  "FinanceChng_TotExp",
-  "FinanceChng_Salaries",
-  "FinanceChng_Benefits",
-  "FinanceChng_TotRent",
-  "FinanceChng_TotTech",
   "PrgSrvc_Amt_Srvc",
   "PrgSrvc_Amt_Num",
-  "PrgSrvc_Amt_Fee",
-  "FndRaise_TotExp",
   "FndRaise_TotDigAppeal",
   "FndRaise_TotDirMail",
   "FndRaise_TotVirtEvent",
-  "FndRaise_TotInPersEvent",
+  "FndRaise_TotInPersEvent"
+)
+
+total_expenditure_cols <- c(
+  "FinanceChng_Benefits",
+  "FinanceChng_TotRent",
+  "FinanceChng_TotTech",
+  "FndRaise_TotExp"
+)
+
+grant_value_change_cols <- c(
   "FndRaise_DAF_Grnt_Chng",
   "FndRaise_Priv_Grnt_Chng",
-  "FndRaise_Corp_Grnt_Chng",
-  "FndRaise_Cashbelow250_Chng",
-  "FndRaise_Cashabove250_Chng"
+  "FndRaise_Corp_Grnt_Chng"
 )
 
 # Questions with 2 possible answers: Received, did not receive
@@ -269,7 +270,7 @@ percent_vars <- c(
 metrics <- list(
   TotRev_clean = "median",
   TotExp = "median",
-  Reserves_Est = "median",
+  percent_expenses_inCashReserves = "median",
   FinanceChng_Reserves = "% of respondents",
   FinanceChng_TotExp = "% of respondents",
   FinanceChng_Salaries = "% of respondents",
