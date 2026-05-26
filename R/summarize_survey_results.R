@@ -23,7 +23,7 @@ svy_tfm <- function(groupby_2_vec,
   df_summarised <- purrr::map(
     .x = groupby_2_vec,
     .f = function(groupby_2) {
-      wt <- svy_wt(groupby_2)
+      wt <- svy_wt(groupby_2, metric)
       weighted_count <- sum(df_grouped[[wt]], na.rm = TRUE)
       # Optional nesting for subgroups
       if (groupby_2 != groupby_1) {
@@ -124,20 +124,27 @@ svy_grpby <- function(grpby_var, newname, df) {
 }
 
 #' @title survey-specific weight function
-#' 
-#' @description This function returns the appropriate weight variable based on the groupby variable
-#' 
+#'
+#' @description Returns the name of the weight column to use for a given
+#' (groupby, metric) pair. For Y4/Y5 every metric resolves to the same global
+#' svywt/stateweight columns; for Y6 a per-metric override is encoded in
+#' 00_data_extract.R via svywt_alt/stateweight_alt for the FndRaise metrics
+#' that use weight_year6 instead of weight_year6plus (see y6_metric_weights
+#' in R/config.R).
+#'
 #' @param grpby character scalar. The groupby variable
-#' 
+#' @param metric character scalar. The metric (column in nptrends data) being
+#'   aggregated. Used to pick svywt vs svywt_alt for Y6.
+#'
 #' @return character scalar. The name of the weight variable to use
-svy_wt <- function(grpby) {
+svy_wt <- function(grpby, metric = NULL) {
+  alt_metrics <- if (exists("y6_metric_weights")) y6_metric_weights$metricname else character(0)
+  use_alt <- !is.null(metric) && metric %in% alt_metrics
   if (grpby == "state") {
-    wt <- "stateweight"
+    if (use_alt) "stateweight_alt" else "stateweight"
+  } else {
+    if (use_alt) "svywt_alt" else "svywt"
   }
-  else {
-    wt <- "svywt"
-  }
-  return(wt)
 }
 
 #' @title Recode survey variable being analysed
@@ -177,7 +184,9 @@ binary_flag <- function(data, ...) {
   # Apply the logic row-wise using apply
   apply(mat, 1, function(row_values) {
     any_is_one <- any(row_values == 1, na.rm = TRUE)
-    all_are_zero <- all(row_values == 0, na.rm = FALSE)
+    # Ignore NAs in the all-zero check; the separate has_non_na guard below
+    # ensures we don't mistake an all-NA row for a confirmed zero.
+    all_are_zero <- all(row_values == 0, na.rm = TRUE)
     has_non_na <- any(!is.na(row_values))
     
     if (any_is_one) {

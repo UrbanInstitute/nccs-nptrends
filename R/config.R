@@ -9,14 +9,16 @@ nptrends_y5_id_path <-   "Y:/CNP/Generosity Commission/Year 5/Restricted Dataset
 nptrends_y4_id_path <-   "Y:/CNP/Generosity Commission/Year 4/Restricted Dataset/Identifiable/RESTRICTED_Y4_Identifiable_Vars.csv"
 nptrends_y4_raw_path <- "Y:/CNP/Generosity Commission/Year 4/Restricted Dataset/RESTRICTED_Y4_w_DK_NA.csv"
 nptrends_y5_raw_path <- "Y:/CNP/Generosity Commission/Year 5/Restricted Dataset/RESTRICTED_Y5.csv"
+nptrends_y6_raw_path <- "Y:/CNP/Generosity Commission/Year 6/Restricted Dataset/RESTRICTED_NPTRENDS_Y6.csv"
 nptrends_full_preproc_path <- "data/intermediate/nptrends_full_preprocessed.csv"
 nptrends_full_transformed_path <- "data/intermediate/nptrends_full_transformed.csv"
 nptrends_full_formatted_path <- "data/processed/nptrends_full_formatted.csv"
 nptrends_full_filtered_path <- "data/processed/nptrends_full_filtered.csv"
 
-template_path <- "data/validate/dataTemplate_20260219.csv"
+template_path <- "data/validate/dataTemplate_20260526.csv"
 metricsMaster_gsheet_url <- "https://docs.google.com/spreadsheets/d/1HMoQymn4F6q0qOqTX9njTLujYwHFXXtSGnhgR0_Ohjk/edit?gid=0#gid=0"
-metricsMaster_path <- "data/validate/metricsMaster_20260219.csv"
+metricsMaster_path <- "data/validate/metricsMaster_20260526.csv"
+data_dictionary_path <- "data/dictionary/data_dictionary_20260521.xlsx"
 
 # Variable names needed for analysis
 survey_analysis_vars <- c(
@@ -29,6 +31,9 @@ survey_analysis_vars <- c(
   "year4wt",
   "stateweight",
   "year5wt",
+  "weight_year6",
+  "weight_year6plus",
+  "stateweightplus",
   "TotRev_clean",
   "FinanceChng_Reserves",
   "FinanceChng_TotExp",
@@ -147,7 +152,18 @@ survey_analysis_vars <- c(
   "Staff_Fulltime_2024",
   "Staff_Parttime_2024",
   "FndRaise_Cashbelow250_Chng",
-  "FndRaise_Cashabove250_Chng"
+  "FndRaise_Cashabove250_Chng",
+  # Year 6 _clean / _new variables produced upstream by the data team
+  "GeoAreas_Locally",
+  "Reserves_Est_clean",
+  "PplSrv_NumWait_clean",
+  "Staff_RegVlntr_2025_clean",
+  "Staff_EpsdVltnr_2025_clean",
+  "Staff_Boardmmbr_2025_clean",
+  "Staff_Fulltime_2025_clean",
+  "Staff_Parttime_2025_clean",
+  "CEOrace_new",
+  "BChairrace_new"
 )
 
 # Questions with 5 possible answers: Significant decrease, decrease, stay the same, increase, significant increase
@@ -442,5 +458,90 @@ states_to_exclude <- list(
     "VT",
     "WV",
     "WY"
+  ),
+  "2026" = c(
+    "AK",
+    "CT",
+    "DE",
+    "GA",
+    "HI",
+    "IA",
+    "IN",
+    "KS",
+    "LA",
+    "MD",
+    "ME",
+    "MN",
+    "MO",
+    "MS",
+    "ND",
+    "NE",
+    "NH",
+    "NJ",
+    "NV",
+    "OR",
+    "RI",
+    "SC",
+    "SD",
+    "VT",
+    "WI",
+    "WV",
+    "WY"
   )
+)
+
+# Per-metric Y6 weight selection. The "y6_state_wt" column is used when the
+# groupby/disaggregation is "state"; otherwise "y6_wt" is used. Y4/Y5 continue
+# to use the global svywt + stateweight pair via summarize_survey_results.R.
+# Metrics not listed here default to weight_year6plus / stateweightplus.
+y6_metric_weights <- tibble::tribble(
+  ~metricname,                    ~y6_wt,             ~y6_state_wt,
+  "FndRaise_DAF_Rcv",             "weight_year6",     "stateweight",
+  "FndRaise_PFGrnt_Rcv",          "weight_year6",     "stateweight",
+  "FndRaise_Corp_Found_Grnt_Rcv", "weight_year6",     "stateweight",
+  "FndRaise_CFGrnt_Rcv",          "weight_year6",     "stateweight",
+  "FndRaise_DAF_Grnt_Chng",       "weight_year6",     "stateweight",
+  "FndRaise_Priv_Grnt_Chng",      "weight_year6",     "stateweight",
+  "FndRaise_Corp_Grnt_Chng",      "weight_year6",     "stateweight",
+  "FndRaise_TotExp",              "weight_year6",     "stateweight",
+  "FndRaise_Cashbelow250_Chng",   "weight_year6",     "stateweight",
+  "FndRaise_Cashabove250_Chng",   "weight_year6",     "stateweight"
+)
+y6_default_wt <- "weight_year6plus"
+y6_default_state_wt <- "stateweightplus"
+
+# Metrics whose Y4/Y5 outputs are not comparable to Y6 and should be dropped
+# from the final output for 2024 and 2025 (per data dictionary instructions
+# "Remove year 4 and year 5 data" for the Y6 redesign of ProgDem questions).
+metrics_drop_y4_y5 <- c(
+  "ProgDem_BelowFPL",
+  "ProgDem_Disabled",
+  "ProgDem_Veterans",
+  "ProgDem_LGBTQ",
+  "ProgDem_Foreign",
+  "ProgDem_Latinx",
+  "ProgDem_Black",
+  "ProgDem_Indigenous",
+  "ProgDem_Asian",
+  "ProgDem_Men",
+  "ProgDem_Women",
+  "ProgDem_Nonbinary",
+  "ProgDem_Children",
+  "ProgDem_YoungAdults",
+  "ProgDem_Adults",
+  "ProgDem_Elders"
+)
+
+# Metrics where the percentage bucket scheme switched to 4 buckets
+# (0%, 1-50%, 51-99%, 100%) starting in the 2026-05 template — applies to
+# all years (Y4/Y5/Y6) per the new template structure.
+percentdem_4bucket_vars <- c(
+  "PercentDem_LGBTQ_Board",
+  "PercentDem_Disabled_Board",
+  "PercentDem_Young_Board",
+  "PercentDem_ReceivedServices_Board",
+  "PercentDem_LGBTQ_Staff",
+  "PercentDem_Disabled_Staff",
+  "PercentDem_Young_Staff",
+  "PercentDem_ReceivedServices_Staff"
 )

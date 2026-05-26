@@ -62,8 +62,6 @@ nptrends_full_formatted <- nptrends_full_transformed |>
                 vizType = dataVizType)
 
 data.table::fwrite(nptrends_full_formatted, nptrends_full_formatted_path)
-# Check that recoded groupby/disaggregation variables match template
-testthat::test_file("tests/testthat/test-template_permutations.R")
 
 # Exclude data with minimum number of responses
 
@@ -114,6 +112,10 @@ nptrends_full_responseFiltered <- data.table::rbindlist(
       year == 2025 &
         !filterOpt %in% states_to_exclude[["2025"]] &
         !splitByOpt_category %in% states_to_exclude[["2025"]]
+    ) | (
+      year == 2026 &
+        !filterOpt %in% states_to_exclude[["2026"]] &
+        !splitByOpt_category %in% states_to_exclude[["2026"]]
     )
   )
 
@@ -145,8 +147,17 @@ nptrends_full_formatted_merged <- nptrends_full_formatted_merged[
   value := NA
 ]
 
+# Per the 2026-05 data dictionary, the Y6 redesign of the ProgDem_* questions
+# makes Y4/Y5 values non-comparable. Drop Y4/Y5 data for those metrics.
+drop_metricIDs <- metricID_lookup$metricID[metricID_lookup$metricname %in% metrics_drop_y4_y5]
+nptrends_full_formatted_merged <- nptrends_full_formatted_merged[
+  metricID %in% drop_metricIDs & year %in% c(2024, 2025),
+  value := NA
+]
+
 # Save output dataset
 data.table::fwrite(nptrends_full_formatted_merged, nptrends_full_filtered_path)
 
-# Check that computed values align with HMartin's[HMartin@urban.org] values
-testthat::test_file("tests/testthat/test-data-validation.R")
+# Run the full test suite at the end so the combined pass/fail summary is
+# the last thing printed when the pipeline is sourced.
+testthat::test_dir("tests/testthat", reporter = "summary")

@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+data/processed/*
+data/intermediate/*
+data/validate/dataTemplate*
+data/raw/*
+.RDataTmp*
