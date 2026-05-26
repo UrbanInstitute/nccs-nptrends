@@ -287,6 +287,7 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       .fns = ~ dplyr::case_when(
         year == "2026" & .x == 1 ~ 1L,
         year == "2026" & .x == 0 ~ 0L,
+        year == "2026" & .x == 2 ~ 0L,
         year == "2026" ~ NA_integer_,
         .x == 1 | .x == 2 ~ 1L,
         .x == 0 ~ 0L,
@@ -478,11 +479,17 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       )
     ),
     # 4-bucket scheme introduced with the 2026-05 template for the LGBTQ,
-    # Disabled, and ReceivedServices Board/Staff demographics. Applied to all
-    # years so 2024/2025 outputs align with the new template structure.
+    # Disabled, Young, and ReceivedServices Board/Staff demographics. Y4/Y5
+    # raw uses the 0–11 (+97) coding and we collapse here; Y6 raw already
+    # ships the 0/1/2/3 (+97) coding so we map straight through.
     dplyr::across(
       .cols = dplyr::all_of(percentdem_4bucket_vars),
       .fns = ~ dplyr::case_when(
+        year == "2026" & .x == 0 ~ "0%",
+        year == "2026" & .x == 1 ~ "1–50%",
+        year == "2026" & .x == 2 ~ "51–99%",
+        year == "2026" & .x == 3 ~ "100%",
+        year == "2026" ~ NA_character_,
         .x == 0 ~ "0%",
         .x %in% c(1, 2, 3, 4, 5) ~ "1–50%",
         .x %in% c(6, 7, 8, 9, 10) ~ "51–99%",
@@ -522,7 +529,7 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
                                      Staff_RegVlntr_2024,
                                      Staff_RegVlntr_2025_clean),
     Staff_EpsdVlntr = dplyr::coalesce(Staff_EpsdVlntr_2023,
-                                      Staff_EpsdVltnr_2024,
+                                      Staff_EpsdVlntr_2024,
                                       Staff_EpsdVltnr_2025_clean),
     Staff_Boardmmbr = dplyr::coalesce(Staff_Boardmmbr_2023,
                                       Staff_Boardmmbr_2024,

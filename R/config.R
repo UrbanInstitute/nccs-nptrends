@@ -529,7 +529,8 @@ metrics_drop_y4_y5 <- c(
   "ProgDem_Children",
   "ProgDem_YoungAdults",
   "ProgDem_Adults",
-  "ProgDem_Elders"
+  "ProgDem_Elders",
+  "PplSrv_MeetDemand"
 )
 
 # Metrics where the percentage bucket scheme switched to 4 buckets
