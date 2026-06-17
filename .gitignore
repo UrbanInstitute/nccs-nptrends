@@ -7,6 +7,8 @@ data/processed/*
 data/intermediate/*
 data/validate/dataTemplate*
 data/raw/*
+# Generated Urban data-catalog workbooks (output of R/data_catalog.R)
+data/catalog/
 # Temporary local copies of restricted Y: drive raw data (delete when done)
 data/temp/
 .RDataTmp*
