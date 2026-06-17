@@ -183,8 +183,12 @@ build_code_map <- function() {
   add("GeoAreas_MultipleState", 1, "Serving multiple states")
   add("GeoAreas_MultipleState", 0, "Not serving multiple states")
 
-  # ProgDem: 0 -> "Not serving X"; 1 and 2 both -> "Serving X" (Y4/Y5
-  # collapses 1|2). Y6 uses only code 1, but the same mapping still applies.
+  # ProgDem: 0 -> "Not serving X"; 1 -> "Serving X". The Y6 question redesign
+  # means only code 1 counts as served, so code 2 -> "Not serving X" (mirrors
+  # the year == "2026" recode in R/00_data_extract.R, which maps code 2 -> 0).
+  # Y4/Y5 historically collapsed 1|2 -> served, but those years' ProgDem values
+  # are dropped from the pipeline output (metrics_drop_y4_y5) and so are never
+  # compared here; only Y6 ProgDem reaches this comparison.
   progdem_pairs <- list(
     ProgDem_BelowFPL    = list("people living in poverty"),
     ProgDem_Disabled    = list("people with disabilities"),
@@ -193,7 +197,7 @@ build_code_map <- function() {
     ProgDem_Foreign     = list("foreign-born people"),
     ProgDem_Latinx      = list("Latinx/Hispanic populations"),
     ProgDem_Black       = list("Black/African American populations"),
-    ProgDem_Indigenous  = list("Indigenous/Native American and Alaska Native populations"),
+    ProgDem_Indigenous  = list("American Indian or Alaska Native populations"),
     ProgDem_Asian       = list("Asian populations"),
     ProgDem_Men         = list("men and boys"),
     ProgDem_Women       = list("women and girls"),
@@ -201,13 +205,13 @@ build_code_map <- function() {
     ProgDem_Children    = list("children and youth"),
     ProgDem_YoungAdults = list("young adults"),
     ProgDem_Adults      = list("adults"),
-    ProgDem_Elders      = list("seniors")
+    ProgDem_Elders      = list("older adults")
   )
   for (m in names(progdem_pairs)) {
     suffix <- progdem_pairs[[m]][[1]]
     add(m, 0, sprintf("Not serving %s", suffix))
     add(m, 1, sprintf("Serving %s", suffix))
-    add(m, 2, sprintf("Serving %s", suffix))
+    add(m, 2, sprintf("Not serving %s", suffix))
   }
 
   # FndRaise_*_Rcv: 1 -> "Received ..."; 0 -> "Did not receive ..."

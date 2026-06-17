@@ -7,4 +7,6 @@ data/processed/*
 data/intermediate/*
 data/validate/dataTemplate*
 data/raw/*
+# Temporary local copies of restricted Y: drive raw data (delete when done)
+data/temp/
 .RDataTmp*

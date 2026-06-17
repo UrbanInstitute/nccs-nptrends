@@ -360,8 +360,8 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       .default = NA_character_
     ),
     ProgDem_Indigenous = dplyr::case_when(
-      ProgDem_Indigenous == 1 ~ "Serving Indigenous/Native American and Alaska Native populations",
-      ProgDem_Indigenous == 0 ~ "Not serving Indigenous/Native American and Alaska Native populations",
+      ProgDem_Indigenous == 1 ~ "Serving American Indian or Alaska Native populations",
+      ProgDem_Indigenous == 0 ~ "Not serving American Indian or Alaska Native populations",
       .default = NA_character_
     ),
     ProgDem_Asian = dplyr::case_when(
@@ -400,8 +400,8 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       .default = NA_character_
     ),
     ProgDem_Elders = dplyr::case_when(
-      ProgDem_Elders == 1 ~ "Serving seniors",
-      ProgDem_Elders == 0 ~ "Not serving seniors",
+      ProgDem_Elders == 1 ~ "Serving older adults",
+      ProgDem_Elders == 0 ~ "Not serving older adults",
       .default = NA_character_
     ),
     PrgSrvc_Suspend = dplyr::case_when(
@@ -479,17 +479,32 @@ nptrends_full_preprocessed <- nptrends_full_raw |>
       )
     ),
     # 4-bucket scheme introduced with the 2026-05 template for the LGBTQ,
-    # Disabled, Young, and ReceivedServices Board/Staff demographics. Y4/Y5
-    # raw uses the 0–11 (+97) coding and we collapse here; Y6 raw already
-    # ships the 0/1/2/3 (+97) coding so we map straight through.
+    # Disabled, and ReceivedServices Board/Staff demographics. Y4/Y5 raw
+    # uses the 0–11 (+97) coding and we collapse here; Y6 raw ships the
+    # pre-bucketed 0/1/2/3 (+97) coding so we map straight through.
     dplyr::across(
-      .cols = dplyr::all_of(percentdem_4bucket_vars),
+      .cols = dplyr::all_of(percentdem_4bucket_recoded_y6_vars),
       .fns = ~ dplyr::case_when(
         year == "2026" & .x == 0 ~ "0%",
         year == "2026" & .x == 1 ~ "1–50%",
         year == "2026" & .x == 2 ~ "51–99%",
         year == "2026" & .x == 3 ~ "100%",
         year == "2026" ~ NA_character_,
+        .x == 0 ~ "0%",
+        .x %in% c(1, 2, 3, 4, 5) ~ "1–50%",
+        .x %in% c(6, 7, 8, 9, 10) ~ "51–99%",
+        .x == 11 ~ "100%",
+        .x == 97 ~ NA_character_,
+        .default = NA_character_
+      )
+    ),
+    # Same 4-bucket target as above, but the Y6 raw still uses the 0–11
+    # (+97) coding for PercentDem_Young_Board/Staff — confirmed by the
+    # 2026 survey response options being unchanged for these two items.
+    # Apply the Y4/Y5 collapse uniformly across all years.
+    dplyr::across(
+      .cols = dplyr::all_of(percentdem_4bucket_legacy_y6_vars),
+      .fns = ~ dplyr::case_when(
         .x == 0 ~ "0%",
         .x %in% c(1, 2, 3, 4, 5) ~ "1–50%",
         .x %in% c(6, 7, 8, 9, 10) ~ "51–99%",

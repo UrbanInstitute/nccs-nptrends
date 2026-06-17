@@ -15,10 +15,10 @@ nptrends_full_transformed_path <- "data/intermediate/nptrends_full_transformed.c
 nptrends_full_formatted_path <- "data/processed/nptrends_full_formatted.csv"
 nptrends_full_filtered_path <- "data/processed/nptrends_full_filtered.csv"
 
-template_path <- "data/validate/dataTemplate_20260526.csv"
+template_path <- "data/validate/dataTemplate_20260617.csv"
 metricsMaster_gsheet_url <- "https://docs.google.com/spreadsheets/d/1HMoQymn4F6q0qOqTX9njTLujYwHFXXtSGnhgR0_Ohjk/edit?gid=0#gid=0"
 metricsMaster_path <- "data/validate/metricsMaster_20260526.csv"
-data_dictionary_path <- "data/dictionary/data_dictionary_20260521.xlsx"
+data_dictionary_path <- "data/dictionary/data_dictionary_20260527.xlsx"
 
 # Variable names needed for analysis
 survey_analysis_vars <- c(
@@ -536,13 +536,25 @@ metrics_drop_y4_y5 <- c(
 # Metrics where the percentage bucket scheme switched to 4 buckets
 # (0%, 1-50%, 51-99%, 100%) starting in the 2026-05 template — applies to
 # all years (Y4/Y5/Y6) per the new template structure.
-percentdem_4bucket_vars <- c(
+#
+# Two sub-groups by Y6 raw coding:
+#   *_recoded_y6_vars  — Y6 raw ships pre-bucketed 0/1/2/3 (+97); Y4/Y5 raw
+#                        is 0–11 (+97) and gets collapsed.
+#   *_legacy_y6_vars   — Y6 raw still uses the original 0–11 (+97) coding;
+#                        the same Y4/Y5 collapse applies in all years.
+percentdem_4bucket_recoded_y6_vars <- c(
   "PercentDem_LGBTQ_Board",
   "PercentDem_Disabled_Board",
-  "PercentDem_Young_Board",
   "PercentDem_ReceivedServices_Board",
   "PercentDem_LGBTQ_Staff",
   "PercentDem_Disabled_Staff",
-  "PercentDem_Young_Staff",
   "PercentDem_ReceivedServices_Staff"
+)
+percentdem_4bucket_legacy_y6_vars <- c(
+  "PercentDem_Young_Board",
+  "PercentDem_Young_Staff"
+)
+percentdem_4bucket_vars <- c(
+  percentdem_4bucket_recoded_y6_vars,
+  percentdem_4bucket_legacy_y6_vars
 )
